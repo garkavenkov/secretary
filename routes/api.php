@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\API\v1\CommunityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\v1\RegionController;
 use App\Http\Controllers\API\v1\DistrictController;
+use App\Http\Controllers\API\v1\CommunityController;
+use App\Http\Controllers\API\v1\CouncilTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,5 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('regions',          RegionController::class);
     Route::resource('districts',        DistrictController::class);
     Route::resource('communities',      CommunityController::class);
+    Route::resource('council-types',    CouncilTypeController::class);
 });
