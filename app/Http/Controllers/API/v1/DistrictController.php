@@ -31,7 +31,7 @@ class DistrictController extends Controller
      */
     public function store(DistrictRequest $request)
     {
-        $district = District::create($request->all());
+        $district = District::create($request->validated());
 
         if ($district) {
             return response()->json(['message' => 'Район успішно додан'], 201);

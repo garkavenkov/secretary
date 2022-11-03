@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\v1\CommunityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\v1\RegionController;
@@ -22,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::group(['prefix' => 'v1'], function() {
-    Route::resource('regions',             RegionController::class);
-    Route::resource('districts',           DistrictController::class);
+    Route::resource('regions',          RegionController::class);
+    Route::resource('districts',        DistrictController::class);
+    Route::resource('communities',      CommunityController::class);
 });

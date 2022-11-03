@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Region;
+use App\Models\District;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DistrictSeeder extends Seeder
 {
@@ -14,6 +17,14 @@ class DistrictSeeder extends Seeder
      */
     public function run()
     {
-        //
+        District::truncate();
+
+        DB::table('districts')->insert([
+            [
+                'region_id' =>  Region::where('name', 'Сумська область')->first()->id,
+                'name'      =>  'Конотопський район',
+                'center'    =>  'Конотоп'
+            ]
+        ]);
     }
 }
