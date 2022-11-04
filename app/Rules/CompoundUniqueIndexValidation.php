@@ -2,15 +2,14 @@
 
 namespace App\Rules;
 
-use App\Models\District;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\Rule;
 
-use function PHPUnit\Framework\isNull;
-
-class DistrictUniquePerRegion implements Rule, DataAwareRule
+class CompoundUniqueIndexValidation implements Rule, DataAwareRule
 {
-    private $message = '';
+    private $msg;
+    private $model;
+    private $field;
     protected $data = [];
 
     /**
@@ -18,9 +17,11 @@ class DistrictUniquePerRegion implements Rule, DataAwareRule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $model, string $field, string $msg)
     {
-        //
+        $this->model = $model;
+        $this->field = $field;
+        $this->msg   = $msg;
     }
 
     public function setData($data)
@@ -37,16 +38,15 @@ class DistrictUniquePerRegion implements Rule, DataAwareRule
      */
     public function passes($attribute, $value)
     {
-        $district = District
-                        ::where('region_id', $this->data['region_id'])
-                        ->where($attribute, $value)
-                        ->first();
+        $entity = $this->model
+                    ::where($this->field, $this->data[$this->field])
+                    ->where($attribute, $value)
+                    ->first();
 
-        if(!is_null($district)) {
+        if (!is_null($entity)) {
             if (request()->method() == 'PATCH') {
-                return $district->id == $this->data['id'] ? true : false;
+                return $entity->id == $this->data['id'] ? true : false;
             }
-            $this->msg = 'Такий район вже існує в указаній області';
             return false;
         }
 

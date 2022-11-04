@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\API\v1;
 
-use App\Rules\CommunityUniquePerDistrict;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CompoundUniqueIndexValidation;
 
 class CommunityRequest extends FormRequest
 {
@@ -26,7 +26,16 @@ class CommunityRequest extends FormRequest
     {
         return [
             'district_id'   =>  'required|exists:districts,id',
-            'name'          =>  ['required', 'min:3', new CommunityUniquePerDistrict()],
+            'name'          =>  [
+                                    'required',
+                                    'min:3',
+                                    new CompoundUniqueIndexValidation(
+                                        model: 'App\Models\Community',
+                                        field: 'district_id',
+                                        msg: 'Громада с такою назвою вже існує в указанному районі'
+                                    )
+
+                                ],
             'address'       =>  'required|min:3',
             'koatuu'        =>  ['required', 'regex:/^\d{10}$/i', 'unique:communities,koatuu,' . $this->id],
             'edrpou'        =>  ['required', 'regex:/^\d{8}$/i',  'unique:communities,edrpou,' . $this->id]

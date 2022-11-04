@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\API\v1;
 
-use App\Rules\DistrictUniquePerRegion;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\CompoundUniqueIndexValidation;
 
 class DistrictRequest extends FormRequest
 {
@@ -26,7 +26,15 @@ class DistrictRequest extends FormRequest
     {
         return [
             'region_id'         =>  'required|exists:regions,id',
-            'name'              =>  ['required', 'min:5', new DistrictUniquePerRegion()],
+            'name'              =>  [
+                                        'required',
+                                        'min:5',
+                                        new CompoundUniqueIndexValidation(
+                                            model: 'App\Models\District',
+                                            field: 'region_id',
+                                            msg: "Такий район вже існує в указаній області"
+                                        )
+                                    ],
             'center'            =>  'required|min:3'
         ];
     }
