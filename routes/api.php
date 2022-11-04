@@ -6,6 +6,7 @@ use App\Http\Controllers\API\v1\RegionController;
 use App\Http\Controllers\API\v1\CouncilController;
 use App\Http\Controllers\API\v1\DistrictController;
 use App\Http\Controllers\API\v1\CommunityController;
+use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
 
@@ -32,4 +33,5 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('council-types',    CouncilTypeController::class);
     Route::resource('councils',         CouncilController::class);
     Route::resource('settlement-types', SettlementTypeController::class);
+    Route::resource('settlements',      SettlementController::class);
 });

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Settlement;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Council extends Model
 {
@@ -17,4 +18,9 @@ class Council extends Model
         'edrpou',
         'koatuu',
     ];
+
+    public function settlements()
+    {
+        return $this->hasMany(Settlement::class);
+    }
 }
