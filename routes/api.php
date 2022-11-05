@@ -11,6 +11,7 @@ use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
+use App\Http\Controllers\HouseholdTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,5 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('settlements',          SettlementController::class);
     Route::resource('places-work',          PlaceWorkController::class);
     Route::resource('family-relationships', FamilyRelationshipController::class);
+    Route::resource('household-types',      HouseholdTypeController::class);
 });
