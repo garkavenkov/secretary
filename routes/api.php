@@ -10,6 +10,7 @@ use App\Http\Controllers\API\v1\PlaceWorkController;
 use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
+use App\Http\Controllers\API\v1\LandPlotTypeController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
 use App\Http\Controllers\HouseholdTypeController;
 
@@ -40,4 +41,5 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('places-work',          PlaceWorkController::class);
     Route::resource('family-relationships', FamilyRelationshipController::class);
     Route::resource('household-types',      HouseholdTypeController::class);
+    Route::resource('land-plot-types',      LandPlotTypeController::class);
 });
