@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\v1;
 
 use Illuminate\Http\Request;
 use App\Models\HouseholdType;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\HouseholdTypeRequest;
 use App\Http\Resources\API\v1\HouseholdType\HouseholdTypeResource;
 use App\Http\Resources\API\v1\HouseholdType\HouseholdTypeResourceCollection;
