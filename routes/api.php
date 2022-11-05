@@ -9,6 +9,7 @@ use App\Http\Controllers\API\v1\CommunityController;
 use App\Http\Controllers\API\v1\PlaceWorkController;
 use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
+use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
 
 /*
@@ -28,12 +29,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::group(['prefix' => 'v1'], function() {
-    Route::resource('regions',          RegionController::class);
-    Route::resource('districts',        DistrictController::class);
-    Route::resource('communities',      CommunityController::class);
-    Route::resource('council-types',    CouncilTypeController::class);
-    Route::resource('councils',         CouncilController::class);
-    Route::resource('settlement-types', SettlementTypeController::class);
-    Route::resource('settlements',      SettlementController::class);
-    Route::resource('places-work',      PlaceWorkController::class);
+    Route::resource('regions',              RegionController::class);
+    Route::resource('districts',            DistrictController::class);
+    Route::resource('communities',          CommunityController::class);
+    Route::resource('council-types',        CouncilTypeController::class);
+    Route::resource('councils',             CouncilController::class);
+    Route::resource('settlement-types',     SettlementTypeController::class);
+    Route::resource('settlements',          SettlementController::class);
+    Route::resource('places-work',          PlaceWorkController::class);
+    Route::resource('family-relationships', FamilyRelationshipController::class);
 });
