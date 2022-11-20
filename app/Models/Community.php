@@ -12,6 +12,7 @@ class Community extends Model
     protected $fillable = [
         'district_id',
         'name',
+        'center',
         'address',
         'edrpou',
         'koatuu'

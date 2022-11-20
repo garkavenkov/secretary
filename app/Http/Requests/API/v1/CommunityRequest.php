@@ -36,6 +36,7 @@ class CommunityRequest extends FormRequest
                                     )
 
                                 ],
+            'center'        =>  'required|min:3',
             'address'       =>  'required|min:3',
             'koatuu'        =>  ['required', 'regex:/^\d{10}$/i', 'unique:communities,koatuu,' . $this->id],
             'edrpou'        =>  ['required', 'regex:/^\d{8}$/i',  'unique:communities,edrpou,' . $this->id]

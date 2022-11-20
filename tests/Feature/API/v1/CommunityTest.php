@@ -96,6 +96,8 @@ class CommunityTest extends TestCase
             'name is empty'                 =>  ['name',        ''],
             'name is not long enough'       =>  ['name',        'qw'],
             'name is unique per district'   =>  ['name',        'Попівська громада'],
+            'center is empty'               =>  ['center',      ''],
+            'center is not long enough'     =>  ['center',      'qw'],
             'address is empty'              =>  ['address',     ''],
             'address is not long enough'    =>  ['address',     'qw'],
             'koatuu is null'                =>  ['koatuu',      ''],

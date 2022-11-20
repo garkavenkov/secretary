@@ -23,6 +23,7 @@ class CommunitySeeder extends Seeder
             [
                 'district_id'   =>  District::where('name', 'Конотопський район')->first()->id,
                 'name'          =>  'Попівська громада',
+                'center'        =>  'Попівка',
                 'address'       =>  'Сумська обл., Конотопський р-н, с. Попівка, вул. Миру, буд. 1',
                 'koatuu'        =>  '5922086601',
                 'edrpou'        =>  '04389220'

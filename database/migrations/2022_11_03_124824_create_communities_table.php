@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('district_id');
             $table->string('name');
+            $table->string('center');
             $table->string('address');
             $table->string('edrpou')->unique();
             $table->string('koatuu')->unique();

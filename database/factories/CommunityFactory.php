@@ -23,6 +23,7 @@ class CommunityFactory extends Factory
             'district_id'   =>  District::factory(),
             'name'          =>  $this->faker->sentence(3),
             'address'       =>  $this->faker->cityAndRegion() . ", " . $this->faker->streetName(),
+            'center'        =>  $this->faker->city(),
             // 'edrpou'        =>  $edrpou,
             // 'koatuu'        =>  $koatuu
             'edrpou'        =>  $this->faker->unique()->regexify('[0-9]{8}'),
