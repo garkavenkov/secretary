@@ -1,0 +1,62 @@
+<script>
+import { mapGetters } from 'vuex';
+
+import DataTable from '../../components/ui/DataTable.vue';
+
+export default {
+    name: 'HouseholdTypesMain',
+    components: {
+        DataTable
+    },
+    data() {
+        return {
+            // districts: []
+        }
+    },
+    methods: {
+        // fetchData() {
+        //     axios.get('/api/v1/districts')
+        //         .then(res => {
+        //             this.districts = res.data.data;
+        //         });
+        // }
+    },
+    computed: {
+        ...mapGetters('HouseholdTypes', ['householdTypes'])
+    },
+    created() {
+        // this.fetchData();
+    }
+}
+</script>
+
+<template>
+    <h4>
+        Типи об'єктів погосподарського обліку
+    </h4>
+    <div>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+
+                <DataTable
+                        :dataTable="householdTypes"
+                        tableHeaderClass="table-dark">
+                    <template v-slot:header>
+                        <tr>
+                            <th>Назва</th>
+                            <th></th>
+                        </tr>
+                    </template>
+                    <template v-slot:default="slotProps">
+                        <tr     v-for="record in slotProps.paginatedData"
+                                :key="record.id">
+                            <td>{{record.name}}</td>
+                            <td></td>
+                        </tr>
+                    </template>
+                </DataTable>
+            </div>
+        </div>
+        <!-- {{districts}} -->
+    </div>
+</template>

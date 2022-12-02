@@ -18,7 +18,7 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $communities = Community::all();
+        $communities = Community::with('district')->get();
 
         return new CommunityResourceCollection($communities);
     }

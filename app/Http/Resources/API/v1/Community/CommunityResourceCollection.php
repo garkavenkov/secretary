@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\v1\Community;
 
+use App\Http\Resources\API\v1\District\DistrictResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CommunityResourceCollection extends ResourceCollection
@@ -18,6 +19,7 @@ class CommunityResourceCollection extends ResourceCollection
             return [
                 'id'            =>  (int)   $community->id,
                 'district_id'   =>  (int)   $community->district_id,
+                'district'      =>  new DistrictResource($community->whenLoaded('district')),
                 'name'          =>  $community->name,
                 'address'       =>  $community->address,
                 'edrpou'        =>  $community->edrpou,

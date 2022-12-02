@@ -13,7 +13,7 @@ use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\HouseholdController;
 use App\Http\Controllers\API\v1\LandPlotTypeController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
-use App\Http\Controllers\HouseholdTypeController;
+use App\Http\Controllers\API\v1\HouseholdTypeController;
 
 /*
 |--------------------------------------------------------------------------

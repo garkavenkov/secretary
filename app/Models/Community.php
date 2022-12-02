@@ -17,4 +17,9 @@ class Community extends Model
         'edrpou',
         'koatuu'
     ];
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
 }
