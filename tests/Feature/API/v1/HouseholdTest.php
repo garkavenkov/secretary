@@ -2,9 +2,10 @@
 
 namespace Tests\Feature\API\v1;
 
+use App\Models\Community;
 use Tests\TestCase;
 use App\Models\Household;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\HouseholdType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class HouseholdTest extends TestCase
@@ -39,4 +40,64 @@ class HouseholdTest extends TestCase
         $this->assertEquals($response->data->address, $household->address);
     }
 
+    public function test_api_should_create_household()
+    {
+        $household = Household::factory()->make();
+
+        $this->post($this->url, $household->toArray())->assertStatus(201);
+
+        $this->assertDatabaseHas('households', ['address' => $household->address]);
+    }
+
+    public function test_api_should_update_household()
+    {
+        $household = Household::factory()->create(['additional_data' => 'Test']);
+
+        $data = $household->toArray();
+        $data['additional_data'] = 'Updated data';
+
+        $this->patch("$this->url/$household->id", $data)->assertStatus(200);
+
+        $this->assertDatabaseHas('households', ['id' => $household->id, 'additional_data' => $data['additional_data']]);
+    }
+
+    public function test_api_should_delete_household()
+    {
+        $household = Household::factory()->create();
+
+        $this->delete("$this->url/$household->id")->assertStatus(200);
+
+        $this->assertDatabaseMissing('households', ['id' => $household->id]);
+    }
+
+    /**
+     * @dataProvider dataProvider
+     */
+    public function test_api_MUST_NOT_create_household_id_data_did_not_pass_validation($field, $value)
+    {
+        $community = Community::factory()->create();
+        $household_type = HouseholdType::factory()->create();
+        $household = Household::factory()
+                        ->make([
+                            'community_id' => $community->id,
+                            'household_type_id' => $household_type->id,
+                            $field => $value
+                        ])->toArray();
+
+        $this->post($this->url, $household)->assertSessionHasErrors($field);
+
+        $this->assertDatabaseCount('households', 0);
+    }
+
+    public function dataProvider(): array
+    {
+        return [
+            'community_id is empty'             =>  ['community_id',        ''],
+            'community_id does not exist'       =>  ['community_id',        99],
+            'household_type_id'                 =>  ['household_type_id',   ''],
+            'household_type_id does not exist'  =>  ['household_type_id',   99],
+            'address is empty'                  =>  ['address',             ''],
+            'address in not long enough'        =>  ['address',           'qw'],
+        ];
+    }
 }

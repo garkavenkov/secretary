@@ -6,14 +6,15 @@ use App\Http\Controllers\API\v1\RegionController;
 use App\Http\Controllers\API\v1\CouncilController;
 use App\Http\Controllers\API\v1\DistrictController;
 use App\Http\Controllers\API\v1\CommunityController;
+use App\Http\Controllers\API\v1\HouseholdController;
 use App\Http\Controllers\API\v1\PlaceWorkController;
 use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
-use App\Http\Controllers\API\v1\FamilyRelationshipController;
-use App\Http\Controllers\API\v1\HouseholdController;
 use App\Http\Controllers\API\v1\LandPlotTypeController;
-use App\Http\Controllers\API\v1\SettlementTypeController;
 use App\Http\Controllers\API\v1\HouseholdTypeController;
+use App\Http\Controllers\API\v1\HouseholdHouseController;
+use App\Http\Controllers\API\v1\SettlementTypeController;
+use App\Http\Controllers\API\v1\FamilyRelationshipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +45,5 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('household-types',      HouseholdTypeController::class);
     Route::resource('land-plot-types',      LandPlotTypeController::class);
     Route::resource('households',           HouseholdController::class);
+    Route::resource('household-houses',     HouseholdHouseController::class);
 });

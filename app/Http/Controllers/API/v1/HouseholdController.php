@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\API\v1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\API\v1\Household\HouseholdResource;
-use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
 use App\Models\Household;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\API\v1\HouseholdRequest;
+use App\Http\Resources\API\v1\Household\HouseholdResource;
+use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
 
 class HouseholdController extends Controller
 {
@@ -25,12 +26,16 @@ class HouseholdController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\API\v1\HouseholdRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(HouseholdRequest $request)
     {
-        //
+        $household = Household::create($request->all());
+
+        if ($household) {
+            return response()->json(['message' => 'Облікова картка успішно додана'], 201);
+        }
     }
 
     /**
@@ -55,7 +60,13 @@ class HouseholdController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $household = Household::findOrFail($id);
+
+        $household->update($request->all());
+
+        if ($household->save()) {
+            return response()->json(['message' => 'Облікова картка була успішно змінена']);
+        }
     }
 
     /**
@@ -66,6 +77,10 @@ class HouseholdController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $household = Household::findOrFail($id);
+
+        if ($household->delete()) {
+            return response()->json(['message' => 'Облікова картка була успішно видалена']);
+        }
     }
 }
