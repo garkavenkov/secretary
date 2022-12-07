@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('household_members', function (Blueprint $table) {
+            $table->id();
+            $table->integer('household_id');
+            $table->string('surname');
+            $table->string('name');
+            $table->string('patronymic');
+            $table->enum('sex',['чоловіча','жіноча']);
+            $table->date('birthday');
+            $table->integer('family_relationship_id');
+            $table->string('employment_information');
+            $table->integer('place_work_id');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('household_members');
+    }
+};

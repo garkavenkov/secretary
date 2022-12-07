@@ -14,6 +14,7 @@ use App\Http\Controllers\API\v1\LandPlotTypeController;
 use App\Http\Controllers\API\v1\HouseholdTypeController;
 use App\Http\Controllers\API\v1\HouseholdHouseController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
+use App\Http\Controllers\API\v1\HouseholdMemberController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
 
 /*
@@ -46,4 +47,5 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('land-plot-types',      LandPlotTypeController::class);
     Route::resource('households',           HouseholdController::class);
     Route::resource('household-houses',     HouseholdHouseController::class);
+    Route::resource('household-members',    HouseholdMemberController::class);
 });
