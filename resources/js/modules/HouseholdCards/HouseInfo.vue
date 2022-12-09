@@ -45,7 +45,7 @@ export default {
 
             ],
             formData: {
-                year: '',
+                year: new Date().getFullYear(),
                 totalArea: 0,
                 totalLivingArea: 0,
                 livingArea: 0,
@@ -62,12 +62,13 @@ export default {
                 electricStove: false,
             },
             modalSubmitCaption: '',
-            modalTitle: ''
+            modalTitle: '',
+            mode: 'create'
         }
     },
     methods: {
         clearFormData() {
-                this.formData.year = '';
+                this.formData.year = new Date().getFullYear();
                 this.formData.totalArea = 0;
                 this.formData.totalLivingArea = 0;
                 this.formData.livingArea = 0;
@@ -87,6 +88,7 @@ export default {
 
             this.modalTitle = 'Додати дані';
             this.modalSubmitCaption = 'Додати';
+            this.mode = 'create';
             var myModal = new Modal(document.getElementById('HouseInfoModalForm'))
             if (e.ctrlKey) {
                 if (this.years.length > 0) {
@@ -98,8 +100,13 @@ export default {
             myModal.show();
         },
         submitData() {
-            this.years.push(Object.assign({}, this.formData));
-            // this.clearFormData();
+            if (this.mode == 'create') {
+                this.years.push(Object.assign({}, this.formData));
+                this.clearFormData();
+            } else if (this.mode == 'update') {
+                let year = this.years.find(y => y.year == this.formData.year);
+                Object.assign(year, this.formData);
+            }
         },
         deleteYear(year) {
             let index = this.years.findIndex(y => y.year === year);
@@ -112,6 +119,7 @@ export default {
             Object.assign(this.formData, _year);
             this.modalSubmitCaption = 'Зберегти';
             this.modalTitle = `Редагувати дані за ${year} рік`;
+            this.mode = 'update';
             var myModal = new Modal(document.getElementById('HouseInfoModalForm'))
             myModal.show()
         }

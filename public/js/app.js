@@ -21458,7 +21458,7 @@ __webpack_require__.r(__webpack_exports__);
         electricStove: true
       }],
       formData: {
-        year: '',
+        year: new Date().getFullYear(),
         totalArea: 0,
         totalLivingArea: 0,
         livingArea: 0,
@@ -21475,12 +21475,13 @@ __webpack_require__.r(__webpack_exports__);
         electricStove: false
       },
       modalSubmitCaption: '',
-      modalTitle: ''
+      modalTitle: '',
+      mode: 'create'
     };
   },
   methods: {
     clearFormData: function clearFormData() {
-      this.formData.year = '';
+      this.formData.year = new Date().getFullYear();
       this.formData.totalArea = 0;
       this.formData.totalLivingArea = 0;
       this.formData.livingArea = 0;
@@ -21499,6 +21500,7 @@ __webpack_require__.r(__webpack_exports__);
     newYearData: function newYearData(e) {
       this.modalTitle = 'Додати дані';
       this.modalSubmitCaption = 'Додати';
+      this.mode = 'create';
       var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('HouseInfoModalForm'));
       if (e.ctrlKey) {
         if (this.years.length > 0) {
@@ -21510,8 +21512,16 @@ __webpack_require__.r(__webpack_exports__);
       myModal.show();
     },
     submitData: function submitData() {
-      this.years.push(Object.assign({}, this.formData));
-      // this.clearFormData();
+      var _this = this;
+      if (this.mode == 'create') {
+        this.years.push(Object.assign({}, this.formData));
+        this.clearFormData();
+      } else if (this.mode == 'update') {
+        var year = this.years.find(function (y) {
+          return y.year == _this.formData.year;
+        });
+        Object.assign(year, this.formData);
+      }
     },
     deleteYear: function deleteYear(year) {
       var index = this.years.findIndex(function (y) {
@@ -21528,6 +21538,7 @@ __webpack_require__.r(__webpack_exports__);
       Object.assign(this.formData, _year);
       this.modalSubmitCaption = 'Зберегти';
       this.modalTitle = "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u0437\u0430 ".concat(year, " \u0440\u0456\u043A");
+      this.mode = 'update';
       var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('HouseInfoModalForm'));
       myModal.show();
     }
