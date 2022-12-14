@@ -7,7 +7,7 @@ use App\Http\Controllers\API\v1\CouncilController;
 use App\Http\Controllers\API\v1\DistrictController;
 use App\Http\Controllers\API\v1\CommunityController;
 use App\Http\Controllers\API\v1\HouseholdController;
-use App\Http\Controllers\API\v1\PlaceWorkController;
+use App\Http\Controllers\API\v1\WorkPlaceController;
 use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
 use App\Http\Controllers\API\v1\LandPlotTypeController;
@@ -41,7 +41,7 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('councils',             CouncilController::class);
     Route::resource('settlement-types',     SettlementTypeController::class);
     Route::resource('settlements',          SettlementController::class);
-    Route::resource('places-work',          PlaceWorkController::class);
+    Route::resource('work-places',          WorkPlaceController::class);
     Route::resource('family-relationships', FamilyRelationshipController::class);
     Route::resource('household-types',      HouseholdTypeController::class);
     Route::resource('land-plot-types',      LandPlotTypeController::class);

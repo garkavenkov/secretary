@@ -8,6 +8,7 @@
                 <router-link to="/communities">Громади</router-link>
                 <router-link to="/family-relationships">Родинні відносини</router-link>
                 <router-link to="/household-types">Типи погосподарського обліку</router-link>
+                <router-link to="/work-places">Коди місця роботи (заняття)</router-link>
                 <router-link to="/household-cards">Облікова картка</router-link>
             </div>
         </div>
@@ -30,6 +31,7 @@ import { mapActions } from 'vuex'
             this.$store.dispatch('Districts/fetchData');
             this.$store.dispatch('FamilyRelationships/fetchData');
             this.$store.dispatch('HouseholdTypes/fetchData');
+            this.$store.dispatch('WorkPlaces/fetchData');
         }
     }
 </script>
