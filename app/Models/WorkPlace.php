@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PlaceWork extends Model
+class WorkPlace extends Model
 {
     use HasFactory;
 
-    protected $table = 'places_work';
+    // protected $table = 'work_places';
 
     protected $fillable = [
         'name'

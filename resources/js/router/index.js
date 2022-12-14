@@ -4,6 +4,7 @@ import Regions          from "../modules/Regions/Main.vue";
 import Districts        from "../modules/Districts/Main.vue";
 import Communities      from "../modules/Communities/Main.vue";
 import Relationships    from "../modules/FamilyRelationships/Main.vue";
+import WorkPlaces       from "../modules/WorkPlaces/Main.vue";
 import HouseholdTypes   from "../modules/HouseholdTypes/Main.vue";
 import HouseholdCards   from "../modules/HouseholdCards/Main.vue";
 
@@ -12,6 +13,7 @@ const routes = [
     { path: '/districts',               component: Districts },
     { path: '/communities',             component: Communities },
     { path: '/family-relationships',    component: Relationships },
+    { path: '/work-places',             component: WorkPlaces },
     { path: '/household-types',         component: HouseholdTypes },
     { path: '/household-cards',         component: HouseholdCards}
 ]

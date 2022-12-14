@@ -2,37 +2,37 @@
 
 namespace App\Http\Controllers\API\v1;
 
-use App\Models\PlaceWork;
+use App\Models\WorkPlace;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\v1\PlaceWorkRequest;
-use App\Http\Resources\API\v1\PlaceWork\PlaceWorkResource;
-use App\Http\Resources\API\v1\PlaceWork\PlaceWorkResourceCollection;
+use App\Http\Requests\API\v1\WorkPlaceRequest;
+use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResource;
+use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResourceCollection;
 
-class PlaceWorkController extends Controller
+class WorkPlaceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return App\Http\Resources\API\v1\PlaceWork\PlaceWorkResourceCollection
+     * @return App\Http\Resources\API\v1\PlaceWork\WorkPlaceResourceCollection
      */
     public function index()
     {
-        $places = PlaceWork::all();
+        $places = WorkPlace::all();
 
-        return new PlaceWorkResourceCollection($places);
+        return new WorkPlaceResourceCollection($places);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\API\v1\PlaceWorkRequest  $request
+     * @param  App\Http\Requests\API\v1\WorkPlaceRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PlaceWorkRequest $request)
+    public function store(WorkPlaceRequest $request)
     {
-        $place = PlaceWork::create($request->all());
-
+        $place = WorkPlace::create($request->validated());
+        dd($place);
         if ($place) {
             return response()->json(['message' => 'Місце роботи успішно додано'], 201);
         }
@@ -42,27 +42,27 @@ class PlaceWorkController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return App\Http\Resources\API\v1\PlaceWork\PlaceWorkResource
+     * @return App\Http\Resources\API\v1\PlaceWork\WorkPlaceResource
      */
     public function show($id)
     {
-        $place = PlaceWork::findOrfail($id);
+        $place = WorkPlace::findOrfail($id);
 
-        return new PlaceWorkResource($place);
+        return new WorkPlaceResource($place);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\API\v1\WorkPlaceRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(WorkPlaceRequest $request, $id)
     {
-        $place = PlaceWork::findOrFail($id);
+        $place = WorkPlace::findOrFail($id);
 
-        $place->update($request->all());
+        $place->update($request->validated());
 
         if ($place->save()) {
             return response()->json(['message' => 'Місце роботи успішно змінено']);
@@ -77,7 +77,7 @@ class PlaceWorkController extends Controller
      */
     public function destroy($id)
     {
-        $place = PlaceWork::findOrFail($id);
+        $place = WorkPlace::findOrFail($id);
 
         if ($place->delete()) {
             return response()->json(['message' => 'Місце роботи успішно видалено']);

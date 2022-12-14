@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\PlaceWork;
+use App\Models\WorkPlace;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class PlaceWorkSeeder extends Seeder
+class WorkPlaceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,9 +16,9 @@ class PlaceWorkSeeder extends Seeder
      */
     public function run()
     {
-        PlaceWork::truncate();
+        WorkPlace::truncate();
 
-        DB::table('places_work')->insert([
+        DB::table('work_places')->insert([
             [
                 'name'  =>  'на території населенного пункту проживання/перебування'
             ],
