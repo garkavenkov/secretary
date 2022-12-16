@@ -4,7 +4,8 @@ import { Regions }                from './modules/Regions';
 import { Districts }              from './modules/Districts';
 import { FamilyRelationships }    from './modules/FamilyRelationships';
 import { HouseholdTypes }         from './modules/HouseholdTypes';
-import { WorkPlaces}              from './modules/WorkPlaces';
+import { WorkPlaces }             from './modules/WorkPlaces';
+import { Settlements }            from './modules/Settlements';
 
 export default createStore({
     modules: {
@@ -12,7 +13,8 @@ export default createStore({
         Districts,
         FamilyRelationships,
         HouseholdTypes,
-        WorkPlaces
+        WorkPlaces,
+        Settlements
     }
 });
 
