@@ -20,6 +20,7 @@ class SettlementResource extends JsonResource
             'settlement_type_id'    =>  (int)   $this->settlement_type_id,
             'name'                  =>  $this->name,
             'postcode'              =>  $this->postcode,
+            'katottg'               =>  $this->katottg,
         ];
     }
 }

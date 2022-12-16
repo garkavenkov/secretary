@@ -22,7 +22,8 @@ class SettlementFactory extends Factory
             'council_id'            =>  Council::factory(),
             'settlement_type_id'    =>  SettlementType::factory(),
             'name'                  =>  $this->faker->city(),
-            'postcode'              =>  $this->faker->unique()->postcode()
+            'postcode'              =>  $this->faker->unique()->postcode(),
+            'katottg'               =>  $this->faker->unique()->regexify('UA[0-9]{17}')
         ];
     }
 }

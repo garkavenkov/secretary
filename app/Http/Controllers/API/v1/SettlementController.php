@@ -54,15 +54,15 @@ class SettlementController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\API\v1\SettlementRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SettlementRequest $request, $id)
     {
         $settlement = Settlement::findOrFail($id);
 
-        $settlement->update($request->all());
+        $settlement->update($request->validated());
 
         if ($settlement->save()) {
             return response()->json(['message' => 'Поселення було успішно змінено']);

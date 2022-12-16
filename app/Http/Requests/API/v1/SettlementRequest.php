@@ -36,7 +36,8 @@ class SettlementRequest extends FormRequest
                                                 msg: "Поселення вже існує в указаній раді"
                                             )
                                         ],
-            'postcode'              =>  ['required', 'regex:/^\d{5}$/i']
+            'postcode'              =>  ['required', 'regex:/^\d{5}$/i'],
+            'katottg'               =>  ['required', 'regex:/^UA\d{17}$/i', 'unique:settlements,katottg,' . $this->id],
         ];
     }
 }

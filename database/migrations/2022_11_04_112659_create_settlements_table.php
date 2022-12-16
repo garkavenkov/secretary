@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('settlement_type_id');
             $table->string('name');
             $table->string('postcode')->unique();
+            $table->string('katottg')->unique();
             $table->timestamps();
         });
     }

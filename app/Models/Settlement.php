@@ -14,7 +14,8 @@ class Settlement extends Model
         'council_id',
         'settlement_type_id',
         'name',
-        'postcode'
+        'postcode',
+        'katottg'
     ];
 
     public function council()

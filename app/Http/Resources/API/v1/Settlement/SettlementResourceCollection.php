@@ -20,7 +20,8 @@ class SettlementResourceCollection extends ResourceCollection
                 'council_id'            =>  (int)   $settlement->council_id,
                 'settlement_type_id'    =>  (int)   $settlement->settlement_type_id,
                 'name'                  =>  $settlement->name,
-                'postcode'              =>  $settlement->postcode
+                'postcode'              =>  $settlement->postcode,
+                'katottg'               =>  $settlement->katottg,
             ];
         });
     }

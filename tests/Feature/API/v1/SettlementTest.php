@@ -53,7 +53,7 @@ class SettlementTest extends TestCase
         $settlement = Settlement::factory()->create(['name' => 'шаповалівка']);
         $data = $settlement->toArray();
         $data['name'] = 'Шаповалівка';
-
+        $this->withoutExceptionHandling();
         $this->patch("$this->url/$settlement->id", $data)->assertStatus(200);
 
         $this->assertDatabaseHas('settlements', ['name' => $data['name']]);
@@ -74,7 +74,14 @@ class SettlementTest extends TestCase
     public function test_api_MUST_NOT_create_settlement_if_data_did_not_pass_validation($field, $value)
     {
         $council = Council::factory()->create(['name' => 'Шаповалівська сільска рада']);
-        Settlement::factory()->create(['council_id' => $council->id, 'name' => 'Шаповалівка' ]);
+
+        Settlement::factory()
+                    ->create([
+                        'council_id' => $council->id,
+                        'name' => 'Шаповалівка',
+                        'katottg' => 'UA59020130250036991'
+                    ]);
+
         $settlement = Settlement
                         ::factory()
                         ->make([
@@ -99,7 +106,10 @@ class SettlementTest extends TestCase
             'name is not long enough'           =>  ['name',                'qw'],
             'name is unique per council'        =>  ['name',       'Шаповалівка'],
             'postcode is empty'                 =>  ['postcode',            ''  ],
-            'postcode has wrong format'         =>  ['postcode',         '1q2w3']
+            'postcode has wrong format'         =>  ['postcode',         '1q2w3'],
+            'katottg is empty'                  =>  ['katottg',             ''  ],
+            'katottg has wrong format'          =>  ['katottg',          '1q2w3'],
+            'katottg is already exists'         =>  ['katottg', 'UA59020130250036991'],
         ];
     }
 }
