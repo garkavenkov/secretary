@@ -36,6 +36,16 @@ class SettlementRequest extends FormRequest
                                                 msg: "Поселення вже існує в указаній раді"
                                             )
                                         ],
+            'inner_code'            =>  [
+                                            'required',
+                                            'gt:0',
+                                            'integer',
+                                            new CompoundUniqueIndexValidation(
+                                                model: 'App\Models\Settlement',
+                                                field: 'council_id',
+                                                msg: "КОд поселення вже використовується в указаній раді"
+                                            )
+                                        ],
             'postcode'              =>  ['required', 'regex:/^\d{5}$/i'],
             'katottg'               =>  ['required', 'regex:/^UA\d{17}$/i', 'unique:settlements,katottg,' . $this->id],
         ];

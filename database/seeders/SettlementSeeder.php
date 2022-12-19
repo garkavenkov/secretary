@@ -28,6 +28,7 @@ class SettlementSeeder extends Seeder
                 'council_id'            =>  $council->id,
                 'settlement_type_id'    =>  $type->id,
                 'name'                  =>  'Шаповалівка',
+                'inner_code'            =>  1,
                 'postcode'              =>  '41660',
                 'katottg'               =>  'UA59020130380057468'
             ],
@@ -35,6 +36,7 @@ class SettlementSeeder extends Seeder
                 'council_id'            =>  $council->id,
                 'settlement_type_id'    =>  $type->id,
                 'name'                  =>  'Привокзальне',
+                'inner_code'            =>  2,
                 'postcode'              =>  '41661',
                 'katottg'               =>  'UA59020130250036991'
             ],

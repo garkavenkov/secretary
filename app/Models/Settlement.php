@@ -14,6 +14,7 @@ class Settlement extends Model
         'council_id',
         'settlement_type_id',
         'name',
+        'inner_code',
         'postcode',
         'katottg'
     ];

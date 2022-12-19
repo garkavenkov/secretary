@@ -20,6 +20,7 @@ class SettlementResourceCollection extends ResourceCollection
                 'council_id'            =>  (int)   $settlement->council_id,
                 'settlement_type_id'    =>  (int)   $settlement->settlement_type_id,
                 'name'                  =>  $settlement->name,
+                'inner_code'            =>  $settlement->inner_code,
                 'postcode'              =>  $settlement->postcode,
                 'katottg'               =>  $settlement->katottg,
             ];

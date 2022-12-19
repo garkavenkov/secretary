@@ -79,7 +79,8 @@ class SettlementTest extends TestCase
                     ->create([
                         'council_id' => $council->id,
                         'name' => 'Шаповалівка',
-                        'katottg' => 'UA59020130250036991'
+                        'katottg' => 'UA59020130250036991',
+                        'inner_code' => 1
                     ]);
 
         $settlement = Settlement
@@ -98,18 +99,22 @@ class SettlementTest extends TestCase
     public function dataProvider(): array
     {
         return [
-            'council is empty'                  =>  ['council_id',          ''  ],
-            'council does not exist'            =>  ['council_id',          99  ],
-            'settlement_type'                   =>  ['settlement_type_id',  ''  ],
-            'settlement_type does not exist'    =>  ['settlement_type_id',  99  ],
-            'name is empty'                     =>  ['name',                ''  ],
-            'name is not long enough'           =>  ['name',                'qw'],
-            'name is unique per council'        =>  ['name',       'Шаповалівка'],
-            'postcode is empty'                 =>  ['postcode',            ''  ],
-            'postcode has wrong format'         =>  ['postcode',         '1q2w3'],
-            'katottg is empty'                  =>  ['katottg',             ''  ],
-            'katottg has wrong format'          =>  ['katottg',          '1q2w3'],
-            'katottg is already exists'         =>  ['katottg', 'UA59020130250036991'],
+            'council is empty'                          =>  ['council_id',          ''  ],
+            'council does not exist'                    =>  ['council_id',          99  ],
+            'settlement_type'                           =>  ['settlement_type_id',  ''  ],
+            'settlement_type does not exist'            =>  ['settlement_type_id',  99  ],
+            'name is empty'                             =>  ['name',                ''  ],
+            'name is not long enough'                   =>  ['name',                'qw'],
+            'name is unique per council'                =>  ['name',       'Шаповалівка'],
+            'inner_code is empty'                       =>  ['inner_code',            ''],
+            'inner_code is less than 1'                 =>  ['inner_code',             0],
+            'inner_code is not a number'                =>  ['inner_code',           1.1],
+            'inner_code is already exist in council'    =>  ['inner_code',             1],
+            'postcode is empty'                         =>  ['postcode',            ''  ],
+            'postcode has wrong format'                 =>  ['postcode',         '1q2w3'],
+            'katottg is empty'                          =>  ['katottg',             ''  ],
+            'katottg has wrong format'                  =>  ['katottg',          '1q2w3'],
+            'katottg is already exists'                 =>  ['katottg', 'UA59020130250036991'],
         ];
     }
 }
