@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\FamilyRelationship;
 use App\Models\Household;
-use App\Models\PlaceWork;
+use App\Models\WorkPlace;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -29,7 +29,7 @@ class HouseholdMemberFactory extends Factory
             'birthday'                  =>  $this->faker->date($format = 'Y-m-d', $max = 'now'),
             'family_relationship_id'    =>  FamilyRelationship::factory(),
             'employment_information'    =>  $this->faker->company(),
-            'place_work_id'             =>  PlaceWork::factory()
+            'place_work_id'             =>  WorkPlace::factory()
         ];
     }
 }
