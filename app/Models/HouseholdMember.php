@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\WorkPlace;
+use App\Models\FamilyRelationship;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class HouseholdMember extends Model
 {
@@ -18,6 +20,16 @@ class HouseholdMember extends Model
         'birthday',
         'family_relationship_id',
         'employment_information',
-        'place_work_id',
+        'work_place_id',
     ];
+
+    public function familyRelationship()
+    {
+        return $this->belongsTo(FamilyRelationship::class);
+    }
+
+    public function workPlace()
+    {
+        return $this->belongsTo(WorkPlace::class);
+    }
 }

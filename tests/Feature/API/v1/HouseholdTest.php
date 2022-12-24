@@ -6,6 +6,7 @@ use App\Models\Community;
 use Tests\TestCase;
 use App\Models\Household;
 use App\Models\HouseholdType;
+use App\Models\Settlement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class HouseholdTest extends TestCase
@@ -75,11 +76,11 @@ class HouseholdTest extends TestCase
      */
     public function test_api_MUST_NOT_create_household_id_data_did_not_pass_validation($field, $value)
     {
-        $community = Community::factory()->create();
+        $settlement = Settlement::factory()->create();
         $household_type = HouseholdType::factory()->create();
         $household = Household::factory()
                         ->make([
-                            'community_id' => $community->id,
+                            'settlement_id' => $settlement->id,
                             'household_type_id' => $household_type->id,
                             $field => $value
                         ])->toArray();
@@ -92,8 +93,8 @@ class HouseholdTest extends TestCase
     public function dataProvider(): array
     {
         return [
-            'community_id is empty'             =>  ['community_id',        ''],
-            'community_id does not exist'       =>  ['community_id',        99],
+            'settlement_id is empty'            =>  ['settlement_id',       ''],
+            'settlement_id does not exist'      =>  ['settlement_id',       99],
             'household_type_id'                 =>  ['household_type_id',   ''],
             'household_type_id does not exist'  =>  ['household_type_id',   99],
             'address is empty'                  =>  ['address',             ''],

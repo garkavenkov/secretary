@@ -41,6 +41,15 @@ class HouseholdHouseRequest extends FormRequest
             'living_area'           =>  'required|numeric|gt:0|lte:total_living_area',
             'room_count'            =>  'required|numeric|gte:0',
             'total_non_living_area' =>  'required|numeric|gte:0',
+            'water_supply'          =>  'nullable|boolean',
+            'hot_water_supply'      =>  'nullable|boolean',
+            'sewage'                =>  'nullable|boolean',
+            'central_heating'       =>  'nullable|boolean',
+            'individual_heating'    =>  'nullable|boolean',
+            'furnace_heating'       =>  'nullable|boolean',
+            'natural_gas'           =>  'nullable|boolean',
+            'liquefied_gas'         =>  'nullable|boolean',
+            'electric_stove'        =>  'nullable|boolean',
         ];
     }
 }

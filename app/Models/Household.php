@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Settlement;
+use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,15 +13,50 @@ class Household extends Model
     use HasFactory;
 
     protected $fillable = [
-        'community_id',
+        'settlement_id',
         'household_type_id',
         'address',
         'special_marks',
         'additional_data',
     ];
 
-    public function house()
+    protected static function boot()
+    {
+
+        parent::boot();
+
+        static::creating(function($model)
+        {
+            $settlement = Settlement::findOrFail($model->settlement_id);
+
+            $number = Household::where('settlement_id', $settlement->id)->max('number');
+            if (is_null($number)) {
+                $number = 1;
+            } else {
+                $number = $number + 1;
+            }
+
+            $model->number = $number;
+        });
+    }
+
+    public function houseYears()
     {
         return $this->hasMany(HouseholdHouse::class);
+    }
+
+    public function settlement()
+    {
+        return $this->belongsTo(Settlement::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(HouseholdType::class, 'household_type_id');
+    }
+
+    public function members()
+    {
+        return $this->hasMany(HouseholdMember::class);
     }
 }

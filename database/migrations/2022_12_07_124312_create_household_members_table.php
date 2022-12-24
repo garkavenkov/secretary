@@ -22,8 +22,8 @@ return new class extends Migration
             $table->enum('sex',['чоловіча','жіноча']);
             $table->date('birthday');
             $table->integer('family_relationship_id');
-            $table->string('employment_information');
-            $table->integer('place_work_id');
+            $table->string('employment_information')->nullable();
+            $table->integer('work_place_id')->nullable();
             $table->timestamps();
         });
     }

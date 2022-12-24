@@ -2,64 +2,41 @@
 
 import Checkbox from '../../components/ui/Chekbox.vue';
 import { Modal } from 'bootstrap'
+import TableRow from '../../components/ui/TableRow.vue';
+import FormValidator from '../../minixs/FormValidator';
 
 export default {
     name: 'HouseInfo',
+    props: {
+        'years': {
+            type: Array,
+            required: true
+        },
+        'household_id': {
+            type: [String, Number],
+            required: true
+        }
+    },
+    mixins: [FormValidator],
     data() {
         return {
-            years: [
-                {
-                    year: 2021,
-                    totalArea: 212,
-                    totalLivingArea: 180,
-                    livingArea: 150,
-                    roomCount: 4,
-                    totalNonLivingArea: 65,
-                    waterSupply: true,
-                    hotWaterSupply: false,
-                    sewage: false,
-                    centralHeating: false,
-                    individualHeating: true,
-                    furnaceHeating: true,
-                    naturalGas: true,
-                    liquefiedGas: false,
-                    electricStove: true,
-                },
-                {
-                    year: 2022,
-                    totalArea: 212,
-                    totalLivingArea: 180,
-                    livingArea: 150,
-                    roomCount: 4,
-                    totalNonLivingArea: 65,
-                    waterSupply: true,
-                    hotWaterSupply: false,
-                    sewage: true,
-                    centralHeating: false,
-                    individualHeating: true,
-                    furnaceHeating: true,
-                    naturalGas: true,
-                    liquefiedGas: true,
-                    electricStove: true,
-                },
-
-            ],
             formData: {
+                household_id: this.household_id,
                 year: new Date().getFullYear(),
-                totalArea: 0,
-                totalLivingArea: 0,
-                livingArea: 0,
-                roomCount: 0,
-                totalNonLivingArea: 0,
-                waterSupply: false,
-                hotWaterSupply: false,
+                total_area: 0,
+                total_living_area: 0,
+                living_area: 0,
+                room_count: 0,
+                total_non_living_area: 0,
+                water_supply: false,
+                hot_water_supply: false,
                 sewage: false,
-                centralHeating: false,
-                individualHeating: false,
-                furnaceHeating: false,
-                naturalGas: false,
-                liquefiedGas: false,
-                electricStove: false,
+                central_heating: false,
+                individual_heating: false,
+                furnace_heating: false,
+                natural_gas: false,
+                liquefied_gas: false,
+                electric_stove: false,
             },
             modalSubmitCaption: '',
             modalTitle: '',
@@ -69,23 +46,22 @@ export default {
     methods: {
         clearFormData() {
                 this.formData.year = new Date().getFullYear();
-                this.formData.totalArea = 0;
-                this.formData.totalLivingArea = 0;
-                this.formData.livingArea = 0;
-                this.formData.roomCount = 0;
-                this.formData.totalNonLivingArea = 0;
-                this.formData.waterSupply = false;
-                this.formData.hotWaterSupply = false;
+                this.formData.total_area = 0;
+                this.formData.total_living_area = 0;
+                this.formData.living_area = 0;
+                this.formData.room_count = 0;
+                this.formData.total_non_living_area = 0;
+                this.formData.water_supply = false;
+                this.formData.hot_water_supply = false;
                 this.formData.sewage = false;
-                this.formData.centralHeating = false;
-                this.formData.individualHeating = false;
-                this.formData.furnaceHeating = false;
-                this.formData.naturalGas = false;
-                this.formData.liquefiedGas = false;
-                this.formData.electricStove = false;
+                this.formData.central_heating = false;
+                this.formData.individual_heating = false;
+                this.formData.furnace_heating = false;
+                this.formData.natural_gas = false;
+                this.formData.liquefied_gas = false;
+                this.formData.electric_stove = false;
         },
         newYearData(e) {
-
             this.modalTitle = 'Додати дані';
             this.modalSubmitCaption = 'Додати';
             this.mode = 'create';
@@ -100,32 +76,58 @@ export default {
             myModal.show();
         },
         submitData() {
+
             if (this.mode == 'create') {
-                this.years.push(Object.assign({}, this.formData));
-                this.clearFormData();
+                axios.post('/api/v1/household-houses', this.formData)
+                    .then(res => {
+                        this.$store.dispatch('Households/fetchHousehold', this.household_id);
+                        this.clearFormData();
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors;
+                    })
             } else if (this.mode == 'update') {
-                let year = this.years.find(y => y.year == this.formData.year);
-                Object.assign(year, this.formData);
+                axios.patch(`/api/v1/household-houses/${this.formData.id}`, this.formData)
+                    .then(res => {
+                        this.$store.dispatch('Households/fetchHousehold', this.household_id);
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors;
+                    })
             }
         },
-        deleteYear(year) {
-            let index = this.years.findIndex(y => y.year === year);
-            if (index >= 0) {
-                this.years.splice(index, 1);
-            }
+        deleteYear(id) {
+            axios.delete(`/api/v1/household-houses/${id}`)
+                .then(res => {
+                    this.$store.dispatch('Households/fetchHousehold', this.household_id);
+                })
         },
-        editYear(year) {
-            let _year = this.years.find(y => y.year === year);
+        editYear(id) {
+            let _year = this.years.find(y => y.id == id)
             Object.assign(this.formData, _year);
             this.modalSubmitCaption = 'Зберегти';
-            this.modalTitle = `Редагувати дані за ${year} рік`;
+            this.modalTitle = `Редагувати дані за ${_year.year} рік`;
             this.mode = 'update';
             var myModal = new Modal(document.getElementById('HouseInfoModalForm'))
             myModal.show()
+        },
+        generateCell(field) {
+            let _html = `
+                    <td v-for="year in years" :key="(year.year+'-'+year['${field}'])" class="table-cell-bordered">
+                        <template v-if="year['${field}']">
+                            так
+                        </template>
+                        <template v-else>
+                            ні
+                        </template>
+                    </td>`;
+            console.log(_html);
+            return _html;
         }
     },
     components: {
-        Checkbox
+        Checkbox,
+        TableRow
     }
 }
 </script>
@@ -151,60 +153,63 @@ export default {
                             <th v-for="year in years" :key="year.year">
                                 {{year.year}}
                             </th>
-                            <!-- <th>2021</th>
-                            <th>2022</th> -->
                         </tr>
                     </thead>
                     <tbody class="table-group-divider">
-                        <tr>
+                        <TableRow :years="years" field="total_area" rowTitle="<b>Загальна площа житлового будинку/квартири, м<sup>2</sup></b>"></TableRow>
+                        <!-- <tr>
                             <td><b>Загальна площа житлового будинку/квартири, м<sup>2</sup></b></td>
                             <td v-for="year in years" :key="(year.year+'-'+year.totalArea)" class="table-cell-bordered">
                                 {{year.totalArea}}
                             </td>
-                            <!-- <td>212</td>
-                            <td>175</td> -->
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <!-- <tr>
                             <td>Загальна площа житлових приміщень, м<sup>2</sup></td>
-                            <!-- <td>212</td>
-                            <td>175</td> -->
                             <td v-for="year in years" :key="(year.year+'-'+year.totalLivingArea)" class="table-cell-bordered">
                                 {{year.totalLivingArea}}
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="total_living_area" rowTitle="Загальна площа житлових приміщень, м<sup>2</sup>"></TableRow>
+                        <!-- <tr>
                             <td class="ps-5">з неї житлова площа, м<sup>2</sup></td>
-                            <!-- <td>165</td>
-                            <td>165</td> -->
                             <td v-for="year in years" :key="(year.year+'-'+year.livingArea)" class="table-cell-bordered">
                                 {{year.livingArea}}
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="living_area" rowTitle="з неї житлова площа, м<sup>2</sup>" rowTitleClass="ps-5"></TableRow>
+                        <!-- <tr>
                             <td>Кількість житлових кімнат</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.roomCount)" class="table-cell-bordered">
                                 {{year.roomCount}}
                             </td>
-                            <!-- <td>4</td>
-                            <td>4</td> -->
-                        </tr>
+                        </tr> -->
+                        <TableRow :years="years" field="room_count" rowTitle="Кількість житлових кімнат"></TableRow>
                         <tr>
                             <td :colspan="(years.length+1)"><b>Наявність</b><i>(проставляється "так" або "ні")</i></td>
                         </tr>
-                        <tr>
-                            <td class="ps-5">водопроводу</td>
-                            <td v-for="year in years" :key="(year.year+'-'+year.waterSupply)" class="table-cell-bordered">
-                                <template v-if="year.waterSupply">
+                        <!-- <tr>
+                            <td class="ps-5">водопроводу</td> -->
+                            <!-- <template v-html="generateCell('waterSupply')"></template> -->
+
+                            <!-- {{ generateCell('waterSupply') }} -->
+                            <!-- <td v-for="year in years" :key="(year.year+'-'+year['waterSupply'])" class="table-cell-bordered">
+                                <template v-if="year['waterSupply']">
                                     так
                                 </template>
                                 <template v-else>
                                     ні
                                 </template>
-                            </td>
-                            <!-- <td>так</td>
-                            <td>так</td> -->
-                        </tr>
-                        <tr>
+                            </td> -->
+                        <!-- </tr> -->
+                        <TableRow :years="years" field="water_supply" rowTitle="водопроводу" rowTitleClass="ps-5" :fieldValue="true">
+                            <!-- <template v-if="year['waterSupply']">
+                                так
+                            </template>
+                            <template v-else>
+                                ні
+                            </template> -->
+                        </TableRow>
+                        <!-- <tr>
                             <td class="ps-5">горячого водопостачання</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.hotWaterSupply)" class="table-cell-bordered">
                                 <template v-if="year.hotWaterSupply">
@@ -214,8 +219,9 @@ export default {
                                     ні
                                 </template>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="hot_water_supply" rowTitle="горячого водопостачання" rowTitleClass="ps-5" :fieldValue="true"></TableRow>
+                        <!-- <tr>
                             <td class="ps-5">каналізації</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.sewage)" class="table-cell-bordered">
                                 <template v-if="year.sewage">
@@ -225,8 +231,9 @@ export default {
                                     ні
                                 </template>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="sewage" rowTitle="каналізації" rowTitleClass="ps-5" :fieldValue="true"></TableRow>
+                        <!-- <tr>
                             <td class="ps-5">опалення центрального</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.centralHeating)" class="table-cell-bordered">
                                 <template v-if="year.centralHeating">
@@ -236,8 +243,9 @@ export default {
                                     ні
                                 </template>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="central_heating" rowTitle="опалення центрального" rowTitleClass="ps-5" :fieldValue="true"></TableRow>
+                        <!-- <tr>
                             <td class="ps-5">опалення від індивідуальних установок</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.individualHeating)" class="table-cell-bordered">
                                 <template v-if="year.individualHeating">
@@ -247,8 +255,9 @@ export default {
                                     ні
                                 </template>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="individual_heating" rowTitle="опалення від індивідуальних установок" rowTitleClass="ps-5" :fieldValue="true"></TableRow>
+                        <!-- <tr>
                             <td class="ps-5">пічного опалення</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.furnaceHeating)" class="table-cell-bordered">
                                 <template v-if="year.furnaceHeating">
@@ -258,8 +267,9 @@ export default {
                                     ні
                                 </template>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="furnace_heating" rowTitle="пічного опалення" rowTitleClass="ps-5" :fieldValue="true"></TableRow>
+                        <!-- <tr>
                             <td class="ps-5">природного газу</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.naturalGas)" class="table-cell-bordered">
                                 <template v-if="year.naturalGas">
@@ -269,8 +279,9 @@ export default {
                                     ні
                                 </template>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="natural_gas" rowTitle="природного газу" rowTitleClass="ps-5" :fieldValue="true"></TableRow>
+                        <!-- <tr>
                             <td class="ps-5">скрапленого опалення</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.liquefiedGas)" class="table-cell-bordered">
                                 <template v-if="year.liquefiedGas">
@@ -280,8 +291,9 @@ export default {
                                     ні
                                 </template>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="liquefied_gas" rowTitle="скрапленого опалення" rowTitleClass="ps-5" :fieldValue="true"></TableRow>
+                        <!-- <tr>
                             <td class="ps-5">підлогової електричної плити</td>
                             <td v-for="year in years" :key="(year.year+'-'+year.electricStove)" class="table-cell-bordered">
                                 <template v-if="year.electricStove">
@@ -291,21 +303,27 @@ export default {
                                     ні
                                 </template>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <TableRow :years="years" field="electric_stove" rowTitle="підлогової електричної плити" rowTitleClass="ps-5" :fieldValue="true"></TableRow>
+                        <!-- <tr>
                             <td><b>Загальна площа нежитлових будівель, м<sup>2</sup></b></td>
                             <td v-for="year in years" :key="(year.year+'-'+year.totalNonLivingArea)" class="table-cell-bordered">
                                 {{year.totalNonLivingArea}}
                             </td>
-                        </tr>
+                        </tr> -->
+                        <TableRow :years="years" field="total_non_living_area" rowTitle="<b>Загальна площа нежитлових будівель, м<sup>2</sup></b>"></TableRow>
                     </tbody>
                     <tfoot>
                         <tr>
                             <td></td>
                             <td v-for="year in years" :key="(year.year+'-'+'buttons')">
                                 <div  class="d-flex justify-content-around">
-                                    <button class="btn btn-sm btn-outline-danger" @click="deleteYear(year.year)">dlt</button>
-                                    <button class="btn btn-sm btn-outline-warning" @click="editYear(year.year)">edt</button>
+                                    <button class="btn btn-sm btn-outline-danger" @click="deleteYear(year.id)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-warning" @click="editYear(year.id)">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -358,38 +376,44 @@ export default {
                 <div class="modal-body">
                     <div class="mb-1 row">
                         <label for="year" class="col-sm-9 col-form-label">Рік</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="year" v-model="formData.year">
+                        <div :class="['col-sm-3', hasError('year') ? 'is-invalid' : '']">
+                            <input  type="text"
+                                    :class="['form-control', hasError('year') ? 'is-invalid' : '']"
+                                    id="year"
+                                    v-model="formData.year">
+                        </div>
+                        <div id="yearValidation" class="invalid-feedback">
+                            {{ getError('year') }}
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="totalArea" class="col-sm-9 col-form-label">Загальна площа житлового будинку/квартири, м<sup>2</sup></label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="totalArea" v-model="formData.totalArea">
+                            <input type="text" class="form-control" id="totalArea" v-model="formData.total_area">
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="totalLivingArea" class="col-sm-9 col-form-label">Загальна площа житлових приміщень, м<sup>2</sup></label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="totalLivingArea" v-model="formData.totalLivingArea">
+                            <input type="text" class="form-control" id="totalLivingArea" v-model="formData.total_living_area">
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="livingArea" class="col-sm-9 col-form-label">з неї житлова площа, м<sup>2</sup></label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="livingArea" v-model="formData.livingArea">
+                            <input type="text" class="form-control" id="livingArea" v-model="formData.living_area">
                         </div>
                     </div>
                     <div class="mb-1 row">
                         <label for="roomCount" class="col-sm-9 col-form-label">Кількість житлових кімнат</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="roomCount" v-model="formData.roomCount">
+                            <input type="text" class="form-control" id="roomCount" v-model="formData.room_count">
                         </div>
                     </div>
                     <div class="mb-2 row">
                         <label for="totalNonLivingArea" class="col-sm-9 col-form-label">Загальна площа нежитлових будівель, м<sup>2</sup></label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="totalNonLivingArea" v-model="formData.totalNonLivingArea">
+                            <input type="text" class="form-control" id="totalNonLivingArea" v-model="formData.total_non_living_area">
                         </div>
                     </div>
                     <!-- <div class="row align-items-center">
@@ -484,19 +508,19 @@ export default {
                     </div> -->
                     <div class="p-2">
                         <div class="d-flex justify-content-between mb-3">
-                            <Checkbox v-model="formData.waterSupply" id="waterSupply" image="/img/water-supply.png" title="Наявність водопроводу" />
-                            <Checkbox v-model="formData.hotWaterSupply" id="hotWaterSupply" image="/img/hot-water.png" title="Наявність гарячого водопостачання" />
+                            <Checkbox v-model="formData.water_supply" id="waterSupply" image="/img/water-supply.png" title="Наявність водопроводу" />
+                            <Checkbox v-model="formData.hot_water_supply" id="hotWaterSupply" image="/img/hot-water.png" title="Наявність гарячого водопостачання" />
                             <Checkbox v-model="formData.sewage" id="hotWaterSupply" image="/img/sewage.png" title="Наявність каналізації" />
                         </div>
                         <div class="d-flex justify-content-between mb-3">
-                            <Checkbox v-model="formData.centralHeating" id="centralHeating" image="/img/central-heating.png" title="Наявність центрального опалення" />
-                            <Checkbox v-model="formData.individualHeating" id="individualHeating" image="/img/individual-heating.png" title="Наявність опалення від індивідуальних установок" />
-                            <Checkbox v-model="formData.furnaceHeating" id="furnaceHeating" image="/img/furnace-heating.png" title="Наявність пічного опалення" />
+                            <Checkbox v-model="formData.central_heating" id="centralHeating" image="/img/central-heating.png" title="Наявність центрального опалення" />
+                            <Checkbox v-model="formData.individual_heating" id="individualHeating" image="/img/individual-heating.png" title="Наявність опалення від індивідуальних установок" />
+                            <Checkbox v-model="formData.furnace_heating" id="furnaceHeating" image="/img/furnace-heating.png" title="Наявність пічного опалення" />
                         </div>
                         <div class="d-flex justify-content-between">
-                            <Checkbox v-model="formData.naturalGas" id="naturalGas" image="/img/natural-gas.png" title="Наявність природного газу" />
-                            <Checkbox v-model="formData.liquefiedGas" id="liquefiedGas" image="/img/liquefied-gas.png" title="Наявність скрапленого газу" />
-                            <Checkbox v-model="formData.electricStove" id="electricStove" image="/img/electric-stove.png" title="Наявність підлоговоії електричної плити" />
+                            <Checkbox v-model="formData.natural_gas" id="naturalGas" image="/img/natural-gas.png" title="Наявність природного газу" />
+                            <Checkbox v-model="formData.liquefied_gas" id="liquefiedGas" image="/img/liquefied-gas.png" title="Наявність скрапленого газу" />
+                            <Checkbox v-model="formData.electric_stove" id="electricStove" image="/img/electric-stove.png" title="Наявність підлоговоії електричної плити" />
                         </div>
                     </div>
 
@@ -513,11 +537,6 @@ export default {
 <style scoped>
 .table tr td:not(:first-child),
 .table tr th:not(:first-child) {
-
     text-align: center;
-}
-td.table-cell-bordered {
-    border-left: 1px solid #dee2e6;
-    border-right: 1px solid #dee2e6;
 }
 </style>

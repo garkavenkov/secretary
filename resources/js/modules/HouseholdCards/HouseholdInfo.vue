@@ -2,6 +2,12 @@
 
 export default {
     name: 'HouseholdInfo',
+    props: {
+        'info': {
+            type: Object,
+            required: false
+        }
+    },
     data() {
         return {}
     }
@@ -10,28 +16,31 @@ export default {
 </script>
 
 <template>
-    <div class="pt-4">
-        <!-- <div class="row"> -->
-            <div class="col">
-                <div>Тип</div>
-                <div>
-                    Домогосподарство <b>з реєстрацією місця проживання</b>
-                </div>
+    <div class="p-4">
+        <div class="mb-3">
+            <div class="fw-bold">Тип</div>
+            <div v-show="info.type">
+                {{ info.type}}
             </div>
-            <div class="col">
-                <div>Адреса</div>
-                <div>
-                    46164, Сумська область, Конотопский район, с.Шаповалівка, вул. Набережна, б.57
-                </div>
+        </div>
+        <div class="mb-3">
+            <div class="fw-bold">Адреса</div>
+            <div v-show="info.address">
+                {{ info.address }}
             </div>
-            <div class="col">
-                <div>Власник(и)</div>
-                <div>Гаркавенков Валентин Юрійович</div>
+        </div>
+        <div class="mb-3">
+            <div>
+                <span class="fw-bold">Власник(и)</span>
+                <button class="btn btn-sm btn-outline-secondary ms-3">
+                    <i class="bi bi-plus"></i>
+                </button>
             </div>
-            <div class="col">
-                <div>Голова домогосподарства</div>
-                <div>Гаркавенков Юрій Григорович</div>
-            </div>
-        <!-- </div> -->
+            <div>Гаркавенков Валентин Юрійович</div>
+        </div>
+        <div class="mb-3">
+            <div class="fw-bold">Голова домогосподарства</div>
+            <div>Гаркавенков Юрій Григорович</div>
+        </div>
     </div>
 </template>

@@ -6,6 +6,7 @@
                 <router-link to="/regions">Регіони</router-link>
                 <router-link to="/districts">Райони</router-link>
                 <router-link to="/communities">Громади</router-link>
+                <router-link to="/settlements">Населені пункти</router-link>
                 <router-link to="/family-relationships">Родинні відносини</router-link>
                 <router-link to="/household-types">Типи погосподарського обліку</router-link>
                 <router-link to="/work-places">Коди місця роботи (заняття)</router-link>
@@ -32,6 +33,13 @@ import { mapActions } from 'vuex'
             this.$store.dispatch('FamilyRelationships/fetchData');
             this.$store.dispatch('HouseholdTypes/fetchData');
             this.$store.dispatch('WorkPlaces/fetchData');
+            this.$store.dispatch('Settlements/fetchData');
         }
     }
 </script>
+
+<style lang="scss" scoped>
+a {
+    padding-right: 0.5rem;
+}
+</style>

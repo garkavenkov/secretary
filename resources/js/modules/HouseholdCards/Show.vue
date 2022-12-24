@@ -1,0 +1,107 @@
+<script>
+
+import HouseholdMembers from './HouseholdMembers.vue';
+import HouseInfo        from './HouseInfo.vue';
+import LandInfo         from './LandInfo.vue';
+import HouseholdInfo    from './HouseholdInfo.vue';
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+    name: 'ShowCard',
+    components: {
+        HouseholdMembers,
+        HouseInfo,
+        LandInfo,
+        HouseholdInfo,
+    },
+    props: {
+        'id': {
+            type: [String, Number],
+            required: true
+        }
+    },
+    data() {
+        return {
+            currentTab: 'HouseholdInfo',
+            // householdCard: {}
+        }
+    },
+    methods: {
+        ...mapActions('Households', ['fetchHousehold']),
+        // fetchHouseholdCard() {
+        //     axios.get(`/api/v1/households/${this.id}`)
+        //         .then(res => {
+        //             this.householdCard = res.data.data;
+        //         })
+        // }
+    },
+    computed: {
+        componentProps() {
+            if (this.currentTab == 'HouseholdInfo') {
+                if (this.household.info) {
+                    return {
+                        info: {
+                            type: this.household.info.household_type.name,
+                            address: this.household.info.address
+                        }
+                    }
+                }
+            } else if (this.currentTab == 'HouseholdMembers') {
+                return {
+                    members: this.household.members,
+                    household_id: this.id
+                }
+            } else if (this.currentTab == 'HouseInfo') {
+                return {
+                    years: this.household.houseYears,
+                    household_id: this.id
+                }
+            }
+        },
+        ...mapGetters('Households', ['household'])
+    },
+    created() {
+        this.fetchHousehold(this.id);
+    }
+}
+</script>
+
+<template>
+    <div class="d-flex px-5 pt-3 justify-content-between">
+        <h3>Облікова картка об'єкта погосподарського обліку <span>{{ household.number }}</span></h3>
+        <router-link :to="{name: 'HouseholdCards'}">Назад</router-link>
+        <!-- <router-link to="/household-cards">Назад</router-link> -->
+    </div>
+    <div class="px-5">
+        <ul class="nav nav-tabs px-3">
+            <li class="nav-item">
+                <a class="nav-link" :class="{'active': currentTab == 'HouseholdInfo'}" aria-current="page" @click="currentTab='HouseholdInfo'">
+                    <i class="bi bi-info-circle"></i>
+                    Основна інформація
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{'active': currentTab == 'HouseholdMembers'}" aria-current="page" @click="currentTab='HouseholdMembers'">
+                    <i class="bi bi-people-fill"></i>
+                    Члени домогосподарства
+                </a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" :class="{'active': currentTab == 'HouseInfo'}" @click="currentTab='HouseInfo'">
+                    <i class="bi bi-house-gear-fill"></i>
+                    Будинок / Квартира
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" :class="{'active': currentTab == 'LandInfo'}" @click="currentTab='LandInfo'">
+                    <i class="bi bi-globe"></i>
+                    Земля
+                </a>
+            </li>
+        </ul>
+        <KeepAlive>
+            <component :is="currentTab" v-bind="componentProps"></component>
+        </KeepAlive>
+    </div>
+
+</template>

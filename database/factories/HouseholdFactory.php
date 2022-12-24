@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Community;
 use App\Models\HouseholdType;
+use App\Models\Settlement;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +19,7 @@ class HouseholdFactory extends Factory
     public function definition()
     {
         return [
-            'community_id'      =>  Community::factory(),
+            'settlement_id'     =>  Settlement::factory(),
             'household_type_id' =>  HouseholdType::factory(),
             'address'           =>  $this->faker->address(),
             'special_marks'     =>  $this->faker->sentence(5),

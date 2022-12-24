@@ -5,6 +5,9 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Models\Household;
 use App\Models\HouseholdHouse;
+use App\Models\HouseholdMember;
+use App\Models\HouseholdType;
+use App\Models\Settlement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class HouseholdTest extends TestCase
@@ -17,6 +20,32 @@ class HouseholdTest extends TestCase
 
         HouseholdHouse::factory()->count(3)->create(['household_id' => $household->id]);
 
-        $this->assertCount(3, $household->house);
+        $this->assertCount(3, $household->houseYears);
     }
+
+    public function test_household_must_have_settlement()
+    {
+        $settlement = Settlement::factory()->create(['name' => 'Шаповалівка']);
+        $household = Household::factory()->create(['settlement_id' => $settlement->id]);
+
+        $this->assertEquals($household->settlement->name, $settlement->name);
+    }
+
+    public function test_household_must_have_type()
+    {
+        $type = HouseholdType::factory()->create(['name' => 'Тип 1']);
+        $household = Household::factory()->create(['household_type_id' => $type->id]);
+
+        $this->assertEquals($household->type->name, $type->name);
+    }
+
+    public function test_household_may_have_memebers()
+    {
+        $household = Household::factory()->create();
+
+        HouseholdMember::factory()->count(3)->create(['household_id' => $household->id]);
+
+        $this->assertCount(3, $household->members);
+    }
+
 }

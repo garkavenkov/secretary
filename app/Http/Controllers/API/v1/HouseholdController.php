@@ -18,7 +18,7 @@ class HouseholdController extends Controller
      */
     public function index()
     {
-        $households = Household::all();
+        $households = Household::with('settlement')->get();
 
         return new HouseholdResourceCollection($households);
     }
@@ -31,7 +31,8 @@ class HouseholdController extends Controller
      */
     public function store(HouseholdRequest $request)
     {
-        $household = Household::create($request->all());
+        // dd($request->validated());
+        $household = Household::create($request->validated());
 
         if ($household) {
             return response()->json(['message' => 'Облікова картка успішно додана'], 201);
@@ -46,7 +47,7 @@ class HouseholdController extends Controller
      */
     public function show($id)
     {
-        $household = Household::findOrFail($id);
+        $household = Household::with('settlement', 'type', 'members.familyRelationship', 'members.workPlace', 'houseYears')->findOrFail($id);
 
         return new HouseholdResource($household);
     }
@@ -62,7 +63,7 @@ class HouseholdController extends Controller
     {
         $household = Household::findOrFail($id);
 
-        $household->update($request->all());
+        $household->update($request->validated());
 
         if ($household->save()) {
             return response()->json(['message' => 'Облікова картка була успішно змінена']);

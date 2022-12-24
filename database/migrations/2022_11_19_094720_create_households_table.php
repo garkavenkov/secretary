@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('households', function (Blueprint $table) {
             $table->id();
-            $table->integer('community_id');
+            $table->integer('settlement_id');
             $table->integer('household_type_id');
             $table->string('address');
-            $table->string('special_marks');
-            $table->string('additional_data');
+            $table->integer('number');
+            $table->string('special_marks')->nullable();
+            $table->string('additional_data')->nullable();
             $table->timestamps();
         });
     }

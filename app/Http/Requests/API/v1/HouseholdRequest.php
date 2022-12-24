@@ -24,11 +24,31 @@ class HouseholdRequest extends FormRequest
     public function rules()
     {
         return [
-            'community_id'      =>  'required|exists:communities,id',
+            'settlement_id'     =>  'required|exists:settlements,id',
             'household_type_id' =>  'required|exists:household_types,id',
             'address'           =>  'required|min:3',
             'special_marks'     =>  'nullable|min:3',
             'additional_data'   =>  'nullable|min:3'
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'address.required'              => 'Ви не указали адрес',
+            'address.min'                   => 'Укажіть не менше ніж :min символа',
+            'special_marks.min'             => 'Укажіть  не менше ніж :min символа',
+            'additional_data.min'           => 'Укажіть не менше ніж :min символа',
+            'settlement_id.required'        => 'Ви не указали населений пункт',
+            'settlement_id.exists'          => 'Населений пункт не існує в довіднику або не обран',
+            'household_type_id.required'    => 'Ви не указали тип об\'єкта',
+            'household_type_id.exists'      => 'Тип об\'єкта не існує в довіднику або не обран',
+
         ];
     }
 }
