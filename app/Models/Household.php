@@ -59,4 +59,39 @@ class Household extends Model
     {
         return $this->hasMany(HouseholdMember::class);
     }
+
+    public function paramCategory()
+    {
+        // dd(get_class($this));
+        $category = AdditionalParamCategory::where('code', 'household')->first();
+        return $category ?? null;
+    }
+
+    public function params()
+    {
+        $category = AdditionalParamCategory::where('code', get_class($this))->first();
+
+        return $category->params();
+    }
+
+    public function owners()
+    {
+        $category = AdditionalParamCategory::where('code', get_class($this))->first();
+        $param = AdditionalParam::where('code', 'owner')->where('category_id', $category->id)->first();
+        $owners = AdditionalParamValue::where('owner_id', $this->id)->where('param_id', $param->id)->get();
+
+        $owners = $owners->map(function($owner) {
+            $parts = explode('|', $owner->value);
+            $data = [];
+            $data['id'] = $owner->id;
+            if (count($parts) > 1) {
+                $data['name'] = $parts[0];
+                $data['address'] = $parts[1];
+            } else {
+                $data['name'] = $owner->value;
+            }
+            return $data;
+        });
+        return $owners;
+    }
 }

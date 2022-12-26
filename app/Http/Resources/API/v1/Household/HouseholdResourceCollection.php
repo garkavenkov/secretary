@@ -30,8 +30,8 @@ class HouseholdResourceCollection extends ResourceCollection
                                             . '-'
                                             . $household->household_type_id,
                 'address'               =>  $household->address,
-                'special_marks'         =>  $household->special_marks,
-                'additional_data'       =>  $household->additional_data
+                // 'special_marks'         =>  $household->special_marks,
+                // 'additional_data'       =>  $household->additional_data
             ];
         });
     }

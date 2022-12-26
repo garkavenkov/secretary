@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Models\AdditionalParam;
+use App\Models\AdditionalParamCategory;
 use Tests\TestCase;
 use App\Models\Household;
 use App\Models\HouseholdHouse;
@@ -48,4 +50,12 @@ class HouseholdTest extends TestCase
         $this->assertCount(3, $household->members);
     }
 
+    public function test_household_may_have_additional_params()
+    {
+        $household = Household::factory()->create();
+        $category = AdditionalParamCategory::factory()->create(['code' => 'category']);
+        $param = AdditionalParam::factory()->create(['category_id' => $category->id, 'code' => 'param']);
+
+        $this->assertArrayHasKey($household->params, $param->code);
+    }
 }

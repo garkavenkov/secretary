@@ -34,6 +34,8 @@ class DatabaseSeeder extends Seeder
             CommunitySeeder::class,
             CouncilSeeder::class,
             SettlementSeeder::class,
+            AdditionalParamCategorySeeder::class,
+            AdditionalParamSeeder::class,
         ]);
 
     }

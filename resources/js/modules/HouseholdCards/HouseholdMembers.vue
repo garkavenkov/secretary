@@ -97,109 +97,108 @@ export default {
 </script>
 
 <template>
-
-    <div class="p-3 d-flex justify-content-between">
-        <div>
-            <button type="button" class="btn btn-sm btn-primary" @click="newMember($event)">
-                <i class="bi bi-plus"></i>
-                новий член
-            </button>
-        </div>
-        <div>
-            <button type="button"
-                    title="Режим карток"
-                    class="btn btn-sm btn-outline-secondary me-2"
-                    :class="{'active' : viewMode == 'card'}"
-                    @click="viewMode = 'card'">
-                <i class="bi bi-person-vcard"></i>
-            </button>
-            <button type="button"
-                    title="Режим таблиці"
-                    class="btn btn-sm btn-outline-secondary"
-                    :class="{'active' : viewMode == 'table'}"
-                    @click="viewMode = 'table'">
-                <i class="bi bi-table"></i>
-            </button>
-        </div>
-    </div>
-    <div class="px-3 d-flex gap-3">
-        <template v-if="viewMode == 'card'">
-            <div class="card member" v-for="member in members" :key="member.id" @dblclick="showHouseholdMember(member.id)">
-                <div class="card-header d-flex justify-content-between">
-                    <div>
-                        <div class="member-surname">{{member.surname}}</div>
-                        <div class="member-name">{{member.name}} {{member.patronymic}}</div>
-                    </div>
-                    <h4 class="mt-2" v-if="member.family_relationship == 'голова домогосподарства'">
-                        <i class="bi bi-person-bounding-box" title="Голова домогосподарства"></i>
-                    </h4>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex mb-2 align-items-center family-relationship">
-                        <i class="bi bi-diagram-3 me-3" style="color:blue" title="Родинні стосунку"></i>
-                        {{member.family_relationship}}
-                    </div>
-                    <div class="d-flex mb-2 align-items-center">
-                        <i class="bi bi-gift me-3" style="color:red" title="Дата народження"></i>
-                        {{formatedDate(member.birthday)}}
-                    </div>
-                    <div class="member-sex">
-                        <span v-if="member.sex=='чоловіча'" title="чоловік">
-                            &#9794;
-                        </span>
-                        <span v-else title="жінка">
-                            &#9792;
-                        </span>
-                    </div>
-                </div>
-                <div class="card-footer d-flex justify-content-center">
-                    <button class="btn btn-sm btn-outline-secondary" @click="showHouseholdMember(member.id)">
-                        <i class="bi bi-eye"></i>
-                    </button>
-                </div>
+    <div>
+        <div class="p-3 d-flex justify-content-between">
+            <div>
+                <button type="button" class="btn btn-sm btn-primary" @click="newMember($event)">
+                    <i class="bi bi-person-add"></i>
+                    новий член
+                </button>
             </div>
-        </template>
-        <template v-else>
-            <table class="table table-sm table-bordered">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Прізвище</th>
-                        <th>Ім'я</th>
-                        <th>По батькові</th>
-                        <th>Дата народження</th>
-                        <th>Стать</th>
-                        <th>Родинні стосунки</th>
-                        <th>Місце роботи</th>
-                        <th>Відомості про зайнятість / незайнятість</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="member in members" :key="member.id" :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary"
-                                    @click="showHouseholdMember(member.id)">
-                                <i class="bi bi-eye"></i>
-                            </button>
-                        </td>
-                        <td>{{member.surname}}</td>
-                        <td>{{member.name}}</td>
-                        <td>{{member.patronymic}}</td>
-                        <td>{{formatedDate(member.birthday)}}</td>
-                        <td>{{member.sex}}</td>
-                        <td>{{member.family_relationship}}</td>
-                        <td>
-                            <template v-if="member.work_place">
-                                {{member.work_place.name}}
-                            </template>
-                        </td>
-                        <td>{{member.employment_information}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </template>
-
-
+            <div>
+                <button type="button"
+                        title="Режим карток"
+                        class="btn btn-sm btn-outline-secondary me-2"
+                        :class="{'active' : viewMode == 'card'}"
+                        @click="viewMode = 'card'">
+                    <i class="bi bi-person-vcard"></i>
+                </button>
+                <button type="button"
+                        title="Режим таблиці"
+                        class="btn btn-sm btn-outline-secondary"
+                        :class="{'active' : viewMode == 'table'}"
+                        @click="viewMode = 'table'">
+                    <i class="bi bi-table"></i>
+                </button>
+            </div>
+        </div>
+        <div class="px-3 d-flex gap-3">
+            <template v-if="viewMode == 'card'">
+                <div class="card member" v-for="member in members" :key="member.id" @dblclick="showHouseholdMember(member.id)">
+                    <div class="card-header d-flex justify-content-between">
+                        <div>
+                            <div class="member-surname">{{member.surname}}</div>
+                            <div class="member-name">{{member.name}} {{member.patronymic}}</div>
+                        </div>
+                        <h4 class="mt-2" v-if="member.family_relationship == 'голова домогосподарства'">
+                            <i class="bi bi-person-bounding-box" title="Голова домогосподарства"></i>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-2 align-items-center family-relationship">
+                            <i class="bi bi-diagram-3 me-3" style="color:blue" title="Родинні відносини"></i>
+                            {{member.family_relationship}}
+                        </div>
+                        <div class="d-flex mb-2 align-items-center">
+                            <i class="bi bi-gift me-3" style="color:red" title="Дата народження"></i>
+                            {{formatedDate(member.birthday)}}
+                        </div>
+                        <!-- <div class="member-sex">
+                            <span v-if="member.sex=='чоловіча'" title="чоловік">
+                                &#9794;
+                            </span>
+                            <span v-else title="жінка">
+                                &#9792;
+                            </span>
+                        </div> -->
+                    </div>
+                    <div class="card-footer d-flex justify-content-center">
+                        <button class="btn btn-sm btn-outline-secondary" @click="showHouseholdMember(member.id)">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+                </div>
+            </template>
+            <template v-else>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Прізвище</th>
+                            <th>Ім'я</th>
+                            <th>По батькові</th>
+                            <th>Дата народження</th>
+                            <th>Стать</th>
+                            <th>Родинні стосунки</th>
+                            <th>Місце роботи</th>
+                            <th>Відомості про зайнятість / незайнятість</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="member in members" :key="member.id" :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
+                            <td>
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        @click="showHouseholdMember(member.id)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </td>
+                            <td>{{member.surname}}</td>
+                            <td>{{member.name}}</td>
+                            <td>{{member.patronymic}}</td>
+                            <td>{{formatedDate(member.birthday)}}</td>
+                            <td>{{member.sex}}</td>
+                            <td>{{member.family_relationship}}</td>
+                            <td>
+                                <template v-if="member.work_place">
+                                    {{member.work_place.name}}
+                                </template>
+                            </td>
+                            <td>{{member.employment_information}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </template>
+        </div>
     </div>
     <!-- <div class="pt-4">
         <table class="table table-bordered table-sm">

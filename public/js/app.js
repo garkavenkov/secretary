@@ -21601,6 +21601,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdInfo',
   props: {
@@ -21610,7 +21612,35 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
-    return {};
+    return {
+      formData: {
+        ownerName: '',
+        ownerAddress: ''
+      },
+      modalTitle: '',
+      modalSubmitCaption: ''
+    };
+  },
+  methods: {
+    newOwner: function newOwner(e) {
+      var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('HouseholdOwnerModalForm'));
+      this.modalTitle = 'Додати власника домогосподарства';
+      this.modalSubmitCaption = 'Додати';
+      myModal.show();
+    },
+    clearFormData: function clearFormData() {
+      this.formData.ownerName = '';
+      this.formData.ownerAddress = '';
+    },
+    submitData: function submitData() {
+      var data = {
+        // owner_id: household_id,
+        value: "".concat(this.formData.ownerName, "|").concat(this.formData.ownerAddress)
+      };
+      axios.post("/api/v1/add-household-owner", data).then(function (res) {
+        console.log(res);
+      });
+    }
   }
 });
 
@@ -21959,10 +21989,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       if (this.currentTab == 'HouseholdInfo') {
         if (this.household.info) {
           return {
-            info: {
-              type: this.household.info.household_type.name,
-              address: this.household.info.address
-            }
+            // info: {
+            //     type: this.household.info.household_type.name,
+            //     address: this.household.info.address,
+            //     owners: this.household.info.owners
+            // }
+            info: _objectSpread({}, this.household.info)
           };
         }
       } else if (this.currentTab == 'HouseholdMembers') {
@@ -23028,14 +23060,138 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "fw-bold"
 }, "Тип", -1 /* HOISTED */);
 var _hoisted_4 = {
+  key: 0
+};
+var _hoisted_5 = {
   "class": "mb-3"
 };
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "fw-bold"
 }, "Адреса", -1 /* HOISTED */);
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"mb-3\"><div><span class=\"fw-bold\">Власник(и)</span><button class=\"btn btn-sm btn-outline-secondary ms-3\"><i class=\"bi bi-plus\"></i></button></div><div>Гаркавенков Валентин Юрійович</div></div><div class=\"mb-3\"><div class=\"fw-bold\">Голова домогосподарства</div><div>Гаркавенков Юрій Григорович</div></div>", 2);
+var _hoisted_7 = {
+  key: 0
+};
+var _hoisted_8 = {
+  "class": "mb-3"
+};
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "fw-bold"
+}, "Власник(и)", -1 /* HOISTED */);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-plus"
+}, null, -1 /* HOISTED */);
+var _hoisted_11 = [_hoisted_10];
+var _hoisted_12 = {
+  "class": "owners-wrapper"
+};
+var _hoisted_13 = {
+  "class": "mb-3"
+};
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "fw-bold"
+}, "Голова домогосподарства", -1 /* HOISTED */);
+var _hoisted_15 = {
+  "class": "modal fade",
+  id: "HouseholdOwnerModalForm",
+  tabindex: "-1",
+  "aria-labelledby": "staticBackdropLabel",
+  "aria-hidden": "true"
+};
+var _hoisted_16 = {
+  "class": "modal-dialog"
+};
+var _hoisted_17 = {
+  "class": "modal-content"
+};
+var _hoisted_18 = {
+  "class": "modal-header"
+};
+var _hoisted_19 = ["innerHTML"];
+var _hoisted_20 = {
+  "class": "modal-body"
+};
+var _hoisted_21 = {
+  "class": "row mb-3"
+};
+var _hoisted_22 = {
+  "class": "col"
+};
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "ownerName",
+  "class": "form-label"
+}, "Прізвище І.Б.", -1 /* HOISTED */);
+var _hoisted_24 = {
+  "class": "row mb-3"
+};
+var _hoisted_25 = {
+  "class": "col"
+};
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "memberName",
+  "class": "form-label"
+}, "Адреса", -1 /* HOISTED */);
+var _hoisted_27 = {
+  "class": "modal-footer"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.info.type), 513 /* TEXT, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.info.type]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.info.address), 513 /* TEXT, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.info.address]])]), _hoisted_6]);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, $props.info.household_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.info.household_type.name), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, $props.info.address ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.info.address), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-sm btn-outline-secondary ms-3",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.newOwner && $options.newOwner.apply($options, arguments);
+    })
+  }, _hoisted_11)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [$props.info.owners && $props.info.owners.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.info.owners, function (owner) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      "class": "owner",
+      key: owner.id
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(owner.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(owner.address), 1 /* TEXT */)]);
+  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 1
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Інформація відсутня ")], 64 /* STABLE_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$props.info.household_head ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.info.household_head), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 1
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Інформація відсутня ")], 64 /* STABLE_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+    "class": "modal-title fs-5",
+    id: "staticBackdropLabel",
+    innerHTML: $data.modalTitle
+  }, null, 8 /* PROPS */, _hoisted_19), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "btn-close",
+    "data-bs-dismiss": "modal",
+    "aria-label": "Close",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.clearFormData && $options.clearFormData.apply($options, arguments);
+    })
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    id: "ownerName",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.formData.ownerName = $event;
+    })
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.ownerName]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                {{ getError('surname') }}\n                            </div> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "form-control",
+    id: "ownerAddress",
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.formData.ownerAddress = $event;
+    })
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.ownerAddress]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div id=\"memberNameValidation\" class=\"invalid-feedback\">\n                                {{ getError('name') }}\n                            </div> ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div>\n                        <button type=\"button\" class=\"btn btn-outline-danger\" @click=\"deleteMember(formData.id)\">Видалити</button>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "btn btn-secondary",
+    "data-bs-dismiss": "modal",
+    onClick: _cache[4] || (_cache[4] = function () {
+      return $options.clearFormData && $options.clearFormData.apply($options, arguments);
+    })
+  }, "Відмінити"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "btn btn-primary",
+    onClick: _cache[5] || (_cache[5] = function () {
+      return $options.submitData && $options.submitData.apply($options, arguments);
+    })
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.modalSubmitCaption), 1 /* TEXT */)])])])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -23061,7 +23217,7 @@ var _hoisted_1 = {
 };
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-plus"
+    "class": "bi bi-person-add"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
@@ -23112,7 +23268,7 @@ var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
     style: {
       "color": "blue"
     },
-    title: "Родинні стосунку"
+    title: "Родинні відносини"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_18 = {
@@ -23128,74 +23284,76 @@ var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_20 = {
-  "class": "member-sex"
-};
-var _hoisted_21 = {
-  key: 0,
-  title: "чоловік"
-};
-var _hoisted_22 = {
-  key: 1,
-  title: "жінка"
-};
-var _hoisted_23 = {
   "class": "card-footer d-flex justify-content-center"
 };
-var _hoisted_24 = ["onClick"];
-var _hoisted_25 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_21 = ["onClick"];
+var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "bi bi-eye"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_26 = [_hoisted_25];
-var _hoisted_27 = {
+var _hoisted_23 = [_hoisted_22];
+var _hoisted_24 = {
   key: 1,
   "class": "table table-sm table-bordered"
 };
-var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_25 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Прізвище"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Ім'я"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "По батькові"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Дата народження"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Стать"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Родинні стосунки"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Місце роботи"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Відомості про зайнятість / незайнятість")])], -1 /* HOISTED */);
 });
-var _hoisted_29 = ["onClick"];
-var _hoisted_30 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_26 = ["onClick"];
+var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "bi bi-eye"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_31 = [_hoisted_30];
-var _hoisted_32 = {
+var _hoisted_28 = [_hoisted_27];
+var _hoisted_29 = {
   "class": "modal modal-lg fade",
   id: "HouseholdMemberModalForm",
   tabindex: "-1",
   "aria-labelledby": "staticBackdropLabel",
   "aria-hidden": "true"
 };
-var _hoisted_33 = {
+var _hoisted_30 = {
   "class": "modal-dialog"
 };
-var _hoisted_34 = {
+var _hoisted_31 = {
   "class": "modal-content"
 };
-var _hoisted_35 = {
+var _hoisted_32 = {
   "class": "modal-header"
 };
-var _hoisted_36 = ["innerHTML"];
-var _hoisted_37 = {
+var _hoisted_33 = ["innerHTML"];
+var _hoisted_34 = {
   "class": "modal-body"
 };
-var _hoisted_38 = {
+var _hoisted_35 = {
   "class": "row mb-3"
+};
+var _hoisted_36 = {
+  "class": "col"
+};
+var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "memberSurname",
+    "class": "form-label"
+  }, "Прізвище", -1 /* HOISTED */);
+});
+var _hoisted_38 = {
+  id: "memberSurnameValidation",
+  "class": "invalid-feedback"
 };
 var _hoisted_39 = {
   "class": "col"
 };
 var _hoisted_40 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "for": "memberSurname",
+    "for": "memberName",
     "class": "form-label"
-  }, "Прізвище", -1 /* HOISTED */);
+  }, "Ім'я", -1 /* HOISTED */);
 });
 var _hoisted_41 = {
-  id: "memberSurnameValidation",
+  id: "memberNameValidation",
   "class": "invalid-feedback"
 };
 var _hoisted_42 = {
@@ -23203,40 +23361,27 @@ var _hoisted_42 = {
 };
 var _hoisted_43 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "for": "memberName",
-    "class": "form-label"
-  }, "Ім'я", -1 /* HOISTED */);
-});
-var _hoisted_44 = {
-  id: "memberNameValidation",
-  "class": "invalid-feedback"
-};
-var _hoisted_45 = {
-  "class": "col"
-};
-var _hoisted_46 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "memberPatronymic",
     "class": "form-label"
   }, "По батькові", -1 /* HOISTED */);
 });
-var _hoisted_47 = {
+var _hoisted_44 = {
   id: "memberPatronymicValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_48 = {
+var _hoisted_45 = {
   "class": "row mb-3"
 };
-var _hoisted_49 = {
+var _hoisted_46 = {
   "class": "col-md-3"
 };
-var _hoisted_50 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_47 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "memberSex",
     "class": "form-label"
   }, "Стать", -1 /* HOISTED */);
 });
-var _hoisted_51 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_48 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("datalist", {
     id: "sex"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
@@ -23245,82 +23390,82 @@ var _hoisted_51 = /*#__PURE__*/_withScopeId(function () {
     value: "жіноча"
   })], -1 /* HOISTED */);
 });
-var _hoisted_52 = {
+var _hoisted_49 = {
   id: "memberSexValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_53 = {
+var _hoisted_50 = {
   "class": "col-md-3"
 };
-var _hoisted_54 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_51 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "memberBirthday",
     "class": "form-label"
   }, "Дата народження", -1 /* HOISTED */);
 });
-var _hoisted_55 = {
+var _hoisted_52 = {
   id: "memberBirthdayValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_56 = {
+var _hoisted_53 = {
   "class": "col-md-6"
 };
-var _hoisted_57 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_54 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "familyRelationship",
     "class": "form-label"
   }, "Родинні стосунки", -1 /* HOISTED */);
 });
-var _hoisted_58 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_55 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     disabled: "",
     value: "0"
   }, "Оберить тип родинних стосунків", -1 /* HOISTED */);
 });
-var _hoisted_59 = ["value"];
-var _hoisted_60 = {
+var _hoisted_56 = ["value"];
+var _hoisted_57 = {
   id: "familyRelationshipValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_61 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_58 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1 /* HOISTED */);
 });
-var _hoisted_62 = {
+var _hoisted_59 = {
   "class": "row mb-3"
 };
-var _hoisted_63 = {
+var _hoisted_60 = {
   "class": "col"
 };
-var _hoisted_64 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_61 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "workPlace",
     "class": "form-label"
   }, "Місце роботи залежно від територіального розташування", -1 /* HOISTED */);
 });
-var _hoisted_65 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_62 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     disabled: "",
     value: "0"
   }, "Оберить місце роботи", -1 /* HOISTED */);
 });
-var _hoisted_66 = ["value"];
-var _hoisted_67 = {
+var _hoisted_63 = ["value"];
+var _hoisted_64 = {
   "class": "row mb-3"
 };
-var _hoisted_68 = {
+var _hoisted_65 = {
   "class": "col"
 };
-var _hoisted_69 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_66 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "memberEmployment",
     "class": "form-label"
   }, "Відомості про зайнятість / незайнятість", -1 /* HOISTED */);
 });
-var _hoisted_70 = {
+var _hoisted_67 = {
   "class": "modal-footer d-flex justify-content-between"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-sm btn-primary",
     onClick: _cache[0] || (_cache[0] = function ($event) {
@@ -23353,13 +23498,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onDblclick: function onDblclick($event) {
         return $options.showHouseholdMember(member.id);
       }
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */)]), member.family_relationship == 'голова домогосподарства' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_12, _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatedDate(member.birthday)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [member.sex == 'чоловіча' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_21, " ♂ ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_22, " ♀ "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */)]), member.family_relationship == 'голова домогосподарства' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_12, _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatedDate(member.birthday)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"member-sex\">\n                            <span v-if=\"member.sex=='чоловіча'\" title=\"чоловік\">\n                                &#9794;\n                            </span>\n                            <span v-else title=\"жінка\">\n                                &#9792;\n                            </span>\n                        </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "btn btn-sm btn-outline-secondary",
       onClick: function onClick($event) {
         return $options.showHouseholdMember(member.id);
       }
-    }, _hoisted_26, 8 /* PROPS */, _hoisted_24)])], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_8);
-  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_27, [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.members, function (member) {
+    }, _hoisted_23, 8 /* PROPS */, _hoisted_21)])], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_8);
+  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.members, function (member) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: member.id,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
@@ -23370,14 +23515,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onClick: function onClick($event) {
         return $options.showHouseholdMember(member.id);
       }
-    }, _hoisted_31, 8 /* PROPS */, _hoisted_29)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatedDate(member.birthday)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.sex), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [member.work_place ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    }, _hoisted_28, 8 /* PROPS */, _hoisted_26)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatedDate(member.birthday)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.sex), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [member.work_place ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: 0
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.work_place.name), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.employment_information), 1 /* TEXT */)], 2 /* CLASS */);
-  }), 128 /* KEYED_FRAGMENT */))])]))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"pt-4\">\n        <table class=\"table table-bordered table-sm\">\n            <tbody>\n                <tr>\n                    <td colspan=\"2\">Прізвище</td>\n                    <td>Петренко</td>\n                    <td>Петренко</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Ім'я</td>\n                    <td>Петр</td>\n                    <td>Марія</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">По батькові</td>\n                    <td>Іванович</td>\n                    <td>Степанівна</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Дата народження</td>\n                    <td>15.12.1965</td>\n                    <td>27.05.1969</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Стать</td>\n                    <td>чоловіча</td>\n                    <td>жіноча</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Родинні стосунки</td>\n                    <td>голова домогосподарства</td>\n                    <td>дружина</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Відомості про зайнятість / незайнятість <br> <i>(для осіб віком 15 років і старше)</i></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Місце роботи (заняття) залежно від територального розташування</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td rowspan=\"3\">Наявність <br>земельної<br>ділянки</td>\n                    <td>у власності</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>взято в оренду</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>здано в оренду</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td rowspan=\"2\">Відмитка про<br>ведення особистого<br>селянського<br>господарстка</td>\n                    <td>ведеться <br><i>(дата)</i></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>припинено<br><i>(дата)</i></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td rowspan=\"4\">\n                        Відмитка про<br>тимчасову<br>відсутність<br>\n                        <i>\n                            (місяць, рік і причина вибуття<br>місяць, рік повернення)\n                        </i>\n                    </td>\n                    <td>вибув</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>повернувся</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>вибув</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>повернувся</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Відмитка про повне вибуття</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td rowspan=\"2\">\n                        Відмитка про<br>прибуття на<br>терріторію населеного<br>пункту заново\n                    </td>\n                    <td><small>дата реєстрації місця<br>проживання на терріторії<br>населенного пункта</small></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td><small>попереднє місце<br>реєстрації проживання</small></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n            </tbody>\n        </table>\n    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  }), 128 /* KEYED_FRAGMENT */))])]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"pt-4\">\n        <table class=\"table table-bordered table-sm\">\n            <tbody>\n                <tr>\n                    <td colspan=\"2\">Прізвище</td>\n                    <td>Петренко</td>\n                    <td>Петренко</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Ім'я</td>\n                    <td>Петр</td>\n                    <td>Марія</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">По батькові</td>\n                    <td>Іванович</td>\n                    <td>Степанівна</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Дата народження</td>\n                    <td>15.12.1965</td>\n                    <td>27.05.1969</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Стать</td>\n                    <td>чоловіча</td>\n                    <td>жіноча</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Родинні стосунки</td>\n                    <td>голова домогосподарства</td>\n                    <td>дружина</td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Відомості про зайнятість / незайнятість <br> <i>(для осіб віком 15 років і старше)</i></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Місце роботи (заняття) залежно від територального розташування</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td rowspan=\"3\">Наявність <br>земельної<br>ділянки</td>\n                    <td>у власності</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>взято в оренду</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>здано в оренду</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td rowspan=\"2\">Відмитка про<br>ведення особистого<br>селянського<br>господарстка</td>\n                    <td>ведеться <br><i>(дата)</i></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>припинено<br><i>(дата)</i></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td rowspan=\"4\">\n                        Відмитка про<br>тимчасову<br>відсутність<br>\n                        <i>\n                            (місяць, рік і причина вибуття<br>місяць, рік повернення)\n                        </i>\n                    </td>\n                    <td>вибув</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>повернувся</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>вибув</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td>повернувся</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td colspan=\"2\">Відмитка про повне вибуття</td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td rowspan=\"2\">\n                        Відмитка про<br>прибуття на<br>терріторію населеного<br>пункту заново\n                    </td>\n                    <td><small>дата реєстрації місця<br>проживання на терріторії<br>населенного пункта</small></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n                <tr>\n                    <td><small>попереднє місце<br>реєстрації проживання</small></td>\n                    <td></td>\n                    <td></td>\n                </tr>\n            </tbody>\n        </table>\n    </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "modal-title fs-5",
     id: "staticBackdropLabel",
     innerHTML: $data.modalTitle
-  }, null, 8 /* PROPS */, _hoisted_36), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 8 /* PROPS */, _hoisted_33), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn-close",
     "data-bs-dismiss": "modal",
@@ -23385,28 +23530,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[3] || (_cache[3] = function () {
       return $options.clearFormData && $options.clearFormData.apply($options, arguments);
     })
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-floating mb-3\">\n                        <input type=\"email\" class=\"form-control\" id=\"memberSurname\" placeholder=\"Прізвище\" v-model=\"formData.surname\">\n                        <label for=\"memberSurname\">Прізвище</label>\n                    </div>\n                    <div class=\"form-floating mb-3\">\n                        <input type=\"email\" class=\"form-control\" id=\"memberSurname\" placeholder=\"Ім'я\" v-model=\"formData.name\">\n                        <label for=\"memberSurname\">Ім'я</label>\n                    </div>\n                    <div class=\"form-floating mb-1\">\n                        <input type=\"email\" class=\"form-control\" id=\"floatingInput\" v-model=\"formData.patronymic\" placeholder=\"По батькові\">\n                        <label for=\"floatingInput\">По батькові</label>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-1 row\">\n                        <label for=\"livingArea\" class=\"col-sm-9 col-form-label\">Дата народження</label>\n                        <div class=\"col-sm-3\">\n                            <input type=\"text\" class=\"form-control\" id=\"livingArea\" v-model=\"formData.birthday\">\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-floating mb-3\">\n                        <input type=\"email\" class=\"form-control\" id=\"memberSurname\" placeholder=\"Прізвище\" v-model=\"formData.surname\">\n                        <label for=\"memberSurname\">Прізвище</label>\n                    </div>\n                    <div class=\"form-floating mb-3\">\n                        <input type=\"email\" class=\"form-control\" id=\"memberSurname\" placeholder=\"Ім'я\" v-model=\"formData.name\">\n                        <label for=\"memberSurname\">Ім'я</label>\n                    </div>\n                    <div class=\"form-floating mb-1\">\n                        <input type=\"email\" class=\"form-control\" id=\"floatingInput\" v-model=\"formData.patronymic\" placeholder=\"По батькові\">\n                        <label for=\"floatingInput\">По батькові</label>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-1 row\">\n                        <label for=\"livingArea\" class=\"col-sm-9 col-form-label\">Дата народження</label>\n                        <div class=\"col-sm-3\">\n                            <input type=\"text\" class=\"form-control\" id=\"livingArea\" v-model=\"formData.birthday\">\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     id: "memberSurname",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('surname') ? 'is-invalid' : '']),
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.formData.surname = $event;
     })
-  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.surname]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('surname')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.surname]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('surname')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('name') ? 'is-invalid' : '']),
     id: "memberName",
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.formData.name = $event;
     })
-  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('name')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [_hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('name')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('patronymic') ? 'is-invalid' : '']),
     id: "memberPatronymic",
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.formData.patronymic = $event;
     })
-  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.patronymic]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('patronymic')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-1 row\">\n                        <label for=\"exampleFormControlInput1\" class=\"form-label\">Дата народження</label>\n                        <input type=\"date\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.birthday\">\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [_hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.patronymic]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('patronymic')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-1 row\">\n                        <label for=\"exampleFormControlInput1\" class=\"form-label\">Дата народження</label>\n                        <input type=\"date\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.birthday\">\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     list: "sex",
     id: "memberSex",
     placeholder: "Type to search...",
@@ -23414,44 +23559,44 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.formData.sex = $event;
     })
-  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.sex]]), _hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('sex')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [_hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.sex]]), _hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('sex')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "date",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('birthday') ? 'is-invalid' : '']),
     id: "memberBirthday",
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $data.formData.birthday = $event;
     })
-  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.birthday]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('birthday')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [_hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.birthday]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('birthday')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [_hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('family_relationship_id') ? 'is-invalid' : '']),
     "aria-label": "Default select example",
     "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
       return $data.formData.family_relationship_id = $event;
     })
-  }, [_hoisted_58, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.relationships, function (relationship) {
+  }, [_hoisted_55, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.relationships, function (relationship) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: relationship.id,
       key: relationship.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relationship.name), 9 /* TEXT, PROPS */, _hoisted_59);
-  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.family_relationship_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('family_relationship_id')), 1 /* TEXT */)])]), _hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relationship.name), 9 /* TEXT, PROPS */, _hoisted_56);
+  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.family_relationship_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('family_relationship_id')), 1 /* TEXT */)])]), _hoisted_58, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [_hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-select",
     id: "workPlace",
     "aria-label": "Default select example",
     "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
       return $data.formData.work_place_id = $event;
     })
-  }, [_hoisted_65, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.places, function (place) {
+  }, [_hoisted_62, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.places, function (place) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: place.id,
       key: place.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(place.name), 9 /* TEXT, PROPS */, _hoisted_66);
-  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.work_place_id]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [_hoisted_69, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(place.name), 9 /* TEXT, PROPS */, _hoisted_63);
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.work_place_id]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [_hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": "form-control",
     id: "memberEmployment",
     rows: "2",
     "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
       return $data.formData.employment_information = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.employment_information]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <ul class=\"nav nav-tabs\" id=\"myTab\" role=\"tablist\">\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link active\"\n                                    id=\"work-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#work-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"work-tab-pane\"\n                                    aria-selected=\"true\">\n                                Робота\n                            </button>\n                        </li>\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link\"\n                                    id=\"land-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#land-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"land-tab-pane\"\n                                    aria-selected=\"false\">\n                                Земля\n                            </button>\n                        </li>\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link\"\n                                    id=\"peasant-economy-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#peasant-economy-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"peasant-economy-tab-pane\"\n                                    aria-selected=\"false\">\n                                Селянське господарство\n                            </button>\n                        </li>\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link\"\n                                    id=\"social-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#social-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"social-tab-pane\"\n                                    aria-selected=\"false\">\n                                Інформація о соціальних виплатах\n                            </button>\n                        </li>\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link\"\n                                    id=\"additional-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#additional-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"additional-tab-pane\"\n                                    aria-selected=\"false\">\n                                Додаткова інформація\n                            </button>\n                        </li>\n                    </ul>\n                    <div class=\"tab-content\" id=\"myTabContent\">\n                        <div class=\"tab-pane fade show active\" id=\"work-tab-pane\" role=\"tabpanel\" aria-labelledby=\"work-tab\" tabindex=\"0\">\n                            <div class=\"mb-2\">\n                                <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                                <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"formData.workPlace\">\n                                    <option disabled value=\"0\">Оберить місце роботи</option>\n                                    <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                        {{place.name}}\n                                    </option>\n                                </select>\n                            </div>\n                            <div class=\"mb-3\">\n                                <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                                <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"formData.employment\"></textarea>\n                            </div>\n                        </div>\n                        <div class=\"tab-pane fade\" id=\"land-tab-pane\" role=\"tabpanel\" aria-labelledby=\"land-tab\" tabindex=\"0\">\n                            <div class=\"row mb-3\">\n                                <label>Наявність земельної ділянки</label>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.surname\">\n                                </div>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.name\">\n                                </div>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.patronymic\">\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"tab-pane fade\" id=\"peasant-economy-tab-pane\" role=\"tabpanel\" aria-labelledby=\"peasant-economy-tab\" tabindex=\"0\">\n                            <div class=\"row\">\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.surname\">\n                                </div>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.name\">\n                                </div>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.patronymic\">\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"tab-pane fade\" id=\"social-tab-pane\" role=\"tabpanel\" aria-labelledby=\"social-tab\" tabindex=\"0\">\n                            <div class=\"mb-3\">\n                                <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>\n                                <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"formData.employment\"></textarea>\n                            </div>\n                        </div>\n                        <div class=\"tab-pane fade\" id=\"additional-tab-pane\" role=\"tabpanel\" aria-labelledby=\"additional-tab\" tabindex=\"0\">\n                            <div class=\"mb-3\">\n                                <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Додаткова інформація</label>\n                                <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"formData.additional\"></textarea>\n                            </div>\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr>\n                    <div class=\"mb-2\">\n                        <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                        <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"formData.workPlace\">\n                            <option disabled value=\"0\">Оберить місце роботи</option>\n                            <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                {{place.name}}\n                            </option>\n                        </select>\n                    </div>\n                    <div class=\"mb-3\">\n                        <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" v-model=\"formData.employment\"></textarea>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr>\n                    <div class=\"row mb-3\">\n                        <label>Наявність земельної ділянки</label>\n                        <div class=\"col\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                            <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.surname\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                            <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.name\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                            <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.patronymic\">\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-floating\">\n                        <select class=\"form-select\" id=\"floatingSelect\" aria-label=\"Floating label select example\" v-model=\"formData.familyRelationship\">\n                            <option disabled value=\"0\">Оберить тип родинних стосунків</option>\n                            <option :value=\"relationship.id\" v-for=\"relationship in relationships\" :key=\"relationship.id\">\n                                {{relationship.name}}\n                            </option>\n                        </select>\n                        <label for=\"floatingSelect\">Родинні стосунки</label>\n                    </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.employment_information]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <ul class=\"nav nav-tabs\" id=\"myTab\" role=\"tablist\">\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link active\"\n                                    id=\"work-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#work-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"work-tab-pane\"\n                                    aria-selected=\"true\">\n                                Робота\n                            </button>\n                        </li>\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link\"\n                                    id=\"land-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#land-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"land-tab-pane\"\n                                    aria-selected=\"false\">\n                                Земля\n                            </button>\n                        </li>\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link\"\n                                    id=\"peasant-economy-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#peasant-economy-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"peasant-economy-tab-pane\"\n                                    aria-selected=\"false\">\n                                Селянське господарство\n                            </button>\n                        </li>\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link\"\n                                    id=\"social-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#social-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"social-tab-pane\"\n                                    aria-selected=\"false\">\n                                Інформація о соціальних виплатах\n                            </button>\n                        </li>\n                        <li class=\"nav-item\" role=\"presentation\">\n                            <button class=\"nav-link\"\n                                    id=\"additional-tab\"\n                                    data-bs-toggle=\"tab\"\n                                    data-bs-target=\"#additional-tab-pane\"\n                                    type=\"button\"\n                                    role=\"tab\"\n                                    aria-controls=\"additional-tab-pane\"\n                                    aria-selected=\"false\">\n                                Додаткова інформація\n                            </button>\n                        </li>\n                    </ul>\n                    <div class=\"tab-content\" id=\"myTabContent\">\n                        <div class=\"tab-pane fade show active\" id=\"work-tab-pane\" role=\"tabpanel\" aria-labelledby=\"work-tab\" tabindex=\"0\">\n                            <div class=\"mb-2\">\n                                <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                                <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"formData.workPlace\">\n                                    <option disabled value=\"0\">Оберить місце роботи</option>\n                                    <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                        {{place.name}}\n                                    </option>\n                                </select>\n                            </div>\n                            <div class=\"mb-3\">\n                                <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                                <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"formData.employment\"></textarea>\n                            </div>\n                        </div>\n                        <div class=\"tab-pane fade\" id=\"land-tab-pane\" role=\"tabpanel\" aria-labelledby=\"land-tab\" tabindex=\"0\">\n                            <div class=\"row mb-3\">\n                                <label>Наявність земельної ділянки</label>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.surname\">\n                                </div>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.name\">\n                                </div>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.patronymic\">\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"tab-pane fade\" id=\"peasant-economy-tab-pane\" role=\"tabpanel\" aria-labelledby=\"peasant-economy-tab\" tabindex=\"0\">\n                            <div class=\"row\">\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.surname\">\n                                </div>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.name\">\n                                </div>\n                                <div class=\"col\">\n                                    <label for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                                    <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.patronymic\">\n                                </div>\n                            </div>\n                        </div>\n                        <div class=\"tab-pane fade\" id=\"social-tab-pane\" role=\"tabpanel\" aria-labelledby=\"social-tab\" tabindex=\"0\">\n                            <div class=\"mb-3\">\n                                <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>\n                                <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"formData.employment\"></textarea>\n                            </div>\n                        </div>\n                        <div class=\"tab-pane fade\" id=\"additional-tab-pane\" role=\"tabpanel\" aria-labelledby=\"additional-tab\" tabindex=\"0\">\n                            <div class=\"mb-3\">\n                                <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Додаткова інформація</label>\n                                <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"formData.additional\"></textarea>\n                            </div>\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr>\n                    <div class=\"mb-2\">\n                        <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                        <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"formData.workPlace\">\n                            <option disabled value=\"0\">Оберить місце роботи</option>\n                            <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                {{place.name}}\n                            </option>\n                        </select>\n                    </div>\n                    <div class=\"mb-3\">\n                        <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"3\" v-model=\"formData.employment\"></textarea>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <hr>\n                    <div class=\"row mb-3\">\n                        <label>Наявність земельної ділянки</label>\n                        <div class=\"col\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                            <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.surname\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                            <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.name\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                            <input type=\"email\" class=\"form-control\" id=\"exampleFormControlInput1\" v-model=\"formData.patronymic\">\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"form-floating\">\n                        <select class=\"form-select\" id=\"floatingSelect\" aria-label=\"Floating label select example\" v-model=\"formData.familyRelationship\">\n                            <option disabled value=\"0\">Оберить тип родинних стосунків</option>\n                            <option :value=\"relationship.id\" v-for=\"relationship in relationships\" :key=\"relationship.id\">\n                                {{relationship.name}}\n                            </option>\n                        </select>\n                        <label for=\"floatingSelect\">Родинні стосунки</label>\n                    </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-outline-danger",
     onClick: _cache[12] || (_cache[12] = function ($event) {
@@ -23763,10 +23908,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c&scoped=true":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c&scoped=true ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -23776,6 +23921,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _withScopeId = function _withScopeId(n) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-cc04dc5c"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
+};
 var _hoisted_1 = {
   "class": "d-flex px-5 pt-3 justify-content-between"
 };
@@ -23788,27 +23936,35 @@ var _hoisted_3 = {
 var _hoisted_4 = {
   "class": "nav-item"
 };
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-info-circle"
-}, null, -1 /* HOISTED */);
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "bi bi-info-circle"
+  }, null, -1 /* HOISTED */);
+});
 var _hoisted_6 = {
   "class": "nav-item"
 };
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-people-fill"
-}, null, -1 /* HOISTED */);
+var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "bi bi-people-fill"
+  }, null, -1 /* HOISTED */);
+});
 var _hoisted_8 = {
   "class": "nav-item"
 };
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-house-gear-fill"
-}, null, -1 /* HOISTED */);
+var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "bi bi-house-gear-fill"
+  }, null, -1 /* HOISTED */);
+});
 var _hoisted_10 = {
   "class": "nav-item"
 };
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-globe"
-}, null, -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+    "class": "bi bi-globe"
+  }, null, -1 /* HOISTED */);
+});
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
@@ -31949,6 +32105,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".settlement[data-v-a4a202e4] {\n  disp
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "a.nav-link.active[data-v-cc04dc5c] {\n  background: linear-gradient(#e9ecef, #f8fafc);\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/HouseInfo.vue?vue&type=style&index=0&id=7d4b022e&scoped=true&lang=css":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/HouseInfo.vue?vue&type=style&index=0&id=7d4b022e&scoped=true&lang=css ***!
@@ -32361,6 +32541,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Main_vue_vue_type_style_index_0_id_a4a202e4_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_style_index_0_id_cc04dc5c_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!../../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_style_index_0_id_cc04dc5c_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_style_index_0_id_cc04dc5c_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
@@ -33063,15 +33273,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Show_vue_vue_type_template_id_cc04dc5c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Show.vue?vue&type=template&id=cc04dc5c */ "./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c");
+/* harmony import */ var _Show_vue_vue_type_template_id_cc04dc5c_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Show.vue?vue&type=template&id=cc04dc5c&scoped=true */ "./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c&scoped=true");
 /* harmony import */ var _Show_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Show.vue?vue&type=script&lang=js */ "./resources/js/modules/HouseholdCards/Show.vue?vue&type=script&lang=js");
-/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _Show_vue_vue_type_style_index_0_id_cc04dc5c_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true */ "./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true");
+/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Show_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Show_vue_vue_type_template_id_cc04dc5c__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/HouseholdCards/Show.vue"]])
+
+
+const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_Show_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Show_vue_vue_type_template_id_cc04dc5c_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-cc04dc5c"],['__file',"resources/js/modules/HouseholdCards/Show.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -33656,18 +33869,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c":
-/*!************************************************************************************!*\
-  !*** ./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c ***!
-  \************************************************************************************/
+/***/ "./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c&scoped=true":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c&scoped=true ***!
+  \************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_template_id_cc04dc5c__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_template_id_cc04dc5c_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_template_id_cc04dc5c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Show.vue?vue&type=template&id=cc04dc5c */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_template_id_cc04dc5c_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Show.vue?vue&type=template&id=cc04dc5c&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=template&id=cc04dc5c&scoped=true");
 
 
 /***/ }),
@@ -33810,6 +34023,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Main_vue_vue_type_style_index_0_id_a4a202e4_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!../../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Main.vue?vue&type=style&index=0&id=a4a202e4&lang=scss&scoped=true */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Main.vue?vue&type=style&index=0&id=a4a202e4&lang=scss&scoped=true");
+
+
+/***/ }),
+
+/***/ "./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true ***!
+  \***************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_style_index_0_id_cc04dc5c_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!../../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Show.vue?vue&type=style&index=0&id=cc04dc5c&lang=scss&scoped=true");
 
 
 /***/ }),

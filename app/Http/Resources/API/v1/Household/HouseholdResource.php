@@ -21,6 +21,21 @@ class HouseholdResource extends JsonResource
      */
     public function toArray($request)
     {
+        $members = HouseholdMemberResource::collection($this->whenLoaded('members'));
+
+        $household_head = "";
+
+        if ($members->count() > 0) {
+            $head = $members->first(function($m) {
+                // dd($m);
+                return $m->familyRelationship->name == 'голова домогосподарства';
+            });
+            if ($head) {
+                $household_head = $head->surname . ' ' . $head->name . ' ' . $head->patronymic;
+            }
+
+        }
+
         return [
             'id'                    =>  (int)   $this->id,
             'number'                =>  str_pad($this->settlement->inner_code, 2, '0', STR_PAD_LEFT)
@@ -33,11 +48,14 @@ class HouseholdResource extends JsonResource
                 'settlement'            =>  new SettlementResource($this->whenLoaded('settlement')),
                 'household_type_id'     =>  (int)   $this->household_type_id,
                 'household_type'        =>  new HouseholdTypeResource($this->whenLoaded('type')),
+                'household_head'        =>  $household_head,
                 'address'               =>  $this->address,
                 'special_marks'         =>  $this->special_marks,
-                'additional_data'       =>  $this->additional_data
+                'additional_data'       =>  $this->additional_data,
+                'owners'                =>  $this->owners(),
             ],
-            'members'               =>  HouseholdMemberResource::collection($this->whenLoaded('members')),
+            // 'members'               =>  HouseholdMemberResource::collection($this->whenLoaded('members')),
+            'members'               =>  $members,
             'houseYears'            =>  HouseholdHouseResource::collection($this->whenLoaded('houseYears'))
         ];
     }

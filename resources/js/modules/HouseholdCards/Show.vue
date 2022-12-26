@@ -40,10 +40,12 @@ export default {
             if (this.currentTab == 'HouseholdInfo') {
                 if (this.household.info) {
                     return {
-                        info: {
-                            type: this.household.info.household_type.name,
-                            address: this.household.info.address
-                        }
+                        // info: {
+                        //     type: this.household.info.household_type.name,
+                        //     address: this.household.info.address,
+                        //     owners: this.household.info.owners
+                        // }
+                        info: {...this.household.info}
                     }
                 }
             } else if (this.currentTab == 'HouseholdMembers') {
@@ -105,3 +107,9 @@ export default {
     </div>
 
 </template>
+
+<style lang="scss" scoped>
+a.nav-link.active {
+    background: linear-gradient(#e9ecef, #f8fafc);
+}
+</style>

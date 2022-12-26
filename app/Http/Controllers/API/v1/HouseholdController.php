@@ -59,7 +59,7 @@ class HouseholdController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(HouseholdRequest $request, $id)
     {
         $household = Household::findOrFail($id);
 
@@ -83,5 +83,10 @@ class HouseholdController extends Controller
         if ($household->delete()) {
             return response()->json(['message' => 'Облікова картка була успішно видалена']);
         }
+    }
+
+    public function addOwner(Request $request)
+    {
+        dd($request->all());
     }
 }

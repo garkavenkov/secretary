@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Resources\API\v1\AdditionalParam;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\API\v1\AdditionalParamCategory\AdditionalParamCategoryResource;
+
+class AdditionalParamResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        return [
+            'id'            =>  (int)   $this->id,
+            'category_id'   =>  (int)   $this->category_id,
+            'category'      =>  new AdditionalParamCategoryResource($this->whenLoaded('category')),
+            'code'          =>  $this->code,
+            'name'          =>  $this->name,
+        ];
+    }
+}
