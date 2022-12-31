@@ -142,6 +142,7 @@ export default {
 </script>
 
 <template>
+    <breadcrumbs />
     <div class="d-flex mb-3">
         <span>
             Шаповалівська сільська рада

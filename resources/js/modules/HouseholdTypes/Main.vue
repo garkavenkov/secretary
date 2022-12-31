@@ -31,6 +31,7 @@ export default {
 </script>
 
 <template>
+    <breadcrumbs />
     <h4>
         Типи об'єктів погосподарського обліку
     </h4>

@@ -9,7 +9,7 @@ export default {
     },
     data() {
         return {
-            communities: []
+            communities: [],
         }
     },
     methods: {
@@ -28,6 +28,7 @@ export default {
 
 
 <template>
+    <breadcrumbs />
     <h4>
         Громади
     </h4>

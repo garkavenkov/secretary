@@ -30,8 +30,9 @@ export default {
 </script>
 
 <template>
+    <breadcrumbs />
     <h4>
-        Області країни
+        Населенні пункти
     </h4>
     <div>
         <DataTable

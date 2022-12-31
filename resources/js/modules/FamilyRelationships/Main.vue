@@ -1,12 +1,14 @@
 <script>
 import { mapGetters } from 'vuex';
+import Breadcrumbs from '../../components/ui/Breadcrumbs.vue';
 
 import DataTable from '../../components/ui/DataTable.vue';
 
 export default {
     name: 'FamilyRelationshipsMain',
     components: {
-        DataTable
+        DataTable,
+        Breadcrumbs
     },
     data() {
         return {
@@ -31,6 +33,7 @@ export default {
 </script>
 
 <template>
+    <breadcrumbs />
     <h4>
         Родинні відносини
     </h4>

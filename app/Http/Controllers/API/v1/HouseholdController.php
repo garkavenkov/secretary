@@ -18,7 +18,14 @@ class HouseholdController extends Controller
      */
     public function index()
     {
-        $households = Household::with('settlement')->get();
+        if (request()->query('search')) {
+            $search  = request()->query('search');
+
+            $households = Household::with('settlement')->where('address', 'like', '%'. $search . '%')->get();
+        } else {
+            $households = Household::with('settlement')->get();
+        }
+
 
         return new HouseholdResourceCollection($households);
     }

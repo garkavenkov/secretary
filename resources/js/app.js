@@ -15,8 +15,13 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import Dashboard from './components/Dashboard.vue';
-app.component('dashboard', Dashboard);
+import SideBarMenu  from './components/SideBarMenu.vue';
+import Breadcrumbs  from './components/ui/Breadcrumbs.vue';
+import SearchForm   from './components/ui/SearchForm.vue'
+
+app.component('sidebar-menu', SideBarMenu);
+app.component('breadcrumbs', Breadcrumbs);
+app.component('search-form', SearchForm);
 
 
 /**

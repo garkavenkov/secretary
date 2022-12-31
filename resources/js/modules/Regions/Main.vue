@@ -30,6 +30,7 @@ export default {
 </script>
 
 <template>
+    <breadcrumbs />
     <h4>
         Області країни
     </h4>

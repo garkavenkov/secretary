@@ -31,6 +31,7 @@ export default {
 </script>
 
 <template>
+    <breadcrumbs />
     <h4>
         Коди місця роботи (заняття)
     </h4>

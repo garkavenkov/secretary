@@ -62,6 +62,13 @@ export default {
         },
         ...mapGetters('Households', ['household'])
     },
+    watch: {
+        '$route' (to, from) {
+            // console.log(to, from);
+            this.fetchHousehold(to.params.id);
+        },
+
+    },
     created() {
         this.fetchHousehold(this.id);
     }
@@ -69,12 +76,9 @@ export default {
 </script>
 
 <template>
-    <div class="d-flex px-5 pt-3 justify-content-between">
-        <h3>Облікова картка об'єкта погосподарського обліку <span>{{ household.number }}</span></h3>
-        <router-link :to="{name: 'HouseholdCards'}">Назад</router-link>
-        <!-- <router-link to="/household-cards">Назад</router-link> -->
-    </div>
-    <div class="px-5">
+    <breadcrumbs />
+    <h3>Облікова картка об'єкта погосподарського обліку <span>{{ household.number }}</span></h3>
+    <div class="px-3 pt-3">
         <ul class="nav nav-tabs px-3">
             <li class="nav-item">
                 <a class="nav-link" :class="{'active': currentTab == 'HouseholdInfo'}" aria-current="page" @click="currentTab='HouseholdInfo'">
