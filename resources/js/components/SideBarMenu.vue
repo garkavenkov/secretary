@@ -51,6 +51,12 @@
                 </router-link>
             </li>
             <li>
+                <router-link to="/family-relationships">
+                    <i class="bi bi-diagram-3"></i>
+                    <span>Родинні стосунки</span>
+                </router-link>
+            </li>
+            <li>
                 <router-link to="/household-cards">
                     <i class="bi bi-card-heading"></i>
                     <span>Облікова картка</span>

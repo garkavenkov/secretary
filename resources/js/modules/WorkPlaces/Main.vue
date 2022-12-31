@@ -10,54 +10,55 @@ export default {
     },
     data() {
         return {
-            // districts: []
         }
     },
     methods: {
-        // fetchData() {
-        //     axios.get('/api/v1/districts')
-        //         .then(res => {
-        //             this.districts = res.data.data;
-        //         });
-        // }
     },
     computed: {
         ...mapGetters('WorkPlaces', ['places'])
     },
-    created() {
-        // this.fetchData();
-    }
 }
 </script>
 
 <template>
     <breadcrumbs />
-    <h4>
-        Коди місця роботи (заняття)
-    </h4>
-    <div>
-        <div class="row">
-            <div class="col-md-6 mx-auto">
-
-                <DataTable
-                        :dataTable="places"
-                        tableHeaderClass="table-dark">
-                    <template v-slot:header>
-                        <tr>
-                            <th>Назва</th>
-                            <th></th>
-                        </tr>
-                    </template>
-                    <template v-slot:default="slotProps">
-                        <tr     v-for="record in slotProps.paginatedData"
-                                :key="record.id">
-                            <td>{{record.name}}</td>
-                            <td></td>
-                        </tr>
-                    </template>
-                </DataTable>
+    <!-- <div class="row">
+        <div class="col-md-8 mx-auto"> -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="dictionary-name__wrapper">
+                        <span>Довідник "Коди місця роботи (заняття)"</span>
+                        <button class="btn btn-sm btn-primary">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
+                    <!-- <div>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-funnel"></i>
+                        </button>
+                    </div> -->
+                    <!-- <h5>Коди місця роботи (заняття)</h5> -->
+                </div>
+                <div class="card-body">
+                    <DataTable
+                            :dataTable="places"
+                            tableHeaderClass="table-dark">
+                        <template v-slot:header>
+                            <tr>
+                                <th>Назва</th>
+                                <th></th>
+                            </tr>
+                        </template>
+                        <template v-slot:default="slotProps">
+                            <tr     v-for="record in slotProps.paginatedData"
+                                    :key="record.id">
+                                <td>{{record.name}}</td>
+                                <td></td>
+                            </tr>
+                        </template>
+                    </DataTable>
+                </div>
             </div>
-        </div>
-        <!-- {{districts}} -->
-    </div>
+        <!-- </div>
+    </div> -->
 </template>

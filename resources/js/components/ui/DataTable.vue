@@ -2,7 +2,7 @@
     <div class="data-table--wrapper">
         <div class="data-table_  d-flex justify-content-between pb-2" v-if="showActionsPanel">
             <div class="per-page__wrapper" >
-                <span class="mr-1">Відображати</span>
+                <span>Відображати</span>
                 <select name="per_Page"
                         id="per_page"
                         class="per-page"
@@ -16,7 +16,7 @@
                 </select>
             </div>
             <div class="search__wrapper">
-                <label  for="search" class="mr-2 mb-0">Поіск</label>
+                <label  for="search">Поіск</label>
                 <input  type="search"
                         name="search"
                         id="search"
@@ -185,14 +185,22 @@ export default {
     appearance: none;
 }
 
-.search {
-    display: inline-block;
-    width: 200px;
-    height: calc(1.6em + 0.75rem + 2px);
-    padding: 0.375rem 0.75rem;
-    background-color: #fff;
-    background-clip: padding-box;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+
+.search__wrapper {
+    label {
+        margin-right: 0.5rem;
+    }
+    .search {
+        display: inline-block;
+        width: 200px;
+        height: calc(1.6em + 0.75rem + 0px);
+        padding: 0.375rem 0.75rem;
+        background-color: #fff;
+        background-clip: padding-box;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    }
 }
 
 .per-page:focus, .search:focus {
@@ -212,6 +220,12 @@ export default {
 //         width: 20px;
 //     }
 // }
+
+.per-page__wrapper {
+    span {
+        margin-right: 0.5rem;
+    }
+}
 
 tbody tr:last-of-type {
     border-bottom: 2px solid #343a40;

@@ -77,38 +77,46 @@ export default {
 
 <template>
     <breadcrumbs />
-    <h3>Облікова картка об'єкта погосподарського обліку <span>{{ household.number }}</span></h3>
-    <div class="px-3 pt-3">
-        <ul class="nav nav-tabs px-3">
-            <li class="nav-item">
-                <a class="nav-link" :class="{'active': currentTab == 'HouseholdInfo'}" aria-current="page" @click="currentTab='HouseholdInfo'">
-                    <i class="bi bi-info-circle"></i>
-                    Основна інформація
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{'active': currentTab == 'HouseholdMembers'}" aria-current="page" @click="currentTab='HouseholdMembers'">
-                    <i class="bi bi-people-fill"></i>
-                    Члени домогосподарства
-                </a>
-            </li>
-            <li class="nav-item" >
-                <a class="nav-link" :class="{'active': currentTab == 'HouseInfo'}" @click="currentTab='HouseInfo'">
-                    <i class="bi bi-house-gear-fill"></i>
-                    Будинок / Квартира
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" :class="{'active': currentTab == 'LandInfo'}" @click="currentTab='LandInfo'">
-                    <i class="bi bi-globe"></i>
-                    Земля
-                </a>
-            </li>
-        </ul>
-        <KeepAlive>
-            <component :is="currentTab" v-bind="componentProps"></component>
-        </KeepAlive>
+    <div class="card">
+        <div class="card-header">
+            <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card__number">{{ household.number }}</span></h5>
+        </div>
+        <div class="card-body">
+
+            <div class="px-3 pt-3">
+                <ul class="nav nav-tabs px-3">
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{'active': currentTab == 'HouseholdInfo'}" aria-current="page" @click="currentTab='HouseholdInfo'">
+                            <i class="bi bi-info-circle"></i>
+                            Основна інформація
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{'active': currentTab == 'HouseholdMembers'}" aria-current="page" @click="currentTab='HouseholdMembers'">
+                            <i class="bi bi-people-fill"></i>
+                            Члени домогосподарства
+                        </a>
+                    </li>
+                    <li class="nav-item" >
+                        <a class="nav-link" :class="{'active': currentTab == 'HouseInfo'}" @click="currentTab='HouseInfo'">
+                            <i class="bi bi-house-gear-fill"></i>
+                            Будинок / Квартира
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{'active': currentTab == 'LandInfo'}" @click="currentTab='LandInfo'">
+                            <i class="bi bi-globe"></i>
+                            Земля
+                        </a>
+                    </li>
+                </ul>
+                <KeepAlive>
+                    <component :is="currentTab" v-bind="componentProps"></component>
+                </KeepAlive>
+            </div>
+        </div>
     </div>
+
 
 </template>
 
@@ -116,4 +124,10 @@ export default {
 a.nav-link.active {
     background: linear-gradient(#e9ecef, #f8fafc);
 }
+
+.household-card__number {
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
 </style>

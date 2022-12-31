@@ -143,64 +143,55 @@ export default {
 
 <template>
     <breadcrumbs />
-    <div class="d-flex mb-3">
+    <!-- <div class="d-flex mb-3">
         <span>
             Шаповалівська сільська рада
         </span>
-    </div>
-    <!-- <div class="d-flex mb-3">
-        <div class="settlement">
-            <div class="settlement-name">
-                с. Шаповалівка
-            </div>
-            <div class="cards-count">
-                64
-            </div>
-        </div>
-        <div div class="settlement">
-            <div class="settlement-name">
-                с. Привокзальне
-            </div>
-            <div class="cards-count">
-                32
-            </div>
-        </div>
     </div> -->
-    <button class="btn btn-primary" @click="addCard">
-        <i class="bi bi-plus"></i>
-        Додати картку
-    </button>
-    <button class="btn btn-primary" @click="addCard">
-        <i class="bi bi-funnel"></i>
-        Фільтр
-    </button>
-    <DataTable
-                :dataTable="cards"
-                tableHeaderClass="table-dark">
-            <template v-slot:header>
-                <tr>
-                    <th></th>
-                    <th>Населений пункт</th>
-                    <th>Номер</th>
-                    <th>Тип</th>
-                    <th>Місцезнаходження / адреса</th>
-                </tr>
-            </template>
-            <template v-slot:default="slotProps">
-                <tr     v-for="record in slotProps.paginatedData"
-                        :key="record.id">
-                    <td>
-                        <router-link :to="{name: 'HouseholdCardsShow', params: { id: record.id }}">
-                            <i class="bi bi-eye"></i>
-                        </router-link>
-                    </td>
-                    <td>{{record.settlement}}</td>
-                    <td>{{record.number}}</td>
-                    <td>{{record.householdTypeId}}</td>
-                    <td>{{record.address}}</td>
-                </tr>
-            </template>
-        </DataTable>
+    <div class="card">
+        <div class="card-header">
+            <div class="dictionary-name__wrapper">
+                <span>Облікові картки</span>
+                <button class="btn btn-sm btn-primary" @click="addCard">
+                    <i class="bi bi-plus"></i>
+                </button>
+            </div>
+            <div>
+                <button class="btn btn-sm btn-outline-secondary" @click="addCard">
+                    <i class="bi bi-funnel"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <DataTable
+                    :dataTable="cards"
+                    tableHeaderClass="table-dark">
+                <template v-slot:header>
+                    <tr>
+                        <th></th>
+                        <th>Населений пункт</th>
+                        <th>Номер</th>
+                        <th>Тип</th>
+                        <th>Місцезнаходження / адреса</th>
+                    </tr>
+                </template>
+                <template v-slot:default="slotProps">
+                    <tr     v-for="record in slotProps.paginatedData"
+                            :key="record.id">
+                        <td>
+                            <router-link :to="{name: 'HouseholdCardsShow', params: { id: record.id }}">
+                                <i class="bi bi-eye"></i>
+                            </router-link>
+                        </td>
+                        <td>{{record.settlement}}</td>
+                        <td>{{record.number}}</td>
+                        <td>{{record.householdTypeId}}</td>
+                        <td>{{record.address}}</td>
+                    </tr>
+                </template>
+            </DataTable>
+        </div>
+    </div>
 
 
     <div class="modal modal-lg fade" id="HouseholdCard" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

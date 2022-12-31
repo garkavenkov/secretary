@@ -16,12 +16,6 @@ export default {
         }
     },
     methods: {
-        // fetchData() {
-        //     axios.get('/api/v1/districts')
-        //         .then(res => {
-        //             this.districts = res.data.data;
-        //         });
-        // }
     },
     computed: {
         ...mapGetters('FamilyRelationships', ['relationships'])
@@ -34,32 +28,43 @@ export default {
 
 <template>
     <breadcrumbs />
-    <h4>
-        Родинні відносини
-    </h4>
-    <div>
-        <div class="row">
-            <div class="col-md-6 mx-auto">
 
-                <DataTable
-                        :dataTable="relationships"
-                        tableHeaderClass="table-dark">
-                    <template v-slot:header>
-                        <tr>
-                            <th>Назва</th>
-                            <th></th>
-                        </tr>
-                    </template>
-                    <template v-slot:default="slotProps">
-                        <tr     v-for="record in slotProps.paginatedData"
-                                :key="record.id">
-                            <td>{{record.name}}</td>
-                            <td></td>
-                        </tr>
-                    </template>
-                </DataTable>
+    <!-- <div class="row">
+        <div class="col-md-8 mx-auto"> -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="dictionary-name__wrapper">
+                        <span>Довідник "Родинні стосунки"</span>
+                        <button class="btn btn-sm btn-primary">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
+                    <!-- <div>
+                        <button class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-funnel"></i>
+                        </button>
+                    </div> -->
+                </div>
+                <div class="card-body">
+                    <DataTable
+                            :dataTable="relationships"
+                            tableHeaderClass="table-dark">
+                        <template v-slot:header>
+                            <tr>
+                                <th>Назва</th>
+                                <th></th>
+                            </tr>
+                        </template>
+                        <template v-slot:default="slotProps">
+                            <tr     v-for="record in slotProps.paginatedData"
+                                    :key="record.id">
+                                <td>{{record.name}}</td>
+                                <td></td>
+                            </tr>
+                        </template>
+                    </DataTable>
+                </div>
             </div>
-        </div>
-        <!-- {{districts}} -->
-    </div>
+        <!-- </div>
+    </div> -->
 </template>
