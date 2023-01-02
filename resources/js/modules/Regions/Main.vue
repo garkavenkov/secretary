@@ -42,6 +42,7 @@ export default {
                             tableHeaderClass="table-dark">
                         <template v-slot:header>
                             <tr>
+                                <th></th>
                                 <th>Назва</th>
                                 <th>Обласний центр</th>
                                 <th></th>
@@ -50,6 +51,11 @@ export default {
                         <template v-slot:default="slotProps">
                             <tr     v-for="record in slotProps.paginatedData"
                                     :key="record.id">
+                                <td>
+                                    <router-link :to="{name: 'RegionsShow', params: {id: record.id}}">
+                                        <i class="bi bi-eye"></i>
+                                    </router-link>
+                                </td>
                                 <td>{{record.name}}</td>
                                 <td>{{record.center}}</td>
                                 <td></td>

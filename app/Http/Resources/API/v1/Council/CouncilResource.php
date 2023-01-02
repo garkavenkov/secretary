@@ -4,6 +4,7 @@ namespace App\Http\Resources\API\v1\Council;
 
 use App\Http\Resources\API\v1\Community\CommunityResource;
 use App\Http\Resources\API\v1\CouncilType\CouncilTypeResource;
+use App\Http\Resources\API\v1\Settlement\SettlementResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CouncilResource extends JsonResource
@@ -22,6 +23,7 @@ class CouncilResource extends JsonResource
             'community'         =>  new CommunityResource($this->whenLoaded('community')),
             'council_type_id'   =>  (int)   $this->council_type_id,
             'council_type'      =>  new CouncilTypeResource($this->whenLoaded('council_type')),
+            'settlements'       =>  SettlementResource::collection($this->whenLoaded('settlements')),
             'name'              =>  $this->name,
             'address'           =>  $this->address,
             'edrpou'            =>  $this->edrpou,

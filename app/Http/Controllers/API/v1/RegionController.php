@@ -46,7 +46,7 @@ class RegionController extends Controller
      */
     public function show($id)
     {
-        $region = Region::findOrFail($id);
+        $region = Region::with('districts')->findOrFail($id);
 
         return new RegionResource($region);
     }

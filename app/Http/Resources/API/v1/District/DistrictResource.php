@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\v1\District;
 
+use App\Http\Resources\API\v1\Community\CommunityResourceCollection;
 use App\Http\Resources\API\v1\Region\RegionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,11 +17,12 @@ class DistrictResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'        =>  (int) $this->id,
-            'region_id' =>  (int) $this->region_id,
-            'name'      =>  $this->name,
-            'center'    =>  $this->center,
-            'region'    =>  new RegionResource($this->whenLoaded('region'))
+            'id'            =>  (int) $this->id,
+            'region_id'     =>  (int) $this->region_id,
+            'region'        =>  new RegionResource($this->whenLoaded('region')),
+            'name'          =>  $this->name,
+            'center'        =>  $this->center,
+            'communities'   =>  new CommunityResourceCollection($this->whenLoaded('communities')),
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\API\v1\Community;
 
+use App\Http\Resources\API\v1\Council\CouncilResource;
+use App\Http\Resources\API\v1\District\DistrictResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CommunityResource extends JsonResource
@@ -17,10 +19,12 @@ class CommunityResource extends JsonResource
         return [
             'id'            =>  (int)   $this->id,
             'district_id'   =>  (int)   $this->district_id,
+            'district'      =>  new DistrictResource($this->whenLoaded('district')),
             'name'          =>  $this->name,
             'address'       =>  $this->address,
             'edrpou'        =>  $this->edrpou,
-            'koatuu'        =>  $this->koatuu
+            'koatuu'        =>  $this->koatuu,
+            'councils'      =>  CouncilResource::collection($this->whenLoaded('councils')),
         ];
     }
 }

@@ -12942,6 +12942,10 @@ textarea.form-control-lg {
   display: flex;
   justify-content: space-between;
 }
+.card .card-header h1, .card .card-header .h1, .card .card-header h2, .card .card-header .h2, .card .card-header h3, .card .card-header .h3, .card .card-header h4, .card .card-header .h4, .card .card-header h5, .card .card-header .h5, .card .card-header h6, .card .card-header .h6 {
+  margin-bottom: 0;
+  line-height: 1.6;
+}
 .card .card-header .dictionary-name__wrapper {
   display: flex;
   align-items: center;

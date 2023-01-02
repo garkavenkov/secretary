@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\v1\Region;
 
+use App\Http\Resources\API\v1\District\DistrictResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RegionResource extends JsonResource
@@ -17,7 +18,8 @@ class RegionResource extends JsonResource
         return [
             'id'        =>  (int)   $this->id,
             'name'      =>  $this->name,
-            'center'    =>  $this->center
+            'center'    =>  $this->center,
+            'districts' =>  new DistrictResourceCollection($this->whenLoaded('districts')),
         ];
     }
 }

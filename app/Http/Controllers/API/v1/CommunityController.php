@@ -47,7 +47,7 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-        $community = Community::findOrFail($id);
+        $community = Community::with('district.region', 'councils')->findOrFail($id);
 
         return new CommunityResource($community);
     }

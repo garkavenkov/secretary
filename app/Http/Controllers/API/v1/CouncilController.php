@@ -18,7 +18,7 @@ class CouncilController extends Controller
      */
     public function index()
     {
-        $councils = Council::all();
+        $councils = Council::with('community')->get();
 
         return new CouncilResourceCollection($councils);
     }
@@ -46,7 +46,7 @@ class CouncilController extends Controller
      */
     public function show($id)
     {
-        $council = Council::findOrFail($id);
+        $council = Council::with('community', 'settlements')->findOrFail($id);
 
         return new CouncilResource($council);
     }

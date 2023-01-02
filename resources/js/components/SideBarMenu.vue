@@ -33,6 +33,12 @@
                 </router-link>
             </li>
             <li>
+                <router-link to="/councils">
+                    <i class="bi bi-puzzle"></i>
+                    <span>Міськи / сільські ради</span>
+                </router-link>
+            </li>
+            <li>
                 <router-link to="/settlements">
                     <i class="bi bi-houses"></i>
                     <span>Населені пункти</span>
@@ -83,6 +89,9 @@ export default {
         this.$store.dispatch('HouseholdTypes/fetchData');
         this.$store.dispatch('WorkPlaces/fetchData');
         this.$store.dispatch('Settlements/fetchData');
+        this.$store.dispatch('Councils/fetchData');
+        this.$store.dispatch('CouncilTypes/fetchData');
+        this.$store.dispatch('Communities/fetchData');
     }
 }
 </script>

@@ -46,7 +46,7 @@ class DistrictController extends Controller
      */
     public function show($id)
     {
-        $district = District::findOrFail($id);
+        $district = District::with('region', 'communities')->findOrFail($id);
 
         return new DistrictResource($district);
     }

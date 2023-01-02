@@ -18,7 +18,7 @@ class SettlementController extends Controller
      */
     public function index()
     {
-        $settlements = Settlement::all();
+        $settlements = Settlement::with('council', 'type')->get();
 
         return new SettlementResourceCollection($settlements);
     }
@@ -46,7 +46,7 @@ class SettlementController extends Controller
      */
     public function show($id)
     {
-        $settlement = Settlement::findOrFail($id);
+        $settlement = Settlement::with('council', 'type')->findOrFail($id);
 
         return new SettlementResource($settlement);
     }

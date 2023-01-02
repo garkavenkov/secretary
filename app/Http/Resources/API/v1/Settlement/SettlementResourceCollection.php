@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\API\v1\Settlement;
 
+use App\Http\Resources\API\v1\Council\CouncilResource;
+use App\Http\Resources\API\v1\SettlementType\SettlementTypeResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class SettlementResourceCollection extends ResourceCollection
@@ -18,7 +20,9 @@ class SettlementResourceCollection extends ResourceCollection
             return [
                 'id'                    =>  (int)   $settlement->id,
                 'council_id'            =>  (int)   $settlement->council_id,
+                'council'               =>  new CouncilResource($settlement->whenLoaded('council') ),
                 'settlement_type_id'    =>  (int)   $settlement->settlement_type_id,
+                'settlement_type'       =>  new SettlementTypeResource($settlement->whenLoaded('type')),
                 'name'                  =>  $settlement->name,
                 'inner_code'            =>  $settlement->inner_code,
                 'postcode'              =>  $settlement->postcode,

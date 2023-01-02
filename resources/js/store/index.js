@@ -7,6 +7,9 @@ import { HouseholdTypes }       from './modules/HouseholdTypes';
 import { WorkPlaces }           from './modules/WorkPlaces';
 import { Settlements }          from './modules/Settlements';
 import { Households }           from './modules/Households';
+import { Communities }          from './modules/Communities';
+import { Councils }             from './modules/Councils';
+import { CouncilTypes }         from './modules/CouncilTypes';
 
 export default createStore({
     modules: {
@@ -16,7 +19,10 @@ export default createStore({
         HouseholdTypes,
         WorkPlaces,
         Settlements,
-        Households
+        Households,
+        Communities,
+        Councils,
+        CouncilTypes
     }
 });
 

@@ -50,6 +50,7 @@ export default {
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>
+                        <th></th>
                         <th>Район</th>
                         <th>Назва громади</th>
                         <th>Адреса</th>
@@ -60,8 +61,17 @@ export default {
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
+                        <td>
+                            <router-link :to="{name: 'CommunitiesShow', params: { id: record.id }}">
+                                <i class="bi bi-eye"></i>
+                            </router-link>
+                        </td>
                         <td>{{record.district.name}}</td>
-                        <td>{{record.name}}</td>
+                        <td>
+                            <router-link :to="{name: 'CommunitiesShow', params: { id: record.id }}">
+                                {{record.name}}
+                            </router-link>
+                        </td>
                         <td>{{record.address}}</td>
                         <td>{{record.edrpou}}</td>
                         <td>{{record.koatuu}}</td>

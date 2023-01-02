@@ -4,6 +4,7 @@ import { mapGetters } from 'vuex';
 import DataTable from '../../components/ui/DataTable.vue';
 
 export default {
+    name: 'SettlementsMain',
     components: {
         DataTable
     },
@@ -42,9 +43,10 @@ export default {
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>
-                        <th>Сільська рада</th>
-                        <th>Тип</th>
+                        <th></th>
                         <th>Назва</th>
+                        <th>Тип</th>
+                        <th>Сільська рада</th>
                         <th>Індекс</th>
                         <th>КАТОТТГ</th>
                         <th></th>
@@ -53,11 +55,16 @@ export default {
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
-                        <td>{{record.council_id}}</td>
-                        <td>{{record.settlement_type_id}}</td>
-                        <td>{{record.name}}</td>
-                        <td>{{record.postcode}}</td>
-                        <td>{{record.katottg}}</td>
+                        <td>
+                            <router-link :to="{name: 'SettlementsShow', params: { id: record.id }}">
+                                <i class="bi bi-eye"></i>
+                            </router-link>
+                        </td>
+                        <td>{{ record.name }}</td>
+                        <td>{{ record.settlement_type.name }}</td>
+                        <td>{{ record.council.name }}</td>
+                        <td>{{ record.postcode }}</td>
+                        <td>{{ record.katottg }}</td>
                         <td></td>
                     </tr>
                 </template>

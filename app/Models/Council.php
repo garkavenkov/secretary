@@ -23,4 +23,14 @@ class Council extends Model
     {
         return $this->hasMany(Settlement::class);
     }
+
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(CouncilType::class, 'council_type_id');
+    }
 }

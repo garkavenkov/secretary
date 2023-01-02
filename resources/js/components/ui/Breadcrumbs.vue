@@ -1,13 +1,4 @@
 <template>
-    <!-- <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li v-for="(item, index) in breadcrumbs"
-                :key="index"
-                class="breadcrumb-item">
-                <router-link>{{ item.name }}</router-link>
-            </li>
-        </ol>
-    </nav> -->
     <ul class="breadcrumbs" v-if="breadcrumbs.length > 0">
         <li v-for="(item, index) in breadcrumbs"
             :key="index"
