@@ -23,7 +23,6 @@ export default {
     provide() {
         return {
             modalTitle: 'Новий регіон',
-            modalSubmitCaption: 'Додати',
         }
     },
     methods: {
@@ -81,6 +80,6 @@ export default {
         </div>
     </div>
 
-    <RegionForm  :formData="form"/>
+    <RegionForm  :formData="form" @refreshData="$store.dispatch('Regions/fetchRegions')"/>
 
 </template>

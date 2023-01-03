@@ -12,15 +12,21 @@ export const Districts = {
         district: state => state.district
     },
     mutations: {
-        setDistricts: (state, payload) => {
-            state.districts = payload;
+        setData: (state, payload) => {
+            state[payload.ent] = payload.data;
         }
     },
     actions: {
-        fetchData: ({commit}) =>  {
+        fetchDistricts: ({commit}) =>  {
             axios.get('/api/v1/districts')
                 .then(res => {
-                    commit('setDistricts', res.data.data);
+                    commit('setData', {ent:'districts', data: res.data.data});
+                });
+        },
+        fetchDistrict: ({commit}, id) =>  {
+            axios.get(`/api/v1/districts/${id}`)
+                .then(res => {
+                    commit('setData', {ent:'district', data: res.data.data});
                 });
         }
     }

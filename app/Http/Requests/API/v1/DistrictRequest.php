@@ -38,4 +38,19 @@ class DistrictRequest extends FormRequest
             'center'            =>  'required|min:3'
         ];
     }
+
+    /**
+     * Custom messages for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required'         =>  'Ви не вказали найменування району',
+            'name.min'              =>  'Назва району повинна бути більш ніж :min символів',
+            'center.required'       =>  'Ви не вказали обласний центр',
+            'center.min'            =>  'Назва адміністратитного центру повинна бути більш ніж :min символів',
+        ];
+    }
 }

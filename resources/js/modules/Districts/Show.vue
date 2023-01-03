@@ -5,7 +5,12 @@
         <div class="col-md-8 mx-auto">
             <div class="card" v-if="district.name">
                 <div class="card-header">
-                    <h5>Інформація</h5>
+                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
+                        <span>Інформація</span>
+                        <button class="btn btn-sm btn-light" @click="editDistrict" title="Редагувати дані">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
@@ -38,10 +43,10 @@
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <div class="dictionary-name__wrapper">
+                            <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Громади в районі</span>
-                                <button class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-plus"></i>
+                                <button class="btn btn-sm btn-light" title="Додати громаду">
+                                    <i class="bi bi-plus-lg"></i>
                                 </button>
                             </div>
                         </div>
@@ -72,10 +77,17 @@
             </div>
         </div>
     </div>
+
+    <DistrictForm :formData="districtFormData" action="update"/>
+
 </template>
 
 <script>
+import { Modal } from 'bootstrap';
 import DataTable from '../../components/ui/DataTable.vue'
+import DistrictForm from './Form.vue';
+import { mapGetters } from 'vuex';
+
 export default {
     name: 'DistrictsShow',
     props: {
@@ -86,22 +98,40 @@ export default {
     },
     data() {
         return {
-            district: {}
+            districtFormData: {
+                region_id: 0,
+                name: '',
+                center: ''
+            }
+        }
+    },
+    provide() {
+        return {
+            modalTitle: 'Редагувати регіон',
+            modalSubmitCaption: 'Зберегти',
         }
     },
     methods: {
-        fetchData() {
-            axios.get(`/api/v1/districts/${this.id}`)
-                .then(res => {
-                    this.district = res.data.data
-                })
+        editDistrict() {
+            var myModal = new Modal(document.getElementById('DistrictForm'))
+
+            this.districtFormData.id        = this.district.id;
+            this.districtFormData.region_id = this.district.region_id;
+            this.districtFormData.name      = this.district.name;
+            this.districtFormData.center    = this.district.center;
+
+            myModal.show();
         }
     },
+    computed: {
+        ...mapGetters('Districts', ['district'])
+    },
     created() {
-        this.fetchData();
+        this.$store.dispatch('Districts/fetchDistrict', this.id);
     },
     components: {
-        DataTable
+        DataTable,
+        DistrictForm
     }
 }
 </script>

@@ -8,7 +8,7 @@
                     <!-- <h5>Інформація</h5> -->
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
-                        <button class="btn btn-sm btn-light" @click="editRegion" title="Редагувати дані">
+                        <button class="btn btn-sm btn-light" @click="openRegionForm" title="Редагувати дані">
                             <i class="bi bi-pencil"></i>
                         </button>
                     </div>
@@ -36,7 +36,7 @@
                         <div class="card-header">
                             <div class="dictionary-name__wrapper flex-grow-1 justify-content-between">
                                 <span>Районі в регіоні</span>
-                                <button class="btn btn-sm btn-light" title="Додати район">
+                                <button class="btn btn-sm btn-light" title="Додати район" @click="openDistrictForm">
                                     <i class="bi bi-plus-lg"></i>
                                 </button>
                             </div>
@@ -59,7 +59,7 @@
                                                     <td>{{record.name}}</td>
                                                 </router-link>
                                             </td>
-                                            <td>{{ record.centr }}</td>
+                                            <td>{{ record.center }}</td>
                                         </tr>
                                     </template>
                                 </DataTable>
@@ -76,16 +76,19 @@
         </div>
     </div>
 
-    <RegionForm :formData="formData" action="update"/>
+    <RegionForm :formData="regionFormData" action="update"/>
+    <DistrictForm :formData="districtFormData" @refreshData="$store.dispatch('Regions/fetchRegion', id)" :disabled-fields="['region_id']"/>
 
 </template>
 
 <script>
 import { Modal } from 'bootstrap';
+import { computed } from 'vue';
+import { mapGetters } from 'vuex';
 
 import DataTable from '../../components/ui/DataTable.vue';
 import RegionForm from './Form.vue';
-import { mapGetters } from 'vuex';
+import DistrictForm from '../Districts/Form.vue';
 
 export default {
     name: 'RegionsShow',
@@ -97,26 +100,44 @@ export default {
     },
     provide() {
         return {
-            modalTitle: 'Редагувати регіон',
-            modalSubmitCaption: 'Зберегти',
+            modalTitle: computed(() => this.modalTitle), //'Редагувати регіон',
+            modalSubmitCaption: computed(() => this.modalSubmitCaption) //'Зберегти',
         }
     },
     data() {
         return {
-            formData: {
+            regionFormData: {
                 name: '',
                 center: '',
                 id: null
-            }
+            },
+            districtFormData: {
+                region_id: this.id,
+                name: '',
+                center: '',
+            },
+            modalTitle: '',
+            modalSubmitCaption: ''
         }
     },
     methods: {
-        editRegion() {
-            var myModal = new Modal(document.getElementById('RegionForm'))
+        openRegionForm() {
+            let myModal = new Modal(document.getElementById('RegionForm'))
 
-            this.formData.name = this.region.name;
-            this.formData.center = this.region.center;
-            this.formData.id = this.region.id;
+            this.modalTitle         = 'Редагувати регіон';
+            this.modalSubmitCaption = 'Зберегти';
+
+            this.regionFormData.name      = this.region.name;
+            this.regionFormData.center    = this.region.center;
+            this.regionFormData.id        = this.region.id;
+
+            myModal.show();
+        },
+        openDistrictForm() {
+            let myModal = new Modal(document.getElementById('DistrictForm'))
+
+            this.modalTitle         = 'Новий район в регіоні';
+            this.modalSubmitCaption = 'Додати';
 
             myModal.show();
         }
@@ -130,6 +151,7 @@ export default {
     components:{
         DataTable,
         RegionForm,
+        DistrictForm
     }
 }
 </script>

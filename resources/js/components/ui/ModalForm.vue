@@ -29,10 +29,16 @@ export default {
             required: true
         },
     },
-    inject: [
-        'modalTitle',
-        'modalSubmitCaption'
-    ],
+    inject: {
+        modalTitle: {
+            from: 'modalTitle',
+            default: 'Новий запис'
+        },
+        modalSubmitCaption : {
+            from: 'modalSubmitCaption',
+            default: 'Додати'
+        }
+    },
     data() {
         return {}
     },

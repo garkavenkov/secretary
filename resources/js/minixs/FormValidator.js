@@ -18,4 +18,15 @@ export default {
             return false;
         },
     },
+    created() {
+        var vm = this;
+        var fields = Object.keys(this.formData);
+        fields.forEach(function(f) {
+            let field = `formData.${f}`
+            vm.$watch(field, function() {
+                if (this.errors[f]) delete this.errors[f];
+            });
+        });
+
+    },
 }
