@@ -12,15 +12,21 @@ export const Regions = {
         region: state => state.region
     },
     mutations: {
-        setRegions: (state, payload) => {
-            state.regions = payload;
+        setData: (state, payload) => {
+            state[payload.ent] = payload.data;
         }
     },
     actions: {
-        fetchData: ({commit}) =>  {
+        fetchRegions: ({commit}) =>  {
             axios.get('/api/v1/regions')
                 .then(res => {
-                    commit('setRegions', res.data.data);
+                    commit('setData', {ent:'regions', data: res.data.data});
+                });
+        },
+        fetchRegion: ({commit}, id) =>  {
+            axios.get(`/api/v1/regions/${id}`)
+                .then(res => {
+                    commit('setData', {ent:'region', data: res.data.data});
                 });
         }
     }
