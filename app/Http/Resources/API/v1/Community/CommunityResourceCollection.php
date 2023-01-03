@@ -22,6 +22,7 @@ class CommunityResourceCollection extends ResourceCollection
                 'district'      =>  new DistrictResource($community->whenLoaded('district')),
                 'name'          =>  $community->name,
                 'address'       =>  $community->address,
+                'center'        =>  $community->center,
                 'edrpou'        =>  $community->edrpou,
                 'koatuu'        =>  $community->koatuu,
             ];

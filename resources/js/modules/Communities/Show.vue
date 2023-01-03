@@ -5,7 +5,12 @@
         <div class="col-md-8 mx-auto">
             <div class="card" v-if="community.name">
                 <div class="card-header">
-                    <h5>Інформація о громаді</h5>
+                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
+                        <span>Інформація о громаді</span>
+                        <button class="btn btn-sm btn-light" @click="openCommunityForm" title="Редагувати дані">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
@@ -15,6 +20,14 @@
                             </div>
                             <div class="col-md-9">
                                 {{ community.name }}
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3">
+                                Адміністративний центр
+                            </div>
+                            <div class="col-md-9">
+                                {{ community.center }}
                             </div>
                         </div>
                         <div class="row mb-2">
@@ -64,10 +77,10 @@
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <div class="dictionary-name__wrapper">
+                            <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Міські / сільські ради в громаді</span>
-                                <button class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-plus"></i>
+                                <button class="btn btn-sm btn-light" title="Додати раду">
+                                    <i class="bi bi-plus-lg"></i>
                                 </button>
                             </div>
                         </div>
@@ -85,7 +98,6 @@
                                             :key="record.id">
                                         <td>
                                             <router-link :to="{name: 'CouncilsShow', params: { id: record.id }}">
-                                                <!-- <i class="bi bi-eye"></i> -->
                                                 <td>{{record.name}}</td>
                                             </router-link>
                                         </td>
@@ -99,10 +111,21 @@
             </div>
         </div>
     </div>
+
+    <CommunityForm
+            :formData="communityFormData"
+            action='update'
+            @refreshData="$store.dispatch('Communities/fetchRecord', id)"/>
+
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { computed } from 'vue';
+import { Modal } from 'bootstrap';
+
 import DataTable from '../../components/ui/DataTable.vue';
+import CommunityForm from './Form.vue';
 
 export default {
     name: 'CommunitiesShow',
@@ -114,22 +137,54 @@ export default {
     },
     data() {
         return {
-            community: {}
+            communityFormData: {
+                id: null,
+                region_id: 0,
+                district_id: 0,
+                name:   '',
+                center: '',
+                address:'',
+                edrpou: '',
+                koatuu: ''
+            },
+            modalTitle: '',
+            modalSubmitCaption: ''
+        }
+    },
+    provide() {
+        return {
+            modalTitle: computed(() => this.modalTitle),
+            modalSubmitCaption: computed(() => this.modalSubmitCaption),
         }
     },
     methods: {
-        fetchData() {
-            axios.get(`/api/v1/communities/${this.id}`)
-                .then(res => {
-                    this.community = res.data.data;
-                })
+        openCommunityForm() {
+            let myModal = new Modal(document.getElementById('CommunityForm'))
+
+            this.modalTitle         = 'Редагувати громаду';
+            this.modalSubmitCaption = 'Зберегти';
+
+            this.communityFormData.id           =   this.community.id;
+            this.communityFormData.region_id    =   this.community.district.region_id;
+            this.communityFormData.district_id  =   this.community.district_id;
+            this.communityFormData.name         =   this.community.name;
+            this.communityFormData.center       =   this.community.center;
+            this.communityFormData.address      =   this.community.address;
+            this.communityFormData.edrpou       =   this.community.edrpou;
+            this.communityFormData.koatuu       =   this.community.koatuu;
+
+            myModal.show();
         }
     },
+    computed: {
+        ...mapGetters('Communities', ['community']),
+    },
     created() {
-        this.fetchData();
+        this.$store.dispatch('Communities/fetchRecord', this.id);
     },
     components: {
-        DataTable
+        DataTable,
+        CommunityForm
     }
 }
 </script>

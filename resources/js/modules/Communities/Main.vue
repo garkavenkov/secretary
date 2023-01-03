@@ -1,28 +1,43 @@
 <script>
-
+import { mapGetters } from 'vuex';
+import { Modal } from 'bootstrap';
 import DataTable from '../../components/ui/DataTable.vue';
+import CommunityForm from './Form.vue';
 
 export default {
     name: 'DistrictsMain',
     components: {
-        DataTable
+        DataTable,
+        CommunityForm
     },
     data() {
         return {
-            communities: [],
+            communityFormData: {
+                region_id: 0,
+                district_id: 0,
+                name:   '',
+                center: '',
+                address:'',
+                edrpou: '',
+                koatuu: ''
+            }
+        }
+    },
+    provide() {
+        return {
+            modalTitle: 'Нова громада',
         }
     },
     methods: {
-        fetchData() {
-            axios.get('/api/v1/communities')
-                .then(res => {
-                    this.communities = res.data.data;
-                });
+        openCommunityForm() {
+            let myModal = new Modal(document.getElementById('CommunityForm'))
+            myModal.show();
         }
     },
-    created() {
-        this.fetchData();
+    computed: {
+        ...mapGetters('Communities', ['communities'])
     }
+
 }
 </script>
 
@@ -33,8 +48,8 @@ export default {
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Довідник "Громади"</span>
-                <button class="btn btn-sm btn-primary">
-                    <i class="bi bi-plus"></i>
+                <button class="btn btn-sm btn-primary" title="Додати громаду" @click="openCommunityForm">
+                    <i class="bi bi-plus-lg"></i>
                 </button>
             </div>
             <div>
@@ -42,7 +57,6 @@ export default {
                     <i class="bi bi-funnel"></i>
                 </button>
             </div>
-            <!-- <h5>Громади</h5> -->
         </div>
         <div class="card-body">
             <DataTable
@@ -80,5 +94,7 @@ export default {
             </DataTable>
         </div>
     </div>
+
+    <CommunityForm :formData="communityFormData" @refreshData="$store.dispatch('Communities/fetchRecords')"/>
 
 </template>

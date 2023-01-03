@@ -1,28 +1,24 @@
 import axios from 'axios';
+import crud from '../core/crud';
 
 export const Communities = {
     namespaced: true,
     state: {
         communities: [],
-        community: {}
-
+        community: {},
+        url: '/api/v1/communities',
+        entities: 'communities',
+        entity: 'community',
     },
     getters: {
         communities: state => state.communities,
         community: state => state.community
     },
     mutations: {
-        setCommunities: (state, payload) => {
-            state.communities = payload;
-        }
+        ...crud.mutations,
     },
     actions: {
-        fetchData: ({commit}) =>  {
-            axios.get('/api/v1/communities')
-                .then(res => {
-                    commit('setCommunities', res.data.data);
-                });
-        }
+        ...crud.actions
     }
 }
 

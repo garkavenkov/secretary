@@ -22,6 +22,7 @@ class CommunityResource extends JsonResource
             'district'      =>  new DistrictResource($this->whenLoaded('district')),
             'name'          =>  $this->name,
             'address'       =>  $this->address,
+            'center'        =>  $this->center,
             'edrpou'        =>  $this->edrpou,
             'koatuu'        =>  $this->koatuu,
             'councils'      =>  CouncilResource::collection($this->whenLoaded('councils')),

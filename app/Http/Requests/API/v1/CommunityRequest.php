@@ -42,4 +42,27 @@ class CommunityRequest extends FormRequest
             'edrpou'        =>  ['required', 'regex:/^\d{8}$/i',  'unique:communities,edrpou,' . $this->id]
         ];
     }
+
+    /**
+     * Custom messages for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required'         =>  'Ви не вказали назву громади',
+            'name.min'              =>  'Назва громади повинна бути більш ніж :min символів',
+            'center.required'       =>  'Ви не вказали адміністративний центр',
+            'center.min'            =>  'Назва адміністратитного центру повинна бути більш ніж :min символів',
+            'address.required'      =>  'Ви не указали адрес',
+            'address.min'           =>  'Укажіть не менше ніж :min символа',
+            'edrpou.required'       =>  'Ви не указали код ЄДРПОУ',
+            'edrpou.regex'          =>  'Ви не указали невірний код ЄДРПОУ',
+            'edrpou.unique'         =>  'Такий код ЄДРПОУ вже існує',
+            'koatuu.required'       =>  'Ви не указали код КОАТУУ',
+            'koatuu.regex'          =>  'Ви не указали невірний код КОАТУУ',
+            'koatuu.unique'         =>  'Такий код КОАТУУ вже існує',
+        ];
+    }
 }

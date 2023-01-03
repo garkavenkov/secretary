@@ -84,14 +84,14 @@ export default {
     },
     created() {
         this.$store.dispatch('Regions/fetchRegions');
-        this.$store.dispatch('Districts/fetchDistricts');
+        this.$store.dispatch('Districts/fetchRecords');
         this.$store.dispatch('FamilyRelationships/fetchData');
         this.$store.dispatch('HouseholdTypes/fetchData');
         this.$store.dispatch('WorkPlaces/fetchData');
         this.$store.dispatch('Settlements/fetchData');
         this.$store.dispatch('Councils/fetchData');
         this.$store.dispatch('CouncilTypes/fetchData');
-        this.$store.dispatch('Communities/fetchData');
+        this.$store.dispatch('Communities/fetchRecords');
     }
 }
 </script>

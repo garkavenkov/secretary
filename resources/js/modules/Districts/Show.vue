@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
-                        <button class="btn btn-sm btn-light" @click="editDistrict" title="Редагувати дані">
+                        <button class="btn btn-sm btn-light" @click="openDistrictForm" title="Редагувати дані">
                             <i class="bi bi-pencil"></i>
                         </button>
                     </div>
@@ -45,7 +45,7 @@
                         <div class="card-header">
                             <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Громади в районі</span>
-                                <button class="btn btn-sm btn-light" title="Додати громаду">
+                                <button class="btn btn-sm btn-light" title="Додати громаду" @click="openCommunityForm">
                                     <i class="bi bi-plus-lg"></i>
                                 </button>
                             </div>
@@ -78,15 +78,26 @@
         </div>
     </div>
 
-    <DistrictForm :formData="districtFormData" action="update"/>
+    <DistrictForm
+            :formData="districtFormData"
+            action="update"
+            @refreshData="$store.dispatch('Districts/fetchRecord', id)"/>
+
+    <CommunityForm
+            :formData="communityFormData"
+            :disabled-fields="['region_id', 'district_id']"
+            @refreshData="$store.dispatch('Districts/fetchRecord', id)"/>
 
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { computed } from 'vue';
 import { Modal } from 'bootstrap';
+
 import DataTable from '../../components/ui/DataTable.vue'
 import DistrictForm from './Form.vue';
-import { mapGetters } from 'vuex';
+import CommunityForm from '../Communities/Form.vue';
 
 export default {
     name: 'DistrictsShow',
@@ -102,23 +113,48 @@ export default {
                 region_id: 0,
                 name: '',
                 center: ''
-            }
+            },
+            communityFormData: {
+                region_id: 0,
+                district_id: 0,
+                name:   '',
+                center: '',
+                address:'',
+                edrpou: '',
+                koatuu: ''
+            },
+            modalTitle: '',
+            modalSubmitCaption: ''
         }
     },
     provide() {
         return {
-            modalTitle: 'Редагувати регіон',
-            modalSubmitCaption: 'Зберегти',
+            modalTitle: computed(() => this.modalTitle),
+            modalSubmitCaption: computed(() => this.modalSubmitCaption),
         }
     },
     methods: {
-        editDistrict() {
+        openDistrictForm() {
             var myModal = new Modal(document.getElementById('DistrictForm'))
+
+            this.modalTitle = 'Редагувати регіон';
+            this.modalSubmitCaption = 'Зберегти';
 
             this.districtFormData.id        = this.district.id;
             this.districtFormData.region_id = this.district.region_id;
             this.districtFormData.name      = this.district.name;
             this.districtFormData.center    = this.district.center;
+
+            myModal.show();
+        },
+        openCommunityForm() {
+            var myModal = new Modal(document.getElementById('CommunityForm'))
+
+            this.modalTitle = 'Нова громада';
+            this.modalSubmitCaption = 'Додати';
+
+            this.communityFormData.region_id = this.district.region_id;
+            this.communityFormData.district_id = this.district.id;
 
             myModal.show();
         }
@@ -127,11 +163,12 @@ export default {
         ...mapGetters('Districts', ['district'])
     },
     created() {
-        this.$store.dispatch('Districts/fetchDistrict', this.id);
+        this.$store.dispatch('Districts/fetchRecord', this.id);
     },
     components: {
         DataTable,
-        DistrictForm
+        DistrictForm,
+        CommunityForm
     }
 }
 </script>
