@@ -1,11 +1,16 @@
 <template>
     <breadcrumbs />
-    <!-- {{ council }} -->
+
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card" v-if="council.name">
                 <div class="card-header">
-                    <h5>Інформація о раді</h5>
+                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
+                        <span>Інформація о раді</span>
+                        <button class="btn btn-sm btn-light" @click="openCouncilForm" title="Редагувати дані">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -37,9 +42,9 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="dictionary-name__wrapper">
-                                <span>Населенні пункти в громаді</span>
-                                <button class="btn btn-sm btn-outline-secondary">
-                                    <i class="bi bi-plus"></i>
+                                <span>Підпорядковані населенні пункти</span>
+                                <button class="btn btn-sm btn-light">
+                                    <i class="bi bi-plus-lg"></i>
                                 </button>
                             </div>
                         </div>
@@ -73,10 +78,21 @@
             </div>
         </div>
     </div>
+
+    <CouncilForm
+            :formData="councilFormData"
+            action="update"
+            @refreshData="$store.dispatch('Councils/fetchRecord', id)" />
+
 </template>
 
 <script>
+import { Modal } from 'bootstrap';
+import { computed } from 'vue';
+
 import DataTable from '../../components/ui/DataTable.vue';
+import CouncilForm from './Form.vue';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'CouncilsShow',
@@ -88,22 +104,57 @@ export default {
     },
     data() {
         return {
-            council: {}
+            councilFormData: {
+                id:                 null,
+                region_id:          0,
+                district_id:        0,
+                community_id:       0,
+                council_type_id:    0,
+                name:               '',
+                address:            '',
+                edrpou:             '',
+                koatuu:             '',
+            },
+            modalTitle: '',
+            modalSubmitCaption: ''
+        }
+    },
+    provide() {
+        return {
+            modalTitle: computed(() => this.modalTitle),
+            modalSubmitCaption: computed(() => this.modalSubmitCaption),
         }
     },
     methods: {
-        fetchData() {
-            axios.get(`/api/v1/councils/${this.id}`)
-                .then(res => {
-                    this.council = res.data.data;
-                })
-        }
+        openCouncilForm() {
+            let myModal = new Modal(document.getElementById('CouncilForm'))
+
+            this.modalTitle         = 'Редагувати раду';
+            this.modalSubmitCaption = 'Зберегти';
+
+            this.councilFormData.id                 =   this.council.id;
+            this.councilFormData.region_id          =   this.council.community.district.region_id;
+            this.councilFormData.district_id        =   this.council.community.district_id;
+            this.councilFormData.community_id       =   this.council.community_id;
+            this.councilFormData.council_type_id    =   this.council.council_type_id;
+            this.councilFormData.name               =   this.council.name;
+            this.councilFormData.center             =   this.council.center;
+            this.councilFormData.address            =   this.council.address;
+            this.councilFormData.edrpou             =   this.council.edrpou;
+            this.councilFormData.koatuu             =   this.council.koatuu;
+
+            myModal.show();
+        },
+    },
+    computed: {
+        ...mapGetters('Councils', ['council']),
     },
     created() {
-        this.fetchData();
+        this.$store.dispatch('Councils/fetchRecord', this.id)
     },
     components: {
-        DataTable
+        DataTable,
+        CouncilForm
     }
 }
 </script>

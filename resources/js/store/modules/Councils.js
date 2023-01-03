@@ -1,10 +1,14 @@
 import axios from 'axios';
+import crud from '../core/crud';
 
 export const Councils = {
     namespaced: true,
     state: {
         councils: [],
-        council: {}
+        council: {},
+        url: '/api/v1/councils',
+        entities: 'councils',
+        entity: 'council',
 
     },
     getters: {
@@ -12,17 +16,10 @@ export const Councils = {
         council: state => state.council
     },
     mutations: {
-        setCouncils: (state, payload) => {
-            state.councils = payload;
-        }
+        ...crud.mutations,
     },
     actions: {
-        fetchData: ({commit}) =>  {
-            axios.get('/api/v1/councils')
-                .then(res => {
-                    commit('setCouncils', res.data.data);
-                });
-        }
+        ...crud.actions
     }
 }
 

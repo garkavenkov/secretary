@@ -79,7 +79,7 @@
                         <div class="card-header">
                             <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Міські / сільські ради в громаді</span>
-                                <button class="btn btn-sm btn-light" title="Додати раду">
+                                <button class="btn btn-sm btn-light" title="Додати раду"  @click="openCouncilForm">
                                     <i class="bi bi-plus-lg"></i>
                                 </button>
                             </div>
@@ -117,6 +117,11 @@
             action='update'
             @refreshData="$store.dispatch('Communities/fetchRecord', id)"/>
 
+    <CouncilForm
+            :formData="councilFormData"
+            @refreshData="$store.dispatch('Communities/fetchRecord', id)"
+            :disabledFields="['region_id', 'district_id', 'community_id']"/>
+
 </template>
 
 <script>
@@ -126,6 +131,7 @@ import { Modal } from 'bootstrap';
 
 import DataTable from '../../components/ui/DataTable.vue';
 import CommunityForm from './Form.vue';
+import CouncilForm from '../Councils/Form.vue';
 
 export default {
     name: 'CommunitiesShow',
@@ -146,6 +152,16 @@ export default {
                 address:'',
                 edrpou: '',
                 koatuu: ''
+            },
+            councilFormData: {
+                region_id:          0,
+                district_id:        0,
+                community_id:       0,
+                council_type_id:    0,
+                name:               '',
+                address:            '',
+                edrpou:             '',
+                koatuu:             '',
             },
             modalTitle: '',
             modalSubmitCaption: ''
@@ -174,6 +190,23 @@ export default {
             this.communityFormData.koatuu       =   this.community.koatuu;
 
             myModal.show();
+        },
+        openCouncilForm() {
+            let myModal = new Modal(document.getElementById('CouncilForm'))
+
+            this.modalTitle         = 'Нава рада';
+            this.modalSubmitCaption = 'Додати';
+
+            this.councilFormData.region_id      =   this.community.district.region_id;
+            this.councilFormData.district_id    =   this.community.district_id;
+            this.councilFormData.community_id   =   this.community.id;
+            // this.councilFormData.council_type_id
+            // this.councilFormData.name
+            // this.councilFormData.address
+            // this.councilFormData.edrpou
+            // this.councilFormData.koatuu
+
+            myModal.show();
         }
     },
     computed: {
@@ -184,7 +217,8 @@ export default {
     },
     components: {
         DataTable,
-        CommunityForm
+        CommunityForm,
+        CouncilForm
     }
 }
 </script>

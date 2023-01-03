@@ -46,7 +46,7 @@ class CouncilController extends Controller
      */
     public function show($id)
     {
-        $council = Council::with('community', 'settlements')->findOrFail($id);
+        $council = Council::with('community.district', 'settlements')->findOrFail($id);
 
         return new CouncilResource($council);
     }

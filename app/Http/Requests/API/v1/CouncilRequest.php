@@ -41,4 +41,29 @@ class CouncilRequest extends FormRequest
             'edrpou'            =>  ['required', 'regex:/^\d{8}$/i', 'unique:councils,edrpou,' . $this->id]
         ];
     }
+
+    /**
+     * Custom messages for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'community_id.required'     =>  'Ви не указали громаду',
+            'community_id.exists'       =>  'Громада с таким ID не існує',
+            'council_type_id.required'  =>  'Ви не указали тип ради',
+            'council_type_id.exists'    =>  'Тип ради с таким ID не існує',
+            'name.required'             =>  'Ви не вказали назву ради',
+            'name.min'                  =>  'Назва ради повинна бути більш ніж :min символів',
+            'address.required'          =>  'Ви не указали адрес',
+            'address.min'               =>  'Укажіть не менше ніж :min символа',
+            'edrpou.required'           =>  'Ви не указали код ЄДРПОУ',
+            'edrpou.regex'              =>  'Ви не указали невірний код ЄДРПОУ',
+            'edrpou.unique'             =>  'Такий код ЄДРПОУ вже існує',
+            'koatuu.required'           =>  'Ви не указали код КОАТУУ',
+            'koatuu.regex'              =>  'Ви не указали невірний код КОАТУУ',
+            'koatuu.unique'             =>  'Такий код КОАТУУ вже існує',
+        ];
+    }
 }
