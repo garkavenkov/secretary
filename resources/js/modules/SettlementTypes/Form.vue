@@ -4,12 +4,12 @@
 
         <div class="row mb-3">
             <div class="col">
-                <label for="settlementName" class="form-label">Назва</label>
+                <label for="settlementTypeName" class="form-label">Назва</label>
                 <input  type="text"
                         :class="['form-control', hasError('name') ? 'is-invalid' : '']"
-                        id="settlementName"
+                        id="settlementTypeName"
                         v-model="formData.name" />
-                <div id="settlementNameValidation" class="invalid-feedback">
+                <div id="settlementTypeNameValidation" class="invalid-feedback">
                     {{ getError('name') }}
                 </div>
             </div>
