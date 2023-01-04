@@ -1,10 +1,14 @@
 import axios from 'axios';
+import crud from '../core/crud';
 
 export const Regions = {
     namespaced: true,
     state: {
         regions: [],
-        region: {}
+        region: {},
+        url: '/api/v1/regions',
+        entities: 'regions',
+        entity: 'region',
 
     },
     getters: {
@@ -12,23 +16,10 @@ export const Regions = {
         region: state => state.region
     },
     mutations: {
-        setData: (state, payload) => {
-            state[payload.ent] = payload.data;
-        }
+        ...crud.mutations,
     },
     actions: {
-        fetchRegions: ({commit}) =>  {
-            axios.get('/api/v1/regions')
-                .then(res => {
-                    commit('setData', {ent:'regions', data: res.data.data});
-                });
-        },
-        fetchRegion: ({commit}, id) =>  {
-            axios.get(`/api/v1/regions/${id}`)
-                .then(res => {
-                    commit('setData', {ent:'region', data: res.data.data});
-                });
-        }
+        ...crud.actions
     }
 }
 

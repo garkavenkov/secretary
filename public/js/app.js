@@ -21093,7 +21093,7 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   created: function created() {
-    this.$store.dispatch('Regions/fetchRegions');
+    this.$store.dispatch('Regions/fetchRecords');
     this.$store.dispatch('Districts/fetchRecords');
     this.$store.dispatch('FamilyRelationships/fetchData');
     this.$store.dispatch('HouseholdTypes/fetchData');
@@ -23189,7 +23189,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('Regions', ['region'])),
   created: function created() {
-    this.$store.dispatch('Regions/fetchRegion', this.id);
+    this.$store.dispatch('Regions/fetchRecord', this.id);
   },
   components: {
     DataTable: _components_ui_DataTable_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -27205,7 +27205,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
   var _component_RegionForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("RegionForm");
   var _component_DistrictForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DistrictForm");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_ctx.region.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <h5>Інформація</h5> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_ctx.region.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-sm btn-light",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.openRegionForm && $options.openRegionForm.apply($options, arguments);
@@ -28602,13 +28602,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Regions": () => (/* binding */ Regions)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var _core_crud__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/crud */ "./resources/js/store/core/crud.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 var Regions = {
   namespaced: true,
   state: {
     regions: [],
-    region: {}
+    region: {},
+    url: '/api/v1/regions',
+    entities: 'regions',
+    entity: 'region'
   },
   getters: {
     regions: function regions(state) {
@@ -28618,31 +28628,8 @@ var Regions = {
       return state.region;
     }
   },
-  mutations: {
-    setData: function setData(state, payload) {
-      state[payload.ent] = payload.data;
-    }
-  },
-  actions: {
-    fetchRegions: function fetchRegions(_ref) {
-      var commit = _ref.commit;
-      axios__WEBPACK_IMPORTED_MODULE_0__["default"].get('/api/v1/regions').then(function (res) {
-        commit('setData', {
-          ent: 'regions',
-          data: res.data.data
-        });
-      });
-    },
-    fetchRegion: function fetchRegion(_ref2, id) {
-      var commit = _ref2.commit;
-      axios__WEBPACK_IMPORTED_MODULE_0__["default"].get("/api/v1/regions/".concat(id)).then(function (res) {
-        commit('setData', {
-          ent: 'region',
-          data: res.data.data
-        });
-      });
-    }
-  }
+  mutations: _objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations),
+  actions: _objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].actions)
 };
 
 /***/ }),

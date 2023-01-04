@@ -49,7 +49,7 @@ class DistrictRequest extends FormRequest
         return [
             'name.required'         =>  'Ви не вказали найменування району',
             'name.min'              =>  'Назва району повинна бути більш ніж :min символів',
-            'center.required'       =>  'Ви не вказали обласний центр',
+            'center.required'       =>  'Ви не вказали андміністративний центр',
             'center.min'            =>  'Назва адміністратитного центру повинна бути більш ніж :min символів',
         ];
     }

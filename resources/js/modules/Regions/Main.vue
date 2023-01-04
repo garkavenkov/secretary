@@ -1,44 +1,6 @@
-<script>
-
-import { mapGetters } from 'vuex';
-import { Modal } from 'bootstrap';
-
-import DataTable from '../../components/ui/DataTable.vue';
-import RegionForm from './Form.vue';
-
-export default {
-    components: {
-        DataTable,
-        RegionForm
-    },
-
-    data() {
-        return {
-            form: {
-                name: '',
-                center: ''
-            }
-        }
-    },
-    provide() {
-        return {
-            modalTitle: 'Новий регіон',
-        }
-    },
-    methods: {
-        addRegion() {
-            var myModal = new Modal(document.getElementById('RegionForm'))
-            myModal.show();
-        },
-    },
-    computed: {
-        ...mapGetters('Regions', ['regions']),
-    },
-}
-</script>
-
 <template>
     <breadcrumbs />
+
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
@@ -83,3 +45,42 @@ export default {
     <RegionForm  :formData="form" @refreshData="$store.dispatch('Regions/fetchRegions')"/>
 
 </template>
+
+
+<script>
+import { mapGetters } from 'vuex';
+import { Modal } from 'bootstrap';
+
+import DataTable from '../../components/ui/DataTable.vue';
+import RegionForm from './Form.vue';
+
+export default {
+    components: {
+        DataTable,
+        RegionForm
+    },
+
+    data() {
+        return {
+            form: {
+                name: '',
+                center: ''
+            }
+        }
+    },
+    provide() {
+        return {
+            modalTitle: 'Новий регіон',
+        }
+    },
+    methods: {
+        addRegion() {
+            var myModal = new Modal(document.getElementById('RegionForm'))
+            myModal.show();
+        },
+    },
+    computed: {
+        ...mapGetters('Regions', ['regions']),
+    },
+}
+</script>

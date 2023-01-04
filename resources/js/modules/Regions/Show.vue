@@ -5,7 +5,6 @@
         <div class="col-md-8 mx-auto">
             <div class="card" v-if="region.name">
                 <div class="card-header">
-                    <!-- <h5>Інформація</h5> -->
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
                         <button class="btn btn-sm btn-light" @click="openRegionForm" title="Редагувати дані">
@@ -146,7 +145,7 @@ export default {
         ...mapGetters('Regions', ['region']),
     },
     created() {
-        this.$store.dispatch('Regions/fetchRegion', this.id);
+        this.$store.dispatch('Regions/fetchRecord', this.id);
     },
     components:{
         DataTable,
