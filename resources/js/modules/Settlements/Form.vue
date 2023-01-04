@@ -66,11 +66,11 @@
                 </div>
             </div>
             <div class="col">
-                <label for="settlementType" class="form-label">Тип ради</label>
+                <label for="settlementType" class="form-label">Тип</label>
                 <select :class="['form-control', hasError('settlement_type_id') ? 'is-invalid' : '']"
                         id="settlementType"
                         v-model="formData.settlement_type_id">
-                    <option disabled value="0">Оберіть тип ради</option>
+                    <option disabled value="0">Оберіть тип пункту</option>
                     <option :value="settlementType.id" v-for="settlementType in settlementTypes" :key="settlementType.id">
                         {{settlementType.name}}
                     </option>
@@ -112,8 +112,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="row mb-3">
-        </div> -->
 
     </ModalForm>
 

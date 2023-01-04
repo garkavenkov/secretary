@@ -27,4 +27,18 @@ class SettlementTypeRequest extends FormRequest
             'name'  =>  'required|min:3|unique:settlement_types,name'
         ];
     }
+
+    /**
+     * Custom messages for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required'                 =>  'Ви не вказали назву типу населенного пункту',
+            'name.min'                      =>  'Назва типу населенного пункту повинна бути більш ніж :min символів',
+            'name.unique'                   =>  'Тип с такою назвою вже існує',
+        ];
+    }
 }

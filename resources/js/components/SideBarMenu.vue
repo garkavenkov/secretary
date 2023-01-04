@@ -50,6 +50,13 @@
                     <span>Типи погосподарського обліку</span>
                 </router-link>
             </li>
+            <li class="combined-icons">
+                <router-link to="/settlement-types">
+                    <i class="bi bi-houses"></i>
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Типи населеного пункту</span>
+                </router-link>
+            </li>
             <li>
                 <router-link to="/work-places">
                     <i class="bi bi-person-gear"></i>

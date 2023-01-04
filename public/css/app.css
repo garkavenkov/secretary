@@ -12911,6 +12911,15 @@ textarea.form-control-lg {
 .sidebar-menu__wrapper li a:hover {
   background: #081D45;
 }
+.sidebar-menu__wrapper li.combined-icons {
+  position: relative;
+}
+.sidebar-menu__wrapper li.combined-icons a i:last-of-type {
+  position: fixed;
+  font-size: 0.6rem;
+  left: 6px;
+  margin-top: 6px;
+}
 .sidebar-menu.shrinked {
   width: 60px;
 }

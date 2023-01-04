@@ -14,6 +14,7 @@ import HouseholdCards       from "../modules/HouseholdCards/Main.vue";
 import HouseholdCardsShow   from "../modules/HouseholdCards/Show.vue";
 import Settlements          from "../modules/Settlements/Main.vue";
 import SettlementsShow      from "../modules/Settlements/Show.vue";
+import SettlementTypes      from "../modules/SettlementTypes/Main.vue";
 import Councils             from "../modules/Councils/Main.vue";
 import CouncilsShow         from "../modules/Councils/Show.vue";
 
@@ -33,7 +34,8 @@ const routes = [
     { path: '/settlements',             component: Settlements, meta: {name: 'Населенні пункти'}},
     { path: '/settlements/:id',         component: SettlementsShow, name: 'SettlementsShow', props: true, meta: {name: 'Інформація'}},
     { path: '/councils',                component: Councils, meta: {name: 'Міські / сільські ради'}},
-    { path: '/councils/:id',            component: CouncilsShow, name: 'CouncilsShow', props: true, meta: {name: 'Інформація'}}
+    { path: '/councils/:id',            component: CouncilsShow, name: 'CouncilsShow', props: true, meta: {name: 'Інформація'}},
+    { path: '/settlement-types',        component: SettlementTypes, meta: {name: 'Типи населеного пункту'}},
 ]
 
 const router = createRouter({

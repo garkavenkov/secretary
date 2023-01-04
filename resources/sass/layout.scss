@@ -82,6 +82,20 @@
                     background: #081D45;
                 }
             }
+
+            &.combined-icons {
+                position: relative;
+
+                a {
+                    i:last-of-type {
+                        position: fixed;
+                        font-size: 0.6rem;
+                        left: 6px;
+                        margin-top: 6px;
+                    }
+                }
+
+            }
         }
     }
 
