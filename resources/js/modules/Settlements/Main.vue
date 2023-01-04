@@ -1,32 +1,10 @@
-<script>
-
-import { mapGetters } from 'vuex';
-import DataTable from '../../components/ui/DataTable.vue';
-
-export default {
-    name: 'SettlementsMain',
-    components: {
-        DataTable
-    },
-    data() {
-        return {
-        }
-    },
-    methods: {
-    },
-    computed: {
-        ...mapGetters('Settlements', ['settlements']),
-    },
-}
-</script>
-
 <template>
     <breadcrumbs />
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Довідник "Населенні пункти"</span>
-                <button class="btn btn-sm btn-primary">
+                <button class="btn btn-sm btn-primary" @click="openSettlementForm">
                     <i class="bi bi-plus"></i>
                 </button>
             </div>
@@ -35,7 +13,6 @@ export default {
                     <i class="bi bi-funnel"></i>
                 </button>
             </div>
-            <!-- <h5>Населенні пункти</h5> -->
         </div>
         <div class="card-body">
             <DataTable
@@ -71,4 +48,55 @@ export default {
             </DataTable>
         </div>
     </div>
+
+    <SettlementForm
+            :formData="formData"
+            @refreshData="$store.dispatch('Settlements/fetchRecords')" />
+
 </template>
+
+<script>
+import { mapGetters } from 'vuex';
+import { Modal } from 'bootstrap'
+
+import DataTable from '../../components/ui/DataTable.vue';
+import SettlementForm from './Form.vue';
+
+export default {
+    name: 'SettlementsMain',
+    components: {
+        DataTable,
+        SettlementForm
+    },
+    data() {
+        return {
+            formData: {
+                region_id           : 0,
+                district_id         : 0,
+                community_id        : 0,
+                council_id          : 0,
+                settlement_type_id  : 0,
+                name                :'',
+                postcode            :'',
+                inner_code          :'',
+                katottg             :'',
+            }
+        }
+    },
+    provide() {
+        return {
+            modalTitle: 'Новий населений пункт',
+        }
+    },
+    methods: {
+        openSettlementForm() {
+            var myModal = new Modal(document.getElementById('SettlementForm'));
+            myModal.show();
+        }
+    },
+    computed: {
+        ...mapGetters('Settlements', ['settlements']),
+    },
+}
+</script>
+

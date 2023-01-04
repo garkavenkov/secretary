@@ -46,7 +46,7 @@ class SettlementController extends Controller
      */
     public function show($id)
     {
-        $settlement = Settlement::with('council', 'type')->findOrFail($id);
+        $settlement = Settlement::with('council.community.district.region', 'type')->findOrFail($id);
 
         return new SettlementResource($settlement);
     }

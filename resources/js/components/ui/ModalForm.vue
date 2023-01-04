@@ -1,6 +1,6 @@
 <template>
 
-    <div class="modal fade" :id="formId" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" :class="modalClass" :id="formId" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -28,6 +28,11 @@ export default {
             type: String,
             required: true
         },
+        'modalClass': {
+            type: String,
+            required: false,
+            default: ''
+        }
     },
     inject: {
         modalTitle: {

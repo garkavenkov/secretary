@@ -5,17 +5,13 @@
         <div class="col-md-8 mx-auto">
             <div class="card" v-if="settlement.name">
                 <div class="card-header">
-                    <!-- <h5>Інформація</h5> -->
-                    <div class="dictionary-name__wrapper">
-                        <span>Інформація</span>
-                        <!-- <button class="btn btn-sm btn-primary">
-                            <i class="bi bi-plus"></i>
-                        </button> -->
+                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
+                        <span>Інформація о поселенні</span>
+                        <button class="btn btn-sm btn-light" @click="openSettlementForm" title="Редагувати дані">
+                            <i class="bi bi-pencil"></i>
+                        </button>
                     </div>
                 <div>
-                <button class="btn btn-sm btn-outline-secondary">
-                    <i class="bi bi-pencil"></i>
-                </button>
             </div>
                 </div>
                 <div class="card-body">
@@ -70,14 +66,56 @@
                                 </router-link>
                             </div>
                         </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3">
+                                Громада
+                            </div>
+                            <div class="col-md-9">
+                                <router-link :to="{name: 'CommunitiesShow', params: {id: settlement.council.community_id}}">
+                                    {{ settlement.council.community.name }}
+                                </router-link>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3">
+                                Район
+                            </div>
+                            <div class="col-md-9">
+                                <router-link :to="{name: 'DistrictsShow', params: {id: settlement.council.community.district_id}}">
+                                    {{ settlement.council.community.district.name }}
+                                </router-link>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-3">
+                                Регіон
+                            </div>
+                            <div class="col-md-9">
+                                <router-link :to="{name: 'RegionsShow', params: {id: settlement.council.community.district.region_id}}">
+                                    {{ settlement.council.community.district.region.name }}
+                                </router-link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <SettlementForm
+            :formData="settlementFormData"
+            @refreshData="$store.dispatch('Settlements/fetchRecord', id)"
+            :disabledFields="['region_id', 'district_id', 'community_id', 'council_id']"
+            action="update" />
+
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import { Modal } from 'bootstrap';
+
+import SettlementForm from './Form.vue';
+
 export default {
     name: 'SettlementsShow',
     props: {
@@ -88,19 +126,53 @@ export default {
     },
     data() {
         return {
-            settlement: {}
+            settlementFormData: {
+                region_id           : 0,
+                district_id         : 0,
+                community_id        : 0,
+                council_id          : 0,
+                settlement_type_id  : 0,
+                name                :'',
+                postcode            :'',
+                inner_code          :'',
+                katottg             :'',
+            },
+            modalTitle: '',
+            modalSubmitCaption: ''
+        }
+    },
+    provide() {
+        return {
+            modalTitle: 'Редагувати поселення',
+            modalSubmitCaption: 'Зберегти',
         }
     },
     methods: {
-        fetchData() {
-            axios.get(`/api/v1/settlements/${this.id}`)
-                .then(res => {
-                    this.settlement = res.data.data
-                });
+        openSettlementForm() {
+            let myModal = new Modal(document.getElementById('SettlementForm'))
+
+            this.settlementFormData.id                  =   this.settlement.id;
+            this.settlementFormData.region_id           =   this.settlement.council.community.district.region_id;
+            this.settlementFormData.district_id         =   this.settlement.council.community.district_id;
+            this.settlementFormData.community_id        =   this.settlement.council.community_id;
+            this.settlementFormData.council_id          =   this.settlement.council_id;
+            this.settlementFormData.settlement_type_id  =   this.settlement.settlement_type_id;
+            this.settlementFormData.name                =   this.settlement.name;
+            this.settlementFormData.postcode            =   this.settlement.postcode;
+            this.settlementFormData.inner_code          =   this.settlement.inner_code;
+            this.settlementFormData.katottg             =   this.settlement.katottg;
+
+            myModal.show();
         }
     },
+    computed: {
+        ...mapGetters('Settlements', ['settlement']),
+    },
     created() {
-        this.fetchData();
+        this.$store.dispatch('Settlements/fetchRecord', this.id)
+    },
+    components: {
+        SettlementForm
     }
 }
 </script>

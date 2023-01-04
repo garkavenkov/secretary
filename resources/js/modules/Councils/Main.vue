@@ -81,8 +81,8 @@ export default {
                 edrpou:             '',
                 koatuu:             '',
             },
-            districts: [],
-            communities: [],
+            // districts: [],
+            // communities: [],
         }
     },
     provide() {

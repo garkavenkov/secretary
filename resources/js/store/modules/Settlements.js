@@ -1,10 +1,14 @@
 import axios from 'axios';
+import crud from '../core/crud';
 
 export const Settlements = {
     namespaced: true,
     state: {
         settlements: [],
-        settlement: {}
+        settlement: {},
+        url: '/api/v1/settlements',
+        entities: 'settlements',
+        entity: 'settlement',
 
     },
     getters: {
@@ -12,17 +16,10 @@ export const Settlements = {
         settlement: state => state.settlement
     },
     mutations: {
-        setSettlements: (state, payload) => {
-            state.settlements = payload;
-        }
+        ...crud.mutations,
     },
     actions: {
-        fetchData: ({commit}) =>  {
-            axios.get('/api/v1/settlements')
-                .then(res => {
-                    commit('setSettlements', res.data.data);
-                });
-        }
+        ...crud.actions
     }
 }
 

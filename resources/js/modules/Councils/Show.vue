@@ -41,9 +41,9 @@
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <div class="dictionary-name__wrapper">
+                            <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Підпорядковані населенні пункти</span>
-                                <button class="btn btn-sm btn-light">
+                                <button class="btn btn-sm btn-light" title="Додати населенний пункт" @click="openSettlementForm">
                                     <i class="bi bi-plus-lg"></i>
                                 </button>
                             </div>
@@ -84,15 +84,22 @@
             action="update"
             @refreshData="$store.dispatch('Councils/fetchRecord', id)" />
 
+
+    <SettlementForm
+            :formData="settlementFormData"
+            :disabledFields="['region_id', 'district_id', 'community_id', 'council_id']"
+            @refreshData="$store.dispatch('Councils/fetchRecord', id)" />
+
 </template>
 
 <script>
 import { Modal } from 'bootstrap';
 import { computed } from 'vue';
+import { mapGetters } from 'vuex';
 
 import DataTable from '../../components/ui/DataTable.vue';
 import CouncilForm from './Form.vue';
-import { mapGetters } from 'vuex';
+import SettlementForm from '../Settlements/Form.vue';
 
 export default {
     name: 'CouncilsShow',
@@ -114,6 +121,17 @@ export default {
                 address:            '',
                 edrpou:             '',
                 koatuu:             '',
+            },
+            settlementFormData: {
+                region_id             : 0,
+                district_id           : 0,
+                community_id          : 0,
+                council_id            : 0,
+                settlement_type_id    : 0,
+                name                  : '',
+                postcode              : '',
+                inner_code            : '',
+                katottg               : '',
             },
             modalTitle: '',
             modalSubmitCaption: ''
@@ -145,6 +163,19 @@ export default {
 
             myModal.show();
         },
+        openSettlementForm() {
+            let myModal = new Modal(document.getElementById('SettlementForm'))
+
+            this.modalTitle         = 'Новий населенний пункт';
+            this.modalSubmitCaption = 'Додати';
+
+            this.settlementFormData.region_id          =   this.council.community.district.region_id;
+            this.settlementFormData.district_id        =   this.council.community.district_id;
+            this.settlementFormData.community_id       =   this.council.community_id;
+            this.settlementFormData.council_id         =   this.council.id;
+
+            myModal.show();
+        }
     },
     computed: {
         ...mapGetters('Councils', ['council']),
@@ -154,7 +185,8 @@ export default {
     },
     components: {
         DataTable,
-        CouncilForm
+        CouncilForm,
+        SettlementForm,
     }
 }
 </script>
