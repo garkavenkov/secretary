@@ -93,7 +93,7 @@ export default {
         this.$store.dispatch('Regions/fetchRecords');
         this.$store.dispatch('Districts/fetchRecords');
         this.$store.dispatch('FamilyRelationships/fetchData');
-        this.$store.dispatch('HouseholdTypes/fetchData');
+        this.$store.dispatch('HouseholdTypes/fetchRecords');
         this.$store.dispatch('WorkPlaces/fetchData');
         this.$store.dispatch('SettlementTypes/fetchRecords');
         this.$store.dispatch('Settlements/fetchRecords');

@@ -1,10 +1,14 @@
+import crud from '../core/crud';
 import axios from 'axios';
 
 export const HouseholdTypes = {
     namespaced: true,
     state: {
         householdTypes: [],
-        householdType: {}
+        householdType: {},
+        url: '/api/v1/household-types',
+        entities: 'householdTypes',
+        entity: 'householdType'
 
     },
     getters: {
@@ -12,17 +16,10 @@ export const HouseholdTypes = {
         householdType: state => state.householdType
     },
     mutations: {
-        setHouseholdTypes: (state, payload) => {
-            state.householdTypes = payload;
-        }
+        ...crud.mutations
     },
     actions: {
-        fetchData: ({commit}) =>  {
-            axios.get('/api/v1/household-types')
-                .then(res => {
-                    commit('setHouseholdTypes', res.data.data);
-                });
-        }
+        ...crud.actions
     }
 }
 

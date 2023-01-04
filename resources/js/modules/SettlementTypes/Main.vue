@@ -7,7 +7,7 @@
                     <div class="dictionary-name__wrapper">
                         <span>Довідник "Тип населеного пункту"</span>
                         <button class="btn btn-sm btn-primary" @click="openFormForAdd">
-                            <i class="bi bi-plus"></i>
+                            <i class="bi bi-plus-lg"></i>
                         </button>
                     </div>
                 </div>

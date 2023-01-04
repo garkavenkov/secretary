@@ -27,4 +27,18 @@ class HouseholdTypeRequest extends FormRequest
             'name'  =>  'required|min:3|unique:household_types,name'
         ];
     }
+
+    /**
+     * Custom messages for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required'                 =>  'Ви не вказали назву типу об\'єкта погосподарського обліку',
+            'name.min'                      =>  'Назва типу типу об\'єкта повинна бути більш ніж :min символів',
+            'name.unique'                   =>  'Тип об\'єкта с такою назвою вже існує',
+        ];
+    }
 }
