@@ -23615,76 +23615,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Form.vue?vue&type=script&lang=js":
-/*!******************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Form.vue?vue&type=script&lang=js ***!
-  \******************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'WorkPlacesForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
-  props: {
-    'formData': {
-      type: Object,
-      required: true
-    },
-    'action': {
-      type: String,
-      required: false,
-      "default": 'create'
-    },
-    'disabledFields': {
-      type: Array,
-      required: false,
-      "default": function _default() {
-        return [];
-      }
-    }
-  },
-  data: function data() {
-    return {};
-  },
-  methods: {
-    submitData: function submitData() {
-      var _this = this;
-      if (this.action == 'create') {
-        axios.post('/api/v1/work-places', this.formData).then(function (res) {
-          _this.clearFormData();
-          _this.$emit('refreshData');
-        })["catch"](function (err) {
-          _this.errors = err.response.data.errors;
-        });
-      } else if (this.action == 'update') {
-        axios.patch("/api/v1/work-places/".concat(this.formData.id), this.formData).then(function (res) {
-          _this.errors = [];
-          _this.$emit('refreshData');
-        })["catch"](function (err) {
-          _this.errors = err.response.data.errors;
-        });
-      }
-    },
-    clearFormData: function clearFormData() {
-      this.formData.name = '';
-      this.errors = [];
-    }
-  },
-  components: {
-    ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Main.vue?vue&type=script&lang=js":
 /*!******************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Main.vue?vue&type=script&lang=js ***!
@@ -23696,11 +23626,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _components_ui_SystemDictionaryTable_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ui/SystemDictionaryTable.vue */ "./resources/js/components/ui/SystemDictionaryTable.vue");
-/* harmony import */ var _Form_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Form.vue */ "./resources/js/modules/WorkPlaces/Form.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var _minixs_SystemDictionary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../minixs/SystemDictionary */ "./resources/js/minixs/SystemDictionary.js");
+/* harmony import */ var _components_ui_SystemDictionaryTable_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/ui/SystemDictionaryTable.vue */ "./resources/js/components/ui/SystemDictionaryTable.vue");
+/* harmony import */ var _components_ui_SystemDictionaryForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ui/SystemDictionaryForm.vue */ "./resources/js/components/ui/SystemDictionaryForm.vue");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -23711,53 +23640,21 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'WorkPlacesMain',
+  mixins: [_minixs_SystemDictionary__WEBPACK_IMPORTED_MODULE_0__["default"]],
   components: {
-    SystemDictionaryTable: _components_ui_SystemDictionaryTable_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    WorkPlaceForm: _Form_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    SystemDictionaryTable: _components_ui_SystemDictionaryTable_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    SystemDictionaryForm: _components_ui_SystemDictionaryForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
-      formData: {
-        name: ''
-      },
-      action: '',
-      modalTitle: '',
-      modalSubmitCaption: ''
+      formId: 'WorkPlaceForm',
+      modalTitleCreate: "Новий код місця роботи",
+      modalTitleUpdate: 'Редагування коду'
     };
   },
-  provide: function provide() {
-    var _this = this;
-    return {
-      modalTitle: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-        return _this.modalTitle;
-      }),
-      modalSubmitCaption: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
-        return _this.modalSubmitCaption;
-      })
-    };
-  },
-  methods: {
-    openFormForAdd: function openFormForAdd() {
-      var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('WorkPlaceForm'));
-      this.modalTitle = 'Новий код місця роботи';
-      this.modalSubmitCaption = 'Додати';
-      this.action = 'create';
-      myModal.show();
-    },
-    openFormForEdit: function openFormForEdit(record) {
-      var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('WorkPlaceForm'));
-      this.modalTitle = 'Редагування коду ';
-      this.modalSubmitCaption = 'Зберегти';
-      this.formData.id = record.id;
-      this.formData.name = record.name;
-      this.action = 'update';
-      myModal.show();
-    }
-  },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('WorkPlaces', ['places']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('WorkPlaces', ['places']))
 });
 
 /***/ }),
@@ -27677,7 +27574,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_breadcrumbs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("breadcrumbs");
   var _component_SystemDictionaryTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SystemDictionaryTable");
   var _component_SystemDictionaryForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SystemDictionaryForm");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"card\">\n                <div class=\"card-header\">\n                    <div class=\"dictionary-name__wrapper\">\n                        <span>Довідник \"Тип населеного пункту\"</span>\n                        <button class=\"btn btn-sm btn-primary\" @click=\"openFormForAdd\">\n                            <i class=\"bi bi-plus-lg\"></i>\n                        </button>\n                    </div>\n                </div>\n                <div class=\"card-body\">\n                    <DataTable\n                            :dataTable=\"settlementTypes\"\n                            tableHeaderClass=\"table-dark\">\n                        <template v-slot:header>\n                            <tr>\n                                <th>Назва</th>\n                                <th></th>\n                            </tr>\n                        </template>\n                        <template v-slot:default=\"slotProps\">\n                            <tr     v-for=\"record in slotProps.paginatedData\"\n                                    :key=\"record.id\">\n                                <td>{{record.name}}</td>\n                                <td>\n                                    <button class=\"btn btn-sm btn-outline-secondary\" @click=\"openFormForEdit(record)\" title=\"Редагувати інформацію\">\n                                        <i class=\"bi bi-pencil\"></i>\n                                    </button>\n                                </td>\n                            </tr>\n                        </template>\n                    </DataTable>\n                </div>\n            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryTable, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryTable, {
     dataTable: _ctx.settlementTypes,
     title: "Довідник \"Тип населеного пункту\"",
     onNewRecord: _ctx.openFormForAdd,
@@ -27686,7 +27583,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     formData: _ctx.formData,
     action: _ctx.action,
     formId: $data.formId,
-    fieldId: "settlementTypeNameName",
+    fieldId: "settlementTypeName",
     url: "/api/v1/settlement-types",
     onRefreshData: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.$store.dispatch('SettlementTypes/fetchRecords');
@@ -28223,57 +28120,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Form.vue?vue&type=template&id=700b6580":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Form.vue?vue&type=template&id=700b6580 ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* binding */ render)
-/* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-
-var _hoisted_1 = {
-  "class": "row mb-3"
-};
-var _hoisted_2 = {
-  "class": "col"
-};
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "workPlaceName",
-  "class": "form-label"
-}, "Назва", -1 /* HOISTED */);
-var _hoisted_4 = {
-  id: "workPlaceNameValidation",
-  "class": "invalid-feedback"
-};
-function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
-    formId: "WorkPlaceForm",
-    onSubmitData: $options.submitData,
-    onCloseForm: $options.clearFormData
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-        row: "2",
-        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('name') ? 'is-invalid' : '']),
-        id: "workPlaceName",
-        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-          return $props.formData.name = $event;
-        })
-      }, "\n                ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('name')), 1 /* TEXT */)])])];
-    }),
-
-    _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
-}
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Main.vue?vue&type=template&id=a9847896":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Main.vue?vue&type=template&id=a9847896 ***!
@@ -28296,19 +28142,22 @@ var _hoisted_2 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_breadcrumbs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("breadcrumbs");
   var _component_SystemDictionaryTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SystemDictionaryTable");
-  var _component_WorkPlaceForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("WorkPlaceForm");
+  var _component_SystemDictionaryForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SystemDictionaryForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryTable, {
     dataTable: _ctx.places,
     title: "Довідник \"Коди місця роботи (заняття)\"",
-    onNewRecord: $options.openFormForAdd,
-    onEditRecord: $options.openFormForEdit
-  }, null, 8 /* PROPS */, ["dataTable", "onNewRecord", "onEditRecord"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_WorkPlaceForm, {
-    formData: $data.formData,
-    action: $data.action,
+    onNewRecord: _ctx.openFormForAdd,
+    onEditRecord: _ctx.openFormForEdit
+  }, null, 8 /* PROPS */, ["dataTable", "onNewRecord", "onEditRecord"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryForm, {
+    formData: _ctx.formData,
+    action: _ctx.action,
+    formId: $data.formId,
+    fieldId: "workPlaceName",
+    url: "/api/v1/work-places",
     onRefreshData: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.$store.dispatch('WorkPlaces/fetchRecords');
     })
-  }, null, 8 /* PROPS */, ["formData", "action"])], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["formData", "action", "formId"])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -38581,34 +38430,6 @@ if (false) {}
 
 /***/ }),
 
-/***/ "./resources/js/modules/WorkPlaces/Form.vue":
-/*!**************************************************!*\
-  !*** ./resources/js/modules/WorkPlaces/Form.vue ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _Form_vue_vue_type_template_id_700b6580__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form.vue?vue&type=template&id=700b6580 */ "./resources/js/modules/WorkPlaces/Form.vue?vue&type=template&id=700b6580");
-/* harmony import */ var _Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form.vue?vue&type=script&lang=js */ "./resources/js/modules/WorkPlaces/Form.vue?vue&type=script&lang=js");
-/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
-
-
-
-
-;
-const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Form_vue_vue_type_template_id_700b6580__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/WorkPlaces/Form.vue"]])
-/* hot reload */
-if (false) {}
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
-
-/***/ }),
-
 /***/ "./resources/js/modules/WorkPlaces/Main.vue":
 /*!**************************************************!*\
   !*** ./resources/js/modules/WorkPlaces/Main.vue ***!
@@ -39181,22 +39002,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/modules/WorkPlaces/Form.vue?vue&type=script&lang=js":
-/*!**************************************************************************!*\
-  !*** ./resources/js/modules/WorkPlaces/Form.vue?vue&type=script&lang=js ***!
-  \**************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Form.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Form.vue?vue&type=script&lang=js");
- 
-
-/***/ }),
-
 /***/ "./resources/js/modules/WorkPlaces/Main.vue?vue&type=script&lang=js":
 /*!**************************************************************************!*\
   !*** ./resources/js/modules/WorkPlaces/Main.vue?vue&type=script&lang=js ***!
@@ -39753,22 +39558,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_template_id_c26aa670__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_template_id_c26aa670__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Show.vue?vue&type=template&id=c26aa670 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Settlements/Show.vue?vue&type=template&id=c26aa670");
-
-
-/***/ }),
-
-/***/ "./resources/js/modules/WorkPlaces/Form.vue?vue&type=template&id=700b6580":
-/*!********************************************************************************!*\
-  !*** ./resources/js/modules/WorkPlaces/Form.vue?vue&type=template&id=700b6580 ***!
-  \********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_template_id_700b6580__WEBPACK_IMPORTED_MODULE_0__.render)
-/* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_template_id_700b6580__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Form.vue?vue&type=template&id=700b6580 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/WorkPlaces/Form.vue?vue&type=template&id=700b6580");
 
 
 /***/ }),

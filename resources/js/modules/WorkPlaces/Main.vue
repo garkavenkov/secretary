@@ -12,64 +12,35 @@
         </div>
     </div>
 
-    <WorkPlaceForm
+    <SystemDictionaryForm
             :formData="formData"
             :action="action"
+            :formId="formId"
+            fieldId="workPlaceName"
+            url="/api/v1/work-places"
             @refreshData="$store.dispatch('WorkPlaces/fetchRecords')" />
 
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { Modal } from 'bootstrap';
-import { computed } from 'vue';
+import SystemDictionary from '../../minixs/SystemDictionary';
 
 import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
-import WorkPlaceForm from './Form.vue';
+import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
 
 export default {
     name: 'WorkPlacesMain',
+    mixins: [SystemDictionary],
     components: {
         SystemDictionaryTable,
-        WorkPlaceForm
+        SystemDictionaryForm,
     },
     data() {
         return {
-            formData: {
-                name: ''
-            },
-            action: '',
-            modalTitle: '',
-            modalSubmitCaption: '',
-        }
-    },
-    provide() {
-        return {
-            modalTitle: computed(() => this.modalTitle),
-            modalSubmitCaption: computed(() => this.modalSubmitCaption),
-        }
-    },
-    methods: {
-        openFormForAdd() {
-            let myModal = new Modal(document.getElementById('WorkPlaceForm'));
-
-            this.modalTitle = 'Новий код місця роботи';
-            this.modalSubmitCaption = 'Додати';
-            this.action = 'create';
-
-            myModal.show();
-        },
-        openFormForEdit(record) {
-            let myModal = new Modal(document.getElementById('WorkPlaceForm'));
-
-            this.modalTitle = 'Редагування коду ';
-            this.modalSubmitCaption = 'Зберегти';
-
-            this.formData.id   = record.id;
-            this.formData.name = record.name;
-            this.action = 'update';
-
-            myModal.show();
+            formId: 'WorkPlaceForm',
+            modalTitleCreate: "Новий код місця роботи",
+            modalTitleUpdate: 'Редагування коду',
         }
     },
     computed: {
