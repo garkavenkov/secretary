@@ -2,7 +2,7 @@
     <breadcrumbs />
     <div class="row">
         <div class="col-md-8 col-lg-6 mx-auto">
-            <div class="card">
+            <!-- <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper">
                         <span>Довідник "Тип населеного пункту"</span>
@@ -34,68 +34,46 @@
                         </template>
                     </DataTable>
                 </div>
-            </div>
+            </div> -->
+
+            <SystemDictionaryTable
+                    :dataTable="settlementTypes"
+                    title='Довідник "Тип населеного пункту"'
+                    @newRecord="openFormForAdd"
+                    @editRecord="openFormForEdit" />
+
         </div>
     </div>
 
-    <SettlementTypeForm
+    <SystemDictionaryForm
             :formData="formData"
             :action="action"
-            @refreshData="$store.dispatch('SettlementTypes/fetchRecords')" />
+            :formId="formId"
+            fieldId="settlementTypeNameName"
+            url="/api/v1/settlement-types"
+            @refreshData="$store.dispatch('SettlementTypes/fetchRecords')"  />
 
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { Modal } from 'bootstrap';
-import { computed } from 'vue';
 
-import DataTable from '../../components/ui/DataTable.vue';
-import SettlementTypeForm from './Form.vue';
+import SystemDictionary from '../../minixs/SystemDictionary';
+import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
+import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
 
 export default {
     name: 'SettlementTypesMain',
+    mixins: [SystemDictionary],
     components: {
-        DataTable,
-        SettlementTypeForm
+        SystemDictionaryForm,
+        SystemDictionaryTable,
     },
     data() {
         return {
-            formData: {
-                name: ''
-            },
-            action: '',
-            modalTitle: '',
-            modalSubmitCaption: '',
-        }
-    },
-    provide() {
-        return {
-            modalTitle: computed(() => this.modalTitle),
-            modalSubmitCaption: computed(() => this.modalSubmitCaption),
-        }
-    },
-    methods: {
-        openFormForAdd() {
-            let myModal = new Modal(document.getElementById('SettlementTypeForm'));
-
-            this.modalTitle = 'Новий тип населеного пункту';
-            this.modalSubmitCaption = 'Додати';
-            this.action = 'create';
-
-            myModal.show();
-        },
-        openFormForEdit(type) {
-            let myModal = new Modal(document.getElementById('SettlementTypeForm'));
-
-            this.modalTitle = 'Редагування типу населеного пункту';
-            this.modalSubmitCaption = 'Зберегти';
-
-            this.formData.id   = type.id;
-            this.formData.name = type.name;
-            this.action = 'update';
-
-            myModal.show();
+            formId: 'SettlementTypeForm',
+            modalTitleCreate: "Новий тип населеного пункту",
+            modalTitleUpdate: 'Редагування типу',
         }
     },
     computed: {
@@ -103,10 +81,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-table tr td:last-of-type {
-    text-align: center;
-    width: 5rem;
-}
-</style>
