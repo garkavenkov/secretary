@@ -94,7 +94,7 @@ export default {
         this.$store.dispatch('Districts/fetchRecords');
         this.$store.dispatch('FamilyRelationships/fetchData');
         this.$store.dispatch('HouseholdTypes/fetchRecords');
-        this.$store.dispatch('WorkPlaces/fetchData');
+        this.$store.dispatch('WorkPlaces/fetchRecords');
         this.$store.dispatch('SettlementTypes/fetchRecords');
         this.$store.dispatch('Settlements/fetchRecords');
         this.$store.dispatch('Councils/fetchRecords');
