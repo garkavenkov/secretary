@@ -2,100 +2,45 @@
     <breadcrumbs />
     <div class="row">
         <div class="col-md-10 col-lg-8 mx-auto">
-            <div class="card">
-                <div class="card-header">
-                    <div class="dictionary-name__wrapper">
-                        <span>Довідник "Типи об'єктів погосподарського обліку"</span>
-                        <button class="btn btn-sm btn-primary" @click="openFormForAdd">
-                            <i class="bi bi-plus-lg"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <DataTable
-                            :dataTable="householdTypes"
-                            tableHeaderClass="table-dark">
-                        <template v-slot:header>
-                            <tr>
-                                <th>Назва</th>
-                                <th></th>
-                            </tr>
-                        </template>
-                        <template v-slot:default="slotProps">
-                            <tr     v-for="record in slotProps.paginatedData"
-                                    :key="record.id">
-                                <td>{{record.name}}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-secondary" @click="openFormForEdit(record)" title="Редагувати інформацію">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </template>
-                    </DataTable>
-                </div>
-            </div>
+
+            <SystemDictionaryTable
+                    :dataTable="householdTypes"
+                    title="Довідник 'Типи об'єктів погосподарського обліку'"
+                    @newRecord="openFormForAdd"
+                    @editRecord="openFormForEdit" />
+
         </div>
     </div>
 
-    <HouseholdTypeForm
+    <SystemDictionaryForm
             :formData="formData"
             :action="action"
-            @refreshData="$store.dispatch('HouseholdTypes/fetchRecords')" />
+            :formId="formId"
+            fieldId="householdTypeName"
+            url="/api/v1/household-types"
+            @refreshData="$store.dispatch('HouseholdTypes/fetchRecords')"  />
 
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { Modal } from 'bootstrap';
-import { computed } from 'vue';
+import SystemDictionary from '../../minixs/SystemDictionary';
 
-import DataTable from '../../components/ui/DataTable.vue';
-import HouseholdTypeForm from './Form.vue';
+import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
+import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
 
 export default {
     name: 'HouseholdTypesMain',
+    mixins: [SystemDictionary],
     components: {
-        DataTable,
-        HouseholdTypeForm
+        SystemDictionaryTable,
+        SystemDictionaryForm,
     },
     data() {
         return {
-            formData: {
-                name: ''
-            },
-            action: '',
-            modalTitle: '',
-            modalSubmitCaption: '',
-        }
-    },
-    provide() {
-        return {
-            modalTitle: computed(() => this.modalTitle),
-            modalSubmitCaption: computed(() => this.modalSubmitCaption),
-        }
-    },
-    methods: {
-        openFormForAdd() {
-            let myModal = new Modal(document.getElementById('HouseholdTypeForm'));
-
-            this.modalTitle = 'Новий тип об\'єкта погосподарського обліку';
-            this.modalSubmitCaption = 'Додати';
-            this.action = 'create';
-
-            myModal.show();
-        },
-        openFormForEdit(type) {
-            let myModal = new Modal(document.getElementById('HouseholdTypeForm'));
-
-            this.modalTitle = 'Редагування типу ';
-            this.modalSubmitCaption = 'Зберегти';
-
-            this.formData.id   = type.id;
-            this.formData.name = type.name;
-            this.action = 'update';
-
-            myModal.show();
+            formId: 'HouseholdTypeForm',
+            modalTitleCreate: "Новий тип об'єкта погосподарського обліку",
+            modalTitleUpdate: 'Редагування типу',
         }
     },
     computed: {
@@ -103,10 +48,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-table tr td:last-of-type {
-    text-align: center;
-    width: 5rem;
-}
-</style>
