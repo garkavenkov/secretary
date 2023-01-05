@@ -1,10 +1,14 @@
 import axios from 'axios';
+import crud from '../core/crud';
 
 export const FamilyRelationships = {
     namespaced: true,
     state: {
         relationships: [],
-        relationship: {}
+        relationship: {},
+        url: '/api/v1/family-relationships',
+        entities: 'relationships',
+        entity: 'relationship'
 
     },
     getters: {
@@ -12,17 +16,10 @@ export const FamilyRelationships = {
         relationship: state => state.relationship
     },
     mutations: {
-        setRelationships: (state, payload) => {
-            state.relationships = payload;
-        }
+        ...crud.mutations
     },
     actions: {
-        fetchData: ({commit}) =>  {
-            axios.get('/api/v1/family-relationships')
-                .then(res => {
-                    commit('setRelationships', res.data.data);
-                });
-        }
+        ...crud.actions
     }
 }
 

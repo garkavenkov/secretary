@@ -27,4 +27,18 @@ class FamilyRelationshipRequest extends FormRequest
             'name'  =>  'required|min:3|unique:family_relationships,name'
         ];
     }
+
+    /**
+     * Custom messages for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required'                 =>  'Ви не вказали назву типу родинних відносин',
+            'name.min'                      =>  'Назва типу родинних відносин повинна бути більш ніж :min символів',
+            'name.unique'                   =>  'Тип родинних відносин с такою назвою вже існує',
+        ];
+    }
 }

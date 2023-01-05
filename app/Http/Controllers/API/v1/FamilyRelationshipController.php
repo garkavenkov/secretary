@@ -54,15 +54,15 @@ class FamilyRelationshipController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\API\v1\FamilyRelationshipRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(FamilyRelationshipRequest $request, $id)
     {
         $relationship = FamilyRelationship::findOrFail($id);
 
-        $relationship->update($request->all());
+        $relationship->update($request->validated());
 
         if($relationship->save()) {
             return response()->json(['message' => 'Тип родинних стосунків був успішно змінен']);

@@ -2,40 +2,13 @@
     <breadcrumbs />
     <div class="row">
         <div class="col-md-10 col-lg-8 mx-auto">
-            <!-- <div class="card">
-                <div class="card-header">
-                    <div class="dictionary-name__wrapper">
-                        <span>Довідник "Коди місця роботи (заняття)"</span>
-                        <button class="btn btn-sm btn-primary">
-                            <i class="bi bi-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <DataTable
-                            :dataTable="places"
-                            tableHeaderClass="table-dark">
-                        <template v-slot:header>
-                            <tr>
-                                <th>Назва</th>
-                                <th></th>
-                            </tr>
-                        </template>
-                        <template v-slot:default="slotProps">
-                            <tr     v-for="record in slotProps.paginatedData"
-                                    :key="record.id">
-                                <td>{{record.name}}</td>
-                                <td></td>
-                            </tr>
-                        </template>
-                    </DataTable>
-                </div>
-            </div> -->
-            <SystemDictionary
+
+            <SystemDictionaryTable
                     :dataTable="places"
                     title='Довідник "Коди місця роботи (заняття)"'
                     @newRecord="openFormForAdd"
                     @editRecord="openFormForEdit" />
+
         </div>
     </div>
 
@@ -51,13 +24,13 @@ import { mapGetters } from 'vuex';
 import { Modal } from 'bootstrap';
 import { computed } from 'vue';
 
-import SystemDictionary from '../../components/ui/SystemDictionary.vue';
+import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
 import WorkPlaceForm from './Form.vue';
 
 export default {
     name: 'WorkPlacesMain',
     components: {
-        SystemDictionary,
+        SystemDictionaryTable,
         WorkPlaceForm
     },
     data() {

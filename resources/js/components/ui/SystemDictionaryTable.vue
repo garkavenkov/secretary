@@ -43,7 +43,7 @@
 import DataTable from './DataTable.vue';
 
 export default {
-    name:'SystemDictionary',
+    name:'SystemDictionaryTable',
     props: {
         'title': {
             type: String,

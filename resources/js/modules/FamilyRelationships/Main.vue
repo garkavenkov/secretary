@@ -1,70 +1,53 @@
+<template>
+    <breadcrumbs />
+
+    <div class="row">
+        <div class="col-md-10 col-lg-8 mx-auto">
+
+            <SystemDictionaryTable
+                    :dataTable="relationships"
+                    title='Довідник "Родинні стосунки"'
+                    @newRecord="openFormForAdd"
+                    @editRecord="openFormForEdit" />
+
+        </div>
+    </div>
+
+    <SystemDictionaryForm
+            :formData="formData"
+            :action="action"
+            :formId="formId"
+            fieldId="familyRelationshipName"
+            url="/api/v1/family-relationships"
+            @refreshData="$store.dispatch('FamilyRelationships/fetchRecords')" />
+
+</template>
+
 <script>
 import { mapGetters } from 'vuex';
-import Breadcrumbs from '../../components/ui/Breadcrumbs.vue';
+import SystemDictionary from '../../minixs/SystemDictionary';
 
-import DataTable from '../../components/ui/DataTable.vue';
+import Breadcrumbs from '../../components/ui/Breadcrumbs.vue';
+import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
+import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
 
 export default {
     name: 'FamilyRelationshipsMain',
+    mixins: [SystemDictionary],
     components: {
-        DataTable,
-        Breadcrumbs
+        Breadcrumbs,
+        SystemDictionaryTable,
+        SystemDictionaryForm,
     },
     data() {
         return {
-            // districts: []
+            formId: 'FamilyRelationshipForm',
+            modalTitleCreate: 'Новий тип родинних відносин',
+            modalTitleUpdate: 'Редагування типу',
         }
-    },
-    methods: {
     },
     computed: {
         ...mapGetters('FamilyRelationships', ['relationships'])
     },
-    created() {
-        // this.fetchData();
-    }
 }
 </script>
-
-<template>
-    <breadcrumbs />
-
-    <!-- <div class="row">
-        <div class="col-md-8 mx-auto"> -->
-            <div class="card">
-                <div class="card-header">
-                    <div class="dictionary-name__wrapper">
-                        <span>Довідник "Родинні стосунки"</span>
-                        <button class="btn btn-sm btn-primary">
-                            <i class="bi bi-plus"></i>
-                        </button>
-                    </div>
-                    <!-- <div>
-                        <button class="btn btn-sm btn-outline-secondary">
-                            <i class="bi bi-funnel"></i>
-                        </button>
-                    </div> -->
-                </div>
-                <div class="card-body">
-                    <DataTable
-                            :dataTable="relationships"
-                            tableHeaderClass="table-dark">
-                        <template v-slot:header>
-                            <tr>
-                                <th>Назва</th>
-                                <th></th>
-                            </tr>
-                        </template>
-                        <template v-slot:default="slotProps">
-                            <tr     v-for="record in slotProps.paginatedData"
-                                    :key="record.id">
-                                <td>{{record.name}}</td>
-                                <td></td>
-                            </tr>
-                        </template>
-                    </DataTable>
-                </div>
-            </div>
-        <!-- </div>
-    </div> -->
-</template>
