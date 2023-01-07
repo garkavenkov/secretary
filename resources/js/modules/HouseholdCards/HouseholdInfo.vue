@@ -48,47 +48,54 @@ export default {
 
 <template>
     <div class="p-4">
-        <div class="mb-3">
-            <div class="fw-bold">Тип</div>
-            <div v-if="info.household_type">
-                {{ info.household_type.name}}
+        <div class="row mb-3">
+            <div class="col">
+                <div class="fw-bold">Адреса</div>
+                <div v-if="info.address">
+                    {{ info.address }}
+                </div>
             </div>
         </div>
-        <div class="mb-3">
-            <div class="fw-bold">Адреса</div>
-            <div v-if="info.address">
-                {{ info.address }}
+        <div class="row mb-3">
+            <div class="col">
+                <div class="fw-bold">Тип</div>
+                <div v-if="info.household_type">
+                    {{ info.household_type.name}}
+                </div>
             </div>
         </div>
-        <div class="mb-3">
-            <div>
-                <span class="fw-bold">Власник(и)</span>
-                <button class="btn btn-sm btn-outline-secondary ms-3" @click="newOwner">
-                    <i class="bi bi-plus"></i>
-                </button>
-            </div>
-            <div class="owners-wrapper">
-                <template v-if="info.owners && (info.owners.length > 0)">
-                    <div class="owner" v-for="owner in info.owners" :key="owner.id">
-                        <span>{{ owner.name }}</span>
-                        <span>{{ owner.address }}</span>
-                    </div>
-                </template>
-                <template v-else>
-                    Інформація відсутня
-                </template>
-
+        <div class="row mb-3">
+            <div class="col">
+                <div>
+                    <span class="fw-bold">Власник(и)</span>
+                    <button class="btn btn-sm btn-outline-secondary ms-3" @click="newOwner">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                </div>
+                <div class="owners-wrapper">
+                    <template v-if="info.owners && (info.owners.length > 0)">
+                        <div class="owner" v-for="owner in info.owners" :key="owner.id">
+                            <span>{{ owner.name }}</span>
+                            <span>{{ owner.address }}</span>
+                        </div>
+                    </template>
+                    <template v-else>
+                        Інформація відсутня
+                    </template>
+                </div>
             </div>
         </div>
-        <div class="mb-3">
-            <div class="fw-bold">Голова домогосподарства</div>
-            <div>
-                <template v-if="info.household_head">
-                    {{ info.household_head }}
-                </template>
-                <template v-else>
-                    Інформація відсутня
-                </template>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="fw-bold">Голова домогосподарства</div>
+                <div>
+                    <template v-if="info.household_head">
+                        {{ info.household_head }}
+                    </template>
+                    <template v-else>
+                        Інформація відсутня
+                    </template>
+                </div>
             </div>
         </div>
     </div>

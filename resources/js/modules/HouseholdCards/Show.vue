@@ -70,7 +70,8 @@ export default {
 
     },
     created() {
-        this.fetchHousehold(this.id);
+        this.$store.dispatch('Households/fetchRecord', this.id);
+        // this.fetchHousehold(this.id);
     }
 }
 </script>

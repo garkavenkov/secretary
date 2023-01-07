@@ -1,4 +1,5 @@
 import axios from 'axios';
+import crud from '../core/crud';
 
 export const Households = {
     namespaced: true,
@@ -6,32 +7,19 @@ export const Households = {
         households: [],
         household: {
             info: {}
-        }
+        },
+        url: '/api/v1/households',
+        entities: 'households',
+        entity: 'household',
     },
     getters: {
         households: state => state.households,
         household: state => state.household,
     },
     mutations: {
-        setHouseholds(state, payload) {
-            state.households = payload
-        },
-        setHousehold(state, payload) {
-            state.household = payload
-        },
+        ...crud.mutations,
     },
     actions: {
-        fetchHouseholds({commit}) {
-            axios.get('/api/v1/households')
-                .then(res => {
-                    commit('setHouseholds', res.data.data)
-                })
-        },
-        fetchHousehold({commit}, id) {
-            axios.get(`/api/v1/households/${id}`)
-                .then(res => {
-                    commit('setHousehold', res.data.data)
-                })
-        }
+        ...crud.actions
     }
 }

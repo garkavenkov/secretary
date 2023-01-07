@@ -24,7 +24,7 @@ export default {
             currentTab: 'HouseholdInfo',
             modalTitle: '',
             modalSubmitCaption: '',
-            cards: [],
+            // cards: [],
             // cards: [
             //     {
             //         id:1,
@@ -124,19 +124,21 @@ export default {
                     this.errors = err.response.data.errors;
                 })
         },
-        fetchCards() {
-            axios.get('/api/v1/households')
-                .then(res => {
-                    this.cards = res.data.data
-                });
-        },
+        // fetchCards() {
+        //     axios.get('/api/v1/households')
+        //         .then(res => {
+        //             this.cards = res.data.data
+        //         });
+        // },
     },
     computed: {
+        ...mapGetters('Households', ['households']),
         ...mapGetters('HouseholdTypes', ['householdTypes']),
         ...mapGetters('Settlements', ['settlements']),
     },
     created() {
-        this.fetchCards();
+        // this.fetchCards();
+        this.$store.dispatch('Households/fetchRecords');
     }
 }
 </script>
@@ -164,7 +166,7 @@ export default {
         </div>
         <div class="card-body">
             <DataTable
-                    :dataTable="cards"
+                    :dataTable="households"
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>

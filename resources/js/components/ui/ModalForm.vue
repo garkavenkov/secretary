@@ -1,7 +1,7 @@
 <template>
 
-    <div class="modal fade" :class="modalClass" :id="formId" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" :id="formId" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" :class="modalClass">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel" v-html="modalTitle"></h1>
