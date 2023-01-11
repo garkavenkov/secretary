@@ -21,7 +21,42 @@ class HouseholdMember extends Model
         'family_relationship_id',
         'employment_information',
         'work_place_id',
+        'death',
+        'death_date',
+        'death_register_number',
+        'death_register_office'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->death = '';
+            if (isset($model->death_date) &&
+                isset($model->death_register_number) &&
+                isset($model->death_register_office)) {
+                    $death = "$model->death_date;$model->death_register_number;$model->death_register_office";
+                    $model->death = $death;
+            }
+            unset($model->death_date);
+            unset($model->death_register_number);
+            unset($model->death_register_office);
+        });
+
+        static::updating(function ($model) {
+            $model->death = '';
+            if (isset($model->death_date) &&
+                isset($model->death_register_number) &&
+                isset($model->death_register_office)) {
+                    $death = "$model->death_date;$model->death_register_number;$model->death_register_office";
+                    $model->death = $death;
+            }
+            unset($model->death_date);
+            unset($model->death_register_number);
+            unset($model->death_register_office);
+        });
+    }
 
     public function familyRelationship()
     {

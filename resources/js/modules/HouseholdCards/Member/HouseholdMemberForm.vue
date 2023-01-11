@@ -296,8 +296,8 @@
 
 import { mapGetters } from 'vuex';
 
-import ModalForm from '../../components/ui/ModalForm.vue';
-import FormValidator from '../../minixs/FormValidator';
+import ModalForm from '../../../components/ui/ModalForm.vue';
+import FormValidator from '../../../minixs/FormValidator';
 
 export default {
     name: 'HouseholdMemeberForm',

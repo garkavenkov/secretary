@@ -33,7 +33,10 @@ class HouseholdMemberRequest extends FormRequest
             'family_relationship_id'    =>  'required|exists:family_relationships,id',
             'birthday'                  =>  'required|date|before_or_equal:today',
             'work_place_id'             =>  'nullable|exists:work_places,id',
-            'employment_information'    =>  'nullable|min:3'
+            'employment_information'    =>  'nullable|min:3',
+            'death_date'                =>  'nullable|date|after_or_equal:birthday',
+            'death_register_number'     =>  'required_with:death_date',
+            'death_register_office'     =>  'required_with:death_date'
         ];
     }
 

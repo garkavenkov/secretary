@@ -6,6 +6,8 @@ namespace App\Http\Resources\API\v1\HouseholdMember;
 use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use function PHPUnit\Framework\isNull;
+
 class HouseholdMemberResource extends JsonResource
 {
     /**
@@ -16,6 +18,16 @@ class HouseholdMemberResource extends JsonResource
      */
     public function toArray($request)
     {
+        $death_date = null;
+        $death_register_number = '';
+        $death_register_office = '';
+        // dd($this->death);
+        // if (($this->death !== '') && !isNull($this->death)) {
+        if ($this->death !== '') {
+        // if (!isNull($this->death)) {
+            // dd($this->death);
+            list($death_date, $death_register_number, $death_register_office) = explode(';', $this->death);
+        }
         return [
             'id'                        =>  (int)   $this->id,
             'household_id'              =>  (int)   $this->household_id,
@@ -28,8 +40,10 @@ class HouseholdMemberResource extends JsonResource
             'family_relationship'       =>  $this->when('familyRelationship', $this->familyRelationship->name),
             'employment_information'    =>  $this->employment_information,
             'work_place_id'             =>  (int)   $this->work_place_id,
-            // 'work_place'                =>  $this->whenLoaded('workPlace', $this->workPlace->name),
-            'work_place'                =>  new WorkPlaceResource($this->whenLoaded('workPlace'))
+            'work_place'                =>  new WorkPlaceResource($this->whenLoaded('workPlace')),
+            'death_date'                =>  $death_date,
+            'death_register_number'     =>  $death_register_number,
+            'death_register_office'     =>  $death_register_office,
         ];
     }
 }

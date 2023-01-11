@@ -1,8 +1,8 @@
 <script>
 
-import HouseholdMembers from './HouseholdMembers.vue';
-import HouseInfo        from './HouseInfo.vue';
-import LandInfo         from './LandInfo.vue';
+import HouseholdMembers from './Member/HouseholdMembers.vue';
+import HouseInfo        from './House/HouseInfo.vue';
+import LandInfo         from './Land/LandInfo.vue';
 import HouseholdInfo    from './HouseholdInfo.vue';
 import { mapActions, mapGetters } from 'vuex';
 

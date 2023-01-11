@@ -1,9 +1,9 @@
 <script>
 
-import Checkbox from '../../components/ui/Chekbox.vue';
+import Checkbox from '../../../components/ui/Chekbox.vue';
 import { Modal } from 'bootstrap'
-import TableRow from '../../components/ui/TableRow.vue';
-import FormValidator from '../../minixs/FormValidator';
+import TableRow from '../../../components/ui/TableRow.vue';
+import FormValidator from '../../../minixs/FormValidator';
 
 export default {
     name: 'HouseInfo',

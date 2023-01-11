@@ -14,6 +14,14 @@
                     <i class="bi bi-person-add"></i>
                     новий член
                 </button>
+                <button type="button"
+                        class="ms-2 btn btn-sm btn-outline-secondary"
+                        :class="{'active' : showAllMembers}"
+                        title="Відобразити всіх"
+                        v-if="hiddenMemebersExist"
+                        @click="showAllMembers = !showAllMembers">
+                    <i class="bi bi-person-fill-check"></i>
+                </button>
             </div>
             <div>
                 <button type="button"
@@ -32,9 +40,13 @@
                 </button>
             </div>
         </div>
-        <div class="px-3 d-flex gap-3">
+        <div class="px-3 d-flex gap-3 flex-wrap">
             <template v-if="viewMode == 'card'">
-                <div class="card member" v-for="member in members" :key="member.id" @dblclick="showHouseholdMemberInfo(member.id)">
+                <div    class="card member"
+                        :class="{'dead' : member.death_date != null }"
+                        v-for="member in shownMembers"
+                        :key="member.id"
+                        @dblclick="showHouseholdMemberInfo(member.id)">
                     <div class="card-header d-flex justify-content-between">
                         <div>
                             <div class="member-surname">{{member.surname}}</div>
@@ -52,6 +64,9 @@
                         <div class="d-flex mb-2 align-items-center">
                             <i class="bi bi-gift me-3" style="color:red" title="Дата народження"></i>
                             {{formatedDate(member.birthday)}}
+                            <template v-if="member.death_date != null">
+                                - {{formatedDate(member.death_date)}}
+                            </template>
                         </div>
                         <!-- <div class="member-sex">
                             <span v-if="member.sex=='чоловіча'" title="чоловік">
@@ -85,7 +100,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="member in members" :key="member.id" :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
+                        <tr v-for="member in shownMembers" :key="member.id" :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
                             <td>
                                 <button class="btn btn-sm btn-outline-secondary"
                                         @click="showHouseholdMember(member.id)">
@@ -112,15 +127,15 @@
     </div>
 
     <HouseholdMemberForm :formData="formData" @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
-    <HouseholdMemberInfo :formData="formData" />
+    <HouseholdMemberInfo :formData="formData" @refreshData="refreshMemberInfo" v-if="formIsReady" @closeForm="formIsReady = false"/>
 
 </template>
 
 <script>
 import { Modal } from 'bootstrap'
 import { computed } from 'vue'
-import { mapActions, mapGetters } from 'vuex'
-// import FormValidator from '../../minixs/FormValidator'
+
+
 import HouseholdMemberForm from './HouseholdMemberForm.vue'
 import HouseholdMemberInfo from './HouseholdMemberInfo.vue'
 
@@ -136,7 +151,6 @@ export default {
             required: true
         }
     },
-    // mixins: [FormValidator],
     data() {
         return {
             formData: {
@@ -149,10 +163,17 @@ export default {
                 family_relationship_id: 0,
                 employment_information: '',
                 work_place_id: 0,
+                land_owned: 0,
+                land_rented: 0,
+                land_leased: 0,
+                death_date: null,
+                death_register_number: '',
+                death_register_office: ''
             },
-            // modalSubmitCaption: 'Додати',
             modalTitle: '',
-            viewMode: 'card'
+            viewMode: 'card',
+            formIsReady: false,
+            showAllMembers: false,
         }
     },
     provide() {
@@ -163,31 +184,6 @@ export default {
         }
     },
     methods: {
-        // clearFormData() {
-        //         this.formData.surname = '';
-        //         this.formData.name = '';
-        //         this.formData.patronymic = '';
-        //         this.formData.sex = '';
-        //         this.formData.birthday = null;
-        //         this.formData.family_relationship_id = 0;
-        //         this.formData.employment_information = '';
-        //         this.formData.work_place_id = 0;
-
-        //         this.errors = {};
-        // },
-        // submitData() {
-        //     if (this.formData.work_place_id == 0) {
-        //         delete this.formData.work_place_id;
-        //     }
-        //     axios.post('/api/v1/household-members', this.formData)
-        //         .then(res => {
-        //             this.$store.dispatch('Households/fetchHousehold', this.household_id);
-        //             this.clearFormData();
-        //         })
-        //         .catch(err => {
-        //             this.errors = err.response.data.errors;
-        //         })
-        // },
         newMember(e) {
             let myModal = new Modal(document.getElementById('HouseholdMemberForm'))
             this.modalTitle = 'Новий член домогосподарства';
@@ -196,14 +192,22 @@ export default {
         showHouseholdMemberInfo(id) {
             axios.get(`/api/v1/household-members/${id}`)
                 .then(res => {
-                    let myModal = new Modal(document.getElementById('HouseholdMemberInfo'))
-                    this.modalTitle = 'Інформація о члені домогосподарства';
+                    this.formIsReady = true;
+                    this.$nextTick(function() {
+                        let myModal = new Modal(document.getElementById('HouseholdMemberInfo'))
+                        this.modalTitle = 'Інформація о члені домогосподарства';
+                        Object.assign(this.formData, res.data.data);
+                        myModal.show();
+                    });
+                })
+        },
+        refreshMemberInfo(id) {
+            axios.get(`/api/v1/household-members/${id}`)
+                .then(res => {
                     Object.assign(this.formData, res.data.data);
-                    myModal.show();
                 })
         },
         formatedDate(date) {
-            // return new Date(date).toISOString();
             return new Date(date).toISOString().slice(0, 10).split('-').reverse().join('.');
         },
         deleteMember(id) {
@@ -252,14 +256,20 @@ export default {
         }
 
     },
+    computed: {
+        shownMembers() {
+            return this.showAllMembers ? this.members : this.members.filter(m => m.death_date === null);
+        },
+        hiddenMemebersExist() {
+            return this.members.some(m => {
+                return m.death_date != null;
+            })
+        }
+    },
     components: {
         HouseholdMemberForm,
         HouseholdMemberInfo
     }
-    // computed: {
-    //     ...mapGetters('FamilyRelationships', ['relationships']),
-    //     ...mapGetters('WorkPlaces', ['places']),
-    // },
 }
 </script>
 
@@ -288,6 +298,10 @@ export default {
 
     .family-relationship {
         height: 2rem;
+    }
+
+    &.dead {
+        background: lightgray;
     }
     // &-name {
     //     margin-bottom: 0.25rem;

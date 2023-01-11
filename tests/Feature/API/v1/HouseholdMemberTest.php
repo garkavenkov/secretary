@@ -79,6 +79,7 @@ class HouseholdMemberTest extends TestCase
         $member = HouseholdMember::factory()
                         ->make([
                             'household_id'  =>  $household->id,
+                            'death_date'    =>  '2030-01-01',
                             $field => $value
                         ])->toArray();
 
@@ -90,24 +91,29 @@ class HouseholdMemberTest extends TestCase
     public function dataProvider():array
     {
         return [
-            'household_id is missing'               =>  ['household_id', ''],
-            'household does not exist'              =>  ['household_id', 99],
-            'surname is empty'                      =>  ['surname', ''],
-            'surname is not long enough'            =>  ['surname', 'qw'],
-            'name is empty'                         =>  ['name', ''],
-            'name is not long enough'               =>  ['name', 'qw'],
-            'patronymic is empty'                   =>  ['patronymic', ''],
-            'patronymic is not long enough'         =>  ['patronymic', 'qw'],
-            'sex is empty'                          =>  ['sex', ''],
-            'sex is strange'                        =>  ['sex', 'qw'],
-            'family_relationship is empty'          =>  ['family_relationship_id', ''],
-            'family_relationship does not exist'    =>  ['family_relationship_id', 99],
-            'birthday is empty'                     =>  ['birthday', ''],
-            'birthday is not a date'                =>  ['birthday', 'qw'],
-            'birthday is in future'                 =>  ['birthday', '2022-12-08'],
-            'place_work is empty'                   =>  ['place_work_id', ''],
-            'place_work does not exist'             =>  ['place_work_id', 99],
-            'employment is not long enough'         =>  ['employment_information', 'qw'],
+            'household_id is missing'                       =>  ['household_id', ''],
+            'household does not exist'                      =>  ['household_id', 99],
+            'surname is empty'                              =>  ['surname', ''],
+            'surname is not long enough'                    =>  ['surname', 'qw'],
+            'name is empty'                                 =>  ['name', ''],
+            'name is not long enough'                       =>  ['name', 'qw'],
+            'patronymic is empty'                           =>  ['patronymic', ''],
+            'patronymic is not long enough'                 =>  ['patronymic', 'qw'],
+            'sex is empty'                                  =>  ['sex', ''],
+            'sex is strange'                                =>  ['sex', 'qw'],
+            'family_relationship is empty'                  =>  ['family_relationship_id', ''],
+            'family_relationship does not exist'            =>  ['family_relationship_id', 99],
+            'birthday is empty'                             =>  ['birthday', ''],
+            'birthday is not a date'                        =>  ['birthday', 'qw'],
+            'birthday is in future'                         =>  ['birthday', '2022-12-08'],
+            'place_work is empty'                           =>  ['place_work_id', ''],
+            'place_work does not exist'                     =>  ['place_work_id', 99],
+            'employment is not long enough'                 =>  ['employment_information', 'qw'],
+            'death_date is not a date'                      =>  ['death_date',  '111'],
+            'death_date in past'                            =>  ['death_date',  '1900-01-01'],
+            'death_number is empty when death_date is set'  =>  ['death_register_number',    ''],
+            'death_office is empty when death_date is set'  =>  ['death_register_office',    ''],
+            'death_office is not long enough'               =>  ['death_register_office',    'qw'],
         ];
     }
 }

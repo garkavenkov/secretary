@@ -53,15 +53,15 @@ class HouseholdMemberController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\API\v1\HouseholdMemberRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(HouseholdMemberRequest $request, $id)
     {
         $member = HouseholdMember::findOrFail($id);
 
-        $member->update($request->all());
+        $member->update($request->validated());
 
         if ($member->save()) {
             return response()->json(['message' => 'Інформація була успішно змінена']);
