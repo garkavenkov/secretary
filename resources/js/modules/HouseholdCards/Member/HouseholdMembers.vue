@@ -43,7 +43,7 @@
         <div class="px-3 d-flex gap-3 flex-wrap">
             <template v-if="viewMode == 'card'">
                 <div    class="card member"
-                        :class="{'dead' : member.death_date != null }"
+                        :class="[member.status == 'dead' ? 'dead' : '',  member.status == 'gone' ? 'gone' : '']"
                         v-for="member in shownMembers"
                         :key="member.id"
                         @dblclick="showHouseholdMemberInfo(member.id)">
@@ -134,13 +134,14 @@
 <script>
 import { Modal } from 'bootstrap'
 import { computed } from 'vue'
-
+import DateFormat from '../../../minixs/DateFormat';
 
 import HouseholdMemberForm from './HouseholdMemberForm.vue'
 import HouseholdMemberInfo from './HouseholdMemberInfo.vue'
 
 export default {
     name: 'HouseholdMembers',
+    mixins: [DateFormat],
     props: {
         'members': {
             type: Array,
@@ -162,13 +163,16 @@ export default {
                 birthday: null,
                 family_relationship_id: 0,
                 employment_information: '',
+                social_information: '',
+                additional_information: '',
                 work_place_id: 0,
                 land_owned: 0,
                 land_rented: 0,
                 land_leased: 0,
                 death_date: null,
                 death_register_number: '',
-                death_register_office: ''
+                death_register_office: '',
+                movements: [],
             },
             modalTitle: '',
             viewMode: 'card',
@@ -207,9 +211,9 @@ export default {
                     Object.assign(this.formData, res.data.data);
                 })
         },
-        formatedDate(date) {
-            return new Date(date).toISOString().slice(0, 10).split('-').reverse().join('.');
-        },
+        // formatedDate(date) {
+        //     return new Date(date).toISOString().slice(0, 10).split('-').reverse().join('.');
+        // },
         deleteMember(id) {
 
             axios.delete(`/api/v1/household-members/${id}`)
@@ -258,11 +262,11 @@ export default {
     },
     computed: {
         shownMembers() {
-            return this.showAllMembers ? this.members : this.members.filter(m => m.death_date === null);
+            return this.showAllMembers ? this.members : this.members.filter(m => m.status == 'active');
         },
         hiddenMemebersExist() {
             return this.members.some(m => {
-                return m.death_date != null;
+                return ['dead', 'gone'].indexOf(m.status) !== -1;
             })
         }
     },
@@ -302,6 +306,9 @@ export default {
 
     &.dead {
         background: lightgray;
+    }
+    &.gone {
+        border-color: red;
     }
     // &-name {
     //     margin-bottom: 0.25rem;

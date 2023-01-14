@@ -33,10 +33,12 @@ class HouseholdMemberRequest extends FormRequest
             'family_relationship_id'    =>  'required|exists:family_relationships,id',
             'birthday'                  =>  'required|date|before_or_equal:today',
             'work_place_id'             =>  'nullable|exists:work_places,id',
-            'employment_information'    =>  'nullable|min:3',
+            'employment_information'    =>  'required_with:work_place_id',
+            'additional_information'    =>  'nullable|min:3',
+            'social_information'        =>  'nullable|min:3',
             'death_date'                =>  'nullable|date|after_or_equal:birthday',
             'death_register_number'     =>  'required_with:death_date',
-            'death_register_office'     =>  'required_with:death_date'
+            'death_register_office'     =>  'required_with:death_date',
         ];
     }
 
@@ -48,21 +50,24 @@ class HouseholdMemberRequest extends FormRequest
     public function messages()
     {
         return [
-            'surname.required'                  => 'Ви не указали прізвище',
-            'surname.min'                       => 'Укажіть не менше ніж :min символа',
-            'name.required'                     => 'Ви не указали ім\'я',
-            'name.min'                          => 'Укажіть  не менше ніж :min символа',
-            'patronymic.required'               => 'Ви не указали по батькові',
-            'patronymic.min'                    => 'Укажіть не менше ніж :min символа',
-            'sex.required'                      => 'Ви не указали стать',
-            'sex.in'                            => 'Не припустиме значення',
-            'birthday.required'                 => 'Ви не указали дату народження',
-            'birthday.date'                     => 'Потрібен формат YYYY-MM-DD',
-            'birthday.before_or_equal'          => 'Ви указали майбутню дату',
-            'family_relationship_id.required'   => 'Ви не указали тип стосунків',
-            'family_relationship_id.exists'     => 'Тип не існує в довіднику або не обран',
-            'work_place_id.exists'              => 'Тип не існує в довіднику або не обран',
-            'employment_information.min'        => 'Укажіть не менше ніж :min символа',
+            'surname.required'                      => 'Ви не указали прізвище',
+            'surname.min'                           => 'Укажіть не менше ніж :min символа',
+            'name.required'                         => 'Ви не указали ім\'я',
+            'name.min'                              => 'Укажіть  не менше ніж :min символа',
+            'patronymic.required'                   => 'Ви не указали по батькові',
+            'patronymic.min'                        => 'Укажіть не менше ніж :min символа',
+            'sex.required'                          => 'Ви не указали стать',
+            'sex.in'                                => 'Не припустиме значення',
+            'birthday.required'                     => 'Ви не указали дату народження',
+            'birthday.date'                         => 'Потрібен формат YYYY-MM-DD',
+            'birthday.before_or_equal'              => 'Ви указали майбутню дату',
+            'family_relationship_id.required'       => 'Ви не указали тип стосунків',
+            'family_relationship_id.exists'         => 'Тип не існує в довіднику або не обран',
+            'work_place_id.exists'                  => 'Тип не існує в довіднику або не обран',
+            'employment_information.required_with'  => 'Ви не вказали місце роботи і посаду',
+            'employment_information.min'            => 'Укажіть не менше ніж :min символа',
+            'social_information.min'                => 'Укажіть не менше ніж :min символа',
+            'additional_information.min'            => 'Укажіть не менше ніж :min символа',
         ];
     }
 

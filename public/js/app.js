@@ -22945,9 +22945,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
 /* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
+/* harmony import */ var _minixs_DateFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../minixs/DateFormat */ "./resources/js/minixs/DateFormat.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -22957,10 +22958,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
 // import Timeline from '../../components/ui/Timeline.vue';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdMemberInfo',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _minixs_DateFormat__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -22969,23 +22971,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   data: function data() {
     return {
-      movements: [{
-        date: '01.01.2022',
-        type: 'return',
-        purpose: 'Повернення'
-      }, {
-        date: '01.01.2021',
-        type: 'leave',
-        purpose: 'Повне вибуття'
-      }, {
-        date: '01.01.2020',
-        type: 'register',
-        purpose: 'Реєстрація перебування'
-      }],
+      movementTypes: [],
       isInEditMode: false,
-      // _form: {...this.formData},
-      isHistoryShown: false,
-      _form: {}
+      _form: {},
+      movementEventFormIsVisible: false,
+      eventForm: {
+        member_id: null,
+        date: null,
+        movement_type_id: 0,
+        comment: ''
+      },
+      movementAction: ''
     };
   },
   methods: {
@@ -22994,7 +22990,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       // console.log('Submit Form');
       var form = Object.assign({}, this._form);
       if (form.work_place_id == 0) {
-        form.work_place_id = null;
+        delete form.work_place_id;
       }
       if (form.death_date == '') {
         form.death_date = null;
@@ -23010,9 +23006,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this.errors = err.response.data.errors;
       });
     },
-    showMovementHistory: function showMovementHistory() {
-      this.isHistoryShown = true;
-    },
     cancelEdit: function cancelEdit() {
       this.isInEditMode = false;
       this.errors = [];
@@ -23021,20 +23014,81 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     clearFormData: function clearFormData() {
       this.$emit('closeForm');
       this.isInEditMode = false;
+    },
+    showMovementEventForm: function showMovementEventForm() {
+      this.movementEventFormIsVisible = true;
+      this.movementAction = 'create';
+    },
+    editMovementEvent: function editMovementEvent(event) {
+      Object.assign(this.eventForm, event);
+      this.movementEventFormIsVisible = true;
+      this.movementAction = 'update';
+    },
+    clearMovementEventForm: function clearMovementEventForm() {
+      this.eventForm.date = null;
+      this.eventForm.movement_type_id = 0;
+      this.eventForm.comment = '';
+    },
+    closeMovementEventForm: function closeMovementEventForm() {
+      this.movementEventFormIsVisible = false;
+      this.clearMovementEventForm();
+    },
+    submitMovementEventForm: function submitMovementEventForm() {
+      var _this2 = this;
+      this.eventForm.member_id = this.formData.id;
+      if (this.movementAction == 'create') {
+        axios.post('/api/v1/household-member-movements', this.eventForm).then(function (res) {
+          axios.get("/api/v1/household-members/".concat(_this2._form.id)).then(function (res) {
+            _this2.$store.dispatch('Households/fetchRecord', _this2._form.household_id);
+            _this2.$emit('refreshData', _this2._form.id);
+            Object.assign(_this2._form, res.data.data);
+            _this2.clearMovementEventForm();
+          });
+        });
+      } else if (this.movementAction = 'update') {
+        axios.patch("/api/v1/household-member-movements/".concat(this.eventForm.id), this.eventForm).then(function (res) {
+          axios.get("/api/v1/household-members/".concat(_this2._form.id)).then(function (res) {
+            _this2.$store.dispatch('Households/fetchRecord', _this2._form.household_id);
+            _this2.$emit('refreshData', _this2._form.id);
+            Object.assign(_this2._form, res.data.data);
+            // this.clearMovementEventForm();
+          });
+        });
+      }
+    },
+    deleteMovementEvent: function deleteMovementEvent(id) {
+      var _this3 = this;
+      axios["delete"]("/api/v1/household-member-movements/".concat(id)).then(function (res) {
+        axios.get("/api/v1/household-members/".concat(_this3._form.id)).then(function (res) {
+          _this3.$store.dispatch('Households/fetchRecord', _this3._form.household_id);
+          _this3.$emit('refreshData', _this3._form.id);
+          Object.assign(_this3._form, res.data.data);
+        });
+      });
     }
   },
-  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('FamilyRelationships', ['relationships'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('WorkPlaces', ['places'])), {}, {
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('FamilyRelationships', ['relationships'])), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('WorkPlaces', ['places'])), {}, {
     readyForSave: function readyForSave() {
-      // console.log(JSON.stringify(this.formData));
-      // console.log(JSON.stringify(this._form));
       return JSON.stringify(this.formData) !== JSON.stringify(this._form);
-    } // _form() {
-    //     return Object.assign({},this.formData)
-    // }
+    },
+    isEmploymentInformationDisabled: function isEmploymentInformationDisabled() {
+      if (this.isInEditMode) {
+        if (this._form.work_place_id > 0) {
+          return false;
+        }
+      }
+      return true;
+    }
   }),
   mounted: function mounted() {
     this.$nextTick(function () {
       this._form = _objectSpread({}, this.formData);
+    });
+  },
+  created: function created() {
+    var _this4 = this;
+    axios.get('/api/v1/movement-types').then(function (res) {
+      _this4.movementTypes = res.data.data;
     });
   },
   watch: {
@@ -23069,14 +23123,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _HouseholdMemberForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HouseholdMemberForm.vue */ "./resources/js/modules/HouseholdCards/Member/HouseholdMemberForm.vue");
-/* harmony import */ var _HouseholdMemberInfo_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HouseholdMemberInfo.vue */ "./resources/js/modules/HouseholdCards/Member/HouseholdMemberInfo.vue");
+/* harmony import */ var _minixs_DateFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../minixs/DateFormat */ "./resources/js/minixs/DateFormat.js");
+/* harmony import */ var _HouseholdMemberForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HouseholdMemberForm.vue */ "./resources/js/modules/HouseholdCards/Member/HouseholdMemberForm.vue");
+/* harmony import */ var _HouseholdMemberInfo_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./HouseholdMemberInfo.vue */ "./resources/js/modules/HouseholdCards/Member/HouseholdMemberInfo.vue");
+
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdMembers',
+  mixins: [_minixs_DateFormat__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     'members': {
       type: Array,
@@ -23098,13 +23155,16 @@ __webpack_require__.r(__webpack_exports__);
         birthday: null,
         family_relationship_id: 0,
         employment_information: '',
+        social_information: '',
+        additional_information: '',
         work_place_id: 0,
         land_owned: 0,
         land_rented: 0,
         land_leased: 0,
         death_date: null,
         death_register_number: '',
-        death_register_office: ''
+        death_register_office: '',
+        movements: []
       },
       modalTitle: '',
       viewMode: 'card',
@@ -23147,9 +23207,9 @@ __webpack_require__.r(__webpack_exports__);
         Object.assign(_this3.formData, res.data.data);
       });
     },
-    formatedDate: function formatedDate(date) {
-      return new Date(date).toISOString().slice(0, 10).split('-').reverse().join('.');
-    },
+    // formatedDate(date) {
+    //     return new Date(date).toISOString().slice(0, 10).split('-').reverse().join('.');
+    // },
     deleteMember: function deleteMember(id) {
       var _this4 = this;
       axios["delete"]("/api/v1/household-members/".concat(id)).then(function (res) {
@@ -23189,18 +23249,18 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     shownMembers: function shownMembers() {
       return this.showAllMembers ? this.members : this.members.filter(function (m) {
-        return m.death_date === null;
+        return m.status == 'active';
       });
     },
     hiddenMemebersExist: function hiddenMemebersExist() {
       return this.members.some(function (m) {
-        return m.death_date != null;
+        return ['dead', 'gone'].indexOf(m.status) !== -1;
       });
     }
   },
   components: {
-    HouseholdMemberForm: _HouseholdMemberForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    HouseholdMemberInfo: _HouseholdMemberInfo_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    HouseholdMemberForm: _HouseholdMemberForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    HouseholdMemberInfo: _HouseholdMemberInfo_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 
@@ -27279,67 +27339,75 @@ var _hoisted_42 = {
   "class": "col"
 };
 var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "exampleFormControlTextarea1",
+  "for": "socialInformation",
   "class": "form-label"
 }, "Відомості про пенсію, інвалідність, отримання соціальної допомоги", -1 /* HOISTED */);
 var _hoisted_44 = ["disabled"];
 var _hoisted_45 = {
-  "class": "row mb-3"
+  id: "socialInformationValidation",
+  "class": "invalid-feedback"
 };
 var _hoisted_46 = {
+  "class": "row mb-3"
+};
+var _hoisted_47 = {
   "class": "col"
 };
-var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "exampleFormControlTextarea1",
+var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "additionalInformation",
   "class": "form-label"
 }, "Додаткова інформація", -1 /* HOISTED */);
-var _hoisted_48 = ["disabled"];
-var _hoisted_49 = {
+var _hoisted_49 = ["disabled"];
+var _hoisted_50 = {
+  id: "additionalInformationValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_51 = {
   "class": "row"
 };
-var _hoisted_50 = {
+var _hoisted_52 = {
   "class": "col"
 };
-var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberDeathDate",
   "class": "form-label"
 }, "Дата смерті", -1 /* HOISTED */);
-var _hoisted_52 = ["disabled"];
-var _hoisted_53 = {
+var _hoisted_54 = ["disabled"];
+var _hoisted_55 = {
   id: "memberDeathDateValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_54 = {
+var _hoisted_56 = {
   "class": "col"
 };
-var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberDeathNumber",
   "class": "form-label"
 }, "Номер свідоцтва", -1 /* HOISTED */);
-var _hoisted_56 = ["disabled"];
-var _hoisted_57 = {
+var _hoisted_58 = ["disabled"];
+var _hoisted_59 = {
   id: "memberDeathNumberValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_58 = {
+var _hoisted_60 = {
   "class": "row mb-3"
 };
-var _hoisted_59 = {
+var _hoisted_61 = {
   "class": "col"
 };
-var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberDeathRegisterOffice",
   "class": "form-label"
 }, "Орган", -1 /* HOISTED */);
-var _hoisted_61 = ["disabled"];
-var _hoisted_62 = {
+var _hoisted_63 = ["disabled"];
+var _hoisted_64 = {
   id: "memberDeathPlaceValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_63 = {
+var _hoisted_65 = {
   "class": "col-8"
 };
-var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
   "class": "nav nav-tabs",
   id: "myTab",
   role: "tablist"
@@ -27355,7 +27423,9 @@ var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   role: "tab",
   "aria-controls": "work-tab-pane",
   "aria-selected": "true"
-}, " Робота ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-tools me-1"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Робота ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
   "class": "nav-item",
   role: "presentation"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -27367,19 +27437,9 @@ var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   role: "tab",
   "aria-controls": "land-tab-pane",
   "aria-selected": "false"
-}, " Земля ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
-  "class": "nav-item",
-  role: "presentation"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "nav-link",
-  id: "peasant-economy-tab",
-  "data-bs-toggle": "tab",
-  "data-bs-target": "#peasant-economy-tab-pane",
-  type: "button",
-  role: "tab",
-  "aria-controls": "peasant-economy-tab-pane",
-  "aria-selected": "false"
-}, " Селянське господарство ")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-map me-1"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Земля ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item\" role=\"presentation\">\n                                <button class=\"nav-link\"\n                                        id=\"peasant-economy-tab\"\n                                        data-bs-toggle=\"tab\"\n                                        data-bs-target=\"#peasant-economy-tab-pane\"\n                                        type=\"button\"\n                                        role=\"tab\"\n                                        aria-controls=\"peasant-economy-tab-pane\"\n                                        aria-selected=\"false\">\n                                    Селянське господарство\n                                </button>\n                            </li> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
   "class": "nav-item",
   role: "presentation"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -27391,142 +27451,218 @@ var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   role: "tab",
   "aria-controls": "movement-tab-pane",
   "aria-selected": "false"
-}, " Рєестрація ")])], -1 /* HOISTED */);
-var _hoisted_65 = {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-arrow-left-right me-1"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Реєстрація / Переміщення ")])])], -1 /* HOISTED */);
+var _hoisted_67 = {
   "class": "tab-content p-3",
   id: "myTabContent"
 };
-var _hoisted_66 = {
+var _hoisted_68 = {
   "class": "tab-pane fade show active",
   id: "work-tab-pane",
   role: "tabpanel",
   "aria-labelledby": "work-tab",
   tabindex: "0"
 };
-var _hoisted_67 = {
+var _hoisted_69 = {
   "class": "row mb-3"
 };
-var _hoisted_68 = {
+var _hoisted_70 = {
   "class": "col"
 };
-var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "exampleFormControlInput1",
+var _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "workPlace",
   "class": "form-label"
 }, "Місце роботи залежно від територіального розташування", -1 /* HOISTED */);
-var _hoisted_70 = ["disabled"];
-var _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_72 = ["disabled"];
+var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   disabled: "",
   value: "0"
 }, "Оберить місце роботи", -1 /* HOISTED */);
-var _hoisted_72 = ["value"];
-var _hoisted_73 = {
+var _hoisted_74 = ["value"];
+var _hoisted_75 = {
+  id: "workPlaceValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_76 = {
   "class": "row mb-3"
 };
-var _hoisted_74 = {
+var _hoisted_77 = {
   "class": "col"
 };
-var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "exampleFormControlTextarea1",
+var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "employmentInformation",
   "class": "form-label"
 }, "Відомості про зайнятість / незайнятість", -1 /* HOISTED */);
-var _hoisted_76 = ["disabled"];
-var _hoisted_77 = {
+var _hoisted_79 = ["disabled"];
+var _hoisted_80 = {
+  id: "employmentInformationValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_81 = {
   "class": "tab-pane fade",
   id: "land-tab-pane",
   role: "tabpanel",
   "aria-labelledby": "land-tab",
   tabindex: "0"
 };
-var _hoisted_78 = {
+var _hoisted_82 = {
   "class": "row mb-3"
 };
-var _hoisted_79 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", null, "Наявність земельної ділянки", -1 /* HOISTED */);
-var _hoisted_80 = {
+var _hoisted_83 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", null, "Наявність земельної ділянки", -1 /* HOISTED */);
+var _hoisted_84 = {
   "class": "col"
 };
-var _hoisted_81 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_85 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "landOwned",
   "class": "form-label"
 }, "у власності", -1 /* HOISTED */);
-var _hoisted_82 = ["disabled"];
-var _hoisted_83 = {
+var _hoisted_86 = ["disabled"];
+var _hoisted_87 = {
   "class": "col"
 };
-var _hoisted_84 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_88 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "landRented",
   "class": "form-label"
 }, "взято в оренду", -1 /* HOISTED */);
-var _hoisted_85 = ["disabled"];
-var _hoisted_86 = {
+var _hoisted_89 = ["disabled"];
+var _hoisted_90 = {
   "class": "col"
 };
-var _hoisted_87 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_91 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "landLeased",
   "class": "form-label"
 }, "знадо в оренду", -1 /* HOISTED */);
-var _hoisted_88 = ["disabled"];
-var _hoisted_89 = {
+var _hoisted_92 = ["disabled"];
+var _hoisted_93 = {
   "class": "tab-pane fade",
   id: "peasant-economy-tab-pane",
   role: "tabpanel",
   "aria-labelledby": "peasant-economy-tab",
   tabindex: "0"
 };
-var _hoisted_90 = {
+var _hoisted_94 = {
   "class": "row"
 };
-var _hoisted_91 = {
+var _hoisted_95 = {
   "class": "col"
 };
-var _hoisted_92 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_96 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "exampleFormControlInput1",
   "class": "form-label"
 }, "у власності", -1 /* HOISTED */);
-var _hoisted_93 = ["disabled"];
-var _hoisted_94 = {
+var _hoisted_97 = ["disabled"];
+var _hoisted_98 = {
   "class": "col"
 };
-var _hoisted_95 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_99 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "exampleFormControlInput1",
   "class": "form-label"
 }, "взято в оренду", -1 /* HOISTED */);
-var _hoisted_96 = ["disabled"];
-var _hoisted_97 = {
+var _hoisted_100 = ["disabled"];
+var _hoisted_101 = {
   "class": "col"
 };
-var _hoisted_98 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "exampleFormControlInput1",
   "class": "form-label"
 }, "знадо в оренду", -1 /* HOISTED */);
-var _hoisted_99 = ["disabled"];
-var _hoisted_100 = {
+var _hoisted_103 = ["disabled"];
+var _hoisted_104 = {
   "class": "tab-pane fade",
   id: "movement-tab-pane",
   role: "tabpanel",
   "aria-labelledby": "movement-tab",
   tabindex: "0"
 };
-var _hoisted_101 = {
-  "class": "mb-2"
-};
-var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "btn btn-sm btn-outline-secondary",
-  title: "Додати подію"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus-lg"
-})], -1 /* HOISTED */);
-var _hoisted_103 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-clock-history"
-}, null, -1 /* HOISTED */);
-var _hoisted_104 = [_hoisted_103];
 var _hoisted_105 = {
-  key: 0,
+  "class": "mb-3"
+};
+var _hoisted_106 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-calendar2-event me-1"
+}, null, -1 /* HOISTED */);
+var _hoisted_107 = {
+  key: 0
+};
+var _hoisted_108 = {
+  "class": "row mb-2"
+};
+var _hoisted_109 = {
+  "class": "col-md-6"
+};
+var _hoisted_110 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "movementEventType",
+  "class": "form-label"
+}, "Подія", -1 /* HOISTED */);
+var _hoisted_111 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: "0"
+}, "Оберить подію", -1 /* HOISTED */);
+var _hoisted_112 = ["value"];
+var _hoisted_113 = {
+  id: "movementEventValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_114 = {
+  "class": "col-md-6"
+};
+var _hoisted_115 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "movementEventDate",
+  "class": "form-label"
+}, "Дата", -1 /* HOISTED */);
+var _hoisted_116 = {
+  id: "movementEventValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_117 = {
+  "class": "row mb-3"
+};
+var _hoisted_118 = {
+  "class": "col-md-10"
+};
+var _hoisted_119 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "movementEventComment",
+  "class": "form-label"
+}, "Примітка", -1 /* HOISTED */);
+var _hoisted_120 = {
+  "class": "col-md-2 d-flex"
+};
+var _hoisted_121 = {
+  "class": "d-flex flex-grow-1 justify-content-end mt-auto"
+};
+var _hoisted_122 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-x-lg"
+}, null, -1 /* HOISTED */);
+var _hoisted_123 = [_hoisted_122];
+var _hoisted_124 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-save"
+}, null, -1 /* HOISTED */);
+var _hoisted_125 = [_hoisted_124];
+var _hoisted_126 = {
+  key: 1,
   "class": "table"
 };
-var _hoisted_106 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
+var _hoisted_127 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
   "class": "table-dark"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Дата"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Тип"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Попереднє місце реєстрації")])], -1 /* HOISTED */);
-
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Дата"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Подія"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Коментар"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th")])], -1 /* HOISTED */);
+var _hoisted_128 = {
+  "class": "text-end"
+};
+var _hoisted_129 = ["onClick", "disabled"];
+var _hoisted_130 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-pencil"
+}, null, -1 /* HOISTED */);
+var _hoisted_131 = [_hoisted_130];
+var _hoisted_132 = ["onClick", "disabled"];
+var _hoisted_133 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-trash3"
+}, null, -1 /* HOISTED */);
+var _hoisted_134 = [_hoisted_133];
+var _hoisted_135 = {
+  key: 2,
+  "class": "text-center text-muted"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
@@ -27562,6 +27698,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, _hoisted_7, 8 /* PROPS */, _hoisted_5)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      var _$data$_form$movement;
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         id: "memberSurname",
@@ -27616,22 +27753,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: relationship.id
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relationship.name), 9 /* TEXT, PROPS */, _hoisted_39);
       }), 128 /* KEYED_FRAGMENT */))], 10 /* CLASS, PROPS */, _hoisted_37), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data._form.family_relationship_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('family_relationship_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-        "class": "form-control",
-        id: "exampleFormControlTextarea1",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('social_information') ? 'is-invalid' : '']),
+        id: "socialInformation",
         rows: "2",
         "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
-          return $data._form.employment = $event;
+          return $data._form.social_information = $event;
         }),
         disabled: !$data.isInEditMode
-      }, "\n                                ", 8 /* PROPS */, _hoisted_44), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.employment]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [_hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-        "class": "form-control",
-        id: "exampleFormControlTextarea1",
+      }, "\n                                ", 10 /* CLASS, PROPS */, _hoisted_44), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.social_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('social_information')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('additional_information') ? 'is-invalid' : '']),
+        id: "additionalInformation",
         rows: "2",
         "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
-          return $data._form.additional = $event;
+          return $data._form.additional_information = $event;
         }),
         disabled: !$data.isInEditMode
-      }, "\n                                ", 8 /* PROPS */, _hoisted_48), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.additional]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-3\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                            <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"_form.workPlace\">\n                                <option disabled value=\"0\">Оберить місце роботи</option>\n                                <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                    {{place.name}}\n                                </option>\n                            </select>\n                        </div>\n                        <div class=\"mb-2\">\n                            <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                            <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, "\n                                ", 10 /* CLASS, PROPS */, _hoisted_49), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.additional_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('additional_information')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-3\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                            <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"_form.workPlace\">\n                                <option disabled value=\"0\">Оберить місце роботи</option>\n                                <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                    {{place.name}}\n                                </option>\n                            </select>\n                        </div>\n                        <div class=\"mb-2\">\n                            <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                            <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [_hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "date",
         id: "memberDeathDate",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_date') ? 'is-invalid' : '']),
@@ -27639,7 +27776,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.death_date = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_52), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_date')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [_hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_54), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_date')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [_hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         id: "memberDeathNumber",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_register_number') ? 'is-invalid' : '']),
@@ -27647,7 +27784,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.death_register_number = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_56), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_register_number]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_number')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [_hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_58), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_register_number]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_number')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         id: "memberDeathRegisterOffice",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_register_office') ? 'is-invalid' : '']),
@@ -27655,27 +27792,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.death_register_office = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_61), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_register_office]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_office')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col\"> "), _hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"tab-pane fade show active\" id=\"main-tab-pane\" role=\"tabpanel\" aria-labelledby=\"main-tab\" tabindex=\"0\">\n                                <div class=\"row mb-3\">\n\n                                    <div class=\"col\">\n                                        <label  for=\"memberSurname\" class=\"form-label\">Прізвище</label>\n                                        <input  type=\"text\"\n                                                id=\"memberSurname\"\n                                                :class=\"['form-control', hasError('surname') ? 'is-invalid' : '']\"\n                                                v-model=\"_form.surname\" >\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberName\" class=\"form-label\">Ім'я</label>\n                                        <input  type=\"text\"\n                                                :class=\"['form-control', hasError('name') ? 'is-invalid' : '']\"\n                                                id=\"memberName\"\n                                                v-model=\"_form.name\">\n                                        <div id=\"memberNameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('name') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberPatronymic\" class=\"form-label\">По батькові</label>\n                                        <input  type=\"text\"\n                                                :class=\"['form-control', hasError('patronymic') ? 'is-invalid' : '']\"\n                                                id=\"memberPatronymic\"\n                                                v-model=\"_form.patronymic\">\n                                        <div id=\"memberPatronymicValidation\" class=\"invalid-feedback\">\n                                            {{ getError('patronymic') }}\n                                        </div>\n                                    </div>\n\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label  for=\"memberBirthday\" class=\"form-label\">Дата народження</label>\n                                        <input  type=\"date\"\n                                                :class=\"['form-control', hasError('birthday') ? 'is-invalid' : '']\"\n                                                id=\"memberBirthday\"\n                                                v-model=\"_form.birthday\">\n                                        <div id=\"memberBirthdayValidation\" class=\"invalid-feedback\">\n                                            {{ getError('birthday') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberSex\" class=\"form-label\">Стать</label>\n                                        <input  list=\"sex\"\n                                                id=\"memberSex\"\n                                                placeholder=\"Type to search...\"\n                                                :class=\"['form-control', hasError('sex') ? 'is-invalid' : '']\"\n                                                v-model=\"_form.sex\">\n                                        <datalist id=\"sex\">\n                                            <option value=\"чоловіча\" />\n                                            <option value=\"жіноча\" />\n                                        </datalist>\n                                        <div id=\"memberSexValidation\" class=\"invalid-feedback\">\n                                            {{ getError('sex') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label for=\"familyRelationship\" class=\"form-label\">Родинні стосунки</label>\n                                        <select :class=\"['form-control', hasError('family_relationship_id') ? 'is-invalid' : '']\"\n                                                aria-label=\"Default select example\"\n                                                v-model=\"_form.family_relationship_id\">\n                                            <option disabled value=\"0\">Оберить тип родинних стосунків</option>\n                                            <option :value=\"relationship.id\" v-for=\"relationship in relationships\" :key=\"relationship.id\">\n                                                {{relationship.name}}\n                                            </option>\n                                        </select>\n                                        <div id=\"familyRelationshipValidation\" class=\"invalid-feedback\">\n                                            {{ getError('family_relationship_id') }}\n                                        </div>\n                                    </div>\n                                </div>\n\n                                <div class=\"mb-2\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                                        <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"_form.workPlace\">\n                                            <option disabled value=\"0\">Оберить місце роботи</option>\n                                            <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                                {{place.name}}\n                                            </option>\n                                        </select>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>\n                                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label  for=\"memberDeathDate\" class=\"form-label\">Дата сметрі</label>\n                                        <input  type=\"date\"\n                                                id=\"memberDeathFate\"\n                                                :class=\"['form-control', hasError('death_date') ? 'is-invalid' : '']\"\n                                                value=\"02/01/2023\">\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberDeathNumber\" class=\"form-label\">Номер свідоцтва</label>\n                                        <input  type=\"text\"\n                                                id=\"memberDeathNumber\"\n                                                :class=\"['form-control', hasError('death_number') ? 'is-invalid' : '']\"\n                                                value=\"21323254\" >\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                </div>\n                            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [_hoisted_69, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-        "class": "form-select",
-        "aria-label": "Default select example",
+      }, null, 10 /* CLASS, PROPS */, _hoisted_63), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_register_office]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_office')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col\"> "), _hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"tab-pane fade show active\" id=\"main-tab-pane\" role=\"tabpanel\" aria-labelledby=\"main-tab\" tabindex=\"0\">\n                                <div class=\"row mb-3\">\n\n                                    <div class=\"col\">\n                                        <label  for=\"memberSurname\" class=\"form-label\">Прізвище</label>\n                                        <input  type=\"text\"\n                                                id=\"memberSurname\"\n                                                :class=\"['form-control', hasError('surname') ? 'is-invalid' : '']\"\n                                                v-model=\"_form.surname\" >\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberName\" class=\"form-label\">Ім'я</label>\n                                        <input  type=\"text\"\n                                                :class=\"['form-control', hasError('name') ? 'is-invalid' : '']\"\n                                                id=\"memberName\"\n                                                v-model=\"_form.name\">\n                                        <div id=\"memberNameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('name') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberPatronymic\" class=\"form-label\">По батькові</label>\n                                        <input  type=\"text\"\n                                                :class=\"['form-control', hasError('patronymic') ? 'is-invalid' : '']\"\n                                                id=\"memberPatronymic\"\n                                                v-model=\"_form.patronymic\">\n                                        <div id=\"memberPatronymicValidation\" class=\"invalid-feedback\">\n                                            {{ getError('patronymic') }}\n                                        </div>\n                                    </div>\n\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label  for=\"memberBirthday\" class=\"form-label\">Дата народження</label>\n                                        <input  type=\"date\"\n                                                :class=\"['form-control', hasError('birthday') ? 'is-invalid' : '']\"\n                                                id=\"memberBirthday\"\n                                                v-model=\"_form.birthday\">\n                                        <div id=\"memberBirthdayValidation\" class=\"invalid-feedback\">\n                                            {{ getError('birthday') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberSex\" class=\"form-label\">Стать</label>\n                                        <input  list=\"sex\"\n                                                id=\"memberSex\"\n                                                placeholder=\"Type to search...\"\n                                                :class=\"['form-control', hasError('sex') ? 'is-invalid' : '']\"\n                                                v-model=\"_form.sex\">\n                                        <datalist id=\"sex\">\n                                            <option value=\"чоловіча\" />\n                                            <option value=\"жіноча\" />\n                                        </datalist>\n                                        <div id=\"memberSexValidation\" class=\"invalid-feedback\">\n                                            {{ getError('sex') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label for=\"familyRelationship\" class=\"form-label\">Родинні стосунки</label>\n                                        <select :class=\"['form-control', hasError('family_relationship_id') ? 'is-invalid' : '']\"\n                                                aria-label=\"Default select example\"\n                                                v-model=\"_form.family_relationship_id\">\n                                            <option disabled value=\"0\">Оберить тип родинних стосунків</option>\n                                            <option :value=\"relationship.id\" v-for=\"relationship in relationships\" :key=\"relationship.id\">\n                                                {{relationship.name}}\n                                            </option>\n                                        </select>\n                                        <div id=\"familyRelationshipValidation\" class=\"invalid-feedback\">\n                                            {{ getError('family_relationship_id') }}\n                                        </div>\n                                    </div>\n                                </div>\n\n                                <div class=\"mb-2\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                                        <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"_form.workPlace\">\n                                            <option disabled value=\"0\">Оберить місце роботи</option>\n                                            <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                                {{place.name}}\n                                            </option>\n                                        </select>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>\n                                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label  for=\"memberDeathDate\" class=\"form-label\">Дата сметрі</label>\n                                        <input  type=\"date\"\n                                                id=\"memberDeathFate\"\n                                                :class=\"['form-control', hasError('death_date') ? 'is-invalid' : '']\"\n                                                value=\"02/01/2023\">\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberDeathNumber\" class=\"form-label\">Номер свідоцтва</label>\n                                        <input  type=\"text\"\n                                                id=\"memberDeathNumber\"\n                                                :class=\"['form-control', hasError('death_number') ? 'is-invalid' : '']\"\n                                                value=\"21323254\" >\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                </div>\n                            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [_hoisted_71, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-select', _ctx.hasError('work_place_id') ? 'is-invalid' : '']),
         "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
           return $data._form.work_place_id = $event;
         }),
         disabled: !$data.isInEditMode
-      }, [_hoisted_71, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.places, function (place) {
+      }, [_hoisted_73, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.places, function (place) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           value: place.id,
           key: place.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(place.name), 9 /* TEXT, PROPS */, _hoisted_72);
-      }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_70), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data._form.work_place_id]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [_hoisted_75, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-        "class": "form-control",
-        id: "exampleFormControlTextarea1",
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(place.name), 9 /* TEXT, PROPS */, _hoisted_74);
+      }), 128 /* KEYED_FRAGMENT */))], 10 /* CLASS, PROPS */, _hoisted_72), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data._form.work_place_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('work_place_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [_hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('employment_information') ? 'is-invalid' : '']),
+        id: "employmentInformation",
         rows: "2",
         "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
           return $data._form.employment_information = $event;
         }),
-        disabled: !$data.isInEditMode
-      }, "\n                                        ", 8 /* PROPS */, _hoisted_76), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.employment_information]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_78, [_hoisted_79, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [_hoisted_81, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        disabled: $options.isEmploymentInformationDisabled
+      }, "\n                                        ", 10 /* CLASS, PROPS */, _hoisted_79), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.employment_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('employment_information')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [_hoisted_83, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [_hoisted_85, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": "form-control",
         id: "landOwned",
@@ -27683,7 +27819,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.land_owned = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 8 /* PROPS */, _hoisted_82), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_owned]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_83, [_hoisted_84, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 8 /* PROPS */, _hoisted_86), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_owned]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_87, [_hoisted_88, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": "form-control",
         id: "landRented",
@@ -27691,7 +27827,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.land_rented = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 8 /* PROPS */, _hoisted_85), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_rented]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [_hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 8 /* PROPS */, _hoisted_89), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_rented]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_90, [_hoisted_91, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": "form-control",
         id: "landLeased",
@@ -27699,7 +27835,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.land_leased = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 8 /* PROPS */, _hoisted_88), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_leased]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_90, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_91, [_hoisted_92, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 8 /* PROPS */, _hoisted_92), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_leased]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_93, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, [_hoisted_96, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "email",
         "class": "form-control",
         id: "exampleFormControlInput1",
@@ -27707,7 +27843,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.surname = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 8 /* PROPS */, _hoisted_93), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.surname]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [_hoisted_95, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 8 /* PROPS */, _hoisted_97), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.surname]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_98, [_hoisted_99, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "email",
         "class": "form-control",
         id: "exampleFormControlInput1",
@@ -27715,7 +27851,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.name = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 8 /* PROPS */, _hoisted_96), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_97, [_hoisted_98, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 8 /* PROPS */, _hoisted_100), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_101, [_hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "email",
         "class": "form-control",
         id: "exampleFormControlInput1",
@@ -27723,19 +27859,68 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.patronymic = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 8 /* PROPS */, _hoisted_99), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.patronymic]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_101, [_hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-sm ms-3 btn-outline-secondary", {
-          'active': $data.isHistoryShown
-        }]),
-        title: "Відобразити історію",
+      }, null, 8 /* PROPS */, _hoisted_103), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.patronymic]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_105, [!$data.movementEventFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+        key: 0,
+        "class": "btn btn-outline-primary",
+        title: "Додати подію",
         onClick: _cache[22] || (_cache[22] = function () {
-          return $options.showMovementHistory && $options.showMovementHistory.apply($options, arguments);
+          return $options.showMovementEventForm && $options.showMovementEventForm.apply($options, arguments);
         })
-      }, _hoisted_104, 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Додаткова інформація</label> "), $data.isHistoryShown ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_105, [_hoisted_106, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.movements, function (event, index) {
+      }, [_hoisted_106, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати подію ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary\"\n                                                title=\"Відмінити додовання події\"\n                                                @click=\"closeMovementEventForm\"\n                                                v-else>\n                                            <i class=\"bi bi-x-lg\"></i>\n                                        </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-primary\"\n                                                title=\"Зберегти подію\"\n                                                @click=\"submitMovementEventForm\"\n                                                v-if=\"movementEventFormIsVisible\">\n                                            <i class=\"bi bi-save\"></i>\n                                        </button> ")]), $data.movementEventFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_107, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_108, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, [_hoisted_110, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('movement_type_id') ? 'is-invalid' : '']),
+        "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
+          return $data.eventForm.movement_type_id = $event;
+        })
+      }, [_hoisted_111, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.movementTypes, function (movementType) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          value: movementType.id,
+          key: movementType.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movementType.name), 9 /* TEXT, PROPS */, _hoisted_112);
+      }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.eventForm.movement_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_113, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('movement_type_id')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_114, [_hoisted_115, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "date",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('date') ? 'is-invalid' : '']),
+        id: "movementEvent",
+        "onUpdate:modelValue": _cache[24] || (_cache[24] = function ($event) {
+          return $data.eventForm.date = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_116, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('date')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_117, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_118, [_hoisted_119, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": "form-control",
+        id: "movementEventComment",
+        "onUpdate:modelValue": _cache[25] || (_cache[25] = function ($event) {
+          return $data.eventForm.comment = $event;
+        })
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.comment]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_120, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_121, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        "class": "btn btn-outline-secondary me-4",
+        title: "Відмінити додовання події",
+        onClick: _cache[26] || (_cache[26] = function () {
+          return $options.closeMovementEventForm && $options.closeMovementEventForm.apply($options, arguments);
+        })
+      }, _hoisted_123), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        "class": "btn btn-outline-primary",
+        title: "Зберегти подію",
+        onClick: _cache[27] || (_cache[27] = function () {
+          return $options.submitMovementEventForm && $options.submitMovementEventForm.apply($options, arguments);
+        })
+      }, _hoisted_125)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (_$data$_form$movement = $data._form.movements) !== null && _$data$_form$movement !== void 0 && _$data$_form$movement.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_126, [_hoisted_127, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data._form.movements, function (event, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: index
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.date), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.type), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.purpose), 1 /* TEXT */)]);
-      }), 128 /* KEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Timeline :events=\"movements\" /> ")])])])])])])];
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(event.date)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.movement_type.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.comment), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_128, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+          "class": "btn btn-sm btn-outline-warning me-3",
+          title: "Редагувати подію",
+          onClick: function onClick($event) {
+            return $options.editMovementEvent(event);
+          },
+          disabled: $data.movementEventFormIsVisible
+        }, _hoisted_131, 8 /* PROPS */, _hoisted_129), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+          "class": "btn btn-sm btn-outline-danger",
+          title: "Видалити подію",
+          onClick: function onClick($event) {
+            return $options.deleteMovementEvent(event.id);
+          },
+          disabled: $data.movementEventFormIsVisible
+        }, _hoisted_134, 8 /* PROPS */, _hoisted_132)])]);
+      }), 128 /* KEYED_FRAGMENT */))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_135, " Інформація відсутня ")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Timeline :events=\"movements\" /> ")])])])])])])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
@@ -27918,16 +28103,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["card member", {
-        'dead': member.death_date != null
-      }]),
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["card member", [member.status == 'dead' ? 'dead' : '', member.status == 'gone' ? 'gone' : '']]),
       key: member.id,
       onDblclick: function onDblclick($event) {
         return $options.showHouseholdMemberInfo(member.id);
       }
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */)]), member.family_relationship == 'голова домогосподарства' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_17, _hoisted_19)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatedDate(member.birthday)) + " ", 1 /* TEXT */), member.death_date != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */)]), member.family_relationship == 'голова домогосподарства' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_17, _hoisted_19)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.birthday)) + " ", 1 /* TEXT */), member.death_date != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: 0
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatedDate(member.death_date)), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"member-sex\">\n                            <span v-if=\"member.sex=='чоловіча'\" title=\"чоловік\">\n                                &#9794;\n                            </span>\n                            <span v-else title=\"жінка\">\n                                &#9792;\n                            </span>\n                        </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.death_date)), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"member-sex\">\n                            <span v-if=\"member.sex=='чоловіча'\" title=\"чоловік\">\n                                &#9794;\n                            </span>\n                            <span v-else title=\"жінка\">\n                                &#9792;\n                            </span>\n                        </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "btn btn-sm btn-outline-secondary",
       onClick: function onClick($event) {
         return $options.showHouseholdMemberInfo(member.id);
@@ -27944,7 +28127,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onClick: function onClick($event) {
         return _ctx.showHouseholdMember(member.id);
       }
-    }, _hoisted_33, 8 /* PROPS */, _hoisted_31)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formatedDate(member.birthday)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.sex), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [member.work_place ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    }, _hoisted_33, 8 /* PROPS */, _hoisted_31)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.birthday)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.sex), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [member.work_place ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: 0
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.work_place.name), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.employment_information), 1 /* TEXT */)], 2 /* CLASS */);
   }), 128 /* KEYED_FRAGMENT */))])]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseholdMemberForm, {
@@ -29140,6 +29323,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     forceTLS: (import.meta.env.MIX_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+/***/ }),
+
+/***/ "./resources/js/minixs/DateFormat.js":
+/*!*******************************************!*\
+  !*** ./resources/js/minixs/DateFormat.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    formatedDate: function formatedDate(date) {
+      return new Date(date).toISOString().slice(0, 10).split('-').reverse().join('.');
+    }
+  }
+});
 
 /***/ }),
 
@@ -37406,7 +37610,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".member[data-v-6bc96c6a] {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n  width: 200px;\n}\n.member[data-v-6bc96c6a]:hover, .member[data-v-6bc96c6a]:active {\n  box-shadow: 0 0 2px 3px #e7e7e7;\n  transform: scale(1.05);\n  transition: all 0.3s ease;\n  -webkit-font-smoothing: subpixel-antialiased;\n}\n.member-surname[data-v-6bc96c6a] {\n  font-size: 1.1rem;\n  font-weight: bold;\n}\n.member .family-relationship[data-v-6bc96c6a] {\n  height: 2rem;\n}\n.member.dead[data-v-6bc96c6a] {\n  background: lightgray;\n}\n#members[data-v-6bc96c6a]:-webkit-full-screen {\n  padding: 2rem;\n}\n#members[data-v-6bc96c6a]:fullscreen {\n  padding: 2rem;\n}\n#members:-webkit-full-screen button#newMember[data-v-6bc96c6a] {\n  display: none;\n}\n#members:fullscreen button#newMember[data-v-6bc96c6a] {\n  display: none;\n}\n[data-v-6bc96c6a]:not(:root):-webkit-full-screen::backdrop {\n  padding: 2rem;\n  background: #f8fafc;\n}\n[data-v-6bc96c6a]:not(:root):fullscreen::backdrop {\n  padding: 2rem;\n  background: #f8fafc;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".member[data-v-6bc96c6a] {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n  width: 200px;\n}\n.member[data-v-6bc96c6a]:hover, .member[data-v-6bc96c6a]:active {\n  box-shadow: 0 0 2px 3px #e7e7e7;\n  transform: scale(1.05);\n  transition: all 0.3s ease;\n  -webkit-font-smoothing: subpixel-antialiased;\n}\n.member-surname[data-v-6bc96c6a] {\n  font-size: 1.1rem;\n  font-weight: bold;\n}\n.member .family-relationship[data-v-6bc96c6a] {\n  height: 2rem;\n}\n.member.dead[data-v-6bc96c6a] {\n  background: lightgray;\n}\n.member.gone[data-v-6bc96c6a] {\n  border-color: red;\n}\n#members[data-v-6bc96c6a]:-webkit-full-screen {\n  padding: 2rem;\n}\n#members[data-v-6bc96c6a]:fullscreen {\n  padding: 2rem;\n}\n#members:-webkit-full-screen button#newMember[data-v-6bc96c6a] {\n  display: none;\n}\n#members:fullscreen button#newMember[data-v-6bc96c6a] {\n  display: none;\n}\n[data-v-6bc96c6a]:not(:root):-webkit-full-screen::backdrop {\n  padding: 2rem;\n  background: #f8fafc;\n}\n[data-v-6bc96c6a]:not(:root):fullscreen::backdrop {\n  padding: 2rem;\n  background: #f8fafc;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

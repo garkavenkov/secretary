@@ -101,26 +101,32 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="exampleFormControlTextarea1" class="form-label">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>
+                                <label for="socialInformation" class="form-label">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>
                                 <textarea
-                                        class="form-control"
-                                        id="exampleFormControlTextarea1"
+                                        :class="['form-control', hasError('social_information') ? 'is-invalid' : '']"
+                                        id="socialInformation"
                                         rows="2"
-                                        v-model="_form.employment"
+                                        v-model="_form.social_information"
                                         :disabled="!isInEditMode">
                                 </textarea>
+                                <div id="socialInformationValidation" class="invalid-feedback">
+                                    {{ getError('social_information') }}
+                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="exampleFormControlTextarea1" class="form-label">Додаткова інформація</label>
+                                <label for="additionalInformation" class="form-label">Додаткова інформація</label>
                                 <textarea
-                                        class="form-control"
-                                        id="exampleFormControlTextarea1"
+                                        :class="['form-control', hasError('additional_information') ? 'is-invalid' : '']"
+                                        id="additionalInformation"
                                         rows="2"
-                                        v-model="_form.additional"
+                                        v-model="_form.additional_information"
                                         :disabled="!isInEditMode">
                                 </textarea>
+                                <div id="additionalInformationValidation" class="invalid-feedback">
+                                    {{ getError('additional_information') }}
+                                </div>
                             </div>
                         </div>
                         <!-- <div class="mb-3">
@@ -198,6 +204,7 @@
                                         role="tab"
                                         aria-controls="work-tab-pane"
                                         aria-selected="true">
+                                    <i class="bi bi-tools me-1"></i>
                                     Робота
                                 </button>
                             </li>
@@ -210,10 +217,11 @@
                                         role="tab"
                                         aria-controls="land-tab-pane"
                                         aria-selected="false">
+                                    <i class="bi bi-map me-1"></i>
                                     Земля
                                 </button>
                             </li>
-                            <li class="nav-item" role="presentation">
+                            <!-- <li class="nav-item" role="presentation">
                                 <button class="nav-link"
                                         id="peasant-economy-tab"
                                         data-bs-toggle="tab"
@@ -224,7 +232,7 @@
                                         aria-selected="false">
                                     Селянське господарство
                                 </button>
-                            </li>
+                            </li> -->
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link"
                                         id="movement-tab"
@@ -234,7 +242,8 @@
                                         role="tab"
                                         aria-controls="movement-tab-pane"
                                         aria-selected="false">
-                                    Рєестрація
+                                    <i class="bi bi-arrow-left-right me-1"></i>
+                                    Реєстрація / Переміщення
                                 </button>
                             </li>
                         </ul>
@@ -365,10 +374,9 @@
                             <div class="tab-pane fade show active" id="work-tab-pane" role="tabpanel" aria-labelledby="work-tab" tabindex="0">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <label for="exampleFormControlInput1" class="form-label">Місце роботи залежно від територіального розташування</label>
+                                        <label for="workPlace" class="form-label">Місце роботи залежно від територіального розташування</label>
                                         <select
-                                                class="form-select"
-                                                aria-label="Default select example"
+                                                :class="['form-select', hasError('work_place_id') ? 'is-invalid' : '']"
                                                 v-model="_form.work_place_id"
                                                 :disabled="!isInEditMode">
                                             <option disabled value="0">Оберить місце роботи</option>
@@ -376,18 +384,24 @@
                                                 {{place.name}}
                                             </option>
                                         </select>
+                                        <div id="workPlaceValidation" class="invalid-feedback">
+                                            {{ getError('work_place_id') }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Відомості про зайнятість / незайнятість</label>
+                                        <label for="employmentInformation" class="form-label">Відомості про зайнятість / незайнятість</label>
                                         <textarea
-                                                class="form-control"
-                                                id="exampleFormControlTextarea1"
+                                                :class="['form-control', hasError('employment_information') ? 'is-invalid' : '']"
+                                                id="employmentInformation"
                                                 rows="2"
                                                 v-model="_form.employment_information"
-                                                :disabled="!isInEditMode">
+                                                :disabled="isEmploymentInformationDisabled">
                                         </textarea>
+                                        <div id="employmentInformationValidation" class="invalid-feedback">
+                                            {{ getError('employment_information') }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -453,35 +467,116 @@
 
                             <div class="tab-pane fade" id="movement-tab-pane" role="tabpanel" aria-labelledby="movement-tab" tabindex="0">
                                 <div>
-                                    <div class="mb-2">
-                                        <button class="btn btn-sm btn-outline-secondary" title="Додати подію">
-                                            <i class="bi bi-plus-lg"></i>
+                                    <div class="mb-3">
+                                        <button class="btn btn-outline-primary"
+                                                title="Додати подію"
+                                                @click="showMovementEventForm"
+                                                v-if="!movementEventFormIsVisible">
+                                            <i class="bi bi-calendar2-event me-1"></i>
+                                            Додати подію
                                         </button>
-                                        <button class="btn btn-sm ms-3 btn-outline-secondary"
-                                                :class="{'active': isHistoryShown}"
-                                                title="Відобразити історію"
-                                                @click="showMovementHistory">
-                                            <i class="bi bi-clock-history"></i>
-                                        </button>
+                                        <!-- <button class="btn btn-sm btn-outline-secondary"
+                                                title="Відмінити додовання події"
+                                                @click="closeMovementEventForm"
+                                                v-else>
+                                            <i class="bi bi-x-lg"></i>
+                                        </button> -->
+                                        <!-- <button class="btn btn-sm btn-outline-primary"
+                                                title="Зберегти подію"
+                                                @click="submitMovementEventForm"
+                                                v-if="movementEventFormIsVisible">
+                                            <i class="bi bi-save"></i>
+                                        </button> -->
                                     </div>
-                                    <!-- <label for="exampleFormControlTextarea1" class="form-label">Додаткова інформація</label> -->
-                                    <table class="table" v-if="isHistoryShown">
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th>Дата</th>
-                                                <th>Тип</th>
-                                                <th>Попереднє місце реєстрації</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr v-for="(event, index) in movements" :key="index">
-                                                <td>{{ event.date }}</td>
-                                                <td>{{ event.type }}</td>
-                                                <td>{{ event.purpose }}</td>
-                                            </tr>
+                                    <div v-if="movementEventFormIsVisible">
+                                        <div class="row mb-2">
+                                            <div class="col-md-6">
+                                                <label for="movementEventType" class="form-label">Подія</label>
+                                                <select :class="['form-control', hasError('movement_type_id') ? 'is-invalid' : '']"
+                                                        v-model="eventForm.movement_type_id">
+                                                    <option disabled value="0">Оберить подію</option>
+                                                    <option :value="movementType.id" v-for="movementType in movementTypes" :key="movementType.id">
+                                                        {{movementType.name}}
+                                                    </option>
+                                                </select>
+                                                <div id="movementEventValidation" class="invalid-feedback">
+                                                    {{ getError('movement_type_id') }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label  for="movementEventDate" class="form-label">Дата</label>
+                                                <input  type="date"
+                                                        :class="['form-control', hasError('date') ? 'is-invalid' : '']"
+                                                        id="movementEvent"
+                                                        v-model="eventForm.date">
+                                                <div id="movementEventValidation" class="invalid-feedback">
+                                                    {{ getError('date') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-10">
+                                                <label  for="movementEventComment" class="form-label">Примітка</label>
+                                                <input  type="text"
+                                                        class="form-control"
+                                                        id="movementEventComment"
+                                                        v-model="eventForm.comment" />
+                                            </div>
+                                            <div class="col-md-2 d-flex">
+                                                <div class="d-flex flex-grow-1 justify-content-end mt-auto">
+                                                    <button class="btn btn-outline-secondary me-4"
+                                                            title="Відмінити додовання події"
+                                                            @click="closeMovementEventForm">
+                                                        <i class="bi bi-x-lg"></i>
+                                                    </button>
+                                                    <button class="btn btn-outline-primary"
+                                                            title="Зберегти подію"
+                                                            @click="submitMovementEventForm">
+                                                        <i class="bi bi-save"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <template v-if="_form.movements?.length">
+                                        <table class="table">
+                                            <thead class="table-dark">
+                                                <tr>
+                                                    <th>Дата</th>
+                                                    <th>Подія</th>
+                                                    <th>Коментар</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(event, index) in _form.movements" :key="index">
+                                                    <td>{{ formatedDate(event.date)}}</td>
+                                                    <td>{{ event.movement_type.name }}</td>
+                                                    <td>{{ event.comment }}</td>
+                                                    <td class="text-end">
+                                                        <button class="btn btn-sm btn-outline-warning me-3"
+                                                                title="Редагувати подію"
+                                                                @click="editMovementEvent(event)"
+                                                                :disabled="movementEventFormIsVisible">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                        <button class="btn btn-sm btn-outline-danger"
+                                                                title="Видалити подію"
+                                                                @click="deleteMovementEvent(event.id)"
+                                                                :disabled="movementEventFormIsVisible">
+                                                            <i class="bi bi-trash3"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </template>
+                                    <template v-else>
+                                        <div class="text-center text-muted">
+                                            Інформація відсутня
+                                        </div>
+                                    </template>
                                     <!-- <Timeline :events="movements" /> -->
                                 </div>
                             </div>
@@ -500,10 +595,11 @@ import { mapGetters } from 'vuex';
 
 import ModalForm from '../../../components/ui/ModalForm.vue';
 import FormValidator from '../../../minixs/FormValidator';
+import DateFormat from '../../../minixs/DateFormat';
 // import Timeline from '../../components/ui/Timeline.vue';
 export default {
     name: 'HouseholdMemberInfo',
-    mixins: [FormValidator],
+    mixins: [FormValidator, DateFormat],
     props: {
         'formData': {
             type: Object,
@@ -512,27 +608,17 @@ export default {
     },
     data() {
         return {
-            movements: [
-                {
-                    date: '01.01.2022',
-                    type: 'return',
-                    purpose: 'Повернення'
-                },
-                {
-                    date: '01.01.2021',
-                    type: 'leave',
-                    purpose: 'Повне вибуття'
-                },
-                {
-                    date: '01.01.2020',
-                    type: 'register',
-                    purpose: 'Реєстрація перебування'
-                },
-            ],
+            movementTypes: [],
             isInEditMode: false,
-            // _form: {...this.formData},
-            isHistoryShown: false,
-            _form: {}
+            _form: {},
+            movementEventFormIsVisible: false,
+            eventForm: {
+                member_id: null,
+                date: null,
+                movement_type_id: 0,
+                comment: ''
+            },
+            movementAction: ''
         }
     },
     methods: {
@@ -540,7 +626,7 @@ export default {
             // console.log('Submit Form');
             let form = Object.assign({}, this._form);
             if (form.work_place_id == 0) {
-                form.work_place_id = null;
+                delete form.work_place_id;
             }
             if (form.death_date == '') {
                 form.death_date = null;
@@ -558,9 +644,6 @@ export default {
                     this.errors = err.response.data.errors;
                 })
         },
-        showMovementHistory() {
-            this.isHistoryShown = true;
-        },
         cancelEdit() {
             this.isInEditMode = false;
             this.errors = [];
@@ -569,24 +652,88 @@ export default {
         clearFormData() {
             this.$emit('closeForm');
             this.isInEditMode = false;
+        },
+        showMovementEventForm() {
+            this.movementEventFormIsVisible = true;
+            this.movementAction = 'create';
+        },
+        editMovementEvent(event) {
+            Object.assign(this.eventForm, event);
+            this.movementEventFormIsVisible = true;
+            this.movementAction = 'update';
+        },
+        clearMovementEventForm() {
+            this.eventForm.date = null;
+            this.eventForm.movement_type_id = 0;
+            this.eventForm.comment = '';
+        },
+        closeMovementEventForm() {
+            this.movementEventFormIsVisible = false;
+            this.clearMovementEventForm();
+        },
+        submitMovementEventForm() {
+            this.eventForm.member_id = this.formData.id;
+            if (this.movementAction == 'create') {
+                axios.post('/api/v1/household-member-movements', this.eventForm)
+                    .then(res => {
+                        axios.get(`/api/v1/household-members/${this._form.id}`)
+                            .then(res => {
+                                this.$store.dispatch('Households/fetchRecord', this._form.household_id);
+                                this.$emit('refreshData', this._form.id);
+                                Object.assign(this._form, res.data.data);
+                                this.clearMovementEventForm();
+                            })
+                    })
+            } else if (this.movementAction = 'update') {
+                axios.patch(`/api/v1/household-member-movements/${this.eventForm.id}`, this.eventForm)
+                    .then(res => {
+                        axios.get(`/api/v1/household-members/${this._form.id}`)
+                            .then(res => {
+                                this.$store.dispatch('Households/fetchRecord', this._form.household_id);
+                                this.$emit('refreshData', this._form.id);
+                                Object.assign(this._form, res.data.data);
+                                // this.clearMovementEventForm();
+                            })
+                    })
+            }
+        },
+        deleteMovementEvent(id) {
+            axios.delete(`/api/v1/household-member-movements/${id}`)
+                .then(res => {
+                    axios.get(`/api/v1/household-members/${this._form.id}`)
+                        .then(res => {
+                                this.$store.dispatch('Households/fetchRecord', this._form.household_id);
+                                this.$emit('refreshData', this._form.id);
+                                Object.assign(this._form, res.data.data);
+                        })
+                })
         }
     },
     computed: {
         ...mapGetters('FamilyRelationships', ['relationships']),
         ...mapGetters('WorkPlaces', ['places']),
         readyForSave() {
-            // console.log(JSON.stringify(this.formData));
-            // console.log(JSON.stringify(this._form));
             return JSON.stringify(this.formData) !== JSON.stringify(this._form);
         },
-        // _form() {
-        //     return Object.assign({},this.formData)
-        // }
+        isEmploymentInformationDisabled() {
+            if (this.isInEditMode) {
+                if (this._form.work_place_id > 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
     },
     mounted() {
        this.$nextTick(function() {
             this._form = {...this.formData}
        })
+    },
+    created() {
+        axios.get('/api/v1/movement-types')
+            .then(res => {
+                this.movementTypes = res.data.data;
+            })
     },
     watch: {
         '_form.death_date' (newVal) {

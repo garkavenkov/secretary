@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\API\v1;
 
-use App\Models\FamilyRelationship;
 use Tests\TestCase;
 use App\Models\Household;
 use App\Models\HouseholdMember;
@@ -105,7 +104,7 @@ class HouseholdMemberTest extends TestCase
             'family_relationship does not exist'            =>  ['family_relationship_id', 99],
             'birthday is empty'                             =>  ['birthday', ''],
             'birthday is not a date'                        =>  ['birthday', 'qw'],
-            'birthday is in future'                         =>  ['birthday', '2022-12-08'],
+            'birthday is in future'                         =>  ['birthday', date("Y-m-d", strtotime("+1 day"))],
             'place_work is empty'                           =>  ['place_work_id', ''],
             'place_work does not exist'                     =>  ['place_work_id', 99],
             'employment is not long enough'                 =>  ['employment_information', 'qw'],
@@ -114,6 +113,8 @@ class HouseholdMemberTest extends TestCase
             'death_number is empty when death_date is set'  =>  ['death_register_number',    ''],
             'death_office is empty when death_date is set'  =>  ['death_register_office',    ''],
             'death_office is not long enough'               =>  ['death_register_office',    'qw'],
+            'additional is not long enough'                 =>  ['additional',  'qw'],
+            'social is not long enough'                     =>  ['social',      'qw'],
         ];
     }
 }

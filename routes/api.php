@@ -11,6 +11,7 @@ use App\Http\Controllers\API\v1\WorkPlaceController;
 use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
 use App\Http\Controllers\API\v1\LandPlotTypeController;
+use App\Http\Controllers\API\v1\MovementTypeController;
 use App\Http\Controllers\API\v1\HouseholdTypeController;
 use App\Http\Controllers\API\v1\HouseholdHouseController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
@@ -18,7 +19,8 @@ use App\Http\Controllers\API\v1\AdditionalParamController;
 use App\Http\Controllers\API\v1\HouseholdMemberController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
-use App\Models\Household;
+use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +55,8 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('household-members',            HouseholdMemberController::class);
     Route::resource('additional-param-categories',  AdditionalParamCategoryController::class);
     Route::resource('additional-params',            AdditionalParamController::class);
+    Route::resource('movement-types',               MovementTypeController::class);
+    Route::resource('household-member-movements',   HouseholdMemberMovementController::class);
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
     // Route::resource('additional-param-values)

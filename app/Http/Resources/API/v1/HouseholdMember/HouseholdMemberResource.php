@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\API\v1\HouseholdMember;
 
-
+use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,11 +23,27 @@ class HouseholdMemberResource extends JsonResource
         $death_register_office = '';
         // dd($this->death);
         // if (($this->death !== '') && !isNull($this->death)) {
-        if ($this->death !== '') {
+        if ($this->death != '') {
         // if (!isNull($this->death)) {
             // dd($this->death);
             list($death_date, $death_register_number, $death_register_office) = explode(';', $this->death);
         }
+        $movements = HouseholdMemberMovementResource::collection($this->whenLoaded('movements'));
+        $status = 'active';
+        // dd("death date is _{$death_date}_");
+        if (is_null($death_date)) {
+            // dd("household member is alive");
+            if ($movements->count() > 0) {
+                $movement = $movements->first();
+                if (in_array($movement->type->code, ['leave'])) {
+                    $status = 'gone';
+                }
+            }
+        } else {
+            // dd('death date is set');
+            $status = 'dead';
+        }
+
         return [
             'id'                        =>  (int)   $this->id,
             'household_id'              =>  (int)   $this->household_id,
@@ -39,8 +55,12 @@ class HouseholdMemberResource extends JsonResource
             'family_relationship_id'    =>  (int)   $this->family_relationship_id,
             'family_relationship'       =>  $this->when('familyRelationship', $this->familyRelationship->name),
             'employment_information'    =>  $this->employment_information,
+            'social_information'        =>  $this->social_information,
+            'additional_information'    =>  $this->additional_information,
             'work_place_id'             =>  (int)   $this->work_place_id,
             'work_place'                =>  new WorkPlaceResource($this->whenLoaded('workPlace')),
+            'movements'                 =>  $movements,
+            'status'                    =>  $status,
             'death_date'                =>  $death_date,
             'death_register_number'     =>  $death_register_number,
             'death_register_office'     =>  $death_register_office,

@@ -21,6 +21,8 @@ class HouseholdMember extends Model
         'family_relationship_id',
         'employment_information',
         'work_place_id',
+        'social_information',
+        'additional_information',
         'death',
         'death_date',
         'death_register_number',
@@ -66,5 +68,10 @@ class HouseholdMember extends Model
     public function workPlace()
     {
         return $this->belongsTo(WorkPlace::class);
+    }
+
+    public function movements()
+    {
+        return $this->hasMany(HouseholdMemberMovement::class, 'member_id')->orderBy('date', 'desc');
     }
 }

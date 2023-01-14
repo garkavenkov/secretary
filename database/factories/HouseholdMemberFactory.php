@@ -21,7 +21,7 @@ class HouseholdMemberFactory extends Factory
     {
         $sex = $this->faker->randomElement(['чоловіча', 'жіноча']);
         $birthday = $this->faker->date($format = 'Y-m-d', $max = 'now');
-        $death_date = $this->faker->dateTimeBetween('+40 year', '+60 years');
+        // $death_date = $this->faker->dateTimeBetween('+40 year', '+60 years');
         return [
             'household_id'              =>  Household::factory(),
             'surname'                   =>  $sex == 'чоловіча' ? $this->faker->lastName($gender = 'male') : $this->faker->lastName($gender = 'female'),
@@ -31,8 +31,8 @@ class HouseholdMemberFactory extends Factory
             'birthday'                  =>  $birthday,
             'family_relationship_id'    =>  FamilyRelationship::factory(),
             'employment_information'    =>  $this->faker->company(),
-            'place_work_id'             =>  WorkPlace::factory(),
-            'death_date'                =>  $death_date,
+            'work_place_id'             =>  WorkPlace::factory(),
+            // 'death_date'                =>  $death_date,
         ];
     }
 }

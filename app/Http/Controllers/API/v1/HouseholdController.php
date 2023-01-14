@@ -54,7 +54,7 @@ class HouseholdController extends Controller
      */
     public function show($id)
     {
-        $household = Household::with('settlement', 'type', 'members.familyRelationship', 'members.workPlace', 'houseYears')->findOrFail($id);
+        $household = Household::with('settlement', 'type', 'members.familyRelationship', 'members.workPlace', 'members.movements', 'houseYears')->findOrFail($id);
 
         return new HouseholdResource($household);
     }

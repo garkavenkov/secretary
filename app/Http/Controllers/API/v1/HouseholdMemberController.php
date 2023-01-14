@@ -45,7 +45,7 @@ class HouseholdMemberController extends Controller
      */
     public function show($id)
     {
-        $member = HouseholdMember::findOrFail($id);
+        $member = HouseholdMember::with('movements.type')->findOrFail($id);
 
         return new HouseholdMemberResource($member);
     }
