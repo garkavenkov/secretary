@@ -477,7 +477,7 @@
                             <div class="tab-pane fade" id="movement-tab-pane" role="tabpanel" aria-labelledby="movement-tab" tabindex="0">
                                 <div>
                                     <div class="mb-3">
-                                        <button class="btn btn-outline-primary"
+                                        <button class="btn btn-sm btn-outline-primary"
                                                 title="Додати подію"
                                                 @click="showMovementEventForm"
                                                 v-if="!movementEventFormIsVisible">
@@ -498,7 +498,7 @@
                                         </button> -->
                                     </div>
                                     <div v-if="movementEventFormIsVisible">
-                                        <div class="row mb-2">
+                                        <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <label for="movementEventType" class="form-label">Подія</label>
                                                 <select :class="['form-control', hasError('movement_type_id') ? 'is-invalid' : '']"
@@ -524,26 +524,31 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <div class="col-md-10">
+                                            <div class="col-md-12">
                                                 <label  for="movementEventComment" class="form-label">Примітка</label>
                                                 <input  type="text"
-                                                        class="form-control"
+                                                        :class="['form-control', hasError('comment') ? 'is-invalid' : '']"
                                                         id="movementEventComment"
                                                         v-model="eventForm.comment" />
-                                            </div>
-                                            <div class="col-md-2 d-flex">
-                                                <div class="d-flex flex-grow-1 justify-content-end mt-auto">
-                                                    <button class="btn btn-outline-secondary me-4"
-                                                            title="Відмінити додовання події"
-                                                            @click="closeMovementEventForm">
-                                                        <i class="bi bi-x-lg"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-primary"
-                                                            title="Зберегти подію"
-                                                            @click="submitMovementEventForm">
-                                                        <i class="bi bi-save"></i>
-                                                    </button>
+                                                <div id="movementEventCommentValidation" class="invalid-feedback">
+                                                    {{ getError('comment') }}
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="d-flex justify-content-end">
+                                                <button class="btn btn-sm btn-outline-secondary me-4"
+                                                        :title="movementAction == 'create' ? 'Відмінити додовання події' : 'Відмінити редагування події'"
+                                                        @click="closeMovementEventForm">
+                                                    <i class="bi bi-x-lg me-1"></i>
+                                                    Відмінити
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                        :title="movementAction == 'create' ? 'Додати подію' : 'Зберегти зміни'"
+                                                        @click="submitMovementEventForm">
+                                                    <i class="bi bi-save me-1"></i>
+                                                    {{ movementEventSubmitButtonTitle }}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -627,7 +632,9 @@ export default {
                 movement_type_id: 0,
                 comment: ''
             },
-            movementAction: ''
+            movementAction: '',
+            movementEventCancelButtonTitle: '',
+            movementEventSubmitButtonTitle: '',
         }
     },
     methods: {
@@ -665,11 +672,13 @@ export default {
         showMovementEventForm() {
             this.movementEventFormIsVisible = true;
             this.movementAction = 'create';
+            this.movementEventSubmitButtonTitle = 'Додати';
         },
         editMovementEvent(event) {
             Object.assign(this.eventForm, event);
             this.movementEventFormIsVisible = true;
             this.movementAction = 'update';
+            this.movementEventSubmitButtonTitle = 'Зберегти';
         },
         clearMovementEventForm() {
             this.eventForm.date = null;
@@ -678,6 +687,12 @@ export default {
         },
         closeMovementEventForm() {
             this.movementEventFormIsVisible = false;
+            if (this.errors['date'])
+                delete this.errors['date'];
+            if (this.errors['movement_type_id'])
+                delete this.errors['movement_type_id'];
+            if (this.errors['comment'])
+                delete this.errors['comment'];
             this.clearMovementEventForm();
         },
         submitMovementEventForm() {
@@ -693,6 +708,9 @@ export default {
                                 this.clearMovementEventForm();
                             })
                     })
+                    .catch(err => {
+                        this.errors = err.response.data.errors;
+                    })
             } else if (this.movementAction = 'update') {
                 axios.patch(`/api/v1/household-member-movements/${this.eventForm.id}`, this.eventForm)
                     .then(res => {
@@ -703,6 +721,9 @@ export default {
                                 Object.assign(this._form, res.data.data);
                                 // this.clearMovementEventForm();
                             })
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors;
                     })
             }
         },

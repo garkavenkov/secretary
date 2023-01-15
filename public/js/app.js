@@ -22981,7 +22981,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         movement_type_id: 0,
         comment: ''
       },
-      movementAction: ''
+      movementAction: '',
+      movementEventCancelButtonTitle: '',
+      movementEventSubmitButtonTitle: ''
     };
   },
   methods: {
@@ -23018,11 +23020,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     showMovementEventForm: function showMovementEventForm() {
       this.movementEventFormIsVisible = true;
       this.movementAction = 'create';
+      this.movementEventSubmitButtonTitle = 'Додати';
     },
     editMovementEvent: function editMovementEvent(event) {
       Object.assign(this.eventForm, event);
       this.movementEventFormIsVisible = true;
       this.movementAction = 'update';
+      this.movementEventSubmitButtonTitle = 'Зберегти';
     },
     clearMovementEventForm: function clearMovementEventForm() {
       this.eventForm.date = null;
@@ -23031,6 +23035,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     closeMovementEventForm: function closeMovementEventForm() {
       this.movementEventFormIsVisible = false;
+      if (this.errors['date']) delete this.errors['date'];
+      if (this.errors['movement_type_id']) delete this.errors['movement_type_id'];
+      if (this.errors['comment']) delete this.errors['comment'];
       this.clearMovementEventForm();
     },
     submitMovementEventForm: function submitMovementEventForm() {
@@ -23044,6 +23051,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
             Object.assign(_this2._form, res.data.data);
             _this2.clearMovementEventForm();
           });
+        })["catch"](function (err) {
+          _this2.errors = err.response.data.errors;
         });
       } else if (this.movementAction = 'update') {
         axios.patch("/api/v1/household-member-movements/".concat(this.eventForm.id), this.eventForm).then(function (res) {
@@ -23053,6 +23062,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
             Object.assign(_this2._form, res.data.data);
             // this.clearMovementEventForm();
           });
+        })["catch"](function (err) {
+          _this2.errors = err.response.data.errors;
         });
       }
     },
@@ -27564,7 +27575,7 @@ var _hoisted_99 = {
   key: 0
 };
 var _hoisted_100 = {
-  "class": "row mb-2"
+  "class": "row mb-3"
 };
 var _hoisted_101 = {
   "class": "col-md-6"
@@ -27597,47 +27608,51 @@ var _hoisted_109 = {
   "class": "row mb-3"
 };
 var _hoisted_110 = {
-  "class": "col-md-10"
+  "class": "col-md-12"
 };
 var _hoisted_111 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "movementEventComment",
   "class": "form-label"
 }, "Примітка", -1 /* HOISTED */);
 var _hoisted_112 = {
-  "class": "col-md-2 d-flex"
+  id: "movementEventCommentValidation",
+  "class": "invalid-feedback"
 };
 var _hoisted_113 = {
-  "class": "d-flex flex-grow-1 justify-content-end mt-auto"
+  "class": "row mb-3"
 };
-var _hoisted_114 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-x-lg"
-}, null, -1 /* HOISTED */);
-var _hoisted_115 = [_hoisted_114];
+var _hoisted_114 = {
+  "class": "d-flex justify-content-end"
+};
+var _hoisted_115 = ["title"];
 var _hoisted_116 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-save"
+  "class": "bi bi-x-lg me-1"
 }, null, -1 /* HOISTED */);
-var _hoisted_117 = [_hoisted_116];
-var _hoisted_118 = {
+var _hoisted_117 = ["title"];
+var _hoisted_118 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "bi bi-save me-1"
+}, null, -1 /* HOISTED */);
+var _hoisted_119 = {
   key: 1,
   "class": "table"
 };
-var _hoisted_119 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
+var _hoisted_120 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
   "class": "table-dark"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Дата"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Подія"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Коментар"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th")])], -1 /* HOISTED */);
-var _hoisted_120 = {
+var _hoisted_121 = {
   "class": "text-end"
 };
-var _hoisted_121 = ["onClick", "disabled"];
-var _hoisted_122 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_122 = ["onClick", "disabled"];
+var _hoisted_123 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "bi bi-pencil"
 }, null, -1 /* HOISTED */);
-var _hoisted_123 = [_hoisted_122];
-var _hoisted_124 = ["onClick", "disabled"];
-var _hoisted_125 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+var _hoisted_124 = [_hoisted_123];
+var _hoisted_125 = ["onClick", "disabled"];
+var _hoisted_126 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "bi bi-trash3"
 }, null, -1 /* HOISTED */);
-var _hoisted_126 = [_hoisted_125];
-var _hoisted_127 = {
+var _hoisted_127 = [_hoisted_126];
+var _hoisted_128 = {
   key: 2,
   "class": "text-center text-muted"
 };
@@ -27815,7 +27830,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         disabled: !$data.isInEditMode
       }, null, 10 /* CLASS, PROPS */, _hoisted_94), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_leased]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('land_leased')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"tab-pane fade\" id=\"peasant-economy-tab-pane\" role=\"tabpanel\" aria-labelledby=\"peasant-economy-tab\" tabindex=\"0\">\n                                <div class=\"row\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.surname\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.name\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.patronymic\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                </div>\n                            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_97, [!$data.movementEventFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: 0,
-        "class": "btn btn-outline-primary",
+        "class": "btn btn-sm btn-outline-primary",
         title: "Додати подію",
         onClick: _cache[19] || (_cache[19] = function () {
           return $options.showMovementEventForm && $options.showMovementEventForm.apply($options, arguments);
@@ -27839,42 +27854,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         })
       }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('date')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [_hoisted_111, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
-        "class": "form-control",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('comment') ? 'is-invalid' : '']),
         id: "movementEventComment",
         "onUpdate:modelValue": _cache[22] || (_cache[22] = function ($event) {
           return $data.eventForm.comment = $event;
         })
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.comment]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_113, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-        "class": "btn btn-outline-secondary me-4",
-        title: "Відмінити додовання події",
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.comment]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('comment')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_113, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_114, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        "class": "btn btn-sm btn-outline-secondary me-4",
+        title: $data.movementAction == 'create' ? 'Відмінити додовання події' : 'Відмінити редагування події',
         onClick: _cache[23] || (_cache[23] = function () {
           return $options.closeMovementEventForm && $options.closeMovementEventForm.apply($options, arguments);
         })
-      }, _hoisted_115), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-        "class": "btn btn-outline-primary",
-        title: "Зберегти подію",
+      }, [_hoisted_116, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Відмінити ")], 8 /* PROPS */, _hoisted_115), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        "class": "btn btn-sm btn-outline-primary",
+        title: $data.movementAction == 'create' ? 'Додати подію' : 'Зберегти зміни',
         onClick: _cache[24] || (_cache[24] = function () {
           return $options.submitMovementEventForm && $options.submitMovementEventForm.apply($options, arguments);
         })
-      }, _hoisted_117)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (_$data$_form$movement = $data._form.movements) !== null && _$data$_form$movement !== void 0 && _$data$_form$movement.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_118, [_hoisted_119, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data._form.movements, function (event, index) {
+      }, [_hoisted_118, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.movementEventSubmitButtonTitle), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_117)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (_$data$_form$movement = $data._form.movements) !== null && _$data$_form$movement !== void 0 && _$data$_form$movement.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_119, [_hoisted_120, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data._form.movements, function (event, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: index
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(event.date)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.movement_type.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.comment), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_120, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(event.date)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.movement_type.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.comment), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_121, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           "class": "btn btn-sm btn-outline-warning me-3",
           title: "Редагувати подію",
           onClick: function onClick($event) {
             return $options.editMovementEvent(event);
           },
           disabled: $data.movementEventFormIsVisible
-        }, _hoisted_123, 8 /* PROPS */, _hoisted_121), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        }, _hoisted_124, 8 /* PROPS */, _hoisted_122), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           "class": "btn btn-sm btn-outline-danger",
           title: "Видалити подію",
           onClick: function onClick($event) {
             return $options.deleteMovementEvent(event.id);
           },
           disabled: $data.movementEventFormIsVisible
-        }, _hoisted_126, 8 /* PROPS */, _hoisted_124)])]);
-      }), 128 /* KEYED_FRAGMENT */))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_127, " Інформація відсутня ")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Timeline :events=\"movements\" /> ")])])])])])])];
+        }, _hoisted_127, 8 /* PROPS */, _hoisted_125)])]);
+      }), 128 /* KEYED_FRAGMENT */))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_128, " Інформація відсутня ")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Timeline :events=\"movements\" /> ")])])])])])])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);

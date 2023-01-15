@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\HouseholdMemberMovement;
+use App\Http\Requests\API\v1\HouseholdMemberMovementRequest;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 
 class HouseholdMemberMovementController extends Controller
@@ -24,12 +25,12 @@ class HouseholdMemberMovementController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\API\v1\HouseholdMemberMovementRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(HouseholdMemberMovementRequest $request)
     {
-        $movement = HouseholdMemberMovement::create($request->all());
+        $movement = HouseholdMemberMovement::create($request->validated());
 
         if ($movement) {
             return response()->json(['message' => 'Подія успошно додана'], 201);

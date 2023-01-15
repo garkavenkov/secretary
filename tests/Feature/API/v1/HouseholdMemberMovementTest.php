@@ -35,7 +35,7 @@ class HouseholdMemberMovementTest extends TestCase
         $member = HouseholdMember::factory()->create();
 
         $movement = HouseholdMemberMovement::factory()
-                        ->create(['member_id' => $member->id])
+                        ->make(['member_id' => $member->id])
                         ->toArray();
 
         $this->post($this->url, $movement)->assertStatus(201);
@@ -66,5 +66,33 @@ class HouseholdMemberMovementTest extends TestCase
         $this->patch("$this->url/{$movement['id']}", $data)->assertStatus(200);
 
         $this->assertDatabaseHas('household_member_movements', ['id' => $movement['id'], 'comment' => 'Updated comment']);
+    }
+
+    /**
+     * @dataProvider dataProvider
+     */
+    public function test_api_MUST_NOT_create_movement_event_when_data_did_not_pass_validation($field, $value)
+    {
+        $movement = HouseholdMemberMovement::factory()
+                        ->make([$field => $value])
+                        ->toArray();
+
+        $this->post($this->url, $movement)->assertSessionHasErrors($field);
+
+        $this->assertDatabaseCount('household_member_movements', 0);
+    }
+
+    public function dataProvider(): array
+    {
+        return [
+            'member is null'                    =>  ['member_id',           ''],
+            'member does not exist'             =>  ['member_id',           99],
+            'movement_type is null'             =>  ['movement_type_id',    ''],
+            'movement_type does not exist'      =>  ['movement_type_id',    99],
+            'date is null'                      =>  ['date',                ''],
+            'date is not in date format'        =>  ['date',             'asd'],
+            'comment is empty'                  =>  ['comment',             ''],
+            'comment is not long enough'        =>  ['comment',           'qw'],
+        ];
     }
 }
