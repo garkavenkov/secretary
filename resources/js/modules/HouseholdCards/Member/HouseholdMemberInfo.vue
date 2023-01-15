@@ -412,31 +412,40 @@
                                     <div class="col">
                                         <label for="landOwned" class="form-label">у власності</label>
                                         <input  type="text"
-                                                class="form-control"
+                                                :class="['form-control', hasError('land_owned') ? 'is-invalid' : '']"
                                                 id="landOwned"
                                                 v-model="_form.land_owned"
                                                 :disabled="!isInEditMode" />
+                                        <div id="landOwnedValidation" class="invalid-feedback">
+                                            {{ getError('land_owned') }}
+                                        </div>
                                     </div>
                                     <div class="col">
                                         <label  for="landRented" class="form-label">взято в оренду</label>
                                         <input  type="text"
-                                                class="form-control"
+                                                :class="['form-control', hasError('land_rented') ? 'is-invalid' : '']"
                                                 id="landRented"
                                                 v-model="_form.land_rented"
                                                 :disabled="!isInEditMode" />
+                                        <div id="landRentedValidation" class="invalid-feedback">
+                                            {{ getError('land_rented') }}
+                                        </div>
                                     </div>
                                     <div class="col">
                                         <label for="landLeased" class="form-label">знадо в оренду</label>
                                         <input  type="text"
-                                                class="form-control"
+                                                :class="['form-control', hasError('land_leased') ? 'is-invalid' : '']"
                                                 id="landLeased"
                                                 v-model="_form.land_leased"
                                                 :disabled="!isInEditMode" />
+                                        <div id="landLeasedValidation" class="invalid-feedback">
+                                            {{ getError('land_leased') }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="peasant-economy-tab-pane" role="tabpanel" aria-labelledby="peasant-economy-tab" tabindex="0">
+                            <!-- <div class="tab-pane fade" id="peasant-economy-tab-pane" role="tabpanel" aria-labelledby="peasant-economy-tab" tabindex="0">
                                 <div class="row">
                                     <div class="col">
                                         <label for="exampleFormControlInput1" class="form-label">у власності</label>
@@ -463,7 +472,7 @@
                                                 :disabled="!isInEditMode" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="tab-pane fade" id="movement-tab-pane" role="tabpanel" aria-labelledby="movement-tab" tabindex="0">
                                 <div>

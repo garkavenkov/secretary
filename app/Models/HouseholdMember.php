@@ -26,7 +26,10 @@ class HouseholdMember extends Model
         'death',
         'death_date',
         'death_register_number',
-        'death_register_office'
+        'death_register_office',
+        'land_owned',
+        'land_rented',
+        'land_leased'
     ];
 
     protected static function boot()

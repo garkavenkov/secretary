@@ -39,6 +39,9 @@ class HouseholdMemberRequest extends FormRequest
             'death_date'                =>  'nullable|date|after_or_equal:birthday',
             'death_register_number'     =>  'required_with:death_date',
             'death_register_office'     =>  'required_with:death_date',
+            'land_owned'                =>  'nullable|numeric|gte:0',
+            'land_rented'               =>  'nullable|numeric|gte:0',
+            'land_leased'               =>  'nullable|numeric|gte:0',
         ];
     }
 
@@ -68,6 +71,12 @@ class HouseholdMemberRequest extends FormRequest
             'employment_information.min'            => 'Укажіть не менше ніж :min символа',
             'social_information.min'                => 'Укажіть не менше ніж :min символа',
             'additional_information.min'            => 'Укажіть не менше ніж :min символа',
+            'land_owned.numeric'                    => 'Укажіть число',
+            'land_owned.gte'                        => 'Значення повинно бути більше 0',
+            'land_rented.numeric'                   => 'Укажіть число',
+            'land_rented.gte'                       => 'Значення повинно бути більше 0',
+            'land_leased.numeric'                   => 'Укажіть число',
+            'land_leased.gte'                       => 'Значення повинно бути більше 0',
         ];
     }
 

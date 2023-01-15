@@ -50,6 +50,7 @@ class HouseholdMemberResource extends JsonResource
             'surname'                   =>  $this->surname,
             'name'                      =>  $this->name,
             'patronymic'                =>  $this->patronymic,
+            'full_name'                 =>  $this->surname . ' ' . mb_substr($this->name, 0, 1) . '.' . mb_substr($this->patronymic, 0, 1) . '.',
             'sex'                       =>  $this->sex,
             'birthday'                  =>  $this->birthday,
             'family_relationship_id'    =>  (int)   $this->family_relationship_id,
@@ -64,6 +65,9 @@ class HouseholdMemberResource extends JsonResource
             'death_date'                =>  $death_date,
             'death_register_number'     =>  $death_register_number,
             'death_register_office'     =>  $death_register_office,
+            'land_owned'                =>  (float) $this->land_owned,
+            'land_rented'               =>  (float) $this->land_rented,
+            'land_leased'               =>  (float) $this->land_leased,
         ];
     }
 }

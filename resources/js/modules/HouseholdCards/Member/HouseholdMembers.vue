@@ -89,11 +89,12 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Прізвище</th>
-                            <th>Ім'я</th>
-                            <th>По батькові</th>
-                            <th>Дата народження</th>
+                            <th>Прізвище І.Б.</th>
+                            <!-- <th>Ім'я</th>
+                            <th>По батькові</th> -->
                             <th>Стать</th>
+                            <th>Дата народження</th>
+                            <th v-if="showAllMembers">Дата смерті</th>
                             <th>Родинні стосунки</th>
                             <th>Місце роботи</th>
                             <th>Відомості про зайнятість / незайнятість</th>
@@ -101,17 +102,22 @@
                     </thead>
                     <tbody>
                         <tr v-for="member in shownMembers" :key="member.id" :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
-                            <td>
+                            <td class="text-center">
                                 <button class="btn btn-sm btn-outline-secondary"
-                                        @click="showHouseholdMember(member.id)">
+                                        @click="showHouseholdMemberInfo(member.id)">
                                     <i class="bi bi-eye"></i>
                                 </button>
                             </td>
-                            <td>{{member.surname}}</td>
-                            <td>{{member.name}}</td>
-                            <td>{{member.patronymic}}</td>
-                            <td>{{formatedDate(member.birthday)}}</td>
+                            <td>{{member.full_name}}</td>
                             <td>{{member.sex}}</td>
+                            <td class="text-center">{{formatedDate(member.birthday)}}</td>
+                            <td class="text-center" v-if="showAllMembers">
+                                <template v-if="member.death_date">
+                                    {{formatedDate(member.death_date)}}
+                                </template>
+                            </td>
+                            <!-- <td>{{member.name}}</td>
+                            <td>{{member.patronymic}}</td> -->
                             <td>{{member.family_relationship}}</td>
                             <td>
                                 <template v-if="member.work_place">

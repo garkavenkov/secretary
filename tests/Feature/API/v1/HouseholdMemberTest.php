@@ -78,7 +78,7 @@ class HouseholdMemberTest extends TestCase
         $member = HouseholdMember::factory()
                         ->make([
                             'household_id'  =>  $household->id,
-                            'death_date'    =>  '2030-01-01',
+                            // 'death_date'    =>  '2030-01-01',
                             $field => $value
                         ])->toArray();
 
@@ -115,6 +115,12 @@ class HouseholdMemberTest extends TestCase
             'death_office is not long enough'               =>  ['death_register_office',    'qw'],
             'additional is not long enough'                 =>  ['additional',  'qw'],
             'social is not long enough'                     =>  ['social',      'qw'],
+            'land_owned is not number'                      =>  ['land_owned',  'as'],
+            'land_owned in less than 0'                     =>  ['land_owned',  -1],
+            'land_rented is not number'                     =>  ['land_rented',  'as'],
+            'land_rented in less than 0'                    =>  ['land_rented',  -1],
+            'land_leased is not number'                     =>  ['land_leased',  'as'],
+            'land_leased in less than 0'                    =>  ['land_leased',  -1],
         ];
     }
 }
