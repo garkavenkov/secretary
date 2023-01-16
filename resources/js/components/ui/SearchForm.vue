@@ -36,10 +36,10 @@ export default {
     methods: {
         search() {
             axios.get('/api/v1/households', {
-                params: {
-                    search: this.searchText
-                }
-            })
+                    params: {
+                        search: this.searchText
+                    }
+                })
                 .then(res => {
                     this.households = res.data.data;
                     this.isVisible = true;
@@ -53,7 +53,6 @@ export default {
         goToHousehold(id) {
             this.isVisible = false;
             this.$router.push({ name: 'HouseholdCardsShow', params: { id: id } })
-            // console.log(`I am about to go to ${household.address}`);
         },
         handleClick(e) {
             if (!this.$el.contains(e.target)) {
@@ -96,13 +95,12 @@ export default {
 
 
         li {
-            // margin-bottom: 0.5rem;
             padding: 0.75rem;
 
             &:hover {
                 border-radius: 0.375rem;
-                background: #1a478f;
-                color: white;
+                background: #d2e1f9;
+                color: black;
             }
         }
     }
