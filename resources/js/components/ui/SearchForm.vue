@@ -9,14 +9,14 @@
                     placeholder="Адреса домогосподарства..."
                     aria-label="Search">
             <ul v-if="(households.length > 0) && isVisible">
-                <li v-for="household in households" :value="household.id"  :key="household.id" @click="goToHousehold(household)">
+                <li v-for="household in households" :value="household.id"  :key="household.id" @click="goToHousehold(household.id)">
                     <!-- <router-link :to="{name: 'HouseholdCardsShow', params: {id: household.id}}"> -->
                         {{ household.address }}
                     <!-- </router-link> -->
                 </li>
             </ul>
         </div>
-        <button class="btn btn-outline-success" type="buton" @click="search">
+        <button class="btn btn-outline-secondary ms-2" type="buton" @click="search">
             <i class="bi bi-search"></i>
         </button>
     </form>
@@ -50,9 +50,9 @@ export default {
                 this.isVisible = true;
             }
         },
-        goToHousehold(household) {
+        goToHousehold(id) {
             this.isVisible = false;
-            this.$router.push({ name: 'HouseholdCardsShow', params: { id: household.id } })
+            this.$router.push({ name: 'HouseholdCardsShow', params: { id: id } })
             // console.log(`I am about to go to ${household.address}`);
         },
         handleClick(e) {
@@ -82,12 +82,12 @@ export default {
 
 .search__wrapper {
     position: relative;
-    width: 400px;
+    width: 500px;
 
     ul {
         position: absolute;
         list-style: none;
-        padding: 0.5rem 0 0.5rem 1rem;
+        padding: 0.25rem;
         border: 1px solid #cdd4da;
         width: 100%;
         background: white;
@@ -96,10 +96,13 @@ export default {
 
 
         li {
-            margin-bottom: 0.5rem;
+            // margin-bottom: 0.5rem;
+            padding: 0.75rem;
 
             &:hover {
-                background: aquamarine;
+                border-radius: 0.375rem;
+                background: #1a478f;
+                color: white;
             }
         }
     }

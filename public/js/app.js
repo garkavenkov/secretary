@@ -21418,12 +21418,12 @@ __webpack_require__.r(__webpack_exports__);
         this.isVisible = true;
       }
     },
-    goToHousehold: function goToHousehold(household) {
+    goToHousehold: function goToHousehold(id) {
       this.isVisible = false;
       this.$router.push({
         name: 'HouseholdCardsShow',
         params: {
-          id: household.id
+          id: id
         }
       });
       // console.log(`I am about to go to ${household.address}`);
@@ -23325,7 +23325,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     };
   },
 
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapActions)('Households', ['fetchHousehold'])),
+  methods: {
+    // ...mapActions('Households', ['fetchRecord']),
+    // fetchHouseholdCard() {
+    //     axios.get(`/api/v1/households/${this.id}`)
+    //         .then(res => {
+    //             this.householdCard = res.data.data;
+    //         })
+    // }
+  },
   computed: _objectSpread({
     componentProps: function componentProps() {
       if (this.currentTab == 'HouseholdInfo') {
@@ -23355,12 +23363,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   watch: {
     '$route': function $route(to, from) {
       // console.log(to, from);
-      this.fetchHousehold(to.params.id);
+      // this.fetchRecord(to.params.id);
+      this.$store.dispatch('Households/fetchRecord', to.params.id);
     }
   },
   created: function created() {
     this.$store.dispatch('Households/fetchRecord', this.id);
-    // this.fetchHousehold(this.id);
   }
 });
 
@@ -24602,11 +24610,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       value: household.id,
       key: household.id,
       onClick: function onClick($event) {
-        return $options.goToHousehold(household);
+        return $options.goToHousehold(household.id);
       }
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <router-link :to=\"{name: 'HouseholdCardsShow', params: {id: household.id}}\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(household.address) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </router-link> ")], 8 /* PROPS */, _hoisted_4);
   }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "btn btn-outline-success",
+    "class": "btn btn-outline-secondary ms-2",
     type: "buton",
     onClick: _cache[2] || (_cache[2] = function () {
       return $options.search && $options.search.apply($options, arguments);
@@ -29604,20 +29612,24 @@ var routes = [{
   meta: {
     name: 'Інформація'
   }
-}, {
+},
+// { path: '/districts',               component: Districts, meta: {name: 'Райони'} },
+// { path: '/districts/:id',           component: DistrictsShow, name: 'DistrictsShow', props: true, meta: {name: 'Інформація'} },
+{
   path: '/districts',
   component: _modules_Districts_Main_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   meta: {
     name: 'Райони'
-  }
-}, {
-  path: '/districts/:id',
-  component: _modules_Districts_Show_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-  name: 'DistrictsShow',
-  props: true,
-  meta: {
-    name: 'Інформація'
-  }
+  },
+  children: [{
+    path: ':id',
+    component: _modules_Districts_Show_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    name: 'DistrictsShow',
+    props: true,
+    meta: {
+      name: 'Інформація'
+    }
+  }]
 }, {
   path: '/communities',
   component: _modules_Communities_Main_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -37599,7 +37611,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".search__wrapper[data-v-48b04d4c] {\n  position: relative;\n  width: 400px;\n}\n.search__wrapper ul[data-v-48b04d4c] {\n  position: absolute;\n  list-style: none;\n  padding: 0.5rem 0 0.5rem 1rem;\n  border: 1px solid #cdd4da;\n  width: 100%;\n  background: white;\n  margin-top: 2px;\n  border-radius: 0.375rem;\n}\n.search__wrapper ul li[data-v-48b04d4c] {\n  margin-bottom: 0.5rem;\n}\n.search__wrapper ul li[data-v-48b04d4c]:hover {\n  background: aquamarine;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".search__wrapper[data-v-48b04d4c] {\n  position: relative;\n  width: 500px;\n}\n.search__wrapper ul[data-v-48b04d4c] {\n  position: absolute;\n  list-style: none;\n  padding: 0.25rem;\n  border: 1px solid #cdd4da;\n  width: 100%;\n  background: white;\n  margin-top: 2px;\n  border-radius: 0.375rem;\n}\n.search__wrapper ul li[data-v-48b04d4c] {\n  padding: 0.75rem;\n}\n.search__wrapper ul li[data-v-48b04d4c]:hover {\n  border-radius: 0.375rem;\n  background: #1a478f;\n  color: white;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -1,81 +1,3 @@
-<script>
-
-import HouseholdMembers from './Member/HouseholdMembers.vue';
-import HouseInfo        from './House/HouseInfo.vue';
-import LandInfo         from './Land/LandInfo.vue';
-import HouseholdInfo    from './HouseholdInfo.vue';
-import { mapActions, mapGetters } from 'vuex';
-
-export default {
-    name: 'ShowCard',
-    components: {
-        HouseholdMembers,
-        HouseInfo,
-        LandInfo,
-        HouseholdInfo,
-    },
-    props: {
-        'id': {
-            type: [String, Number],
-            required: true
-        }
-    },
-    data() {
-        return {
-            currentTab: 'HouseholdInfo',
-            // householdCard: {}
-        }
-    },
-    methods: {
-        ...mapActions('Households', ['fetchHousehold']),
-        // fetchHouseholdCard() {
-        //     axios.get(`/api/v1/households/${this.id}`)
-        //         .then(res => {
-        //             this.householdCard = res.data.data;
-        //         })
-        // }
-    },
-    computed: {
-        componentProps() {
-            if (this.currentTab == 'HouseholdInfo') {
-                if (this.household.info) {
-                    return {
-                        // info: {
-                        //     type: this.household.info.household_type.name,
-                        //     address: this.household.info.address,
-                        //     owners: this.household.info.owners
-                        // }
-                        info: {...this.household.info}
-                    }
-                }
-            } else if (this.currentTab == 'HouseholdMembers') {
-                return {
-                    members: this.household.members,
-                    household_id: this.id
-                }
-            } else if (this.currentTab == 'HouseInfo') {
-                return {
-                    years: this.household.houseYears,
-                    household_id: this.id
-                }
-            }
-        },
-        ...mapGetters('Households', ['household'])
-    },
-    watch: {
-        '$route' (to, from) {
-            // console.log(to, from);
-            this.fetchHousehold(to.params.id);
-        },
-
-    },
-    created() {
-        this.$store.dispatch('Households/fetchRecord', this.id);
-        // this.fetchHousehold(this.id);
-    }
-}
-</script>
-
 <template>
     <breadcrumbs />
     <div class="card">
@@ -120,6 +42,86 @@ export default {
 
 
 </template>
+
+<script>
+
+import HouseholdMembers from './Member/HouseholdMembers.vue';
+import HouseInfo        from './House/HouseInfo.vue';
+import LandInfo         from './Land/LandInfo.vue';
+import HouseholdInfo    from './HouseholdInfo.vue';
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+    name: 'ShowCard',
+    components: {
+        HouseholdMembers,
+        HouseInfo,
+        LandInfo,
+        HouseholdInfo,
+    },
+    props: {
+        'id': {
+            type: [String, Number],
+            required: true
+        }
+    },
+    data() {
+        return {
+            currentTab: 'HouseholdInfo',
+            // householdCard: {}
+        }
+    },
+    methods: {
+        // ...mapActions('Households', ['fetchRecord']),
+        // fetchHouseholdCard() {
+        //     axios.get(`/api/v1/households/${this.id}`)
+        //         .then(res => {
+        //             this.householdCard = res.data.data;
+        //         })
+        // }
+    },
+    computed: {
+        componentProps() {
+            if (this.currentTab == 'HouseholdInfo') {
+                if (this.household.info) {
+                    return {
+                        // info: {
+                        //     type: this.household.info.household_type.name,
+                        //     address: this.household.info.address,
+                        //     owners: this.household.info.owners
+                        // }
+                        info: {...this.household.info}
+                    }
+                }
+            } else if (this.currentTab == 'HouseholdMembers') {
+                return {
+                    members: this.household.members,
+                    household_id: this.id
+                }
+            } else if (this.currentTab == 'HouseInfo') {
+                return {
+                    years: this.household.houseYears,
+                    household_id: this.id
+                }
+            }
+        },
+        ...mapGetters('Households', ['household'])
+    },
+    watch: {
+        '$route' (to, from) {
+            // console.log(to, from);
+            // this.fetchRecord(to.params.id);
+            this.$store.dispatch('Households/fetchRecord', to.params.id);
+        },
+
+    },
+    created() {
+        this.$store.dispatch('Households/fetchRecord', this.id);
+
+    }
+}
+</script>
+
 
 <style lang="scss" scoped>
 a.nav-link.active {
