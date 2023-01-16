@@ -35,7 +35,29 @@
                 content.classList.toggle('expand');
             });
 
-    /*
+            // ----------------------------------------------------------------------------------------
+            // Toggle Items with submenu.
+            let submenuList = document.querySelectorAll('ul.sidebar-menu__wrapper li.has-submenu');
+            function submenuListClickHandler() {
+                if (!sidebar.classList.contains('shrinked')) {
+                    var currentExpandedItem = document.querySelector('ul.sidebar-menu__wrapper li.has-submenu.expanded');
+                    if (currentExpandedItem && currentExpandedItem != this) {
+                        currentExpandedItem.classList.toggle('expanded');
+                    }
+                    this.classList.toggle('expanded');
+                }
+            }
+            submenuList.forEach((item) => item.addEventListener('click', submenuListClickHandler));
+            // ----------------------------------------------------------------------------
+            // Toggle items with submenu, when clicked on item without submenu
+            let list = document.querySelectorAll('ul.sidebar-menu__wrapper li:not(.has-submenu)');
+            function listClickHandler() {
+                submenuList.forEach((item) => item.classList.remove('expanded'));
+            }
+            list.forEach((item) => item.addEventListener('click', listClickHandler));
+            // ------------------------------------------------------------------------------
+
+            /*
             // ----------------------------------------------------------------------------------------
             // Toggle Items with submenu.
             let submenuList = document.querySelectorAll('.sidebar ul.sidebar-menu li.has-submenu');
