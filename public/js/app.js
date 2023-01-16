@@ -21419,13 +21419,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     goToHousehold: function goToHousehold(id) {
-<<<<<<< HEAD
       this.isVisible = false;
-=======
-      // this.isVisible = false;
-      // e.target.classList.add('visited');
-      // this.$router.push({ name: 'HouseholdCardsShow', params: { id: e.target.value } })
->>>>>>> f568a09 (Refactor SearchForm for HouseholdCard)
       this.$router.push({
         name: 'HouseholdCardsShow',
         params: {
@@ -29617,24 +29611,20 @@ var routes = [{
   meta: {
     name: 'Інформація'
   }
-},
-// { path: '/districts',               component: Districts, meta: {name: 'Райони'} },
-// { path: '/districts/:id',           component: DistrictsShow, name: 'DistrictsShow', props: true, meta: {name: 'Інформація'} },
-{
+}, {
   path: '/districts',
   component: _modules_Districts_Main_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   meta: {
     name: 'Райони'
-  },
-  children: [{
-    path: ':id',
-    component: _modules_Districts_Show_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    name: 'DistrictsShow',
-    props: true,
-    meta: {
-      name: 'Інформація'
-    }
-  }]
+  }
+}, {
+  path: '/districts/:id',
+  component: _modules_Districts_Show_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+  name: 'DistrictsShow',
+  props: true,
+  meta: {
+    name: 'Інформація'
+  }
 }, {
   path: '/communities',
   component: _modules_Communities_Main_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -37616,11 +37606,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-<<<<<<< HEAD
-___CSS_LOADER_EXPORT___.push([module.id, ".search__wrapper[data-v-48b04d4c] {\n  position: relative;\n  width: 500px;\n}\n.search__wrapper ul[data-v-48b04d4c] {\n  position: absolute;\n  list-style: none;\n  padding: 0.25rem;\n  border: 1px solid #cdd4da;\n  width: 100%;\n  background: white;\n  margin-top: 2px;\n  border-radius: 0.375rem;\n}\n.search__wrapper ul li[data-v-48b04d4c] {\n  padding: 0.75rem;\n}\n.search__wrapper ul li[data-v-48b04d4c]:hover {\n  border-radius: 0.375rem;\n  background: #1a478f;\n  color: white;\n}", ""]);
-=======
 ___CSS_LOADER_EXPORT___.push([module.id, ".search__wrapper[data-v-48b04d4c] {\n  position: relative;\n  width: 500px;\n}\n.search__wrapper ul[data-v-48b04d4c] {\n  position: absolute;\n  list-style: none;\n  padding: 0.25rem;\n  border: 1px solid #cdd4da;\n  width: 100%;\n  background: white;\n  margin-top: 2px;\n  border-radius: 0.375rem;\n}\n.search__wrapper ul li[data-v-48b04d4c] {\n  padding: 0.75rem;\n}\n.search__wrapper ul li[data-v-48b04d4c]:hover {\n  border-radius: 0.375rem;\n  background: #d2e1f9;\n  color: black;\n}", ""]);
->>>>>>> f568a09 (Refactor SearchForm for HouseholdCard)
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
