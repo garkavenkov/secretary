@@ -10,10 +10,10 @@
             <span class="navbar-toggler-icon"></span>
         </button> -->
         <div id="sidebar-toggler">
-            <i class="bi bi-list"></i>
+            <span class="mdi mdi-menu"></span>
         </div>
         <div id="fullscreen-toggler" data-screen="collapse" class="ms-2" title="Розгорнути на повний екран">
-            <i class="bi bi-fullscreen"></i>
+            <span class="mdi mdi-fullscreen"></span>
         </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -45,7 +45,7 @@
                         <a  class="dropdown-item"
                             href="{{ route('logout') }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="bi bi-box-arrow-left"></i>
+                                <span class="mdi mdi-exit-run me-1"></span>
                                 <span>
                                     {{ __('Logout') }}
                                 </span>

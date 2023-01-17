@@ -49,12 +49,12 @@ export default {
             <div class="dictionary-name__wrapper">
                 <span>Довідник "Громади"</span>
                 <button class="btn btn-sm btn-primary" title="Додати громаду" @click="openCommunityForm">
-                    <i class="bi bi-plus-lg"></i>
+                    <span class="mdi mdi-plus"></span>
                 </button>
             </div>
             <div>
                 <button class="btn btn-sm btn-outline-secondary">
-                    <i class="bi bi-funnel"></i>
+                    <span class="mdi mdi-filter-outline"></span>
                 </button>
             </div>
         </div>
@@ -77,7 +77,7 @@ export default {
                             :key="record.id">
                         <td>
                             <router-link :to="{name: 'CommunitiesShow', params: { id: record.id }}">
-                                <i class="bi bi-eye"></i>
+                                <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
                         <td>{{record.district.name}}</td>

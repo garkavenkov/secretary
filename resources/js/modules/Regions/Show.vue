@@ -8,7 +8,8 @@
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
                         <button class="btn btn-sm btn-light" @click="openRegionForm" title="Редагувати дані">
-                            <i class="bi bi-pencil"></i>
+                            <!-- <i class="bi bi-pencil"></i> -->
+                            <span class="mdi mdi-pencil"></span>
                         </button>
                     </div>
                 </div>
@@ -36,7 +37,8 @@
                             <div class="dictionary-name__wrapper flex-grow-1 justify-content-between">
                                 <span>Районі в регіоні</span>
                                 <button class="btn btn-sm btn-light" title="Додати район" @click="openDistrictForm">
-                                    <i class="bi bi-plus-lg"></i>
+                                    <!-- <i class="bi bi-plus-lg"></i> -->
+                                    <span class="mdi mdi-plus"></span>
                                 </button>
                             </div>
                         </div>

@@ -17,7 +17,7 @@
             </ul>
         </div>
         <button class="btn btn-outline-secondary ms-2" type="buton" @click="search">
-            <i class="bi bi-search"></i>
+            <span class="mdi mdi-home-search"></span>
         </button>
     </form>
 </template>

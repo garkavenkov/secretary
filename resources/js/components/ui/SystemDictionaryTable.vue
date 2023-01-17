@@ -5,7 +5,7 @@
             <div class="dictionary-name__wrapper">
                 <span>{{ title }}</span>
                 <button class="btn btn-sm btn-primary" @click="$emit('newRecord')">
-                    <i class="bi bi-plus-lg"></i>
+                    <span class="mdi mdi-plus"></span>
                 </button>
             </div>
         </div>
@@ -27,7 +27,7 @@
                             <button class="btn btn-sm btn-outline-secondary"
                                     @click="$emit('editRecord', record)"
                                     title="Редагувати інформацію">
-                                <i class="bi bi-pencil"></i>
+                                <span class="mdi mdi-pencil"></span>
                             </button>
                         </td>
                     </tr>

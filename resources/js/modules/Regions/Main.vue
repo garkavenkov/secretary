@@ -6,10 +6,12 @@
             <div class="dictionary-name__wrapper">
                 <span>Довідник "Регіони"</span>
                 <button class="btn btn-sm btn-primary" @click="addRegion" title="Додати новий регіон">
-                    <i class="bi bi-plus"></i>
+                    <!-- <i class="bi bi-plus"></i> -->
+                    <span class="mdi mdi-plus"></span>
                 </button>
                 <button class="btn btn-sm btn-outline-primary ms-2" @click="$store.dispatch('Regions/fetchRegions')" title="Оновити дані">
-                    <i class="bi bi-arrow-repeat"></i>
+                    <!-- <i class="bi bi-arrow-repeat"></i> -->
+                    <span class="mdi mdi-refresh"></span>
                 </button>
             </div>
         </div>
@@ -30,7 +32,8 @@
                             :key="record.id">
                         <td>
                             <router-link :to="{name: 'RegionsShow', params: {id: record.id}}">
-                                <i class="bi bi-eye"></i>
+                                <!-- <i class="bi bi-eye"></i> -->
+                                <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
                         <td>{{record.name}}</td>

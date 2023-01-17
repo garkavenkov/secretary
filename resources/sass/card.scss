@@ -12,7 +12,8 @@
             display: flex;
             align-items: center;
 
-            span {
+            // Title
+            > span {
                 font-size: 16px;
                 font-weight: 500;
                 margin-right: 1rem;

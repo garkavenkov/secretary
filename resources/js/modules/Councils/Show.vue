@@ -8,7 +8,7 @@
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація о раді</span>
                         <button class="btn btn-sm btn-light" @click="openCouncilForm" title="Редагувати дані">
-                            <i class="bi bi-pencil"></i>
+                            <span class="mdi mdi-pencil"></span>
                         </button>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                             <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Підпорядковані населенні пункти</span>
                                 <button class="btn btn-sm btn-light" title="Додати населенний пункт" @click="openSettlementForm">
-                                    <i class="bi bi-plus-lg"></i>
+                                    <span class="mdi mdi-plus"></span>
                                 </button>
                             </div>
                         </div>

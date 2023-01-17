@@ -8,7 +8,7 @@
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація о поселенні</span>
                         <button class="btn btn-sm btn-light" @click="openSettlementForm" title="Редагувати дані">
-                            <i class="bi bi-pencil"></i>
+                            <span class="mdi mdi-pencil"></span>
                         </button>
                     </div>
                 <div>

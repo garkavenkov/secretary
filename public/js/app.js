@@ -21087,10 +21087,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+// import SvgIcon from '@jamescoyle/vue-icon';
+// import { mdiMonitorDashboard } from '@mdi/js';
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'SideBarMenu',
   data: function data() {
-    return {};
+    return {
+      // mdiMonitorDashboard,
+    };
   },
   created: function created() {
     this.$store.dispatch('Regions/fetchRecords');
@@ -22737,82 +22742,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       currentTab: 'HouseholdInfo',
       modalTitle: '',
       modalSubmitCaption: ''
-      // cards: [],
-      // cards: [
-      //     {
-      //         id:1,
-      //         settlementId: 1,
-      //         settlement: 'Шаповалівка',
-      //         householdTypeId: 1,
-      //         address: 'вул Набрежна, б. 55',
-      //         specialMarks: '',
-      //         additional: '',
-      //         number: '01-0001-1',
-      //     },
-      //     {
-      //         id:2,
-      //         settlementId: 1,
-      //         settlement: 'Шаповалівка',
-      //         householdTypeId: 1,
-      //         address: 'вул Набрежна, б. 57',
-      //         specialMarks: '',
-      //         additional: '',
-      //         number: '01-0002-1',
-      //     },
-      //     {
-      //         id:3,
-      //         settlementId: 1,
-      //         settlement: 'Шаповалівка',
-      //         householdTypeId: 1,
-      //         address: 'вул Набрежна, б. 59',
-      //         specialMarks: '',
-      //         additional: '',
-      //         number: '01-0003-1',
-      //     },
-      //     {
-      //         id:4,
-      //         settlementId: 1,
-      //         settlement: 'Шаповалівка',
-      //         householdTypeId: 1,
-      //         address: 'вул Набрежна, б. 61',
-      //         specialMarks: '',
-      //         additional: '',
-      //         number: '01-0004-1',
-      //     },
-      //     {
-      //         id:5,
-      //         settlementId: 1,
-      //         settlement: 'Привокзальне',
-      //         householdTypeId: 1,
-      //         address: 'вул Свободи, б. 32',
-      //         specialMarks: '',
-      //         additional: '',
-      //         number: '02-0001-1',
-      //     },
-      //     {
-      //         id:6,
-      //         settlementId: 1,
-      //         settlement: 'Привокзальне',
-      //         householdTypeId: 1,
-      //         address: 'вул Свободи, б. 34',
-      //         specialMarks: '',
-      //         additional: '',
-      //         number: '02-0002-1',
-      //     },
-      //     {
-      //         id:7,
-      //         settlementId: 1,
-      //         settlement: 'Привокзальне',
-      //         householdTypeId: 1,
-      //         address: 'вул Свободи, б. 36',
-      //         specialMarks: '',
-      //         additional: '',
-      //         number: '02-0003-1',
-      //     }
-      // ]
     };
   },
-
   methods: {
     addCard: function addCard() {
       var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('HouseholdCard'));
@@ -22836,16 +22767,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       })["catch"](function (err) {
         _this.errors = err.response.data.errors;
       });
-    } // fetchCards() {
-    //     axios.get('/api/v1/households')
-    //         .then(res => {
-    //             this.cards = res.data.data
-    //         });
-    // },
+    }
   },
   computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('Households', ['households'])), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('HouseholdTypes', ['householdTypes'])), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('Settlements', ['settlements'])),
   created: function created() {
-    // this.fetchCards();
     this.$store.dispatch('Households/fetchRecords');
   }
 });
@@ -24024,9 +23949,9 @@ var _hoisted_3 = {
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-laptop"
-  })], -1 /* HOISTED */);
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-monitor-dashboard"
+  }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <svg-icon type=\"mdi\" :path=\"mdiMonitorDashboard\"></svg-icon> ")], -1 /* HOISTED */);
 });
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
@@ -24039,8 +23964,8 @@ var _hoisted_6 = {
 var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-card-heading"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-card-heading\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-folder-home"
   })], -1 /* HOISTED */);
 });
 var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
@@ -24054,12 +23979,12 @@ var _hoisted_9 = {
 var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-inboxes"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-inbox-multiple"
   })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "nav-title"
-  }, "Довідники"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-chevron-down"
+  }, "Довідники"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-chevron-down\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-chevron-down"
   })], -1 /* HOISTED */);
 });
 var _hoisted_11 = {
@@ -24073,8 +23998,8 @@ var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-globe"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-globe\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-map"
   })], -1 /* HOISTED */);
 });
 var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
@@ -24085,8 +24010,8 @@ var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-buildings"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-buildings\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-domain"
   })], -1 /* HOISTED */);
 });
 var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
@@ -24097,8 +24022,8 @@ var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-people"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-people\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span class=\"mdi mdi-home-group\"></span> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-home-city"
   })], -1 /* HOISTED */);
 });
 var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
@@ -24109,8 +24034,8 @@ var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-puzzle"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-puzzle\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-bank"
   })], -1 /* HOISTED */);
 });
 var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
@@ -24121,8 +24046,8 @@ var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-houses"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-houses\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span class=\"mdi mdi-account-group-outline\"></span> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-home-group"
   })], -1 /* HOISTED */);
 });
 var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
@@ -24136,12 +24061,12 @@ var _hoisted_23 = {
 var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-gear"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-gear\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-table-cog"
   })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "nav-title"
-  }, "Системні довідники"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-chevron-down"
+  }, "Системні довідники"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-chevron-down\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-chevron-down"
   })], -1 /* HOISTED */);
 });
 var _hoisted_25 = {
@@ -24155,8 +24080,8 @@ var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-house-gear"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-house-gear\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-home-circle-outline"
   })], -1 /* HOISTED */);
 });
 var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
@@ -24167,8 +24092,8 @@ var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_29 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-houses"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-houses\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-store-cog"
   })], -1 /* HOISTED */);
 });
 var _hoisted_30 = /*#__PURE__*/_withScopeId(function () {
@@ -24179,8 +24104,8 @@ var _hoisted_30 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-person-gear"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-person-gear\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-wrench-cog"
   })], -1 /* HOISTED */);
 });
 var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
@@ -24191,8 +24116,8 @@ var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "icon"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-diagram-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-diagram-3\"></i> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span class=\"mdi mdi-sitemap-outline\"></span> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-family-tree"
   })], -1 /* HOISTED */);
 });
 var _hoisted_34 = /*#__PURE__*/_withScopeId(function () {
@@ -24586,8 +24511,8 @@ var _hoisted_3 = {
 };
 var _hoisted_4 = ["value", "onClick"];
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-search"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-home-search"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_6 = [_hoisted_5];
@@ -24700,8 +24625,8 @@ var _hoisted_3 = {
   "class": "dictionary-name__wrapper"
 };
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-plus-lg"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-plus"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_5 = [_hoisted_4];
@@ -24713,8 +24638,8 @@ var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_8 = ["onClick"];
 var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-pencil"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-pencil"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_10 = [_hoisted_9];
@@ -24999,21 +24924,21 @@ var _hoisted_3 = {
   "class": "dictionary-name__wrapper"
 };
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Довідник \"Громади\"", -1 /* HOISTED */);
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus-lg"
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
 var _hoisted_6 = [_hoisted_5];
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "btn btn-sm btn-outline-secondary"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-funnel"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-filter-outline"
 })])], -1 /* HOISTED */);
 var _hoisted_8 = {
   "class": "card-body"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Район"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва громади"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Адреса"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ЕДРПОУ"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "КОАТУУ")], -1 /* HOISTED */);
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-eye"
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-eye-outline"
 }, null, -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -25108,8 +25033,8 @@ var _hoisted_5 = {
   "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
 };
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Інформація о громаді", -1 /* HOISTED */);
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-pencil"
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
 }, null, -1 /* HOISTED */);
 var _hoisted_8 = [_hoisted_7];
 var _hoisted_9 = {
@@ -25191,8 +25116,8 @@ var _hoisted_34 = {
   "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
 };
 var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Міські / сільські ради в громаді", -1 /* HOISTED */);
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus-lg"
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
 var _hoisted_37 = [_hoisted_36];
 var _hoisted_38 = {
@@ -25536,21 +25461,21 @@ var _hoisted_3 = {
   "class": "dictionary-name__wrapper"
 };
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Довідник \"Міські / сільські ради\"", -1 /* HOISTED */);
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus"
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
 var _hoisted_6 = [_hoisted_5];
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "btn btn-sm btn-outline-secondary"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-funnel"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-filter-outline"
 })])], -1 /* HOISTED */);
 var _hoisted_8 = {
   "class": "card-body"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Громада"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <th>Тип</th> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Адреса"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ЕДРПОУ"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "КОАТУУ")], -1 /* HOISTED */);
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-eye"
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-eye-outline"
 }, null, -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -25631,8 +25556,8 @@ var _hoisted_5 = {
   "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
 };
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Інформація о раді", -1 /* HOISTED */);
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-pencil"
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
 }, null, -1 /* HOISTED */);
 var _hoisted_8 = [_hoisted_7];
 var _hoisted_9 = {
@@ -25696,8 +25621,8 @@ var _hoisted_28 = {
   "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
 };
 var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Підпорядковані населенні пункти", -1 /* HOISTED */);
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus-lg"
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
 var _hoisted_31 = [_hoisted_30];
 var _hoisted_32 = {
@@ -25928,21 +25853,21 @@ var _hoisted_3 = {
   "class": "dictionary-name__wrapper"
 };
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Довідник \"Райони\"", -1 /* HOISTED */);
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus-lg"
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
 var _hoisted_6 = [_hoisted_5];
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "btn btn-sm btn-outline-secondary"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-funnel"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-filter-outline"
 })])], -1 /* HOISTED */);
 var _hoisted_8 = {
   "class": "card-body"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва района"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Адміністративний центр"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Область")], -1 /* HOISTED */);
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-eye"
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-eye-outline"
 }, null, -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -26023,8 +25948,8 @@ var _hoisted_5 = {
   "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
 };
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Інформація", -1 /* HOISTED */);
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-pencil"
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
 }, null, -1 /* HOISTED */);
 var _hoisted_8 = [_hoisted_7];
 var _hoisted_9 = {
@@ -26070,8 +25995,8 @@ var _hoisted_22 = {
   "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
 };
 var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Громади в районі", -1 /* HOISTED */);
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus-lg"
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
 var _hoisted_25 = [_hoisted_24];
 var _hoisted_26 = {
@@ -26675,8 +26600,8 @@ var _hoisted_11 = {
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "fw-bold"
 }, "Власник(и)", -1 /* HOISTED */);
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus"
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
 var _hoisted_14 = [_hoisted_13];
 var _hoisted_15 = {
@@ -26850,142 +26775,141 @@ var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Облікові картки", -1 /* HOISTED */);
 });
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-plus"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-plus"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_6 = [_hoisted_5];
 var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-funnel"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-filter-outline"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_8 = [_hoisted_7];
-var _hoisted_9 = {
+var _hoisted_8 = {
   "class": "card-body"
 };
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Населений пункт"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Номер"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Тип"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Місцезнаходження / адреса")], -1 /* HOISTED */);
 });
-var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-eye"
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-eye-outline"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_12 = {
+var _hoisted_11 = {
   "class": "modal modal-lg fade",
   id: "HouseholdCard",
   tabindex: "-1",
   "aria-labelledby": "staticBackdropLabel",
   "aria-hidden": "true"
 };
-var _hoisted_13 = {
+var _hoisted_12 = {
   "class": "modal-dialog"
 };
-var _hoisted_14 = {
+var _hoisted_13 = {
   "class": "modal-content"
 };
-var _hoisted_15 = {
+var _hoisted_14 = {
   "class": "modal-header"
 };
-var _hoisted_16 = ["innerHTML"];
-var _hoisted_17 = {
+var _hoisted_15 = ["innerHTML"];
+var _hoisted_16 = {
   "class": "modal-body"
 };
-var _hoisted_18 = {
+var _hoisted_17 = {
   "class": "row mb-3"
 };
-var _hoisted_19 = {
+var _hoisted_18 = {
   "class": "col"
 };
-var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdType",
     "class": "form-label"
   }, "Населений пункт", -1 /* HOISTED */);
 });
-var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     disabled: "",
     value: "0"
   }, "Оберить населений пункт", -1 /* HOISTED */);
 });
-var _hoisted_22 = ["value"];
-var _hoisted_23 = {
+var _hoisted_21 = ["value"];
+var _hoisted_22 = {
   id: "householdTypeValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_24 = {
+var _hoisted_23 = {
   "class": "row mb-3"
 };
-var _hoisted_25 = {
+var _hoisted_24 = {
   "class": "col"
 };
-var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_25 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdType",
     "class": "form-label"
   }, "Тип об'єкта погосподарського обліку", -1 /* HOISTED */);
 });
-var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     disabled: "",
     value: "0"
   }, "Оберить тип об'єкта", -1 /* HOISTED */);
 });
-var _hoisted_28 = ["value"];
-var _hoisted_29 = {
+var _hoisted_27 = ["value"];
+var _hoisted_28 = {
   id: "householdTypeValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_30 = {
+var _hoisted_29 = {
   "class": "row mb-3"
 };
-var _hoisted_31 = {
+var _hoisted_30 = {
   "class": "col"
 };
-var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdAddress",
     "class": "form-label"
   }, "Місцезнаходження / адреса", -1 /* HOISTED */);
 });
-var _hoisted_33 = {
+var _hoisted_32 = {
   id: "householdAddressValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_34 = {
+var _hoisted_33 = {
   "class": "row mb-3"
 };
-var _hoisted_35 = {
+var _hoisted_34 = {
   "class": "col"
 };
-var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdSpecialMarks",
     "class": "form-label"
   }, "Спеціальні відмітки", -1 /* HOISTED */);
 });
-var _hoisted_37 = {
+var _hoisted_36 = {
   "class": "row mb-3"
 };
-var _hoisted_38 = {
+var _hoisted_37 = {
   "class": "col"
 };
-var _hoisted_39 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdAdditionalInformation",
     "class": "form-label"
   }, "Додаткові відомості", -1 /* HOISTED */);
 });
-var _hoisted_40 = {
+var _hoisted_39 = {
   "class": "modal-footer"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_breadcrumbs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("breadcrumbs");
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"d-flex mb-3\">\n        <span>\n            Шаповалівська сільська рада\n        </span>\n    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-sm btn-primary",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.addCard && $options.addCard.apply($options, arguments);
@@ -26995,12 +26919,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.addCard && $options.addCard.apply($options, arguments);
     })
-  }, _hoisted_8)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-funnel\"></i>/ "), _hoisted_7])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     dataTable: _ctx.households,
     tableHeaderClass: "table-dark"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_10];
+      return [_hoisted_9];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
@@ -27015,7 +26939,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [_hoisted_11];
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-eye\"></i> "), _hoisted_10];
           }),
           _: 2 /* DYNAMIC */
         }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.settlement), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.number), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.householdTypeId), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.address), 1 /* TEXT */)]);
@@ -27023,11 +26947,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
 
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["dataTable"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  }, 8 /* PROPS */, ["dataTable"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "modal-title fs-5",
     id: "staticBackdropLabel",
     innerHTML: $data.modalTitle
-  }, null, 8 /* PROPS */, _hoisted_16), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 8 /* PROPS */, _hoisted_15), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn-close",
     "data-bs-dismiss": "modal",
@@ -27035,52 +26959,52 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[2] || (_cache[2] = function () {
       return $options.clearFormData && $options.clearFormData.apply($options, arguments);
     })
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n                        <div class=\"col\">\n                            <label for=\"memberSurname\" class=\"form-label\">Прізвище</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberSurname\" v-model=\"formData.surname\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"memberName\" class=\"form-label\">Ім'я</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberName\" v-model=\"formData.name\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"memberPatronymic\" class=\"form-label\">По батькові</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberPatronymic\" v-model=\"formData.patronymic\">\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n                        <div class=\"col\">\n                            <label for=\"memberSurname\" class=\"form-label\">Прізвище</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberSurname\" v-model=\"formData.surname\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"memberName\" class=\"form-label\">Ім'я</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberName\" v-model=\"formData.name\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"memberPatronymic\" class=\"form-label\">По батькові</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberPatronymic\" v-model=\"formData.patronymic\">\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('settlement_id') ? 'is-invalid' : '']),
     id: "householdType",
     "aria-label": "Default select example",
     "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.formData.settlement_id = $event;
     })
-  }, [_hoisted_21, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.settlements, function (settlement) {
+  }, [_hoisted_20, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.settlements, function (settlement) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: settlement.id,
       key: settlement.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(settlement.name), 9 /* TEXT, PROPS */, _hoisted_22);
-  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.settlement_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('settlement_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(settlement.name), 9 /* TEXT, PROPS */, _hoisted_21);
+  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.settlement_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('settlement_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('household_type_id') ? 'is-invalid' : '']),
     id: "householdType",
     "aria-label": "Default select example",
     "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.formData.household_type_id = $event;
     })
-  }, [_hoisted_27, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.householdTypes, function (householdType) {
+  }, [_hoisted_26, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.householdTypes, function (householdType) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: householdType.id,
       key: householdType.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(householdType.name), 9 /* TEXT, PROPS */, _hoisted_28);
-  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.household_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('household_type_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n                        <div class=\"col\">\n                            <label for=\"householdType\" class=\"form-label\">Тип об'єкта погосподарського обліку</label>\n                            <select class=\"form-select\" id=\"householdType\" aria-label=\"Default select example\" v-model=\"formData.householdType\">\n                                <option disabled value=\"0\">Оберить тип об'єкта</option>\n                                <option :value=\"t.id\" v-for=\"t in types\" :key=\"t.id\">\n                                    {{t.name}}\n                                </option>\n                            </select>\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(householdType.name), 9 /* TEXT, PROPS */, _hoisted_27);
+  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.household_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('household_type_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n                        <div class=\"col\">\n                            <label for=\"householdType\" class=\"form-label\">Тип об'єкта погосподарського обліку</label>\n                            <select class=\"form-select\" id=\"householdType\" aria-label=\"Default select example\" v-model=\"formData.householdType\">\n                                <option disabled value=\"0\">Оберить тип об'єкта</option>\n                                <option :value=\"t.id\" v-for=\"t in types\" :key=\"t.id\">\n                                    {{t.name}}\n                                </option>\n                            </select>\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('address') ? 'is-invalid' : '']),
     id: "householdAddress",
     rows: "2",
     "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.formData.address = $event;
     })
-  }, "\n                            ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.address]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('address')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  }, "\n                            ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.address]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('address')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": "form-control",
     id: "householdSpecialMarks",
     rows: "2",
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.formData.special_marks = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.special_marks]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.special_marks]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": "form-control",
     id: "householdAdditionalInformation",
     rows: "2",
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.formData.additional_data = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.additional_data]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.additional_data]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-secondary",
     "data-bs-dismiss": "modal",
@@ -27318,197 +27242,194 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-pencil"
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-account-edit"
 }, null, -1 /* HOISTED */);
-var _hoisted_2 = [_hoisted_1];
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-x-lg"
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-account-cancel"
 }, null, -1 /* HOISTED */);
-var _hoisted_4 = [_hoisted_3];
-var _hoisted_5 = ["disabled"];
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-save2"
+var _hoisted_3 = ["disabled"];
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-account-check-outline"
 }, null, -1 /* HOISTED */);
-var _hoisted_7 = [_hoisted_6];
-var _hoisted_8 = {
+var _hoisted_5 = {
   "class": "col-10 mx-auto h-100"
 };
-var _hoisted_9 = {
+var _hoisted_6 = {
   "class": "row h-100"
 };
-var _hoisted_10 = {
+var _hoisted_7 = {
   "class": "col-4 border-end"
 };
-var _hoisted_11 = {
+var _hoisted_8 = {
   "class": "mb-3"
 };
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberSurname",
   "class": "form-label"
 }, "Прізвище", -1 /* HOISTED */);
-var _hoisted_13 = ["disabled"];
-var _hoisted_14 = {
+var _hoisted_10 = ["disabled"];
+var _hoisted_11 = {
   id: "memberSurnameValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_15 = {
+var _hoisted_12 = {
   "class": "row mb-3"
 };
-var _hoisted_16 = {
+var _hoisted_13 = {
   "class": "col"
 };
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberName",
   "class": "form-label"
 }, "Ім'я", -1 /* HOISTED */);
-var _hoisted_18 = ["disabled"];
-var _hoisted_19 = {
+var _hoisted_15 = ["disabled"];
+var _hoisted_16 = {
   id: "memberNameValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_20 = {
+var _hoisted_17 = {
   "class": "col"
 };
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberPatronymic",
   "class": "form-label"
 }, "По батькові", -1 /* HOISTED */);
-var _hoisted_22 = ["disabled"];
-var _hoisted_23 = {
+var _hoisted_19 = ["disabled"];
+var _hoisted_20 = {
   id: "memberPatronymicValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_24 = {
+var _hoisted_21 = {
   "class": "row mb-3"
 };
-var _hoisted_25 = {
+var _hoisted_22 = {
   "class": "col"
 };
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberBirthday",
   "class": "form-label"
 }, "Дата народження", -1 /* HOISTED */);
-var _hoisted_27 = ["disabled"];
-var _hoisted_28 = {
+var _hoisted_24 = ["disabled"];
+var _hoisted_25 = {
   id: "memberBirthdayValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_29 = {
+var _hoisted_26 = {
   "class": "col"
 };
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberSex",
   "class": "form-label"
 }, "Стать", -1 /* HOISTED */);
-var _hoisted_31 = ["disabled"];
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("datalist", {
+var _hoisted_28 = ["disabled"];
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("datalist", {
   id: "sex"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "чоловіча"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "жіноча"
 })], -1 /* HOISTED */);
-var _hoisted_33 = {
+var _hoisted_30 = {
   id: "memberSexValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_34 = {
+var _hoisted_31 = {
   "class": "row mb-3"
 };
-var _hoisted_35 = {
+var _hoisted_32 = {
   "class": "col"
 };
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "familyRelationship",
   "class": "form-label"
 }, "Родинні стосунки", -1 /* HOISTED */);
-var _hoisted_37 = ["disabled"];
-var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_34 = ["disabled"];
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   disabled: "",
   value: "0"
 }, "Оберить тип родинних стосунків", -1 /* HOISTED */);
-var _hoisted_39 = ["value"];
-var _hoisted_40 = {
+var _hoisted_36 = ["value"];
+var _hoisted_37 = {
   id: "familyRelationshipValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_41 = {
+var _hoisted_38 = {
   "class": "row mb-3"
 };
-var _hoisted_42 = {
+var _hoisted_39 = {
   "class": "col"
 };
-var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "socialInformation",
   "class": "form-label"
 }, "Відомості про пенсію, інвалідність, отримання соціальної допомоги", -1 /* HOISTED */);
-var _hoisted_44 = ["disabled"];
-var _hoisted_45 = {
+var _hoisted_41 = ["disabled"];
+var _hoisted_42 = {
   id: "socialInformationValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_46 = {
+var _hoisted_43 = {
   "class": "row mb-3"
 };
-var _hoisted_47 = {
+var _hoisted_44 = {
   "class": "col"
 };
-var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "additionalInformation",
   "class": "form-label"
 }, "Додаткова інформація", -1 /* HOISTED */);
-var _hoisted_49 = ["disabled"];
-var _hoisted_50 = {
+var _hoisted_46 = ["disabled"];
+var _hoisted_47 = {
   id: "additionalInformationValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_51 = {
+var _hoisted_48 = {
   "class": "row"
 };
-var _hoisted_52 = {
+var _hoisted_49 = {
   "class": "col"
 };
-var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberDeathDate",
   "class": "form-label"
 }, "Дата смерті", -1 /* HOISTED */);
-var _hoisted_54 = ["disabled"];
-var _hoisted_55 = {
+var _hoisted_51 = ["disabled"];
+var _hoisted_52 = {
   id: "memberDeathDateValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_56 = {
+var _hoisted_53 = {
   "class": "col"
 };
-var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberDeathNumber",
   "class": "form-label"
 }, "Номер свідоцтва", -1 /* HOISTED */);
-var _hoisted_58 = ["disabled"];
-var _hoisted_59 = {
+var _hoisted_55 = ["disabled"];
+var _hoisted_56 = {
   id: "memberDeathNumberValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_60 = {
+var _hoisted_57 = {
   "class": "row mb-3"
 };
-var _hoisted_61 = {
+var _hoisted_58 = {
   "class": "col"
 };
-var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberDeathRegisterOffice",
   "class": "form-label"
 }, "Орган", -1 /* HOISTED */);
-var _hoisted_63 = ["disabled"];
-var _hoisted_64 = {
+var _hoisted_60 = ["disabled"];
+var _hoisted_61 = {
   id: "memberDeathPlaceValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_65 = {
+var _hoisted_62 = {
   "class": "col-8"
 };
-var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+var _hoisted_63 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
   "class": "nav nav-tabs",
   id: "myTab",
   role: "tablist"
@@ -27524,8 +27445,8 @@ var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   role: "tab",
   "aria-controls": "work-tab-pane",
   "aria-selected": "true"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-tools me-1"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-account-hard-hat-outline me-1"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Робота ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
   "class": "nav-item",
   role: "presentation"
@@ -27538,8 +27459,8 @@ var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   role: "tab",
   "aria-controls": "land-tab-pane",
   "aria-selected": "false"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-map me-1"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-land-fields me-1"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Земля ")])]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item\" role=\"presentation\">\n                                <button class=\"nav-link\"\n                                        id=\"peasant-economy-tab\"\n                                        data-bs-toggle=\"tab\"\n                                        data-bs-target=\"#peasant-economy-tab-pane\"\n                                        type=\"button\"\n                                        role=\"tab\"\n                                        aria-controls=\"peasant-economy-tab-pane\"\n                                        aria-selected=\"false\">\n                                    Селянське господарство\n                                </button>\n                            </li> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
   "class": "nav-item",
   role: "presentation"
@@ -27552,197 +27473,197 @@ var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   role: "tab",
   "aria-controls": "movement-tab-pane",
   "aria-selected": "false"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-arrow-left-right me-1"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-transit-transfer me-1"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Реєстрація / Переміщення ")])])], -1 /* HOISTED */);
-var _hoisted_67 = {
+var _hoisted_64 = {
   "class": "tab-content p-3",
   id: "myTabContent"
 };
-var _hoisted_68 = {
+var _hoisted_65 = {
   "class": "tab-pane fade show active",
   id: "work-tab-pane",
   role: "tabpanel",
   "aria-labelledby": "work-tab",
   tabindex: "0"
 };
-var _hoisted_69 = {
+var _hoisted_66 = {
   "class": "row mb-3"
 };
-var _hoisted_70 = {
+var _hoisted_67 = {
   "class": "col"
 };
-var _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_68 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "workPlace",
   "class": "form-label"
 }, "Місце роботи залежно від територіального розташування", -1 /* HOISTED */);
-var _hoisted_72 = ["disabled"];
-var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_69 = ["disabled"];
+var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   disabled: "",
   value: "0"
 }, "Оберить місце роботи", -1 /* HOISTED */);
-var _hoisted_74 = ["value"];
-var _hoisted_75 = {
+var _hoisted_71 = ["value"];
+var _hoisted_72 = {
   id: "workPlaceValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_76 = {
+var _hoisted_73 = {
   "class": "row mb-3"
 };
-var _hoisted_77 = {
+var _hoisted_74 = {
   "class": "col"
 };
-var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "employmentInformation",
   "class": "form-label"
 }, "Відомості про зайнятість / незайнятість", -1 /* HOISTED */);
-var _hoisted_79 = ["disabled"];
-var _hoisted_80 = {
+var _hoisted_76 = ["disabled"];
+var _hoisted_77 = {
   id: "employmentInformationValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_81 = {
+var _hoisted_78 = {
   "class": "tab-pane fade",
   id: "land-tab-pane",
   role: "tabpanel",
   "aria-labelledby": "land-tab",
   tabindex: "0"
 };
-var _hoisted_82 = {
+var _hoisted_79 = {
   "class": "row mb-3"
 };
-var _hoisted_83 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", null, "Наявність земельної ділянки", -1 /* HOISTED */);
-var _hoisted_84 = {
+var _hoisted_80 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", null, "Наявність земельної ділянки", -1 /* HOISTED */);
+var _hoisted_81 = {
   "class": "col"
 };
-var _hoisted_85 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_82 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "landOwned",
   "class": "form-label"
 }, "у власності", -1 /* HOISTED */);
-var _hoisted_86 = ["disabled"];
-var _hoisted_87 = {
+var _hoisted_83 = ["disabled"];
+var _hoisted_84 = {
   id: "landOwnedValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_88 = {
+var _hoisted_85 = {
   "class": "col"
 };
-var _hoisted_89 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_86 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "landRented",
   "class": "form-label"
 }, "взято в оренду", -1 /* HOISTED */);
-var _hoisted_90 = ["disabled"];
-var _hoisted_91 = {
+var _hoisted_87 = ["disabled"];
+var _hoisted_88 = {
   id: "landRentedValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_92 = {
+var _hoisted_89 = {
   "class": "col"
 };
-var _hoisted_93 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_90 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "landLeased",
   "class": "form-label"
 }, "знадо в оренду", -1 /* HOISTED */);
-var _hoisted_94 = ["disabled"];
-var _hoisted_95 = {
+var _hoisted_91 = ["disabled"];
+var _hoisted_92 = {
   id: "landLeasedValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_96 = {
+var _hoisted_93 = {
   "class": "tab-pane fade",
   id: "movement-tab-pane",
   role: "tabpanel",
   "aria-labelledby": "movement-tab",
   tabindex: "0"
 };
-var _hoisted_97 = {
+var _hoisted_94 = {
   "class": "mb-3"
 };
-var _hoisted_98 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-calendar2-event me-1"
+var _hoisted_95 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-calendar me-1"
 }, null, -1 /* HOISTED */);
-var _hoisted_99 = {
+var _hoisted_96 = {
   key: 0
 };
-var _hoisted_100 = {
+var _hoisted_97 = {
   "class": "row mb-3"
 };
-var _hoisted_101 = {
+var _hoisted_98 = {
   "class": "col-md-6"
 };
-var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_99 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "movementEventType",
   "class": "form-label"
 }, "Подія", -1 /* HOISTED */);
-var _hoisted_103 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_100 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   disabled: "",
   value: "0"
 }, "Оберить подію", -1 /* HOISTED */);
-var _hoisted_104 = ["value"];
+var _hoisted_101 = ["value"];
+var _hoisted_102 = {
+  id: "movementEventValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_103 = {
+  "class": "col-md-6"
+};
+var _hoisted_104 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "movementEventDate",
+  "class": "form-label"
+}, "Дата", -1 /* HOISTED */);
 var _hoisted_105 = {
   id: "movementEventValidation",
   "class": "invalid-feedback"
 };
 var _hoisted_106 = {
-  "class": "col-md-6"
-};
-var _hoisted_107 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "movementEventDate",
-  "class": "form-label"
-}, "Дата", -1 /* HOISTED */);
-var _hoisted_108 = {
-  id: "movementEventValidation",
-  "class": "invalid-feedback"
-};
-var _hoisted_109 = {
   "class": "row mb-3"
 };
-var _hoisted_110 = {
+var _hoisted_107 = {
   "class": "col-md-12"
 };
-var _hoisted_111 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_108 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "movementEventComment",
   "class": "form-label"
 }, "Примітка", -1 /* HOISTED */);
-var _hoisted_112 = {
+var _hoisted_109 = {
   id: "movementEventCommentValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_113 = {
+var _hoisted_110 = {
   "class": "row mb-3"
 };
-var _hoisted_114 = {
+var _hoisted_111 = {
   "class": "d-flex justify-content-end"
 };
-var _hoisted_115 = ["title"];
-var _hoisted_116 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-x-lg me-1"
+var _hoisted_112 = ["title"];
+var _hoisted_113 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-cancel me-1"
 }, null, -1 /* HOISTED */);
-var _hoisted_117 = ["title"];
-var _hoisted_118 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-save me-1"
+var _hoisted_114 = ["title"];
+var _hoisted_115 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-calendar-check me-1"
 }, null, -1 /* HOISTED */);
-var _hoisted_119 = {
+var _hoisted_116 = {
   key: 1,
   "class": "table"
 };
-var _hoisted_120 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
+var _hoisted_117 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
   "class": "table-dark"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Дата"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Подія"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Коментар"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th")])], -1 /* HOISTED */);
-var _hoisted_121 = {
+var _hoisted_118 = {
   "class": "text-end"
 };
+var _hoisted_119 = ["onClick", "disabled"];
+var _hoisted_120 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
+}, null, -1 /* HOISTED */);
+var _hoisted_121 = [_hoisted_120];
 var _hoisted_122 = ["onClick", "disabled"];
-var _hoisted_123 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-pencil"
+var _hoisted_123 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-trash-can-outline"
 }, null, -1 /* HOISTED */);
 var _hoisted_124 = [_hoisted_123];
-var _hoisted_125 = ["onClick", "disabled"];
-var _hoisted_126 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-trash3"
-}, null, -1 /* HOISTED */);
-var _hoisted_127 = [_hoisted_126];
-var _hoisted_128 = {
+var _hoisted_125 = {
   key: 2,
   "class": "text-center text-muted"
 };
@@ -27763,14 +27684,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onClick: _cache[0] || (_cache[0] = function ($event) {
           return $data.isInEditMode = true;
         })
-      }, _hoisted_2)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-pencil\"></i> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span class=\"mdi mdi-pencil\"></span> "), _hoisted_1])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: 1,
         "class": "btn btn-sm btn-outline-secondary ms-3",
         title: "Відмінити редагування",
         onClick: _cache[1] || (_cache[1] = function () {
           return $options.cancelEdit && $options.cancelEdit.apply($options, arguments);
         })
-      }, _hoisted_4)), $data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-x-lg\"></i> "), _hoisted_2])), $data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: 2,
         "class": "btn btn-sm btn-outline-success ms-3",
         title: "Зберегти редагування",
@@ -27778,11 +27699,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $options.submitData && $options.submitData.apply($options, arguments);
         }),
         disabled: !$options.readyForSave
-      }, _hoisted_7, 8 /* PROPS */, _hoisted_5)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-save2\"></i> "), _hoisted_4], 8 /* PROPS */, _hoisted_3)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       var _$data$_form$movement;
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         id: "memberSurname",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('surname') ? 'is-invalid' : '']),
@@ -27790,7 +27711,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.surname = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_13), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.surname]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('surname')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_10), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.surname]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('surname')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('name') ? 'is-invalid' : '']),
         id: "memberName",
@@ -27798,7 +27719,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.name = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_18), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('name')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_15), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('name')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('patronymic') ? 'is-invalid' : '']),
         id: "memberPatronymic",
@@ -27806,7 +27727,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.patronymic = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_22), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.patronymic]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('patronymic')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-3\">\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_19), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.patronymic]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('patronymic')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-3\">\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "date",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('birthday') ? 'is-invalid' : '']),
         id: "memberBirthday",
@@ -27814,7 +27735,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.birthday = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_27), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.birthday]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('birthday')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_24), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.birthday]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('birthday')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         list: "sex",
         id: "memberSex",
         placeholder: "Type to search...",
@@ -27823,19 +27744,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.sex = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_31), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.sex]]), _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('sex')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_28), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.sex]]), _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('sex')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('family_relationship_id') ? 'is-invalid' : '']),
         "aria-label": "Default select example",
         "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
           return $data._form.family_relationship_id = $event;
         }),
         disabled: !$data.isInEditMode
-      }, [_hoisted_38, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.relationships, function (relationship) {
+      }, [_hoisted_35, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.relationships, function (relationship) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           value: relationship.id,
           key: relationship.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relationship.name), 9 /* TEXT, PROPS */, _hoisted_39);
-      }), 128 /* KEYED_FRAGMENT */))], 10 /* CLASS, PROPS */, _hoisted_37), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data._form.family_relationship_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('family_relationship_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relationship.name), 9 /* TEXT, PROPS */, _hoisted_36);
+      }), 128 /* KEYED_FRAGMENT */))], 10 /* CLASS, PROPS */, _hoisted_34), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data._form.family_relationship_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('family_relationship_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('social_information') ? 'is-invalid' : '']),
         id: "socialInformation",
         rows: "2",
@@ -27843,7 +27764,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.social_information = $event;
         }),
         disabled: !$data.isInEditMode
-      }, "\n                                ", 10 /* CLASS, PROPS */, _hoisted_44), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.social_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('social_information')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+      }, "\n                                ", 10 /* CLASS, PROPS */, _hoisted_41), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.social_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('social_information')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [_hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('additional_information') ? 'is-invalid' : '']),
         id: "additionalInformation",
         rows: "2",
@@ -27851,7 +27772,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.additional_information = $event;
         }),
         disabled: !$data.isInEditMode
-      }, "\n                                ", 10 /* CLASS, PROPS */, _hoisted_49), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.additional_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('additional_information')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-3\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                            <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"_form.workPlace\">\n                                <option disabled value=\"0\">Оберить місце роботи</option>\n                                <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                    {{place.name}}\n                                </option>\n                            </select>\n                        </div>\n                        <div class=\"mb-2\">\n                            <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                            <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [_hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, "\n                                ", 10 /* CLASS, PROPS */, _hoisted_46), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.additional_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('additional_information')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"mb-3\">\n                            <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                            <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"_form.workPlace\">\n                                <option disabled value=\"0\">Оберить місце роботи</option>\n                                <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                    {{place.name}}\n                                </option>\n                            </select>\n                        </div>\n                        <div class=\"mb-2\">\n                            <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                            <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [_hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "date",
         id: "memberDeathDate",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_date') ? 'is-invalid' : '']),
@@ -27859,7 +27780,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.death_date = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_54), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_date')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [_hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_51), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_date')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [_hoisted_54, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         id: "memberDeathNumber",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_register_number') ? 'is-invalid' : '']),
@@ -27867,7 +27788,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.death_register_number = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_58), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_register_number]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_number')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_55), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_register_number]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_number')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [_hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         id: "memberDeathRegisterOffice",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_register_office') ? 'is-invalid' : '']),
@@ -27875,18 +27796,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.death_register_office = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_63), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_register_office]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_office')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col\"> "), _hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"tab-pane fade show active\" id=\"main-tab-pane\" role=\"tabpanel\" aria-labelledby=\"main-tab\" tabindex=\"0\">\n                                <div class=\"row mb-3\">\n\n                                    <div class=\"col\">\n                                        <label  for=\"memberSurname\" class=\"form-label\">Прізвище</label>\n                                        <input  type=\"text\"\n                                                id=\"memberSurname\"\n                                                :class=\"['form-control', hasError('surname') ? 'is-invalid' : '']\"\n                                                v-model=\"_form.surname\" >\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberName\" class=\"form-label\">Ім'я</label>\n                                        <input  type=\"text\"\n                                                :class=\"['form-control', hasError('name') ? 'is-invalid' : '']\"\n                                                id=\"memberName\"\n                                                v-model=\"_form.name\">\n                                        <div id=\"memberNameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('name') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberPatronymic\" class=\"form-label\">По батькові</label>\n                                        <input  type=\"text\"\n                                                :class=\"['form-control', hasError('patronymic') ? 'is-invalid' : '']\"\n                                                id=\"memberPatronymic\"\n                                                v-model=\"_form.patronymic\">\n                                        <div id=\"memberPatronymicValidation\" class=\"invalid-feedback\">\n                                            {{ getError('patronymic') }}\n                                        </div>\n                                    </div>\n\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label  for=\"memberBirthday\" class=\"form-label\">Дата народження</label>\n                                        <input  type=\"date\"\n                                                :class=\"['form-control', hasError('birthday') ? 'is-invalid' : '']\"\n                                                id=\"memberBirthday\"\n                                                v-model=\"_form.birthday\">\n                                        <div id=\"memberBirthdayValidation\" class=\"invalid-feedback\">\n                                            {{ getError('birthday') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberSex\" class=\"form-label\">Стать</label>\n                                        <input  list=\"sex\"\n                                                id=\"memberSex\"\n                                                placeholder=\"Type to search...\"\n                                                :class=\"['form-control', hasError('sex') ? 'is-invalid' : '']\"\n                                                v-model=\"_form.sex\">\n                                        <datalist id=\"sex\">\n                                            <option value=\"чоловіча\" />\n                                            <option value=\"жіноча\" />\n                                        </datalist>\n                                        <div id=\"memberSexValidation\" class=\"invalid-feedback\">\n                                            {{ getError('sex') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label for=\"familyRelationship\" class=\"form-label\">Родинні стосунки</label>\n                                        <select :class=\"['form-control', hasError('family_relationship_id') ? 'is-invalid' : '']\"\n                                                aria-label=\"Default select example\"\n                                                v-model=\"_form.family_relationship_id\">\n                                            <option disabled value=\"0\">Оберить тип родинних стосунків</option>\n                                            <option :value=\"relationship.id\" v-for=\"relationship in relationships\" :key=\"relationship.id\">\n                                                {{relationship.name}}\n                                            </option>\n                                        </select>\n                                        <div id=\"familyRelationshipValidation\" class=\"invalid-feedback\">\n                                            {{ getError('family_relationship_id') }}\n                                        </div>\n                                    </div>\n                                </div>\n\n                                <div class=\"mb-2\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">Місце роботи залежно від територіального розташування</label>\n                                        <select class=\"form-select\" aria-label=\"Default select example\" v-model=\"_form.workPlace\">\n                                            <option disabled value=\"0\">Оберить місце роботи</option>\n                                            <option :value=\"place.id\" v-for=\"place in places\" :key=\"place.id\">\n                                                {{place.name}}\n                                            </option>\n                                        </select>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про зайнятість / незайнятість</label>\n                                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlTextarea1\" class=\"form-label\">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>\n                                        <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" rows=\"2\" v-model=\"_form.employment\"></textarea>\n                                    </div>\n                                </div>\n                                <div class=\"row mb-3\">\n                                    <div class=\"col\">\n                                        <label  for=\"memberDeathDate\" class=\"form-label\">Дата сметрі</label>\n                                        <input  type=\"date\"\n                                                id=\"memberDeathFate\"\n                                                :class=\"['form-control', hasError('death_date') ? 'is-invalid' : '']\"\n                                                value=\"02/01/2023\">\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"memberDeathNumber\" class=\"form-label\">Номер свідоцтва</label>\n                                        <input  type=\"text\"\n                                                id=\"memberDeathNumber\"\n                                                :class=\"['form-control', hasError('death_number') ? 'is-invalid' : '']\"\n                                                value=\"21323254\" >\n                                        <div id=\"memberSurnameValidation\" class=\"invalid-feedback\">\n                                            {{ getError('surname') }}\n                                        </div>\n                                    </div>\n                                </div>\n                            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [_hoisted_71, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_60), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.death_register_office]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_office')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col\"> "), _hoisted_63, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [_hoisted_68, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-select', _ctx.hasError('work_place_id') ? 'is-invalid' : '']),
         "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
           return $data._form.work_place_id = $event;
         }),
         disabled: !$data.isInEditMode
-      }, [_hoisted_73, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.places, function (place) {
+      }, [_hoisted_70, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.places, function (place) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           value: place.id,
           key: place.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(place.name), 9 /* TEXT, PROPS */, _hoisted_74);
-      }), 128 /* KEYED_FRAGMENT */))], 10 /* CLASS, PROPS */, _hoisted_72), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data._form.work_place_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('work_place_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [_hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(place.name), 9 /* TEXT, PROPS */, _hoisted_71);
+      }), 128 /* KEYED_FRAGMENT */))], 10 /* CLASS, PROPS */, _hoisted_69), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data._form.work_place_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('work_place_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [_hoisted_75, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('employment_information') ? 'is-invalid' : '']),
         id: "employmentInformation",
         rows: "2",
@@ -27894,7 +27815,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.employment_information = $event;
         }),
         disabled: $options.isEmploymentInformationDisabled
-      }, "\n                                        ", 10 /* CLASS, PROPS */, _hoisted_79), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.employment_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('employment_information')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [_hoisted_83, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [_hoisted_85, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, "\n                                        ", 10 /* CLASS, PROPS */, _hoisted_76), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.employment_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('employment_information')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_78, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [_hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [_hoisted_82, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('land_owned') ? 'is-invalid' : '']),
         id: "landOwned",
@@ -27902,7 +27823,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.land_owned = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_86), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_owned]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('land_owned')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [_hoisted_89, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_83), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_owned]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('land_owned')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [_hoisted_86, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('land_rented') ? 'is-invalid' : '']),
         id: "landRented",
@@ -27910,7 +27831,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.land_rented = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_90), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_rented]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_91, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('land_rented')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_92, [_hoisted_93, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_87), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_rented]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('land_rented')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [_hoisted_90, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('land_leased') ? 'is-invalid' : '']),
         id: "landLeased",
@@ -27918,68 +27839,68 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return $data._form.land_leased = $event;
         }),
         disabled: !$data.isInEditMode
-      }, null, 10 /* CLASS, PROPS */, _hoisted_94), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_leased]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_95, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('land_leased')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"tab-pane fade\" id=\"peasant-economy-tab-pane\" role=\"tabpanel\" aria-labelledby=\"peasant-economy-tab\" tabindex=\"0\">\n                                <div class=\"row\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.surname\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.name\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.patronymic\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                </div>\n                            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_97, [!$data.movementEventFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+      }, null, 10 /* CLASS, PROPS */, _hoisted_91), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data._form.land_leased]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_92, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('land_leased')), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"tab-pane fade\" id=\"peasant-economy-tab-pane\" role=\"tabpanel\" aria-labelledby=\"peasant-economy-tab\" tabindex=\"0\">\n                                <div class=\"row\">\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">у власності</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.surname\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                    <div class=\"col\">\n                                        <label for=\"exampleFormControlInput1\" class=\"form-label\">взято в оренду</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.name\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                    <div class=\"col\">\n                                        <label  for=\"exampleFormControlInput1\" class=\"form-label\">знадо в оренду</label>\n                                        <input  type=\"email\"\n                                                class=\"form-control\"\n                                                id=\"exampleFormControlInput1\"\n                                                v-model=\"_form.patronymic\"\n                                                :disabled=\"!isInEditMode\" />\n                                    </div>\n                                </div>\n                            </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_93, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [!$data.movementEventFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
         key: 0,
         "class": "btn btn-sm btn-outline-primary",
         title: "Додати подію",
         onClick: _cache[19] || (_cache[19] = function () {
           return $options.showMovementEventForm && $options.showMovementEventForm.apply($options, arguments);
         })
-      }, [_hoisted_98, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати подію ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary\"\n                                                title=\"Відмінити додовання події\"\n                                                @click=\"closeMovementEventForm\"\n                                                v-else>\n                                            <i class=\"bi bi-x-lg\"></i>\n                                        </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-primary\"\n                                                title=\"Зберегти подію\"\n                                                @click=\"submitMovementEventForm\"\n                                                v-if=\"movementEventFormIsVisible\">\n                                            <i class=\"bi bi-save\"></i>\n                                        </button> ")]), $data.movementEventFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_99, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_100, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_101, [_hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }, [_hoisted_95, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати подію ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.movementEventFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_97, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_98, [_hoisted_99, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('movement_type_id') ? 'is-invalid' : '']),
         "onUpdate:modelValue": _cache[20] || (_cache[20] = function ($event) {
           return $data.eventForm.movement_type_id = $event;
         })
-      }, [_hoisted_103, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.movementTypes, function (movementType) {
+      }, [_hoisted_100, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.movementTypes, function (movementType) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           value: movementType.id,
           key: movementType.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movementType.name), 9 /* TEXT, PROPS */, _hoisted_104);
-      }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.eventForm.movement_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_105, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('movement_type_id')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_106, [_hoisted_107, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movementType.name), 9 /* TEXT, PROPS */, _hoisted_101);
+      }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.eventForm.movement_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_102, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('movement_type_id')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_103, [_hoisted_104, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "date",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('date') ? 'is-invalid' : '']),
         id: "movementEvent",
         "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
           return $data.eventForm.date = $event;
         })
-      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('date')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [_hoisted_111, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_105, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('date')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_106, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_107, [_hoisted_108, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('comment') ? 'is-invalid' : '']),
         id: "movementEventComment",
         "onUpdate:modelValue": _cache[22] || (_cache[22] = function ($event) {
           return $data.eventForm.comment = $event;
         })
-      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.comment]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('comment')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_113, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_114, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.eventForm.comment]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('comment')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         "class": "btn btn-sm btn-outline-secondary me-4",
         title: $data.movementAction == 'create' ? 'Відмінити додовання події' : 'Відмінити редагування події',
         onClick: _cache[23] || (_cache[23] = function () {
           return $options.closeMovementEventForm && $options.closeMovementEventForm.apply($options, arguments);
         })
-      }, [_hoisted_116, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Відмінити ")], 8 /* PROPS */, _hoisted_115), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, [_hoisted_113, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Відмінити ")], 8 /* PROPS */, _hoisted_112), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         "class": "btn btn-sm btn-outline-primary",
         title: $data.movementAction == 'create' ? 'Додати подію' : 'Зберегти зміни',
         onClick: _cache[24] || (_cache[24] = function () {
           return $options.submitMovementEventForm && $options.submitMovementEventForm.apply($options, arguments);
         })
-      }, [_hoisted_118, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.movementEventSubmitButtonTitle), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_117)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (_$data$_form$movement = $data._form.movements) !== null && _$data$_form$movement !== void 0 && _$data$_form$movement.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_119, [_hoisted_120, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data._form.movements, function (event, index) {
+      }, [_hoisted_115, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.movementEventSubmitButtonTitle), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_114)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (_$data$_form$movement = $data._form.movements) !== null && _$data$_form$movement !== void 0 && _$data$_form$movement.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_116, [_hoisted_117, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data._form.movements, function (event, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: index
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(event.date)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.movement_type.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.comment), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_121, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(event.date)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.movement_type.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(event.comment), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_118, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           "class": "btn btn-sm btn-outline-warning me-3",
           title: "Редагувати подію",
           onClick: function onClick($event) {
             return $options.editMovementEvent(event);
           },
           disabled: $data.movementEventFormIsVisible
-        }, _hoisted_124, 8 /* PROPS */, _hoisted_122), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        }, _hoisted_121, 8 /* PROPS */, _hoisted_119), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           "class": "btn btn-sm btn-outline-danger",
           title: "Видалити подію",
           onClick: function onClick($event) {
             return $options.deleteMovementEvent(event.id);
           },
           disabled: $data.movementEventFormIsVisible
-        }, _hoisted_127, 8 /* PROPS */, _hoisted_125)])]);
-      }), 128 /* KEYED_FRAGMENT */))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_128, " Інформація відсутня ")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Timeline :events=\"movements\" /> ")])])])])])])];
+        }, _hoisted_124, 8 /* PROPS */, _hoisted_122)])]);
+      }), 128 /* KEYED_FRAGMENT */))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_125, " Інформація відсутня ")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <Timeline :events=\"movements\" /> ")])])])])])])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
@@ -28010,186 +27931,178 @@ var _hoisted_2 = {
   "class": "p-3 d-flex justify-content-between"
 };
 var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-fullscreen"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-account-plus-outline me-1"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_4 = [_hoisted_3];
+var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-account-question-outline"
+  }, null, -1 /* HOISTED */);
+});
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-person-add"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-card-account-details-outline"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-person-fill-check"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-table-account"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_7 = [_hoisted_6];
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-person-vcard"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_9 = [_hoisted_8];
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-table"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_11 = [_hoisted_10];
-var _hoisted_12 = {
+var _hoisted_7 = {
   "class": "px-3 d-flex gap-3 flex-wrap"
 };
-var _hoisted_13 = ["onDblclick"];
-var _hoisted_14 = {
+var _hoisted_8 = ["onDblclick"];
+var _hoisted_9 = {
   "class": "card-header d-flex justify-content-between"
 };
-var _hoisted_15 = {
+var _hoisted_10 = {
   "class": "member-surname"
 };
-var _hoisted_16 = {
+var _hoisted_11 = {
   "class": "member-name"
 };
-var _hoisted_17 = {
+var _hoisted_12 = {
   key: 0,
   "class": "mt-2"
 };
-var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-person-bounding-box",
+var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-head-alert-outline",
     title: "Голова домогосподарства"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_19 = [_hoisted_18];
-var _hoisted_20 = {
+var _hoisted_14 = {
   "class": "card-body"
 };
-var _hoisted_21 = {
+var _hoisted_15 = {
   "class": "d-flex mb-2 align-items-center family-relationship"
 };
-var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-diagram-3 me-3",
+var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-family-tree me-3",
     style: {
       "color": "blue"
     },
     title: "Родинні відносини"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_23 = {
-  "class": "d-flex mb-2 align-items-center"
+var _hoisted_17 = {
+  "class": "d-flex mb-2 flex-column"
 };
-var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-gift me-3",
+var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-cake-variant-outline me-3",
     style: {
       "color": "red"
     },
     title: "Дата народження"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_25 = {
-  "class": "card-footer d-flex justify-content-center"
+var _hoisted_19 = {
+  key: 0
 };
-var _hoisted_26 = ["onClick"];
-var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-eye"
+var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-coffin me-3",
+    title: "Дата смерті"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_28 = [_hoisted_27];
-var _hoisted_29 = {
+var _hoisted_21 = {
+  "class": "card-footer d-flex justify-content-center"
+};
+var _hoisted_22 = ["onClick"];
+var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-eye-outline"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_24 = [_hoisted_23];
+var _hoisted_25 = {
   key: 1,
   "class": "table table-sm table-bordered"
 };
-var _hoisted_30 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, null, -1 /* HOISTED */);
 });
-var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Прізвище І.Б.", -1 /* HOISTED */);
 });
-var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Стать", -1 /* HOISTED */);
 });
-var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_29 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Дата народження", -1 /* HOISTED */);
 });
-var _hoisted_34 = {
+var _hoisted_30 = {
   key: 0
 };
-var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Родинні стосунки", -1 /* HOISTED */);
 });
-var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Місце роботи", -1 /* HOISTED */);
 });
-var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Відомості про зайнятість / незайнятість", -1 /* HOISTED */);
 });
+var _hoisted_34 = {
+  "class": "text-center"
+};
+var _hoisted_35 = ["onClick"];
+var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-eye-outline"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_37 = [_hoisted_36];
 var _hoisted_38 = {
   "class": "text-center"
 };
-var _hoisted_39 = ["onClick"];
-var _hoisted_40 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-eye"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_41 = [_hoisted_40];
-var _hoisted_42 = {
-  "class": "text-center"
-};
-var _hoisted_43 = {
+var _hoisted_39 = {
   key: 0,
   "class": "text-center"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_HouseholdMemberForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HouseholdMemberForm");
   var _component_HouseholdMemberInfo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HouseholdMemberInfo");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    type: "button",
-    "class": "btn btn-sm btn-light me-2",
-    onClick: _cache[0] || (_cache[0] = function () {
-      return $options.toggleFullScreen && $options.toggleFullScreen.apply($options, arguments);
-    }),
-    title: "Повний єкран"
-  }, _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button type=\"button\"\n                        class=\"btn btn-sm btn-light me-2\"\n                        @click=\"toggleFullScreen\" title=\"Повний єкран\">\n                    <i class=\"bi bi-fullscreen\"></i>\n                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     id: "newMember",
     "class": "btn btn-sm btn-primary",
-    onClick: _cache[1] || (_cache[1] = function ($event) {
+    onClick: _cache[0] || (_cache[0] = function ($event) {
       return $options.newMember($event);
     })
-  }, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" новий член ")]), $options.hiddenMemebersExist ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-person-add\"></i> "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" новий член ")]), $options.hiddenMemebersExist ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     type: "button",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["ms-2 btn btn-sm btn-outline-secondary", {
       'active': $data.showAllMembers
     }]),
     title: "Відобразити всіх",
-    onClick: _cache[2] || (_cache[2] = function ($event) {
+    onClick: _cache[1] || (_cache[1] = function ($event) {
       return $data.showAllMembers = !$data.showAllMembers;
     })
-  }, _hoisted_7, 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-person-fill-check\"></i> "), _hoisted_4], 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     title: "Режим карток",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-sm btn-outline-secondary me-2", {
       'active': $data.viewMode == 'card'
     }]),
-    onClick: _cache[3] || (_cache[3] = function ($event) {
+    onClick: _cache[2] || (_cache[2] = function ($event) {
       return $data.viewMode = 'card';
     })
-  }, _hoisted_9, 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-person-vcard\"></i> "), _hoisted_5], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     title: "Режим таблиці",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-sm btn-outline-secondary", {
       'active': $data.viewMode == 'table'
     }]),
-    onClick: _cache[4] || (_cache[4] = function ($event) {
+    onClick: _cache[3] || (_cache[3] = function ($event) {
       return $data.viewMode = 'table';
     })
-  }, _hoisted_11, 2 /* CLASS */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [$data.viewMode == 'card' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-table\"></i> "), _hoisted_6], 2 /* CLASS */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [$data.viewMode == 'card' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
@@ -28198,40 +28111,38 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onDblclick: function onDblclick($event) {
         return $options.showHouseholdMemberInfo(member.id);
       }
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */)]), member.family_relationship == 'голова домогосподарства' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_17, _hoisted_19)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.birthday)) + " ", 1 /* TEXT */), member.death_date != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-      key: 0
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.death_date)), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"member-sex\">\n                            <span v-if=\"member.sex=='чоловіча'\" title=\"чоловік\">\n                                &#9794;\n                            </span>\n                            <span v-else title=\"жінка\">\n                                &#9792;\n                            </span>\n                        </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */)]), member.family_relationship == 'голова домогосподарства' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-person-bounding-box\" title=\"Голова домогосподарства\"></i> "), _hoisted_13])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-gift me-3\" style=\"color:red\" title=\"Дата народження\"></i> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.birthday)), 1 /* TEXT */)]), member.death_date != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.death_date)), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"member-sex\">\n                            <span v-if=\"member.sex=='чоловіча'\" title=\"чоловік\">\n                                &#9794;\n                            </span>\n                            <span v-else title=\"жінка\">\n                                &#9792;\n                            </span>\n                        </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "btn btn-sm btn-outline-secondary",
       onClick: function onClick($event) {
         return $options.showHouseholdMemberInfo(member.id);
       }
-    }, _hoisted_28, 8 /* PROPS */, _hoisted_26)])], 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_13);
-  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_30, _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <th>Ім'я</th>\n                            <th>По батькові</th> "), _hoisted_32, _hoisted_33, $data.showAllMembers ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_34, "Дата смерті")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_35, _hoisted_36, _hoisted_37])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
+    }, _hoisted_24, 8 /* PROPS */, _hoisted_22)])], 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_8);
+  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_26, _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <th>Ім'я</th>\n                            <th>По батькові</th> "), _hoisted_28, _hoisted_29, $data.showAllMembers ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_30, "Дата смерті")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_31, _hoisted_32, _hoisted_33])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: member.id,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
         'table-primary': member.family_relationship == 'голова домогосподарства'
       })
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "btn btn-sm btn-outline-secondary",
       onClick: function onClick($event) {
         return $options.showHouseholdMemberInfo(member.id);
       }
-    }, _hoisted_41, 8 /* PROPS */, _hoisted_39)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.full_name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.sex), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.birthday)), 1 /* TEXT */), $data.showAllMembers ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_43, [member.death_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    }, _hoisted_37, 8 /* PROPS */, _hoisted_35)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.full_name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.sex), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.birthday)), 1 /* TEXT */), $data.showAllMembers ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_39, [member.death_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: 0
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.death_date)), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td>{{member.name}}</td>\n                            <td>{{member.patronymic}}</td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [member.work_place ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       key: 0
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.work_place.name), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.employment_information), 1 /* TEXT */)], 2 /* CLASS */);
   }), 128 /* KEYED_FRAGMENT */))])]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseholdMemberForm, {
     formData: $data.formData,
-    onRefreshData: _cache[5] || (_cache[5] = function ($event) {
+    onRefreshData: _cache[4] || (_cache[4] = function ($event) {
       return _ctx.$store.dispatch('Households/fetchRecord', $props.household_id);
     })
   }, null, 8 /* PROPS */, ["formData"]), $data.formIsReady ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_HouseholdMemberInfo, {
     key: 0,
     formData: $data.formData,
     onRefreshData: $options.refreshMemberInfo,
-    onCloseForm: _cache[6] || (_cache[6] = function ($event) {
+    onCloseForm: _cache[5] || (_cache[5] = function ($event) {
       return $data.formIsReady = false;
     })
   }, null, 8 /* PROPS */, ["formData", "onRefreshData"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
@@ -28277,32 +28188,32 @@ var _hoisted_7 = {
   "class": "nav-item"
 };
 var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-info-circle"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-information-outline"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_9 = {
   "class": "nav-item"
 };
 var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-people-fill"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-account-multiple-outline"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_11 = {
   "class": "nav-item"
 };
 var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-house-gear-fill"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-home-outline"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_13 = {
   "class": "nav-item"
 };
 var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-globe"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-land-fields"
   }, null, -1 /* HOISTED */);
 });
 
@@ -28316,7 +28227,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $data.currentTab = 'HouseholdInfo';
     })
-  }, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Основна інформація ")], 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-info-circle\"></i> "), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Основна інформація ")], 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["nav-link", {
       'active': $data.currentTab == 'HouseholdMembers'
     }]),
@@ -28324,21 +28235,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $data.currentTab = 'HouseholdMembers';
     })
-  }, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Члени домогосподарства ")], 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-people-fill\"></i> "), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Члени домогосподарства ")], 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["nav-link", {
       'active': $data.currentTab == 'HouseInfo'
     }]),
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $data.currentTab = 'HouseInfo';
     })
-  }, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Будинок / Квартира ")], 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-house-gear-fill\"></i> "), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Будинок / Квартира ")], 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["nav-link", {
       'active': $data.currentTab == 'LandInfo'
     }]),
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $data.currentTab = 'LandInfo';
     })
-  }, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Земля ")], 2 /* CLASS */)])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.KeepAlive, null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)($data.currentTab), (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeProps)((0,vue__WEBPACK_IMPORTED_MODULE_0__.guardReactiveProps)($options.componentProps)), null, 16 /* FULL_PROPS */))], 1024 /* DYNAMIC_SLOTS */))])])])], 64 /* STABLE_FRAGMENT */);
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-globe\"></i> "), _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Земля ")], 2 /* CLASS */)])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.KeepAlive, null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)((0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveDynamicComponent)($data.currentTab), (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeProps)((0,vue__WEBPACK_IMPORTED_MODULE_0__.guardReactiveProps)($options.componentProps)), null, 16 /* FULL_PROPS */))], 1024 /* DYNAMIC_SLOTS */))])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -28480,22 +28391,20 @@ var _hoisted_3 = {
   "class": "dictionary-name__wrapper"
 };
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Довідник \"Регіони\"", -1 /* HOISTED */);
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus"
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
-var _hoisted_6 = [_hoisted_5];
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-arrow-repeat"
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-refresh"
 }, null, -1 /* HOISTED */);
-var _hoisted_8 = [_hoisted_7];
-var _hoisted_9 = {
+var _hoisted_7 = {
   "class": "card-body"
 };
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Обласний центр"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th")], -1 /* HOISTED */);
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-eye"
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Обласний центр"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th")], -1 /* HOISTED */);
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-eye-outline"
 }, null, -1 /* HOISTED */);
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, null, -1 /* HOISTED */);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, null, -1 /* HOISTED */);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_breadcrumbs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("breadcrumbs");
@@ -28508,18 +28417,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.addRegion && $options.addRegion.apply($options, arguments);
     }),
     title: "Додати новий регіон"
-  }, _hoisted_6), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-plus\"></i> "), _hoisted_5]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-sm btn-outline-primary ms-2",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.$store.dispatch('Regions/fetchRegions');
     }),
     title: "Оновити дані"
-  }, _hoisted_8)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-arrow-repeat\"></i> "), _hoisted_6])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     dataTable: _ctx.regions,
     tableHeaderClass: "table-dark"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_10];
+      return [_hoisted_8];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
@@ -28534,10 +28443,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [_hoisted_11];
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-eye\"></i> "), _hoisted_9];
           }),
           _: 2 /* DYNAMIC */
-        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.center), 1 /* TEXT */), _hoisted_12]);
+        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.center), 1 /* TEXT */), _hoisted_10]);
       }), 128 /* KEYED_FRAGMENT */))];
     }),
 
@@ -28582,53 +28491,51 @@ var _hoisted_5 = {
   "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
 };
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Інформація", -1 /* HOISTED */);
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-pencil"
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
 }, null, -1 /* HOISTED */);
-var _hoisted_8 = [_hoisted_7];
-var _hoisted_9 = {
+var _hoisted_8 = {
   "class": "card-body"
 };
-var _hoisted_10 = {
+var _hoisted_9 = {
   "class": "row mb-3"
 };
-var _hoisted_11 = {
+var _hoisted_10 = {
   "class": "row mb-2"
 };
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-md-3"
 }, " Назва ", -1 /* HOISTED */);
-var _hoisted_13 = {
+var _hoisted_12 = {
   "class": "col-md-9"
 };
-var _hoisted_14 = {
+var _hoisted_13 = {
   "class": "row mb-2"
 };
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-md-3"
 }, " Адміністративний центр ", -1 /* HOISTED */);
-var _hoisted_16 = {
+var _hoisted_15 = {
   "class": "col-md-9"
 };
-var _hoisted_17 = {
+var _hoisted_16 = {
   "class": "card"
 };
-var _hoisted_18 = {
+var _hoisted_17 = {
   "class": "card-header"
 };
-var _hoisted_19 = {
+var _hoisted_18 = {
   "class": "dictionary-name__wrapper flex-grow-1 justify-content-between"
 };
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Районі в регіоні", -1 /* HOISTED */);
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus-lg"
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Районі в регіоні", -1 /* HOISTED */);
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
-var _hoisted_22 = [_hoisted_21];
-var _hoisted_23 = {
+var _hoisted_21 = {
   "class": "card-body"
 };
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Центр")], -1 /* HOISTED */);
-var _hoisted_25 = {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Центр")], -1 /* HOISTED */);
+var _hoisted_23 = {
   key: 1,
   "class": "text-center text-muted"
 };
@@ -28644,19 +28551,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.openRegionForm && $options.openRegionForm.apply($options, arguments);
     }),
     title: "Редагувати дані"
-  }, _hoisted_8)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.region.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.region.center), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-pencil\"></i> "), _hoisted_7])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.region.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.region.center), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-sm btn-light",
     title: "Додати район",
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.openDistrictForm && $options.openDistrictForm.apply($options, arguments);
     })
-  }, _hoisted_22)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_ctx.region.districts.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DataTable, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-plus-lg\"></i> "), _hoisted_20])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_ctx.region.districts.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DataTable, {
     key: 0,
     dataTable: _ctx.region.districts,
     tableHeaderClass: "table-dark"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_24];
+      return [_hoisted_22];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
@@ -28680,7 +28587,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
 
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["dataTable"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, " В данному регіоні райони не знайдені "))])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RegionForm, {
+  }, 8 /* PROPS */, ["dataTable"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, " В данному регіоні райони не знайдені "))])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RegionForm, {
     formData: $data.regionFormData,
     action: "update"
   }, null, 8 /* PROPS */, ["formData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DistrictForm, {
@@ -29001,21 +28908,21 @@ var _hoisted_3 = {
   "class": "dictionary-name__wrapper"
 };
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Довідник \"Населенні пункти\"", -1 /* HOISTED */);
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-plus"
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
 }, null, -1 /* HOISTED */);
 var _hoisted_6 = [_hoisted_5];
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "btn btn-sm btn-outline-secondary"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-funnel"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-filter-outline"
 })])], -1 /* HOISTED */);
 var _hoisted_8 = {
   "class": "card-body"
 };
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Тип"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Сільська рада"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Індекс"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "КАТОТТГ"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th")], -1 /* HOISTED */);
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-eye"
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-eye-outline"
 }, null, -1 /* HOISTED */);
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, null, -1 /* HOISTED */);
 
@@ -29097,8 +29004,8 @@ var _hoisted_5 = {
   "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
 };
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Інформація о поселенні", -1 /* HOISTED */);
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-  "class": "bi bi-pencil"
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
 }, null, -1 /* HOISTED */);
 var _hoisted_8 = [_hoisted_7];
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, null, -1 /* HOISTED */);
@@ -29595,7 +29502,7 @@ var routes = [{
   path: '/',
   component: _modules_Dashboard_Main_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
   meta: {
-    icon: '<i class="bi bi-laptop"></i>'
+    icon: '<span class="mdi mdi-monitor-dashboard"></span>'
   }
 }, {
   path: '/regions',

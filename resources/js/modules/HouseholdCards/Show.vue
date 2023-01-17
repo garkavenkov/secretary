@@ -10,25 +10,29 @@
                 <ul class="nav nav-tabs px-3">
                     <li class="nav-item">
                         <a class="nav-link" :class="{'active': currentTab == 'HouseholdInfo'}" aria-current="page" @click="currentTab='HouseholdInfo'">
-                            <i class="bi bi-info-circle"></i>
+                            <!-- <i class="bi bi-info-circle"></i> -->
+                            <span class="mdi mdi-information-outline"></span>
                             Основна інформація
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" :class="{'active': currentTab == 'HouseholdMembers'}" aria-current="page" @click="currentTab='HouseholdMembers'">
-                            <i class="bi bi-people-fill"></i>
+                            <!-- <i class="bi bi-people-fill"></i> -->
+                            <span class="mdi mdi-account-multiple-outline"></span>
                             Члени домогосподарства
                         </a>
                     </li>
                     <li class="nav-item" >
                         <a class="nav-link" :class="{'active': currentTab == 'HouseInfo'}" @click="currentTab='HouseInfo'">
-                            <i class="bi bi-house-gear-fill"></i>
+                            <!-- <i class="bi bi-house-gear-fill"></i> -->
+                            <span class="mdi mdi-home-outline"></span>
                             Будинок / Квартира
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" :class="{'active': currentTab == 'LandInfo'}" @click="currentTab='LandInfo'">
-                            <i class="bi bi-globe"></i>
+                            <!-- <i class="bi bi-globe"></i> -->
+                            <span class="mdi mdi-land-fields"></span>
                             Земля
                         </a>
                     </li>

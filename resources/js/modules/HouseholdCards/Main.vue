@@ -2,8 +2,8 @@
 
 import { mapGetters }   from 'vuex';
 import { Modal }        from 'bootstrap'
-import FormValidator    from '../../minixs/FormValidator';
 
+import FormValidator    from '../../minixs/FormValidator';
 import DataTable from '../../components/ui/DataTable.vue';
 
 export default {
@@ -21,82 +21,10 @@ export default {
                 special_marks: '',
                 additional_data: ''
             },
+
             currentTab: 'HouseholdInfo',
             modalTitle: '',
             modalSubmitCaption: '',
-            // cards: [],
-            // cards: [
-            //     {
-            //         id:1,
-            //         settlementId: 1,
-            //         settlement: 'Шаповалівка',
-            //         householdTypeId: 1,
-            //         address: 'вул Набрежна, б. 55',
-            //         specialMarks: '',
-            //         additional: '',
-            //         number: '01-0001-1',
-            //     },
-            //     {
-            //         id:2,
-            //         settlementId: 1,
-            //         settlement: 'Шаповалівка',
-            //         householdTypeId: 1,
-            //         address: 'вул Набрежна, б. 57',
-            //         specialMarks: '',
-            //         additional: '',
-            //         number: '01-0002-1',
-            //     },
-            //     {
-            //         id:3,
-            //         settlementId: 1,
-            //         settlement: 'Шаповалівка',
-            //         householdTypeId: 1,
-            //         address: 'вул Набрежна, б. 59',
-            //         specialMarks: '',
-            //         additional: '',
-            //         number: '01-0003-1',
-            //     },
-            //     {
-            //         id:4,
-            //         settlementId: 1,
-            //         settlement: 'Шаповалівка',
-            //         householdTypeId: 1,
-            //         address: 'вул Набрежна, б. 61',
-            //         specialMarks: '',
-            //         additional: '',
-            //         number: '01-0004-1',
-            //     },
-            //     {
-            //         id:5,
-            //         settlementId: 1,
-            //         settlement: 'Привокзальне',
-            //         householdTypeId: 1,
-            //         address: 'вул Свободи, б. 32',
-            //         specialMarks: '',
-            //         additional: '',
-            //         number: '02-0001-1',
-            //     },
-            //     {
-            //         id:6,
-            //         settlementId: 1,
-            //         settlement: 'Привокзальне',
-            //         householdTypeId: 1,
-            //         address: 'вул Свободи, б. 34',
-            //         specialMarks: '',
-            //         additional: '',
-            //         number: '02-0002-1',
-            //     },
-            //     {
-            //         id:7,
-            //         settlementId: 1,
-            //         settlement: 'Привокзальне',
-            //         householdTypeId: 1,
-            //         address: 'вул Свободи, б. 36',
-            //         specialMarks: '',
-            //         additional: '',
-            //         number: '02-0003-1',
-            //     }
-            // ]
         }
     },
     methods: {
@@ -124,12 +52,6 @@ export default {
                     this.errors = err.response.data.errors;
                 })
         },
-        // fetchCards() {
-        //     axios.get('/api/v1/households')
-        //         .then(res => {
-        //             this.cards = res.data.data
-        //         });
-        // },
     },
     computed: {
         ...mapGetters('Households', ['households']),
@@ -137,7 +59,6 @@ export default {
         ...mapGetters('Settlements', ['settlements']),
     },
     created() {
-        // this.fetchCards();
         this.$store.dispatch('Households/fetchRecords');
     }
 }
@@ -145,22 +66,19 @@ export default {
 
 <template>
     <breadcrumbs />
-    <!-- <div class="d-flex mb-3">
-        <span>
-            Шаповалівська сільська рада
-        </span>
-    </div> -->
+
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Облікові картки</span>
                 <button class="btn btn-sm btn-primary" @click="addCard">
-                    <i class="bi bi-plus"></i>
+                    <span class="mdi mdi-plus"></span>
                 </button>
             </div>
             <div>
                 <button class="btn btn-sm btn-outline-secondary" @click="addCard">
-                    <i class="bi bi-funnel"></i>
+                    <!-- <i class="bi bi-funnel"></i>/ -->
+                    <span class="mdi mdi-filter-outline"></span>
                 </button>
             </div>
         </div>
@@ -182,7 +100,8 @@ export default {
                             :key="record.id">
                         <td>
                             <router-link :to="{name: 'HouseholdCardsShow', params: { id: record.id }}">
-                                <i class="bi bi-eye"></i>
+                                <!-- <i class="bi bi-eye"></i> -->
+                                <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
                         <td>{{record.settlement}}</td>

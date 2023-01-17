@@ -69,7 +69,7 @@ export default {
                 <div>
                     <span class="fw-bold">Власник(и)</span>
                     <button class="btn btn-sm btn-outline-secondary ms-3" @click="newOwner">
-                        <i class="bi bi-plus"></i>
+                        <span class="mdi mdi-plus"></span>
                     </button>
                 </div>
                 <div class="owners-wrapper">

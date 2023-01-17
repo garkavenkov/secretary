@@ -19,7 +19,7 @@ import Councils             from "../modules/Councils/Main.vue";
 import CouncilsShow         from "../modules/Councils/Show.vue";
 
 const routes = [
-    { path: '/',                        component: Dashboard, meta: {icon: '<i class="bi bi-laptop"></i>'} },
+    { path: '/',                        component: Dashboard, meta: {icon: '<span class="mdi mdi-monitor-dashboard"></span>'} },
     { path: '/regions',                 component: Regions, meta: {name: 'Регіони'} },
     { path: '/regions/:id',             component: RegionsShow, name: 'RegionsShow', props: true, meta: {name: 'Інформація'} },
     { path: '/districts',               component: Districts, meta: {name: 'Райони'} },

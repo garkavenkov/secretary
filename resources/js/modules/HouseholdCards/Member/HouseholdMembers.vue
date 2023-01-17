@@ -2,16 +2,17 @@
     <div id="members">
         <div class="p-3 d-flex justify-content-between">
             <div>
-                <button type="button"
+                <!-- <button type="button"
                         class="btn btn-sm btn-light me-2"
                         @click="toggleFullScreen" title="Повний єкран">
                     <i class="bi bi-fullscreen"></i>
-                </button>
+                </button> -->
                 <button type="button"
                         id="newMember"
                         class="btn btn-sm btn-primary"
                         @click="newMember($event)">
-                    <i class="bi bi-person-add"></i>
+                    <!-- <i class="bi bi-person-add"></i> -->
+                    <span class="mdi mdi-account-plus-outline me-1"></span>
                     новий член
                 </button>
                 <button type="button"
@@ -20,7 +21,8 @@
                         title="Відобразити всіх"
                         v-if="hiddenMemebersExist"
                         @click="showAllMembers = !showAllMembers">
-                    <i class="bi bi-person-fill-check"></i>
+                    <!-- <i class="bi bi-person-fill-check"></i> -->
+                    <span class="mdi mdi-account-question-outline"></span>
                 </button>
             </div>
             <div>
@@ -29,14 +31,16 @@
                         class="btn btn-sm btn-outline-secondary me-2"
                         :class="{'active' : viewMode == 'card'}"
                         @click="viewMode = 'card'">
-                    <i class="bi bi-person-vcard"></i>
+                    <!-- <i class="bi bi-person-vcard"></i> -->
+                    <span class="mdi mdi-card-account-details-outline"></span>
                 </button>
                 <button type="button"
                         title="Режим таблиці"
                         class="btn btn-sm btn-outline-secondary"
                         :class="{'active' : viewMode == 'table'}"
                         @click="viewMode = 'table'">
-                    <i class="bi bi-table"></i>
+                    <!-- <i class="bi bi-table"></i> -->
+                    <span class="mdi mdi-table-account"></span>
                 </button>
             </div>
         </div>
@@ -53,20 +57,25 @@
                             <div class="member-name">{{member.name}} {{member.patronymic}}</div>
                         </div>
                         <h4 class="mt-2" v-if="member.family_relationship == 'голова домогосподарства'">
-                            <i class="bi bi-person-bounding-box" title="Голова домогосподарства"></i>
+                            <!-- <i class="bi bi-person-bounding-box" title="Голова домогосподарства"></i> -->
+                            <span class="mdi mdi-head-alert-outline" title="Голова домогосподарства"></span>
                         </h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex mb-2 align-items-center family-relationship">
-                            <i class="bi bi-diagram-3 me-3" style="color:blue" title="Родинні відносини"></i>
+                            <span class="mdi mdi-family-tree me-3" style="color:blue" title="Родинні відносини"></span>
                             {{member.family_relationship}}
                         </div>
-                        <div class="d-flex mb-2 align-items-center">
-                            <i class="bi bi-gift me-3" style="color:red" title="Дата народження"></i>
-                            {{formatedDate(member.birthday)}}
-                            <template v-if="member.death_date != null">
-                                - {{formatedDate(member.death_date)}}
-                            </template>
+                        <div class="d-flex mb-2 flex-column">
+                            <!-- <i class="bi bi-gift me-3" style="color:red" title="Дата народження"></i> -->
+                            <div>
+                                <span class="mdi mdi-cake-variant-outline me-3" style="color:red" title="Дата народження"></span>
+                                <span>{{formatedDate(member.birthday)}}</span>
+                            </div>
+                            <div v-if="member.death_date != null">
+                                <span class="mdi mdi-coffin me-3" title="Дата смерті"></span>
+                                <span>{{formatedDate(member.death_date)}}</span>
+                            </div>
                         </div>
                         <!-- <div class="member-sex">
                             <span v-if="member.sex=='чоловіча'" title="чоловік">
@@ -79,7 +88,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-center">
                         <button class="btn btn-sm btn-outline-secondary" @click="showHouseholdMemberInfo(member.id)">
-                            <i class="bi bi-eye"></i>
+                            <span class="mdi mdi-eye-outline"></span>
                         </button>
                     </div>
                 </div>
@@ -105,7 +114,7 @@
                             <td class="text-center">
                                 <button class="btn btn-sm btn-outline-secondary"
                                         @click="showHouseholdMemberInfo(member.id)">
-                                    <i class="bi bi-eye"></i>
+                                    <span class="mdi mdi-eye-outline"></span>
                                 </button>
                             </td>
                             <td>{{member.full_name}}</td>

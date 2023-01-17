@@ -3,13 +3,17 @@
     <ModalForm formId="HouseholdMemberInfo" @submitData="submitData" @closeForm="clearFormData" modalClass="modal-fullscreen" :showFooter="false">
         <template v-slot:modalHeader>
             <button class="btn btn-sm btn-light ms-3" title="Редагувати" @click="isInEditMode = true" v-if="!isInEditMode" >
-                <i class="bi bi-pencil"></i>
+                <!-- <i class="bi bi-pencil"></i> -->
+                <!-- <span class="mdi mdi-pencil"></span> -->
+                <span class="mdi mdi-account-edit"></span>
             </button>
             <button class="btn btn-sm btn-outline-secondary ms-3" title="Відмінити редагування" @click="cancelEdit" v-else>
-                <i class="bi bi-x-lg"></i>
+                <!-- <i class="bi bi-x-lg"></i> -->
+                <span class="mdi mdi-account-cancel"></span>
             </button>
             <button class="btn btn-sm btn-outline-success ms-3" title="Зберегти редагування" v-if="isInEditMode" @click="submitData" :disabled="!readyForSave">
-                <i class="bi bi-save2"></i>
+                <!-- <i class="bi bi-save2"></i> -->
+                <span class="mdi mdi-account-check-outline"></span>
             </button>
         </template>
         <!-- <div class="row"> -->
@@ -204,7 +208,7 @@
                                         role="tab"
                                         aria-controls="work-tab-pane"
                                         aria-selected="true">
-                                    <i class="bi bi-tools me-1"></i>
+                                    <span class="mdi mdi-account-hard-hat-outline me-1"></span>
                                     Робота
                                 </button>
                             </li>
@@ -217,7 +221,7 @@
                                         role="tab"
                                         aria-controls="land-tab-pane"
                                         aria-selected="false">
-                                    <i class="bi bi-map me-1"></i>
+                                    <span class="mdi mdi-land-fields me-1"></span>
                                     Земля
                                 </button>
                             </li>
@@ -242,135 +246,12 @@
                                         role="tab"
                                         aria-controls="movement-tab-pane"
                                         aria-selected="false">
-                                    <i class="bi bi-arrow-left-right me-1"></i>
+                                    <span class="mdi mdi-transit-transfer me-1"></span>
                                     Реєстрація / Переміщення
                                 </button>
                             </li>
                         </ul>
                         <div class="tab-content p-3" id="myTabContent">
-                           <!-- <div class="tab-pane fade show active" id="main-tab-pane" role="tabpanel" aria-labelledby="main-tab" tabindex="0">
-                                <div class="row mb-3">
-
-                                    <div class="col">
-                                        <label  for="memberSurname" class="form-label">Прізвище</label>
-                                        <input  type="text"
-                                                id="memberSurname"
-                                                :class="['form-control', hasError('surname') ? 'is-invalid' : '']"
-                                                v-model="_form.surname" >
-                                        <div id="memberSurnameValidation" class="invalid-feedback">
-                                            {{ getError('surname') }}
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <label  for="memberName" class="form-label">Ім'я</label>
-                                        <input  type="text"
-                                                :class="['form-control', hasError('name') ? 'is-invalid' : '']"
-                                                id="memberName"
-                                                v-model="_form.name">
-                                        <div id="memberNameValidation" class="invalid-feedback">
-                                            {{ getError('name') }}
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <label  for="memberPatronymic" class="form-label">По батькові</label>
-                                        <input  type="text"
-                                                :class="['form-control', hasError('patronymic') ? 'is-invalid' : '']"
-                                                id="memberPatronymic"
-                                                v-model="_form.patronymic">
-                                        <div id="memberPatronymicValidation" class="invalid-feedback">
-                                            {{ getError('patronymic') }}
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <label  for="memberBirthday" class="form-label">Дата народження</label>
-                                        <input  type="date"
-                                                :class="['form-control', hasError('birthday') ? 'is-invalid' : '']"
-                                                id="memberBirthday"
-                                                v-model="_form.birthday">
-                                        <div id="memberBirthdayValidation" class="invalid-feedback">
-                                            {{ getError('birthday') }}
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <label  for="memberSex" class="form-label">Стать</label>
-                                        <input  list="sex"
-                                                id="memberSex"
-                                                placeholder="Type to search..."
-                                                :class="['form-control', hasError('sex') ? 'is-invalid' : '']"
-                                                v-model="_form.sex">
-                                        <datalist id="sex">
-                                            <option value="чоловіча" />
-                                            <option value="жіноча" />
-                                        </datalist>
-                                        <div id="memberSexValidation" class="invalid-feedback">
-                                            {{ getError('sex') }}
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <label for="familyRelationship" class="form-label">Родинні стосунки</label>
-                                        <select :class="['form-control', hasError('family_relationship_id') ? 'is-invalid' : '']"
-                                                aria-label="Default select example"
-                                                v-model="_form.family_relationship_id">
-                                            <option disabled value="0">Оберить тип родинних стосунків</option>
-                                            <option :value="relationship.id" v-for="relationship in relationships" :key="relationship.id">
-                                                {{relationship.name}}
-                                            </option>
-                                        </select>
-                                        <div id="familyRelationshipValidation" class="invalid-feedback">
-                                            {{ getError('family_relationship_id') }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-2">
-                                    <div class="col">
-                                        <label for="exampleFormControlInput1" class="form-label">Місце роботи залежно від територіального розташування</label>
-                                        <select class="form-select" aria-label="Default select example" v-model="_form.workPlace">
-                                            <option disabled value="0">Оберить місце роботи</option>
-                                            <option :value="place.id" v-for="place in places" :key="place.id">
-                                                {{place.name}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Відомості про зайнятість / незайнятість</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" v-model="_form.employment"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" v-model="_form.employment"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <label  for="memberDeathDate" class="form-label">Дата сметрі</label>
-                                        <input  type="date"
-                                                id="memberDeathFate"
-                                                :class="['form-control', hasError('death_date') ? 'is-invalid' : '']"
-                                                value="02/01/2023">
-                                        <div id="memberSurnameValidation" class="invalid-feedback">
-                                            {{ getError('surname') }}
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <label  for="memberDeathNumber" class="form-label">Номер свідоцтва</label>
-                                        <input  type="text"
-                                                id="memberDeathNumber"
-                                                :class="['form-control', hasError('death_number') ? 'is-invalid' : '']"
-                                                value="21323254" >
-                                        <div id="memberSurnameValidation" class="invalid-feedback">
-                                            {{ getError('surname') }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                             <div class="tab-pane fade show active" id="work-tab-pane" role="tabpanel" aria-labelledby="work-tab" tabindex="0">
                                 <div class="row mb-3">
                                     <div class="col">
@@ -481,21 +362,9 @@
                                                 title="Додати подію"
                                                 @click="showMovementEventForm"
                                                 v-if="!movementEventFormIsVisible">
-                                            <i class="bi bi-calendar2-event me-1"></i>
+                                            <span class="mdi mdi-calendar me-1"></span>
                                             Додати подію
                                         </button>
-                                        <!-- <button class="btn btn-sm btn-outline-secondary"
-                                                title="Відмінити додовання події"
-                                                @click="closeMovementEventForm"
-                                                v-else>
-                                            <i class="bi bi-x-lg"></i>
-                                        </button> -->
-                                        <!-- <button class="btn btn-sm btn-outline-primary"
-                                                title="Зберегти подію"
-                                                @click="submitMovementEventForm"
-                                                v-if="movementEventFormIsVisible">
-                                            <i class="bi bi-save"></i>
-                                        </button> -->
                                     </div>
                                     <div v-if="movementEventFormIsVisible">
                                         <div class="row mb-3">
@@ -540,13 +409,13 @@
                                                 <button class="btn btn-sm btn-outline-secondary me-4"
                                                         :title="movementAction == 'create' ? 'Відмінити додовання події' : 'Відмінити редагування події'"
                                                         @click="closeMovementEventForm">
-                                                    <i class="bi bi-x-lg me-1"></i>
+                                                    <span class="mdi mdi-cancel me-1"></span>
                                                     Відмінити
                                                 </button>
                                                 <button class="btn btn-sm btn-outline-primary"
                                                         :title="movementAction == 'create' ? 'Додати подію' : 'Зберегти зміни'"
                                                         @click="submitMovementEventForm">
-                                                    <i class="bi bi-save me-1"></i>
+                                                    <span class="mdi mdi-calendar-check me-1"></span>
                                                     {{ movementEventSubmitButtonTitle }}
                                                 </button>
                                             </div>
@@ -572,13 +441,13 @@
                                                                 title="Редагувати подію"
                                                                 @click="editMovementEvent(event)"
                                                                 :disabled="movementEventFormIsVisible">
-                                                            <i class="bi bi-pencil"></i>
+                                                            <span class="mdi mdi-pencil"></span>
                                                         </button>
                                                         <button class="btn btn-sm btn-outline-danger"
                                                                 title="Видалити подію"
                                                                 @click="deleteMovementEvent(event.id)"
                                                                 :disabled="movementEventFormIsVisible">
-                                                            <i class="bi bi-trash3"></i>
+                                                            <span class="mdi mdi-trash-can-outline"></span>
                                                         </button>
                                                     </td>
                                                 </tr>
