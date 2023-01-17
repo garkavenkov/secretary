@@ -12,6 +12,9 @@
         <div id="sidebar-toggler">
             <i class="bi bi-list"></i>
         </div>
+        <div id="fullscreen-toggler" data-screen="collapse" class="ms-2" title="Розгорнути на повний екран">
+            <i class="bi bi-fullscreen"></i>
+        </div>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
