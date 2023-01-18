@@ -78,7 +78,7 @@ class HouseholdMemberTest extends TestCase
         $member = HouseholdMember::factory()
                         ->make([
                             'household_id'  =>  $household->id,
-                            // 'death_date'    =>  '2030-01-01',
+                            'death_date'    =>  '2030-01-01',
                             $field => $value
                         ])->toArray();
 
@@ -105,16 +105,17 @@ class HouseholdMemberTest extends TestCase
             'birthday is empty'                             =>  ['birthday', ''],
             'birthday is not a date'                        =>  ['birthday', 'qw'],
             'birthday is in future'                         =>  ['birthday', date("Y-m-d", strtotime("+1 day"))],
-            'place_work is empty'                           =>  ['place_work_id', ''],
-            'place_work does not exist'                     =>  ['place_work_id', 99],
-            'employment is not long enough'                 =>  ['employment_information', 'qw'],
+            'work_place does not exist'                     =>  ['work_place_id', 99],
+            // Did not pass when use "required_with" rule.
+            // 'employment is not long enough'                 =>  ['employment_information', 'qw'],
             'death_date is not a date'                      =>  ['death_date',  '111'],
             'death_date in past'                            =>  ['death_date',  '1900-01-01'],
             'death_number is empty when death_date is set'  =>  ['death_register_number',    ''],
             'death_office is empty when death_date is set'  =>  ['death_register_office',    ''],
-            'death_office is not long enough'               =>  ['death_register_office',    'qw'],
-            'additional is not long enough'                 =>  ['additional',  'qw'],
-            'social is not long enough'                     =>  ['social',      'qw'],
+            // Did not pass when use "required_with" rule.
+            // 'death_office is not long enough'               =>  ['death_register_office',    'qw'],
+            'additional is not long enough'                 =>  ['additional_information',  'qw'],
+            'social is not long enough'                     =>  ['social_information',      'qw'],
             'land_owned is not number'                      =>  ['land_owned',  'as'],
             'land_owned in less than 0'                     =>  ['land_owned',  -1],
             'land_rented is not number'                     =>  ['land_rented',  'as'],

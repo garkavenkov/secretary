@@ -1,6 +1,6 @@
 <template>
 
-    <ModalForm formId="HouseholdMemberInfo" @submitData="submitData" @closeForm="clearFormData" modalClass="modal-fullscreen" :showFooter="false">
+    <ModalForm formId="HouseholdMemberInfo" @submitData="submitData" @closeForm="closeForm" modalClass="modal-fullscreen" :showFooter="false">
         <template v-slot:modalHeader>
             <button class="btn btn-sm btn-light ms-3" title="Редагувати" @click="isInEditMode = true" v-if="!isInEditMode" >
                 <!-- <i class="bi bi-pencil"></i> -->
@@ -534,8 +534,8 @@ export default {
             this.errors = [];
             this._form = Object.assign({}, this.formData);
         },
-        clearFormData() {
-            this.$emit('closeForm');
+        closeForm() {
+            this.$emit('closeMemberInfoForm');
             this.isInEditMode = false;
         },
         showMovementEventForm() {

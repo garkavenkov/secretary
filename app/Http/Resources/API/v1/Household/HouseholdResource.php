@@ -2,14 +2,15 @@
 
 namespace App\Http\Resources\API\v1\Household;
 
-use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResource;
-use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
-use App\Http\Resources\API\v1\HouseholdType\HouseholdTypeResource;
-use App\Http\Resources\API\v1\Settlement\SettlementResource;
+use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
 use App\Models\HouseholdMember;
-use App\Models\HouseholdType;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\API\v1\Settlement\SettlementResource;
+use App\Http\Resources\API\v1\HouseholdType\HouseholdTypeResource;
+use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResource;
+use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
+use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 
 class HouseholdResource extends JsonResource
 {
@@ -21,7 +22,7 @@ class HouseholdResource extends JsonResource
      */
     public function toArray($request)
     {
-        $members = HouseholdMemberResource::collection($this->whenLoaded('members'));
+        $members = new HouseholdMemberResourceCollection($this->whenLoaded('members'));
 
         $household_head = "";
 

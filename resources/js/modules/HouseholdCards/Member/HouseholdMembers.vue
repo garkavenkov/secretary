@@ -98,15 +98,15 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Прізвище І.Б.</th>
-                            <!-- <th>Ім'я</th>
-                            <th>По батькові</th> -->
+                            <th>Прізвище</th>
+                            <th>Ім'я</th>
+                            <th>По батькові</th>
                             <th>Стать</th>
-                            <th>Дата народження</th>
-                            <th v-if="showAllMembers">Дата смерті</th>
+                            <th class="text-center">Дата народження</th>
+                            <th class="text-center" v-if="showAllMembers">Дата смерті</th>
                             <th>Родинні стосунки</th>
-                            <th>Місце роботи</th>
-                            <th>Відомості про зайнятість / незайнятість</th>
+                            <!-- <th>Місце роботи</th>
+                            <th>Відомості про зайнятість / незайнятість</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -117,7 +117,9 @@
                                     <span class="mdi mdi-eye-outline"></span>
                                 </button>
                             </td>
-                            <td>{{member.full_name}}</td>
+                            <td>{{member.surname}}</td>
+                            <td>{{member.name}}</td>
+                            <td>{{member.patronymic}}</td>
                             <td>{{member.sex}}</td>
                             <td class="text-center">{{formatedDate(member.birthday)}}</td>
                             <td class="text-center" v-if="showAllMembers">
@@ -125,15 +127,13 @@
                                     {{formatedDate(member.death_date)}}
                                 </template>
                             </td>
-                            <!-- <td>{{member.name}}</td>
-                            <td>{{member.patronymic}}</td> -->
                             <td>{{member.family_relationship}}</td>
-                            <td>
+                            <!-- <td>
                                 <template v-if="member.work_place">
                                     {{member.work_place.name}}
                                 </template>
                             </td>
-                            <td>{{member.employment_information}}</td>
+                            <td>{{member.employment_information}}</td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -142,7 +142,7 @@
     </div>
 
     <HouseholdMemberForm :formData="formData" @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
-    <HouseholdMemberInfo :formData="formData" @refreshData="refreshMemberInfo" v-if="formIsReady" @closeForm="formIsReady = false"/>
+    <HouseholdMemberInfo :formData="formData" @refreshData="refreshMemberInfo" v-if="formIsReady" @closeMemberInfoForm="closeMemberInfoForm"/>
 
 </template>
 
@@ -220,17 +220,34 @@ export default {
                     });
                 })
         },
+        closeMemberInfoForm() {
+            this.formData.surname                   = '';
+            this.formData.name                      = '';
+            this.formData.patronymic                = '';
+            this.formData.sex                       = '';
+            this.formData.birthday                  = null;
+            this.formData.family_relationship_id    = 0;
+            this.formData.employment_information    = '';
+            this.formData.social_information        = '';
+            this.formData.additional_information    = '';
+            this.formData.work_place_id             = 0;
+            this.formData.land_owned                = 0;
+            this.formData.land_rented               = 0;
+            this.formData.land_leased               = 0;
+            this.formData.death_date                = null;
+            this.formData.death_register_number     = '';
+            this.formData.death_register_office     = '';
+            this.formData.movements                 = [];
+
+            this.formIsReady = false;
+        },
         refreshMemberInfo(id) {
             axios.get(`/api/v1/household-members/${id}`)
                 .then(res => {
                     Object.assign(this.formData, res.data.data);
                 })
         },
-        // formatedDate(date) {
-        //     return new Date(date).toISOString().slice(0, 10).split('-').reverse().join('.');
-        // },
         deleteMember(id) {
-
             axios.delete(`/api/v1/household-members/${id}`)
                 .then(res => {
                     this.$store.dispatch('Households/fetchHousehold', this.household_id);
@@ -240,7 +257,6 @@ export default {
                 })
         },
         toggleFullScreen() {
-
             // if already full screen; exit
             // else go fullscreen
             if (
@@ -270,10 +286,7 @@ export default {
                 element.msRequestFullscreen();
               }
             }
-
-
         }
-
     },
     computed: {
         shownMembers() {

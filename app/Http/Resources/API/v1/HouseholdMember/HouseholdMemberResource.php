@@ -18,32 +18,6 @@ class HouseholdMemberResource extends JsonResource
      */
     public function toArray($request)
     {
-        $death_date = null;
-        $death_register_number = '';
-        $death_register_office = '';
-        // dd($this->death);
-        // if (($this->death !== '') && !isNull($this->death)) {
-        if ($this->death != '') {
-        // if (!isNull($this->death)) {
-            // dd($this->death);
-            list($death_date, $death_register_number, $death_register_office) = explode(';', $this->death);
-        }
-        $movements = HouseholdMemberMovementResource::collection($this->whenLoaded('movements'));
-        $status = 'active';
-        // dd("death date is _{$death_date}_");
-        if (is_null($death_date)) {
-            // dd("household member is alive");
-            if ($movements->count() > 0) {
-                $movement = $movements->first();
-                if (in_array($movement->type->code, ['leave'])) {
-                    $status = 'gone';
-                }
-            }
-        } else {
-            // dd('death date is set');
-            $status = 'dead';
-        }
-
         return [
             'id'                        =>  (int)   $this->id,
             'household_id'              =>  (int)   $this->household_id,
@@ -54,17 +28,17 @@ class HouseholdMemberResource extends JsonResource
             'sex'                       =>  $this->sex,
             'birthday'                  =>  $this->birthday,
             'family_relationship_id'    =>  (int)   $this->family_relationship_id,
-            'family_relationship'       =>  $this->when('familyRelationship', $this->familyRelationship->name),
+            'family_relationship'       =>  $this->whenLoaded('familyRelationship', $this->familyRelationship->name),
             'employment_information'    =>  $this->employment_information,
             'social_information'        =>  $this->social_information,
             'additional_information'    =>  $this->additional_information,
             'work_place_id'             =>  (int)   $this->work_place_id,
             'work_place'                =>  new WorkPlaceResource($this->whenLoaded('workPlace')),
-            'movements'                 =>  $movements,
-            'status'                    =>  $status,
-            'death_date'                =>  $death_date,
-            'death_register_number'     =>  $death_register_number,
-            'death_register_office'     =>  $death_register_office,
+            'movements'                 =>  HouseholdMemberMovementResource::collection($this->whenLoaded('movements')),
+            'status'                    =>  $this->status,
+            'death_date'                =>  $this->death_date,
+            'death_register_number'     =>  $this->death_register_number,
+            'death_register_office'     =>  $this->death_register_office,
             'land_owned'                =>  (float) $this->land_owned,
             'land_rented'               =>  (float) $this->land_rented,
             'land_leased'               =>  (float) $this->land_leased,
