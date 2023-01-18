@@ -24580,12 +24580,13 @@ var _hoisted_2 = {
   "class": "search__wrapper"
 };
 var _hoisted_3 = ["value", "onClick"];
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_4 = ["disabled"];
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-home-search"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_5 = [_hoisted_4];
+var _hoisted_6 = [_hoisted_5];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control me-2', $data.currentHousehodldItem >= 0 ? 'invisible-caret' : '']),
@@ -24620,8 +24621,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "buton",
     onClick: _cache[4] || (_cache[4] = function () {
       return $options.search && $options.search.apply($options, arguments);
-    })
-  }, _hoisted_5)]);
+    }),
+    disabled: $data.searchText == ''
+  }, _hoisted_6, 8 /* PROPS */, _hoisted_4)]);
 }
 
 /***/ }),

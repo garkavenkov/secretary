@@ -15,7 +15,7 @@
                 </li>
             </ul>
         </div>
-        <button class="btn btn-outline-secondary ms-2" type="buton" @click="search">
+        <button class="btn btn-outline-secondary ms-2" type="buton" @click="search" :disabled="searchText == ''">
             <span class="mdi mdi-home-search"></span>
         </button>
     </form>
