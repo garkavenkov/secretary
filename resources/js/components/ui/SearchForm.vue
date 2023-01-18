@@ -1,18 +1,17 @@
 <template>
     <form class="d-flex" role="search" onsubmit="event.preventDefault();">
         <div class="search__wrapper">
-            <input  class="form-control me-2"
+            <input  :class="['form-control me-2', currentHousehodldItem >= 0 ? 'invisible-caret' : '']"
+                    id="searchHousehold"
                     type="search"
-                    list="found-households"
                     v-model="searchText"
                     @click="searchFocus"
+                    @keydown="searchHandleDownKey"
                     placeholder="Адреса домогосподарства..."
                     aria-label="Search">
-            <ul v-if="(households.length > 0) && isVisible">
+            <ul v-show="(households.length > 0) && isVisible" id="households" @mousedown="listHandleMouseDown">
                 <li v-for="household in households" :value="household.id"  :key="household.id" @click="goToHousehold(household.id)">
-                    <!-- <router-link :to="{name: 'HouseholdCardsShow', params: {id: household.id}}"> -->
-                        {{ household.address }}
-                    <!-- </router-link> -->
+                    {{ household.address }}
                 </li>
             </ul>
         </div>
@@ -30,7 +29,10 @@ export default {
         return {
             searchText: '',
             households: [],
-            isVisible: false
+            isVisible: false,
+            searchInputEl: null,
+            foundedHouseholds: null,
+            currentHousehodldItem: -1,
         }
     },
     methods: {
@@ -43,6 +45,7 @@ export default {
                 .then(res => {
                     this.households = res.data.data;
                     this.isVisible = true;
+                    this.foundedHouseholds = document.getElementById('households').children;
                 })
         },
         searchFocus() {
@@ -51,17 +54,68 @@ export default {
             }
         },
         goToHousehold(id) {
-            this.isVisible = false;
             this.$router.push({ name: 'HouseholdCardsShow', params: { id: id } })
         },
         handleClick(e) {
             if (!this.$el.contains(e.target)) {
                 this.isVisible = false;
             }
+        },
+        searchHandleDownKey(e) {
+            if (this.isVisible) {
+
+                if (e.key == 'ArrowDown') {
+                    this.currentHousehodldItem++;
+                    if (this.currentHousehodldItem > this.foundedHouseholds.length-1) {
+                        this.currentHousehodldItem = this.foundedHouseholds.length-1;
+                    }
+                    this.toggleHouseholdClass('selected');
+
+                } else if (e.key == 'ArrowUp') {
+                    if (this.currentHousehodldItem >= 0) {
+                        this.currentHousehodldItem--;
+                        if (this.currentHousehodldItem < 0) {
+                            e.preventDefault();
+                            this.currentHousehodldItem = -1;
+                            this.removeHouseholdClass('selected')
+
+                            let end = this.searchInputEl.value.length;
+                            this.searchInputEl.setSelectionRange(end, end);
+                        } else {
+                            this.toggleHouseholdClass('selected');
+                        }
+                    }
+                } else if (e.key == 'Enter') {
+                    let id = this.foundedHouseholds[this.currentHousehodldItem].value;
+                    this.goToHousehold(id);
+                } else if (e.key == 'Escape') {
+                    e.preventDefault();
+                    this.isVisible = false;
+                }
+            }
+        },
+        listHandleMouseDown(e) {
+            e.preventDefault();
+            let id = e.target.value;
+
+            this.removeHouseholdClass('selected');
+            this.currentHousehodldItem = Array.from(this.foundedHouseholds).findIndex(h => h.value == id);
+
+            this.goToHousehold(id);
+        },
+        removeHouseholdClass(name) {
+            Array.from(this.foundedHouseholds).forEach(h => h.classList.remove(name))
+        },
+        toggleHouseholdClass(name) {
+            this.removeHouseholdClass(name);
+            this.foundedHouseholds[this.currentHousehodldItem].classList.add(name);
         }
     },
     created() {
         window.addEventListener('click', this.handleClick,false);
+    },
+    mounted() {
+        this.searchInputEl = document.getElementById('searchHousehold');
     },
     beforeDestroy() {
         window.removeEventListener('click', this.handleClick, false);
@@ -71,6 +125,8 @@ export default {
             if (newValue == '') {
                 this.isVisible = false;
                 this.households = [];
+                this.foundedHouseholds = null;
+                this.currentHousehodldItem = -1;
             }
         }
     }
@@ -97,7 +153,7 @@ export default {
         li {
             padding: 0.75rem;
 
-            &:hover {
+            &:hover, &.selected {
                 border-radius: 0.375rem;
                 background: #d2e1f9;
                 color: black;
@@ -106,4 +162,7 @@ export default {
     }
 }
 
+.invisible-caret {
+    caret-color: transparent;
+}
 </style>

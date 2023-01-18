@@ -21403,7 +21403,10 @@ __webpack_require__.r(__webpack_exports__);
     return {
       searchText: '',
       households: [],
-      isVisible: false
+      isVisible: false,
+      searchInputEl: null,
+      foundedHouseholds: null,
+      currentHousehodldItem: -1
     };
   },
   methods: {
@@ -21416,6 +21419,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         _this.households = res.data.data;
         _this.isVisible = true;
+        _this.foundedHouseholds = document.getElementById('households').children;
       });
     },
     searchFocus: function searchFocus() {
@@ -21424,7 +21428,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     goToHousehold: function goToHousehold(id) {
-      this.isVisible = false;
       this.$router.push({
         name: 'HouseholdCardsShow',
         params: {
@@ -21436,10 +21439,61 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$el.contains(e.target)) {
         this.isVisible = false;
       }
+    },
+    searchHandleDownKey: function searchHandleDownKey(e) {
+      if (this.isVisible) {
+        if (e.key == 'ArrowDown') {
+          this.currentHousehodldItem++;
+          if (this.currentHousehodldItem > this.foundedHouseholds.length - 1) {
+            this.currentHousehodldItem = this.foundedHouseholds.length - 1;
+          }
+          this.toggleHouseholdClass('selected');
+        } else if (e.key == 'ArrowUp') {
+          if (this.currentHousehodldItem >= 0) {
+            this.currentHousehodldItem--;
+            if (this.currentHousehodldItem < 0) {
+              e.preventDefault();
+              this.currentHousehodldItem = -1;
+              this.removeHouseholdClass('selected');
+              var end = this.searchInputEl.value.length;
+              this.searchInputEl.setSelectionRange(end, end);
+            } else {
+              this.toggleHouseholdClass('selected');
+            }
+          }
+        } else if (e.key == 'Enter') {
+          var id = this.foundedHouseholds[this.currentHousehodldItem].value;
+          this.goToHousehold(id);
+        } else if (e.key == 'Escape') {
+          e.preventDefault();
+          this.isVisible = false;
+        }
+      }
+    },
+    listHandleMouseDown: function listHandleMouseDown(e) {
+      e.preventDefault();
+      var id = e.target.value;
+      this.removeHouseholdClass('selected');
+      this.currentHousehodldItem = Array.from(this.foundedHouseholds).findIndex(function (h) {
+        return h.value == id;
+      });
+      this.goToHousehold(id);
+    },
+    removeHouseholdClass: function removeHouseholdClass(name) {
+      Array.from(this.foundedHouseholds).forEach(function (h) {
+        return h.classList.remove(name);
+      });
+    },
+    toggleHouseholdClass: function toggleHouseholdClass(name) {
+      this.removeHouseholdClass(name);
+      this.foundedHouseholds[this.currentHousehodldItem].classList.add(name);
     }
   },
   created: function created() {
     window.addEventListener('click', this.handleClick, false);
+  },
+  mounted: function mounted() {
+    this.searchInputEl = document.getElementById('searchHousehold');
   },
   beforeDestroy: function beforeDestroy() {
     window.removeEventListener('click', this.handleClick, false);
@@ -21449,6 +21503,8 @@ __webpack_require__.r(__webpack_exports__);
       if (newValue == '') {
         this.isVisible = false;
         this.households = [];
+        this.foundedHouseholds = null;
+        this.currentHousehodldItem = -1;
       }
     }
   }
@@ -24506,44 +24562,49 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "search__wrapper"
 };
-var _hoisted_3 = {
-  key: 0
-};
-var _hoisted_4 = ["value", "onClick"];
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_3 = ["value", "onClick"];
+var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-home-search"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_6 = [_hoisted_5];
+var _hoisted_5 = [_hoisted_4];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "class": "form-control me-2",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control me-2', $data.currentHousehodldItem >= 0 ? 'invisible-caret' : '']),
+    id: "searchHousehold",
     type: "search",
-    list: "found-households",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.searchText = $event;
     }),
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.searchFocus && $options.searchFocus.apply($options, arguments);
     }),
+    onKeydown: _cache[2] || (_cache[2] = function () {
+      return $options.searchHandleDownKey && $options.searchHandleDownKey.apply($options, arguments);
+    }),
     placeholder: "Адреса домогосподарства...",
     "aria-label": "Search"
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchText]]), $data.households.length > 0 && $data.isVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.households, function (household) {
+  }, null, 34 /* CLASS, HYDRATE_EVENTS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchText]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+    id: "households",
+    onMousedown: _cache[3] || (_cache[3] = function () {
+      return $options.listHandleMouseDown && $options.listHandleMouseDown.apply($options, arguments);
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.households, function (household) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       value: household.id,
       key: household.id,
       onClick: function onClick($event) {
         return $options.goToHousehold(household.id);
       }
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <router-link :to=\"{name: 'HouseholdCardsShow', params: {id: household.id}}\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(household.address) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </router-link> ")], 8 /* PROPS */, _hoisted_4);
-  }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(household.address), 9 /* TEXT, PROPS */, _hoisted_3);
+  }), 128 /* KEYED_FRAGMENT */))], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.households.length > 0 && $data.isVisible]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-outline-secondary ms-2",
     type: "buton",
-    onClick: _cache[2] || (_cache[2] = function () {
+    onClick: _cache[4] || (_cache[4] = function () {
       return $options.search && $options.search.apply($options, arguments);
     })
-  }, _hoisted_6)]);
+  }, _hoisted_5)]);
 }
 
 /***/ }),
@@ -37513,7 +37574,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".search__wrapper[data-v-48b04d4c] {\n  position: relative;\n  width: 500px;\n}\n.search__wrapper ul[data-v-48b04d4c] {\n  position: absolute;\n  list-style: none;\n  padding: 0.25rem;\n  border: 1px solid #cdd4da;\n  width: 100%;\n  background: white;\n  margin-top: 2px;\n  border-radius: 0.375rem;\n}\n.search__wrapper ul li[data-v-48b04d4c] {\n  padding: 0.75rem;\n}\n.search__wrapper ul li[data-v-48b04d4c]:hover {\n  border-radius: 0.375rem;\n  background: #d2e1f9;\n  color: black;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".search__wrapper[data-v-48b04d4c] {\n  position: relative;\n  width: 500px;\n}\n.search__wrapper ul[data-v-48b04d4c] {\n  position: absolute;\n  list-style: none;\n  padding: 0.25rem;\n  border: 1px solid #cdd4da;\n  width: 100%;\n  background: white;\n  margin-top: 2px;\n  border-radius: 0.375rem;\n}\n.search__wrapper ul li[data-v-48b04d4c] {\n  padding: 0.75rem;\n}\n.search__wrapper ul li[data-v-48b04d4c]:hover, .search__wrapper ul li.selected[data-v-48b04d4c] {\n  border-radius: 0.375rem;\n  background: #d2e1f9;\n  color: black;\n}\n.invisible-caret[data-v-48b04d4c] {\n  caret-color: transparent;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
