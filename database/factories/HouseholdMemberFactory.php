@@ -20,7 +20,7 @@ class HouseholdMemberFactory extends Factory
     public function definition()
     {
         $sex = $this->faker->randomElement(['чоловіча', 'жіноча']);
-        $birthday = $this->faker->date($format = 'Y-m-d', $max = 'now');
+        $birthdate = $this->faker->date($format = 'Y-m-d', $max = 'now');
         // $death_date = $this->faker->dateTimeBetween('+40 year', '+60 years');
         return [
             'household_id'              =>  Household::factory(),
@@ -28,7 +28,7 @@ class HouseholdMemberFactory extends Factory
             'name'                      =>  $sex == 'чоловіча' ? $this->faker->firstName($gender = 'male') : $this->faker->firstName($gender = 'female'),
             'patronymic'                =>  $sex == 'чоловіча' ? $this->faker->middleName($gender = 'male') : $this->faker->middleName($gender = 'female'),
             'sex'                       =>  $sex,
-            'birthday'                  =>  $birthday,
+            'birthdate'                 =>  $birthdate,
             'family_relationship_id'    =>  FamilyRelationship::factory(),
             'employment_information'    =>  $this->faker->company(),
             'work_place_id'             =>  WorkPlace::factory(),

@@ -70,7 +70,7 @@
                             <!-- <i class="bi bi-gift me-3" style="color:red" title="Дата народження"></i> -->
                             <div>
                                 <span class="mdi mdi-cake-variant-outline me-3" style="color:red" title="Дата народження"></span>
-                                <span>{{formatedDate(member.birthday)}}</span>
+                                <span>{{formatedDate(member.birthdate)}}</span>
                             </div>
                             <div v-if="member.death_date != null">
                                 <span class="mdi mdi-coffin me-3" title="Дата смерті"></span>
@@ -121,7 +121,7 @@
                             <td>{{member.name}}</td>
                             <td>{{member.patronymic}}</td>
                             <td>{{member.sex}}</td>
-                            <td class="text-center">{{formatedDate(member.birthday)}}</td>
+                            <td class="text-center">{{formatedDate(member.birthdate)}}</td>
                             <td class="text-center" v-if="showAllMembers">
                                 <template v-if="member.death_date">
                                     {{formatedDate(member.death_date)}}
@@ -175,7 +175,7 @@ export default {
                 name: '',
                 patronymic: '',
                 sex: '',
-                birthday: null,
+                birthdate: null,
                 family_relationship_id: 0,
                 employment_information: '',
                 social_information: '',
@@ -225,7 +225,7 @@ export default {
             this.formData.name                      = '';
             this.formData.patronymic                = '';
             this.formData.sex                       = '';
-            this.formData.birthday                  = null;
+            this.formData.birthdate                 = null;
             this.formData.family_relationship_id    = 0;
             this.formData.employment_information    = '';
             this.formData.social_information        = '';

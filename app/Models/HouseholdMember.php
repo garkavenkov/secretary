@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
+use DateTime;
 
 class HouseholdMember extends Model
 {
@@ -19,7 +20,7 @@ class HouseholdMember extends Model
         'name',
         'patronymic',
         'sex',
-        'birthday',
+        'birthdate',
         'family_relationship_id',
         'employment_information',
         'work_place_id',
@@ -33,7 +34,7 @@ class HouseholdMember extends Model
         'land_leased'
     ];
 
-    protected $appends = array('status');
+    protected $appends = array('status', 'fullAge');
 
     public function familyRelationship()
     {
@@ -72,5 +73,12 @@ class HouseholdMember extends Model
     public function getFullNameAttribute()
     {
         return  $this->surname . ' ' . mb_substr($this->name, 0, 1) . '.' . mb_substr($this->patronymic, 0, 1) . '.';
+    }
+
+    public function getFullAgeAttribute()
+    {
+        $birthdate = new DateTime($this->birthdate);
+        $interval = $birthdate->diff(new DateTime());
+        return $interval->y;
     }
 }

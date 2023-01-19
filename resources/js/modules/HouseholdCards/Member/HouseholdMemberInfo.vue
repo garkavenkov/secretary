@@ -59,14 +59,14 @@
                         </div> -->
                         <div class="row mb-3">
                             <div class="col">
-                                <label  for="memberBirthday" class="form-label">Дата народження</label>
+                                <label  for="memberBirthdate" class="form-label">Дата народження</label>
                                 <input  type="date"
-                                        :class="['form-control', hasError('birthday') ? 'is-invalid' : '']"
-                                        id="memberBirthday"
-                                        v-model="_form.birthday"
+                                        :class="['form-control', hasError('birthdate') ? 'is-invalid' : '']"
+                                        id="memberBirthdate"
+                                        v-model="_form.birthdate"
                                         :disabled="!isInEditMode">
                                 <div id="memberBirthdayValidation" class="invalid-feedback">
-                                    {{ getError('birthday') }}
+                                    {{ getError('birthdate') }}
                                 </div>
                             </div>
                             <div class="col">

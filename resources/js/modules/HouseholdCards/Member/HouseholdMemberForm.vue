@@ -69,13 +69,13 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label  for="memberBirthday" class="form-label">Дата народження</label>
+                            <label  for="memberBirthdate" class="form-label">Дата народження</label>
                             <input  type="date"
-                                    :class="['form-control', hasError('birthday') ? 'is-invalid' : '']"
-                                    id="memberBirthday"
-                                    v-model="formData.birthday">
-                            <div id="memberBirthdayValidation" class="invalid-feedback">
-                                {{ getError('birthday') }}
+                                    :class="['form-control', hasError('birthdate') ? 'is-invalid' : '']"
+                                    id="memberBirthdate"
+                                    v-model="formData.birthdate">
+                            <div id="memberBirthdateValidation" class="invalid-feedback">
+                                {{ getError('birthdate') }}
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -329,7 +329,7 @@ export default {
                 this.formData.name = '';
                 this.formData.patronymic = '';
                 this.formData.sex = '';
-                this.formData.birthday = null;
+                this.formData.birthdate = null;
                 this.formData.family_relationship_id = 0;
                 this.formData.employment_information = '';
                 this.formData.work_place_id = 0;

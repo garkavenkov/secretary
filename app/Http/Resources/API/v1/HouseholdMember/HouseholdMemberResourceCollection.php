@@ -22,7 +22,7 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'name'                      =>  $member->name,
                 'patronymic'                =>  $member->patronymic,
                 'sex'                       =>  $member->sex,
-                'birthday'                  =>  $member->birthday,
+                'birthdate'                 =>  $member->birthdate,
                 'family_relationship'       =>  $member->whenLoaded('familyRelationship', $member->familyRelationship->name),
                 // 'employment_information'    =>  $member->employment_information,
                 // 'work_place'                =>  new WorkPlaceResource($member->whenLoaded('workPlace')),

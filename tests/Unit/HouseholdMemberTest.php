@@ -24,4 +24,10 @@ class HouseholdMemberTest extends TestCase
 
         $this->assertCount(1, $member->movements);
     }
+
+    public function test_household_member_should_have_full_years_age()
+    {
+        $member = HouseholdMember::factory()->create(['birthdate' => '2000-12-12']);
+        $this->assertEquals(22, $member->full_age);
+    }
 }
