@@ -44,9 +44,8 @@ export default {
         submitData() {
             axios.post('/api/v1/households', this.formData)
                 .then(res => {
-                    console.log(res.data.message);
                     this.clearFormData();
-                    this.fetchCards();
+                    this.$store.dispatch('Households/fetchRecords');
                 })
                 .catch(err => {
                     this.errors = err.response.data.errors;
@@ -73,6 +72,9 @@ export default {
                 <span>Облікові картки</span>
                 <button class="btn btn-sm btn-primary" @click="addCard">
                     <span class="mdi mdi-plus"></span>
+                </button>
+                <button class="btn btn-sm btn-outline-primary ms-2" @click="$store.dispatch('Households/fetchRecords')" title="Оновити дані">
+                    <span class="mdi mdi-refresh"></span>
                 </button>
             </div>
             <div>

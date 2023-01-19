@@ -10857,6 +10857,12 @@ textarea.form-control-lg {
   padding-left: 60px;
 }
 
+.modal-600 {
+  width: 600px;
+  min-width: 600px;
+  max-width: 600px;
+}
+
 .sidebar-menu {
   position: fixed;
   display: flex;

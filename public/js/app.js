@@ -22635,14 +22635,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       if (this.mode == 'create') {
         axios.post('/api/v1/household-houses', this.formData).then(function (res) {
-          _this.$store.dispatch('Households/fetchHousehold', _this.household_id);
+          _this.$store.dispatch('Households/fetchRecord', _this.household_id);
           _this.clearFormData();
         })["catch"](function (err) {
           _this.errors = err.response.data.errors;
         });
       } else if (this.mode == 'update') {
         axios.patch("/api/v1/household-houses/".concat(this.formData.id), this.formData).then(function (res) {
-          _this.$store.dispatch('Households/fetchHousehold', _this.household_id);
+          _this.$store.dispatch('Households/fetchRecord', _this.household_id);
         })["catch"](function (err) {
           _this.errors = err.response.data.errors;
         });
@@ -22651,7 +22651,7 @@ __webpack_require__.r(__webpack_exports__);
     deleteYear: function deleteYear(id) {
       var _this2 = this;
       axios["delete"]("/api/v1/household-houses/".concat(id)).then(function (res) {
-        _this2.$store.dispatch('Households/fetchHousehold', _this2.household_id);
+        _this2.$store.dispatch('Households/fetchRecord', _this2.household_id);
       });
     },
     editYear: function editYear(id) {
@@ -22735,6 +22735,72 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'LandForm',
+  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  props: {
+    'formData': {
+      type: Object,
+      required: true
+    },
+    'action': {
+      type: String,
+      required: false,
+      "default": 'create'
+    }
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {
+    submitData: function submitData() {
+      var _this = this;
+      if (this.action == 'create') {
+        axios.post('/api/v1/household-lands', this.formData).then(function (res) {
+          _this.clearFormData();
+          _this.$emit('refreshData');
+        })["catch"](function (err) {
+          _this.errors = err.response.data.errors;
+        });
+      } else if (this.action == 'update') {
+        axios.patch("/api/v1/household-lands/".concat(this.formData.id), this.formData).then(function (res) {
+          _this.errors = [];
+          _this.$emit('refreshData');
+        })["catch"](function (err) {
+          _this.errors = err.response.data.errors;
+        });
+      }
+    },
+    clearFormData: function clearFormData() {
+      this.formData.year = '';
+      this.formData.maintenance = 0;
+      this.formData.personal_agriculture = 0;
+      this.formData.commercial_agriculture = 0;
+      this.errors = [];
+    }
+  },
+  components: {
+    ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandInfo.vue?vue&type=script&lang=js":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandInfo.vue?vue&type=script&lang=js ***!
@@ -22746,10 +22812,90 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
+/* harmony import */ var _LandForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LandForm.vue */ "./resources/js/modules/HouseholdCards/Land/LandForm.vue");
+/* harmony import */ var _minixs_NumberFormat__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../minixs/NumberFormat */ "./resources/js/minixs/NumberFormat.js");
+
+
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'LandInfo',
+  props: {
+    'years': {
+      type: Array,
+      required: true
+    },
+    'household_id': {
+      type: [String, Number],
+      required: true
+    }
+  },
+  mixins: [_minixs_NumberFormat__WEBPACK_IMPORTED_MODULE_4__["default"]],
   data: function data() {
-    return {};
+    return {
+      formData: {
+        household_id: this.household_id,
+        year: new Date().getFullYear(),
+        maintenance: 0,
+        personal_agriculture: 0,
+        commercial_agriculture: 0
+      },
+      modalTitle: '',
+      modalSubmitCaption: '',
+      action: ''
+    };
+  },
+  provide: function provide() {
+    var _this = this;
+    return {
+      modalTitle: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return _this.modalTitle;
+      }),
+      modalSubmitCaption: (0,vue__WEBPACK_IMPORTED_MODULE_1__.computed)(function () {
+        return _this.modalSubmitCaption;
+      })
+    };
+  },
+  methods: {
+    newYearData: function newYearData(e) {
+      this.modalTitle = 'Додати дані на новий рік';
+      this.modalSubmitCaption = 'Додати';
+      this.action = 'create';
+      if (e.ctrlKey) {
+        if (this.years.length > 0) {
+          this.formData = Object.assign({}, this.years[this.years.length - 1]);
+          this.formData.year = parseInt(this.formData.year) + 1;
+          this.modalTitle = "\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u043D\u0430 <b>".concat(this.formData.year, "</b> \u0440\u0456\u043A");
+        }
+      }
+      var modalForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('LandForm'));
+      modalForm.show();
+    },
+    deleteYear: function deleteYear(id) {
+      var _this2 = this;
+      axios["delete"]("/api/v1/household-lands/".concat(id)).then(function (res) {
+        _this2.$store.dispatch('Households/fetchRecord', _this2.household_id);
+      });
+    },
+    editYear: function editYear(id) {
+      var _year = this.years.find(function (y) {
+        return y.id == id;
+      });
+      Object.assign(this.formData, _year);
+      this.modalSubmitCaption = 'Зберегти';
+      this.modalTitle = "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u0437\u0430 ".concat(_year.year, " \u0440\u0456\u043A");
+      this.action = 'update';
+      var modalForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('LandForm'));
+      modalForm.show();
+    }
+  },
+  components: {
+    TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    LandForm: _LandForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 
@@ -22817,9 +22963,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     submitData: function submitData() {
       var _this = this;
       axios.post('/api/v1/households', this.formData).then(function (res) {
-        console.log(res.data.message);
         _this.clearFormData();
-        _this.fetchCards();
+        _this.$store.dispatch('Households/fetchRecords');
       })["catch"](function (err) {
         _this.errors = err.response.data.errors;
       });
@@ -23336,11 +23481,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       if (this.currentTab == 'HouseholdInfo') {
         if (this.household.info) {
           return {
-            // info: {
-            //     type: this.household.info.household_type.name,
-            //     address: this.household.info.address,
-            //     owners: this.household.info.owners
-            // }
             info: _objectSpread({}, this.household.info)
           };
         }
@@ -23352,6 +23492,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       } else if (this.currentTab == 'HouseInfo') {
         return {
           years: this.household.houseYears,
+          household_id: this.id
+        };
+      } else if (this.currentTab == 'LandInfo') {
+        return {
+          years: this.household.landYears,
           household_id: this.id
         };
       }
@@ -24775,7 +24920,7 @@ var _withScopeId = function _withScopeId(n) {
 };
 var _hoisted_1 = ["innerHTML"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td><b>Загальна площа житлового будинку/квартири, м<sup>2</sup></b></td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($props.rowTitleClass),
     innerHTML: $props.rowTitle
   }, null, 10 /* CLASS, PROPS */, _hoisted_1), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.years, function (year) {
@@ -26255,15 +26400,15 @@ var _hoisted_12 = {
 };
 var _hoisted_13 = ["onClick"];
 var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-trash"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-trash-can"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_15 = [_hoisted_14];
 var _hoisted_16 = ["onClick"];
 var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "bi bi-pencil"
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-pencil"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_18 = [_hoisted_17];
@@ -26393,81 +26538,76 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     years: $props.years,
     field: "total_area",
     rowTitle: "<b>Загальна площа житлового будинку/квартири, м<sup>2</sup></b>"
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td><b>Загальна площа житлового будинку/квартири, м<sup>2</sup></b></td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.totalArea)\" class=\"table-cell-bordered\">\n                                {{year.totalArea}}\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td>Загальна площа житлових приміщень, м<sup>2</sup></td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.totalLivingArea)\" class=\"table-cell-bordered\">\n                                {{year.totalLivingArea}}\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "total_living_area",
     rowTitle: "Загальна площа житлових приміщень, м<sup>2</sup>"
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">з неї житлова площа, м<sup>2</sup></td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.livingArea)\" class=\"table-cell-bordered\">\n                                {{year.livingArea}}\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "living_area",
     rowTitle: "з неї житлова площа, м<sup>2</sup>",
     rowTitleClass: "ps-5"
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td>Кількість житлових кімнат</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.roomCount)\" class=\"table-cell-bordered\">\n                                {{year.roomCount}}\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "room_count",
     rowTitle: "Кількість житлових кімнат"
   }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
     colspan: $props.years.length + 1
-  }, _hoisted_10, 8 /* PROPS */, _hoisted_7)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">водопроводу</td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <template v-html=\"generateCell('waterSupply')\"></template> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{ generateCell('waterSupply') }} "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td v-for=\"year in years\" :key=\"(year.year+'-'+year['waterSupply'])\" class=\"table-cell-bordered\">\n                                <template v-if=\"year['waterSupply']\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, _hoisted_10, 8 /* PROPS */, _hoisted_7)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "water_supply",
     rowTitle: "водопроводу",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <template v-if=\"year['waterSupply']\">\n                                так\n                            </template>\n                            <template v-else>\n                                ні\n                            </template> ")];
-    }),
-    _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">горячого водопостачання</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.hotWaterSupply)\" class=\"table-cell-bordered\">\n                                <template v-if=\"year.hotWaterSupply\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "hot_water_supply",
     rowTitle: "горячого водопостачання",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">каналізації</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.sewage)\" class=\"table-cell-bordered\">\n                                <template v-if=\"year.sewage\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "sewage",
     rowTitle: "каналізації",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">опалення центрального</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.centralHeating)\" class=\"table-cell-bordered\">\n                                <template v-if=\"year.centralHeating\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "central_heating",
     rowTitle: "опалення центрального",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">опалення від індивідуальних установок</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.individualHeating)\" class=\"table-cell-bordered\">\n                                <template v-if=\"year.individualHeating\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "individual_heating",
     rowTitle: "опалення від індивідуальних установок",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">пічного опалення</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.furnaceHeating)\" class=\"table-cell-bordered\">\n                                <template v-if=\"year.furnaceHeating\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "furnace_heating",
     rowTitle: "пічного опалення",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">природного газу</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.naturalGas)\" class=\"table-cell-bordered\">\n                                <template v-if=\"year.naturalGas\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "natural_gas",
     rowTitle: "природного газу",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">скрапленого опалення</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.liquefiedGas)\" class=\"table-cell-bordered\">\n                                <template v-if=\"year.liquefiedGas\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "liquefied_gas",
     rowTitle: "скрапленого опалення",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td class=\"ps-5\">підлогової електричної плити</td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.electricStove)\" class=\"table-cell-bordered\">\n                                <template v-if=\"year.electricStove\">\n                                    так\n                                </template>\n                                <template v-else>\n                                    ні\n                                </template>\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "electric_stove",
     rowTitle: "підлогової електричної плити",
     rowTitleClass: "ps-5",
     fieldValue: true
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td><b>Загальна площа нежитлових будівель, м<sup>2</sup></b></td>\n                            <td v-for=\"year in years\" :key=\"(year.year+'-'+year.totalNonLivingArea)\" class=\"table-cell-bordered\">\n                                {{year.totalNonLivingArea}}\n                            </td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $props.years,
     field: "total_non_living_area",
     rowTitle: "<b>Загальна площа нежитлових будівель, м<sup>2</sup></b>"
@@ -26541,7 +26681,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.formData.total_non_living_area = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.total_non_living_area]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row align-items-center\">\n                        <label for=\"waterSupply\" class=\"col-sm-9 col-form-label\">Наявність водопроводу</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"waterSupply\" v-model=\"formData.waterSupply\">\n                              <label class=\"form-check-label text-muted\" for=\"waterSupply\" v-if=\"!formData.waterSupply\">ні</label>\n                              <label class=\"form-check-label\" for=\"waterSupply\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"row align-items-center\">\n                        <label for=\"hotWaterSupply\" class=\"col-sm-9 col-form-label\">Наявність горячого водопостачання</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"hotWaterSupply\" v-model=\"formData.hotWaterSupply\">\n                              <label class=\"form-check-label text-muted\" for=\"hotWaterSupply\" v-if=\"!formData.hotWaterSupply\">ні</label>\n                              <label class=\"form-check-label\" for=\"hotWaterSupply\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"row align-items-center\">\n                        <label for=\"sewerage\" class=\"col-sm-9 col-form-label\">Наявність каналізації</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"sewerage\" v-model=\"formData.sewerage\">\n                              <label class=\"form-check-label text-muted\" for=\"sewerage\" v-if=\"!formData.sewerage\">ні</label>\n                              <label class=\"form-check-label\" for=\"sewerage\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"row align-items-center\">\n                        <label for=\"centralHeating\" class=\"col-sm-9 col-form-label\">Наявність опалення центрального</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"centralHeating\" v-model=\"formData.centralHeating\">\n                              <label class=\"form-check-label text-muted\" for=\"centralHeating\" v-if=\"!formData.centralHeating\">ні</label>\n                              <label class=\"form-check-label\" for=\"centralHeating\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"row align-items-center\">\n                        <label for=\"individualHeating\" class=\"col-sm-9 col-form-label\">Наявність опалення від індивідуальних установок</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"individualHeating\" v-model=\"formData.individualHeating\">\n                              <label class=\"form-check-label text-muted\" for=\"individualHeating\" v-if=\"!formData.individualHeating\">ні</label>\n                              <label class=\"form-check-label\" for=\"individualHeating\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"row align-items-center\">\n                        <label for=\"furnaceHeating\" class=\"col-sm-9 col-form-label\">Наявність пічного опалення</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"furnaceHeating\" v-model=\"formData.furnaceHeating\">\n                              <label class=\"form-check-label text-muted\" for=\"furnaceHeating\" v-if=\"!formData.furnaceHeating\">ні</label>\n                              <label class=\"form-check-label\" for=\"furnaceHeating\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"row align-items-center\">\n                        <label for=\"naturalGas\" class=\"col-sm-9 col-form-label\">Наявність природного газу</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"naturalGas\" v-model=\"formData.naturalGas\">\n                              <label class=\"form-check-label text-muted\" for=\"naturalGas\" v-if=\"!formData.naturalGas\">ні</label>\n                              <label class=\"form-check-label\" for=\"naturalGas\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"row align-items-center\">\n                        <label for=\"liquefiedGas\" class=\"col-sm-9 col-form-label\">Наявність скрапленого газу</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"liquefiedGas\" v-model=\"formData.liquefiedGas\">\n                              <label class=\"form-check-label text-muted\" for=\"liquefiedGas\" v-if=\"!formData.liquefiedGas\">ні</label>\n                              <label class=\"form-check-label\" for=\"liquefiedGas\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"row align-items-center\">\n                        <label for=\"electricStove\" class=\"col-sm-9 col-form-label\">Наявність підлогової електричної плити</label>\n                        <div class=\"col-sm-3\">\n                            <div class=\"form-check form-switch d-flex justify-content-between\">\n                              <input class=\"form-check-input\" type=\"checkbox\" role=\"switch\" id=\"electricStove\" v-model=\"formData.electricStove\">\n                              <label class=\"form-check-label text-muted\" for=\"electricStove\" v-if=\"!formData.electricStove\">ні</label>\n                              <label class=\"form-check-label\" for=\"electricStove\" v-else>так</label>\n                            </div>\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Checkbox, {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.total_non_living_area]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Checkbox, {
     modelValue: $data.formData.water_supply,
     "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $data.formData.water_supply = $event;
@@ -26802,6 +26942,116 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=template&id=7dd63c0e":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=template&id=7dd63c0e ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "row mb-3"
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "landYear",
+  "class": "col-form-label col-md-9"
+}, "Рік", -1 /* HOISTED */);
+var _hoisted_3 = {
+  id: "landYearValidation",
+  "class": "invalid-feedback col-md-12"
+};
+var _hoisted_4 = {
+  "class": "row mb-3"
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "landMaintenance",
+  "class": "col-form-label col-md-9"
+}, "для будівництва і обслуговування житлового будинку", -1 /* HOISTED */);
+var _hoisted_6 = {
+  id: "landMaintenanceValidation",
+  "class": "invalid-feedback col-md-12"
+};
+var _hoisted_7 = {
+  "class": "row mb-3"
+};
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "landPersonalAgriculture",
+  "class": "col-form-label col-md-9"
+}, "для ведення особистого селянського господарства", -1 /* HOISTED */);
+var _hoisted_9 = {
+  id: "landPersonalAgricultureValidation",
+  "class": "invalid-feedback col-md-12"
+};
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "landCommercialAgriculture",
+  "class": "col-form-label col-md-9"
+}, "для ведення товарного сільськогосподарського виробництва", -1 /* HOISTED */);
+var _hoisted_11 = {
+  id: "landCommercialAgricultureValidation",
+  "class": "invalid-feedback col-md-12"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
+    formId: "LandForm",
+    onSubmitData: $options.submitData,
+    onCloseForm: $options.clearFormData,
+    modalClass: "modal-600"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['col-md-3', _ctx.hasError('year') ? 'is-invalid' : ''])
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('year') ? 'is-invalid' : '']),
+        id: "landYear",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $props.formData.year = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.year]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('year')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['col-md-3', _ctx.hasError('maintenance') ? 'is-invalid' : ''])
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control col-md-3', _ctx.hasError('maintenance') ? 'is-invalid' : '']),
+        id: "landMaintenance",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $props.formData.maintenance = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.maintenance]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('maintenance')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['col-md-3', _ctx.hasError('personal_agriculture') ? 'is-invalid' : ''])
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('personal_agriculture') ? 'is-invalid' : '']),
+        id: "landPersonalAgriculture",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $props.formData.personal_agriculture = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.personal_agriculture]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('personal_agriculture')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['row mb-3', _ctx.hasError('commercial_agriculture') ? 'is-invalid' : ''])
+      }, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['col-md-3', _ctx.hasError('commercial_agriculture') ? 'is-invalid' : ''])
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('commercial_agriculture') ? 'is-invalid' : '']),
+        id: "landCommercialAgriculture",
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+          return $props.formData.commercial_agriculture = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.commercial_agriculture]])], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('commercial_agriculture')), 1 /* TEXT */)], 2 /* CLASS */)];
+    }),
+
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandInfo.vue?vue&type=template&id=6c358ef8":
 /*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandInfo.vue?vue&type=template&id=6c358ef8 ***!
@@ -26818,10 +27068,90 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "pt-4"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<table class=\"table table-bordered1 table-sm\"><thead><tr><th></th><th>2021</th><th>2022</th></tr></thead><tbody class=\"table-group-divider\"><tr><td><b>Площа земельних ділянок - усього</b></td><td>212</td><td>175</td></tr><tr><td>з неї за цільовим призначенням <i>(відповідно до документів)</i></td><td>212</td><td>175</td></tr><tr><td>для будівництва і обслуговування житлового будинку, <br> господарських будівель і споруд</td><td>165</td><td>165</td></tr><tr><td>для ведення особистого селянського господарства</td><td>4</td><td>4</td></tr><tr><td>для ведення товарного сільськогосподарського виробництва</td><td>4</td><td>4</td></tr><tr><td>з них узятих в оренду</td><td></td><td></td></tr><tr><td class=\"ps-5\">для сінокосіння і випасання худоби</td><td></td><td></td></tr><tr><td class=\"ps-5\">для городництва</td><td></td><td></td></tr><tr><td class=\"ps-5\">для індивідуального садівництва</td><td></td><td></td></tr><tr><td>із загальної площи земельних ділянок - <br> площа сільськогосподарських угідь</td><td></td><td></td></tr><tr><td colspan=\"3\">з них:</td></tr><tr><td class=\"ps-5\">рілля</td><td></td><td></td></tr><tr><td class=\"ps-5\">багаторічні насадження</td><td></td><td></td></tr><tr><td class=\"ps-5\">сіножаті, пасовища</td><td></td><td></td></tr></tbody></table>", 1);
-var _hoisted_3 = [_hoisted_2];
+var _hoisted_2 = {
+  "class": "table table-bordered1 table-sm"
+};
+var _hoisted_3 = {
+  "class": "table-group-divider"
+};
+var _hoisted_4 = ["colspan"];
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", null, "(відповідно до документів):", -1 /* HOISTED */);
+var _hoisted_6 = {
+  key: 0
+};
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, null, -1 /* HOISTED */);
+var _hoisted_8 = {
+  "class": "d-flex justify-content-around"
+};
+var _hoisted_9 = ["onClick"];
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-trash-can"
+}, null, -1 /* HOISTED */);
+var _hoisted_11 = [_hoisted_10];
+var _hoisted_12 = ["onClick"];
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
+}, null, -1 /* HOISTED */);
+var _hoisted_14 = [_hoisted_13];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_3);
+  var _component_TableRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TableRow");
+  var _component_LandForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LandForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "btn btn-sm btn-primary",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.newYearData && $options.newYearData.apply($options, arguments);
+    })
+  }, " Додати рік ")]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.years, function (year) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
+      key: year.year,
+      "class": "text-center"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-danger\" @click=\"deleteYear(year.id)\" title=\"Видалити дані\">\n                                <span class=\"mdi mdi-trash-can\"></span>\n                            </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </span>\n                            <button class=\"btn btn-sm btn-outline-warning\" @click=\"editYear(year.id)\" title=\"Змінити дані\">\n                                <span class=\"mdi mdi-pencil\"></span>\n                            </button> ")]);
+  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+    years: $props.years,
+    field: "total",
+    rowTitle: "<b>Площа земельних ділянок - усього</b>"
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableRow :years=\"years\" field=\"purpose\" rowTitle=\"з неї за цільовим призначенням <i>(відповідно до документів)</i>\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    colspan: $props.years.length + 1
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("з неї за цільовим призначенням "), _hoisted_5], 8 /* PROPS */, _hoisted_4)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+    years: $props.years,
+    field: "maintenance",
+    rowTitle: "для будівництва і обслуговування житлового будинку",
+    rowTitleClass: "ps-3"
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+    years: $props.years,
+    field: "personal_agriculture",
+    rowTitle: "для ведення особистого селянського господарства",
+    rowTitleClass: "ps-3"
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+    years: $props.years,
+    field: "commercial_agriculture",
+    rowTitle: "для ведення товарного сільськогосподарського виробництва",
+    rowTitleClass: "ps-3"
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableRow :years=\"years\" field=\"arable\" rowTitle=\"рілля\" rowTitleClass=\"ps-5\" />\n                <TableRow :years=\"years\" field=\"perennial_plantations\" rowTitle=\"багаторічні насадження\" rowTitleClass=\"ps-5\" />\n                <TableRow :years=\"years\" field=\"pastures\" rowTitle=\"сіножатні, пасовища\" rowTitleClass=\"ps-5\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                    <td :colspan=\"(years.length+1)\"><b>Наявність</b><i>(проставляється \"так\" або \"ні\")</i></td>\n                </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableRow :years=\"years\" field=\"water_supply\" rowTitle=\"водопроводу\" rowTitleClass=\"ps-5\" :fieldValue=\"true\">\n                <TableRow :years=\"years\" field=\"hot_water_supply\" rowTitle=\"горячого водопостачання\" rowTitleClass=\"ps-5\" :fieldValue=\"true\"></TableRow> ")]), $props.years.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tfoot", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_7, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.years, function (year) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
+      key: year.year + '-' + 'buttons',
+      "class": "border-start border-end"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      "class": "btn btn-sm btn-outline-danger",
+      onClick: function onClick($event) {
+        return $options.deleteYear(year.id);
+      },
+      title: "Видалити дані"
+    }, _hoisted_11, 8 /* PROPS */, _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      "class": "btn btn-sm btn-outline-warning",
+      onClick: function onClick($event) {
+        return $options.editYear(year.id);
+      },
+      title: "Змінити дані"
+    }, _hoisted_14, 8 /* PROPS */, _hoisted_12)])]);
+  }), 128 /* KEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_LandForm, {
+    formData: $data.formData,
+    action: $data.action,
+    onRefreshData: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.$store.dispatch('Households/fetchRecord', $props.household_id);
+    })
+  }, null, 8 /* PROPS */, ["formData", "action"])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -26862,127 +27192,133 @@ var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_6 = [_hoisted_5];
 var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-refresh"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_8 = [_hoisted_7];
+var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-filter-outline"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_8 = {
+var _hoisted_10 = {
   "class": "card-body"
 };
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Населений пункт"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Номер"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Тип"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Місцезнаходження / адреса")], -1 /* HOISTED */);
 });
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-eye-outline"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_11 = {
+var _hoisted_13 = {
   "class": "modal modal-lg fade",
   id: "HouseholdCard",
   tabindex: "-1",
   "aria-labelledby": "staticBackdropLabel",
   "aria-hidden": "true"
 };
-var _hoisted_12 = {
+var _hoisted_14 = {
   "class": "modal-dialog"
 };
-var _hoisted_13 = {
+var _hoisted_15 = {
   "class": "modal-content"
 };
-var _hoisted_14 = {
+var _hoisted_16 = {
   "class": "modal-header"
 };
-var _hoisted_15 = ["innerHTML"];
-var _hoisted_16 = {
+var _hoisted_17 = ["innerHTML"];
+var _hoisted_18 = {
   "class": "modal-body"
 };
-var _hoisted_17 = {
+var _hoisted_19 = {
   "class": "row mb-3"
 };
-var _hoisted_18 = {
+var _hoisted_20 = {
   "class": "col"
 };
-var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdType",
     "class": "form-label"
   }, "Населений пункт", -1 /* HOISTED */);
 });
-var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_22 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     disabled: "",
     value: "0"
   }, "Оберить населений пункт", -1 /* HOISTED */);
 });
-var _hoisted_21 = ["value"];
-var _hoisted_22 = {
+var _hoisted_23 = ["value"];
+var _hoisted_24 = {
   id: "householdTypeValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_23 = {
+var _hoisted_25 = {
   "class": "row mb-3"
 };
-var _hoisted_24 = {
+var _hoisted_26 = {
   "class": "col"
 };
-var _hoisted_25 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdType",
     "class": "form-label"
   }, "Тип об'єкта погосподарського обліку", -1 /* HOISTED */);
 });
-var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
     disabled: "",
     value: "0"
   }, "Оберить тип об'єкта", -1 /* HOISTED */);
 });
-var _hoisted_27 = ["value"];
-var _hoisted_28 = {
+var _hoisted_29 = ["value"];
+var _hoisted_30 = {
   id: "householdTypeValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_29 = {
+var _hoisted_31 = {
   "class": "row mb-3"
 };
-var _hoisted_30 = {
+var _hoisted_32 = {
   "class": "col"
 };
-var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_33 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdAddress",
     "class": "form-label"
   }, "Місцезнаходження / адреса", -1 /* HOISTED */);
 });
-var _hoisted_32 = {
+var _hoisted_34 = {
   id: "householdAddressValidation",
   "class": "invalid-feedback"
 };
-var _hoisted_33 = {
+var _hoisted_35 = {
   "class": "row mb-3"
 };
-var _hoisted_34 = {
+var _hoisted_36 = {
   "class": "col"
 };
-var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_37 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdSpecialMarks",
     "class": "form-label"
   }, "Спеціальні відмітки", -1 /* HOISTED */);
 });
-var _hoisted_36 = {
+var _hoisted_38 = {
   "class": "row mb-3"
 };
-var _hoisted_37 = {
+var _hoisted_39 = {
   "class": "col"
 };
-var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_40 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "householdAdditionalInformation",
     "class": "form-label"
   }, "Додаткові відомості", -1 /* HOISTED */);
 });
-var _hoisted_39 = {
+var _hoisted_41 = {
   "class": "modal-footer"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -26994,17 +27330,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.addCard && $options.addCard.apply($options, arguments);
     })
-  }, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, _hoisted_6), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-sm btn-outline-primary ms-2",
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.$store.dispatch('Households/fetchRecords');
+    }),
+    title: "Оновити дані"
+  }, _hoisted_8)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-sm btn-outline-secondary",
-    onClick: _cache[1] || (_cache[1] = function () {
+    onClick: _cache[2] || (_cache[2] = function () {
       return $options.addCard && $options.addCard.apply($options, arguments);
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-funnel\"></i>/ "), _hoisted_7])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-funnel\"></i>/ "), _hoisted_9])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     dataTable: _ctx.households,
     tableHeaderClass: "table-dark"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_9];
+      return [_hoisted_11];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
@@ -27019,7 +27361,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           }
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-eye\"></i> "), _hoisted_10];
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <i class=\"bi bi-eye\"></i> "), _hoisted_12];
           }),
           _: 2 /* DYNAMIC */
         }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.settlement), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.number), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.householdTypeId), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.address), 1 /* TEXT */)]);
@@ -27027,74 +27369,74 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
 
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["dataTable"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  }, 8 /* PROPS */, ["dataTable"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "modal-title fs-5",
     id: "staticBackdropLabel",
     innerHTML: $data.modalTitle
-  }, null, 8 /* PROPS */, _hoisted_15), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 8 /* PROPS */, _hoisted_17), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn-close",
     "data-bs-dismiss": "modal",
     "aria-label": "Close",
-    onClick: _cache[2] || (_cache[2] = function () {
+    onClick: _cache[3] || (_cache[3] = function () {
       return $options.clearFormData && $options.clearFormData.apply($options, arguments);
     })
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n                        <div class=\"col\">\n                            <label for=\"memberSurname\" class=\"form-label\">Прізвище</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberSurname\" v-model=\"formData.surname\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"memberName\" class=\"form-label\">Ім'я</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberName\" v-model=\"formData.name\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"memberPatronymic\" class=\"form-label\">По батькові</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberPatronymic\" v-model=\"formData.patronymic\">\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n                        <div class=\"col\">\n                            <label for=\"memberSurname\" class=\"form-label\">Прізвище</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberSurname\" v-model=\"formData.surname\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"memberName\" class=\"form-label\">Ім'я</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberName\" v-model=\"formData.name\">\n                        </div>\n                        <div class=\"col\">\n                            <label for=\"memberPatronymic\" class=\"form-label\">По батькові</label>\n                            <input type=\"text\" class=\"form-control\" id=\"memberPatronymic\" v-model=\"formData.patronymic\">\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('settlement_id') ? 'is-invalid' : '']),
     id: "householdType",
     "aria-label": "Default select example",
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.formData.settlement_id = $event;
     })
-  }, [_hoisted_20, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.settlements, function (settlement) {
+  }, [_hoisted_22, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.settlements, function (settlement) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: settlement.id,
       key: settlement.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(settlement.name), 9 /* TEXT, PROPS */, _hoisted_21);
-  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.settlement_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('settlement_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(settlement.name), 9 /* TEXT, PROPS */, _hoisted_23);
+  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.settlement_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('settlement_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('household_type_id') ? 'is-invalid' : '']),
     id: "householdType",
     "aria-label": "Default select example",
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.formData.household_type_id = $event;
     })
-  }, [_hoisted_26, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.householdTypes, function (householdType) {
+  }, [_hoisted_28, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.householdTypes, function (householdType) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: householdType.id,
       key: householdType.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(householdType.name), 9 /* TEXT, PROPS */, _hoisted_27);
-  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.household_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('household_type_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n                        <div class=\"col\">\n                            <label for=\"householdType\" class=\"form-label\">Тип об'єкта погосподарського обліку</label>\n                            <select class=\"form-select\" id=\"householdType\" aria-label=\"Default select example\" v-model=\"formData.householdType\">\n                                <option disabled value=\"0\">Оберить тип об'єкта</option>\n                                <option :value=\"t.id\" v-for=\"t in types\" :key=\"t.id\">\n                                    {{t.name}}\n                                </option>\n                            </select>\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(householdType.name), 9 /* TEXT, PROPS */, _hoisted_29);
+  }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.formData.household_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('household_type_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n                        <div class=\"col\">\n                            <label for=\"householdType\" class=\"form-label\">Тип об'єкта погосподарського обліку</label>\n                            <select class=\"form-select\" id=\"householdType\" aria-label=\"Default select example\" v-model=\"formData.householdType\">\n                                <option disabled value=\"0\">Оберить тип об'єкта</option>\n                                <option :value=\"t.id\" v-for=\"t in types\" :key=\"t.id\">\n                                    {{t.name}}\n                                </option>\n                            </select>\n                        </div>\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('address') ? 'is-invalid' : '']),
     id: "householdAddress",
     rows: "2",
-    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.formData.address = $event;
     })
-  }, "\n                            ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.address]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('address')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  }, "\n                            ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.address]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('address')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": "form-control",
     id: "householdSpecialMarks",
     rows: "2",
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.formData.special_marks = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.special_marks]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.special_marks]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     "class": "form-control",
     id: "householdAdditionalInformation",
     rows: "2",
-    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $data.formData.additional_data = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.additional_data]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.formData.additional_data]])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-secondary",
     "data-bs-dismiss": "modal",
-    onClick: _cache[8] || (_cache[8] = function () {
+    onClick: _cache[9] || (_cache[9] = function () {
       return $options.clearFormData && $options.clearFormData.apply($options, arguments);
     })
   }, "Відмінити"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "btn btn-primary",
-    onClick: _cache[9] || (_cache[9] = function () {
+    onClick: _cache[10] || (_cache[10] = function () {
       return $options.submitData && $options.submitData.apply($options, arguments);
     })
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.modalSubmitCaption), 1 /* TEXT */)])])])])], 64 /* STABLE_FRAGMENT */);
@@ -29465,6 +29807,28 @@ __webpack_require__.r(__webpack_exports__);
         if (this.errors[f]) delete this.errors[f];
       });
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/minixs/NumberFormat.js":
+/*!*********************************************!*\
+  !*** ./resources/js/minixs/NumberFormat.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    formatedNumber: function formatedNumber(number) {
+      var precision = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      return number.toFixed(precision);
+    }
   }
 });
 
@@ -39225,6 +39589,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/modules/HouseholdCards/Land/LandForm.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/modules/HouseholdCards/Land/LandForm.vue ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _LandForm_vue_vue_type_template_id_7dd63c0e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LandForm.vue?vue&type=template&id=7dd63c0e */ "./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=template&id=7dd63c0e");
+/* harmony import */ var _LandForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LandForm.vue?vue&type=script&lang=js */ "./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=script&lang=js");
+/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_LandForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_LandForm_vue_vue_type_template_id_7dd63c0e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/HouseholdCards/Land/LandForm.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/modules/HouseholdCards/Land/LandInfo.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/modules/HouseholdCards/Land/LandInfo.vue ***!
@@ -40006,6 +40398,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=script&lang=js":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LandForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LandForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LandForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/modules/HouseholdCards/Land/LandInfo.vue?vue&type=script&lang=js":
 /*!***************************************************************************************!*\
   !*** ./resources/js/modules/HouseholdCards/Land/LandInfo.vue?vue&type=script&lang=js ***!
@@ -40594,6 +41002,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseholdInfo_vue_vue_type_template_id_d8f169b0__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseholdInfo_vue_vue_type_template_id_d8f169b0__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseholdInfo.vue?vue&type=template&id=d8f169b0 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/HouseholdInfo.vue?vue&type=template&id=d8f169b0");
+
+
+/***/ }),
+
+/***/ "./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=template&id=7dd63c0e":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=template&id=7dd63c0e ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LandForm_vue_vue_type_template_id_7dd63c0e__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LandForm_vue_vue_type_template_id_7dd63c0e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LandForm.vue?vue&type=template&id=7dd63c0e */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/HouseholdCards/Land/LandForm.vue?vue&type=template&id=7dd63c0e");
 
 
 /***/ }),

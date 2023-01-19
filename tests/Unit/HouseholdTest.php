@@ -7,6 +7,7 @@ use App\Models\AdditionalParamCategory;
 use Tests\TestCase;
 use App\Models\Household;
 use App\Models\HouseholdHouse;
+use App\Models\HouseholdLand;
 use App\Models\HouseholdMember;
 use App\Models\HouseholdType;
 use App\Models\Settlement;
@@ -57,5 +58,14 @@ class HouseholdTest extends TestCase
         $param = AdditionalParam::factory()->create(['category_id' => $category->id, 'code' => 'param']);
 
         $this->assertArrayHasKey($household->params, $param->code);
+    }
+
+    public function test_household_may_have_information_about_land()
+    {
+        $household = Household::factory()->create();
+
+        HouseholdLand::factory()->count(3)->create(['household_id' => $household->id]);
+
+        $this->assertCount(3, $household->landYears);
     }
 }

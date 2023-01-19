@@ -1,6 +1,5 @@
 <template>
     <tr>
-        <!-- <td><b>Загальна площа житлового будинку/квартири, м<sup>2</sup></b></td> -->
         <td :class="rowTitleClass" v-html="rowTitle"></td>
         <td v-for="year in years"
             :key="(year.year+'-'+year[field])"

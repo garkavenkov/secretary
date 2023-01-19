@@ -89,11 +89,6 @@ export default {
             if (this.currentTab == 'HouseholdInfo') {
                 if (this.household.info) {
                     return {
-                        // info: {
-                        //     type: this.household.info.household_type.name,
-                        //     address: this.household.info.address,
-                        //     owners: this.household.info.owners
-                        // }
                         info: {...this.household.info}
                     }
                 }
@@ -105,6 +100,11 @@ export default {
             } else if (this.currentTab == 'HouseInfo') {
                 return {
                     years: this.household.houseYears,
+                    household_id: this.id
+                }
+            } else if (this.currentTab == 'LandInfo') {
+                return {
+                    years: this.household.landYears,
                     household_id: this.id
                 }
             }

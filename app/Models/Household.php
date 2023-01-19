@@ -94,4 +94,10 @@ class Household extends Model
         });
         return $owners;
     }
+
+    public function landYears()
+    {
+        return $this->hasMany(HouseholdLand::class);
+    }
+
 }

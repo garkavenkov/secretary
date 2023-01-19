@@ -7,6 +7,7 @@ use App\Models\HouseholdHouse;
 use App\Models\HouseholdMember;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\API\v1\Settlement\SettlementResource;
+use App\Http\Resources\API\v1\HouseholdLand\HouseholdLandResource;
 use App\Http\Resources\API\v1\HouseholdType\HouseholdTypeResource;
 use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
@@ -57,7 +58,8 @@ class HouseholdResource extends JsonResource
             ],
             // 'members'               =>  HouseholdMemberResource::collection($this->whenLoaded('members')),
             'members'               =>  $members,
-            'houseYears'            =>  HouseholdHouseResource::collection($this->whenLoaded('houseYears'))
+            'houseYears'            =>  HouseholdHouseResource::collection($this->whenLoaded('houseYears')),
+            'landYears'             =>  HouseholdLandResource::collection($this->whenLoaded('landYears'))
         ];
     }
 }
