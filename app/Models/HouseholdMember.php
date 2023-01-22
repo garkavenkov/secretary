@@ -14,6 +14,9 @@ class HouseholdMember extends Model
 {
     use HasFactory;
 
+    const MALE = 'чоловіча';
+    const FEMALE = 'жіноча';
+
     protected $fillable = [
         'household_id',
         'surname',
@@ -80,5 +83,30 @@ class HouseholdMember extends Model
         $birthdate = new DateTime($this->birthdate);
         $interval = $birthdate->diff(new DateTime());
         return $interval->y;
+    }
+
+    public function scopeMale($query)
+    {
+        return $query->where('sex', self::MALE);
+    }
+
+    public function scopeFemale($query)
+    {
+        return $query->where('sex', self::FEMALE);
+    }
+
+    public function scopeDead($query)
+    {
+        return $query->whereNotNull('death_date');
+    }
+
+    public function scopeAlive($query, $date = null)
+    {
+        $q = $query->whereNull('death_date');
+        if ($date) {
+            $q = $q->orWhere('death_date', '>', $date);
+        }
+        return $q;
+
     }
 }

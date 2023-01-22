@@ -21,7 +21,7 @@ use App\Http\Controllers\API\v1\HouseholdMemberController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
-
+use App\Http\Controllers\API\v1\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,5 +61,5 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('household-lands',              HouseholdLandController::class);
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
-    // Route::resource('additional-param-values)
+    Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
 });

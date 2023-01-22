@@ -12,7 +12,6 @@
                 <router-link to="/">
                     <span class="icon">
                         <span class="mdi mdi-monitor-dashboard"></span>
-                        <!-- <svg-icon type="mdi" :path="mdiMonitorDashboard"></svg-icon> -->
                     </span>
                     <span class="nav-title">Робочий стіл</span>
                 </router-link>
@@ -20,7 +19,6 @@
             <li title="Облікові картки">
                 <router-link to="/household-cards">
                     <span class="icon">
-                        <!-- <i class="bi bi-card-heading"></i> -->
                         <span class="mdi mdi-folder-home"></span>
                     </span>
                     <span class="nav-title">Облікові картки</span>
@@ -29,10 +27,29 @@
             <li class="has-submenu">
                 <a>
                     <span class="icon">
+                        <span class="mdi mdi-abacus"></span>
+                    </span>
+                    <span class="nav-title">Аналітика</span>
+                    <span class="mdi mdi-chevron-down"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="sub-menu-title"><span>Аналітика</span></li>
+                    <li>
+                        <router-link to="/members-by-age">
+                            <span class="icon">
+                                <span class="mdi mdi-account-question-outline"></span>
+                            </span>
+                            <span class="nav-title">Вікові групи населення</span>
+                        </router-link>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a>
+                    <span class="icon">
                         <span class="mdi mdi-inbox-multiple"></span>
                     </span>
                     <span class="nav-title">Довідники</span>
-                    <!-- <i class="bi bi-chevron-down"></i> -->
                     <span class="mdi mdi-chevron-down"></span>
                 </a>
                 <ul class="sub-menu">
@@ -40,7 +57,6 @@
                     <li>
                         <router-link to="/regions">
                             <span class="icon">
-                                <!-- <i class="bi bi-globe"></i> -->
                                 <span class="mdi mdi-map"></span>
                             </span>
                             <span class="nav-title">Регіони</span>
@@ -49,7 +65,6 @@
                     <li>
                         <router-link to="/districts">
                             <span class="icon">
-                                <!-- <i class="bi bi-buildings"></i> -->
                                 <span class="mdi mdi-domain"></span>
                             </span>
                             <span class="nav-title">Райони</span>
@@ -58,8 +73,6 @@
                     <li>
                         <router-link to="/communities">
                             <span class="icon">
-                                <!-- <i class="bi bi-people"></i> -->
-                                <!-- <span class="mdi mdi-home-group"></span> -->
                                 <span class="mdi mdi-home-city"></span>
                             </span>
                             <span class="nav-title">Громади</span>
@@ -68,7 +81,6 @@
                     <li>
                         <router-link to="/councils">
                             <span class="icon">
-                                <!-- <i class="bi bi-puzzle"></i> -->
                                 <span class="mdi mdi-bank"></span>
                             </span>
                             <span class="nav-title">Міськи / сільські ради</span>
@@ -77,8 +89,6 @@
                     <li>
                         <router-link to="/settlements">
                             <span class="icon">
-                                <!-- <i class="bi bi-houses"></i> -->
-                                <!-- <span class="mdi mdi-account-group-outline"></span> -->
                                 <span class="mdi mdi-home-group"></span>
                             </span>
                             <span class="nav-title">Населені пункти</span>
@@ -89,11 +99,9 @@
             <li class="has-submenu">
                 <a>
                     <span class="icon">
-                        <!-- <i class="bi bi-gear"></i> -->
                         <span class="mdi mdi-table-cog"></span>
                     </span>
                     <span class="nav-title">Системні довідники</span>
-                    <!-- <i class="bi bi-chevron-down"></i> -->
                     <span class="mdi mdi-chevron-down"></span>
                 </a>
                 <ul class="sub-menu">
@@ -101,27 +109,22 @@
                     <li>
                         <router-link to="/household-types">
                             <span class="icon">
-                                <!-- <i class="bi bi-house-gear"></i> -->
                                 <span class="mdi mdi-home-circle-outline"></span>
                             </span>
                             <span class="nav-title">Типи погосподарського обліку</span>
                         </router-link>
                     </li>
-                    <!-- <li class="combined-icons"> -->
                     <li>
                         <router-link to="/settlement-types">
                             <span class="icon">
-                                <!-- <i class="bi bi-houses"></i> -->
                                 <span class="mdi mdi-store-cog"></span>
                             </span>
-                            <!-- <i class="bi bi-gear-fill"></i> -->
                             <span class="nav-title">Типи населеного пункту</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/work-places">
                             <span class="icon">
-                                <!-- <i class="bi bi-person-gear"></i> -->
                                 <span class="mdi mdi-wrench-cog"></span>
                             </span>
                             <span class="nav-title">Коди місця роботи (заняття)</span>
@@ -130,8 +133,6 @@
                     <li>
                         <router-link to="/family-relationships">
                             <span class="icon">
-                                <!-- <i class="bi bi-diagram-3"></i> -->
-                                <!-- <span class="mdi mdi-sitemap-outline"></span> -->
                                 <span class="mdi mdi-family-tree"></span>
                             </span>
                             <span class="nav-title">Родинні стосунки</span>
@@ -146,14 +147,11 @@
 </template>
 
 <script>
-// import SvgIcon from '@jamescoyle/vue-icon';
-// import { mdiMonitorDashboard } from '@mdi/js';
 
 export default {
     name: 'SideBarMenu',
     data() {
         return {
-            // mdiMonitorDashboard,
         }
     },
     created() {
@@ -170,14 +168,3 @@ export default {
     },
 }
 </script>
-
-<style lang="scss" scoped>
-// a {
-//     padding-right: 0.5rem;
-// }
-
-
-
-
-
-</style>

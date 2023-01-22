@@ -15,7 +15,7 @@
 
     <!-- Scripts -->
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}" media="all">
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body>
