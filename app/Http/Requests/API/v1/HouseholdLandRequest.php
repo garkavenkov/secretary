@@ -42,7 +42,7 @@ class HouseholdLandRequest extends FormRequest
         ];
     }
 
-      /**
+    /**
      * Get the error messages for the defined validation rules.
      *
      * @return array
@@ -50,15 +50,12 @@ class HouseholdLandRequest extends FormRequest
     public function messages()
     {
         return [
-            'household_id.required'                 => 'Ви не указали домогосподарство',
-            'household_id.exists'                   => 'Указане домогосподарство відсутне',
-            'year.required'                         => 'Ви не указали рік',
-            'year.integer'                          => 'Укажіть числове значення',
-            'year.digits'                           => 'Укажіть рік в форматі - 9999',
             'maintenance.numeric'                   => 'Укажіть числове значення',
             'maintenance.gte'                       => 'Значення не може бути від’ємним',
+
             'personal_agriculture.numeric'          => 'Укажіть числове значення',
             'personal_agriculture.gte'              => 'Значення не може бути від’ємним',
+
             'commercial_agriculture.numeric'        => 'Укажіть числове значення',
             'commercial_agriculture.gte'            => 'Значення не може бути від’ємним',
         ];

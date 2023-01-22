@@ -61,11 +61,6 @@ class HouseholdHouseRequest extends FormRequest
     public function messages()
     {
         return [
-            'household_id.required'                 => 'Ви не указали домогосподарство',
-            'household_id.exists'                   => 'Указане домогосподарство відсутне',
-            'year.required'                         => 'Ви не указали рік',
-            'year.integer'                          => 'Укажіть числове значення',
-            'year.digits'                           => 'Укажіть рік в форматі - 9999',
 
             'total_area.required'                   => 'Ви не указали загальну площу',
             'total_area.numeric'                    => 'Укажіть числове значення',
