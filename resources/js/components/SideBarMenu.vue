@@ -141,7 +141,9 @@
                 </ul>
             </li>
         </ul>
-
+        <div class="app-version" v-if="appVersion">
+            <span>Версія : {{ appVersion }}</span>
+        </div>
     </section>
 
 </template>
@@ -152,9 +154,11 @@ export default {
     name: 'SideBarMenu',
     data() {
         return {
+            appVersion: ''
         }
     },
     created() {
+        this.appVersion = window.app.version;
         this.$store.dispatch('Regions/fetchRecords');
         this.$store.dispatch('Districts/fetchRecords');
         this.$store.dispatch('FamilyRelationships/fetchRecords');

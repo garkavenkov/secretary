@@ -7,6 +7,7 @@
     height: 100vh;
     transition: width 0.3s;
     z-index: 1000;
+    justify-content: space-between;
 
     .logo__wrapper {
         height: 64px;
@@ -26,14 +27,25 @@
             font-size: 18px;
         }
     }
+    .app-version {
+        color: #6c757d;
+        padding: 1.1rem;
+        white-space: nowrap;
+        opacity: 1;
+        transition: opacity 0.3s;
+        border-top: 1px solid #333a40;
+        background: #052250;
+    }
 
     ul.sidebar-menu__wrapper {
 
-        position: absolute;
-        top: 90px;
-        left: 0;
+        // position: absolute;
+        // top: 90px;
+        // left: 0;
         padding-left: 0;
+        padding-top: 30px;
         width: 100%;
+        flex-grow: 1;
 
         li {
             // &:has(.router-link-exact-active) a {
@@ -173,7 +185,11 @@
                 transition: visibility 0s linear 300ms, opacity 300ms;
             }
         }
-
+        .app-version {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s linear 300ms, opacity 300ms;
+        }
         .sidebar-menu__wrapper {
             > li {
                 > a  {

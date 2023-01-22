@@ -21090,9 +21090,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'SideBarMenu',
   data: function data() {
-    return {};
+    return {
+      appVersion: ''
+    };
   },
   created: function created() {
+    this.appVersion = window.app.version;
     this.$store.dispatch('Regions/fetchRecords');
     this.$store.dispatch('Districts/fetchRecords');
     this.$store.dispatch('FamilyRelationships/fetchRecords');
@@ -24462,7 +24465,10 @@ var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-title"
 }, "Родинні стосунки", -1 /* HOISTED */);
-
+var _hoisted_41 = {
+  key: 0,
+  "class": "app-version"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("section", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
@@ -24549,7 +24555,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_39, _hoisted_40];
     }),
     _: 1 /* STABLE */
-  })])])])])]);
+  })])])])]), $data.appVersion ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Версія : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.appVersion), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),

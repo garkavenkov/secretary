@@ -15,6 +15,11 @@
 
 @push('scripts')
     <script>
+
+        window.app = {
+            version: "{{ config('app.version', '') }}"
+        };
+
         document.addEventListener("DOMContentLoaded", function() {
 
             // Toggle sidebar panel

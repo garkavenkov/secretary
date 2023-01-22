@@ -11777,6 +11777,7 @@ textarea.form-control-lg {
   height: 100vh;
   transition: width 0.3s;
   z-index: 1000;
+  justify-content: space-between;
 }
 .sidebar-menu .logo__wrapper {
   height: 64px;
@@ -11794,12 +11795,20 @@ textarea.form-control-lg {
 .sidebar-menu .logo__wrapper span {
   font-size: 18px;
 }
+.sidebar-menu .app-version {
+  color: #6c757d;
+  padding: 1.1rem;
+  white-space: nowrap;
+  opacity: 1;
+  transition: opacity 0.3s;
+  border-top: 1px solid #333a40;
+  background: #052250;
+}
 .sidebar-menu ul.sidebar-menu__wrapper {
-  position: absolute;
-  top: 90px;
-  left: 0;
   padding-left: 0;
+  padding-top: 30px;
   width: 100%;
+  flex-grow: 1;
 }
 .sidebar-menu ul.sidebar-menu__wrapper li {
   position: relative;
@@ -11898,6 +11907,11 @@ textarea.form-control-lg {
   width: 60px;
 }
 .sidebar-menu.shrinked .logo__wrapper span {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+.sidebar-menu.shrinked .app-version {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s linear 300ms, opacity 300ms;
