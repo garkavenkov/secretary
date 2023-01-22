@@ -107,6 +107,18 @@ class HouseholdMember extends Model
             $q = $q->orWhere('death_date', '>', $date);
         }
         return $q;
+    }
 
+    public function scopeBorn($query, $month = null, $day = null)
+    {
+        if (!$month) {
+            $month = date('m');
+        }
+        if (!$day) {
+            $day = date('d');
+        }
+        // dd("month - $month, day - $day");
+
+        return $query->whereDay('birthdate', $day)->whereMonth('birthdate', $month);
     }
 }

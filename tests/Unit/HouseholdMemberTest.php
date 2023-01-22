@@ -50,19 +50,26 @@ class HouseholdMemberTest extends TestCase
 
     public function test_count_alive_members()
     {
-        HouseholdMember::factory()->count(1)->create();
-        HouseholdMember::factory()->count(1)->create(['death_date' => '2023-01-01']);
+        HouseholdMember::factory()->create();
+        HouseholdMember::factory()->create(['death_date' => '2023-01-01']);
 
         $this->assertCount(1, HouseholdMember::alive()->get());
     }
 
     public function test_count_alive_members_on_date()
     {
-        HouseholdMember::factory()->count(1)->create();
-        HouseholdMember::factory()->count(1)->create(['death_date' => '2023-01-01']);
+        HouseholdMember::factory()->create();
+        HouseholdMember::factory()->create(['death_date' => '2023-01-01']);
 
         $this->assertCount(2, HouseholdMember::alive(date: '2022-12-31')->get());
     }
 
+    public function test_count_members_were_born_on_date()
+    {
+        HouseholdMember::factory()->count(2)->create();
+        HouseholdMember::factory()->count(2)->create(['birthdate' => date('Y-m-d')]);
+
+        $this->assertCount(2, HouseholdMember::alive()->born()->get());
+    }
 
 }
