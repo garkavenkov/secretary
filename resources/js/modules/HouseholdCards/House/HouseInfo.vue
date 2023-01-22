@@ -1,151 +1,12 @@
-<script>
-
-import Checkbox from '../../../components/ui/Chekbox.vue';
-import { Modal } from 'bootstrap'
-import TableRow from '../../../components/ui/TableRow.vue';
-import FormValidator from '../../../minixs/FormValidator';
-
-export default {
-    name: 'HouseInfo',
-    props: {
-        'years': {
-            type: Array,
-            required: true
-        },
-        'household_id': {
-            type: [String, Number],
-            required: true
-        }
-    },
-    mixins: [FormValidator],
-    data() {
-        return {
-            formData: {
-                household_id: this.household_id,
-                year: new Date().getFullYear(),
-                total_area: 0,
-                total_living_area: 0,
-                living_area: 0,
-                room_count: 0,
-                total_non_living_area: 0,
-                water_supply: false,
-                hot_water_supply: false,
-                sewage: false,
-                central_heating: false,
-                individual_heating: false,
-                furnace_heating: false,
-                natural_gas: false,
-                liquefied_gas: false,
-                electric_stove: false,
-            },
-            modalSubmitCaption: '',
-            modalTitle: '',
-            mode: 'create'
-        }
-    },
-    methods: {
-        clearFormData() {
-                this.formData.year = new Date().getFullYear();
-                this.formData.total_area = 0;
-                this.formData.total_living_area = 0;
-                this.formData.living_area = 0;
-                this.formData.room_count = 0;
-                this.formData.total_non_living_area = 0;
-                this.formData.water_supply = false;
-                this.formData.hot_water_supply = false;
-                this.formData.sewage = false;
-                this.formData.central_heating = false;
-                this.formData.individual_heating = false;
-                this.formData.furnace_heating = false;
-                this.formData.natural_gas = false;
-                this.formData.liquefied_gas = false;
-                this.formData.electric_stove = false;
-        },
-        newYearData(e) {
-            this.modalTitle = 'Додати дані';
-            this.modalSubmitCaption = 'Додати';
-            this.mode = 'create';
-            var myModal = new Modal(document.getElementById('HouseInfoModalForm'))
-            if (e.ctrlKey) {
-                if (this.years.length > 0) {
-                    this.formData = Object.assign({}, this.years[this.years.length-1]);
-                    this.formData.year = parseInt(this.formData.year) + 1;
-                }
-                this.modalTitle = `Додати дані на <b>${this.formData.year}</b> рік`;
-            }
-            myModal.show();
-        },
-        submitData() {
-
-            if (this.mode == 'create') {
-                axios.post('/api/v1/household-houses', this.formData)
-                    .then(res => {
-                        this.$store.dispatch('Households/fetchRecord', this.household_id);
-                        this.clearFormData();
-                    })
-                    .catch(err => {
-                        this.errors = err.response.data.errors;
-                    })
-            } else if (this.mode == 'update') {
-                axios.patch(`/api/v1/household-houses/${this.formData.id}`, this.formData)
-                    .then(res => {
-                        this.$store.dispatch('Households/fetchRecord', this.household_id);
-                    })
-                    .catch(err => {
-                        this.errors = err.response.data.errors;
-                    })
-            }
-        },
-        deleteYear(id) {
-            axios.delete(`/api/v1/household-houses/${id}`)
-                .then(res => {
-                    this.$store.dispatch('Households/fetchRecord', this.household_id);
-                })
-        },
-        editYear(id) {
-            let _year = this.years.find(y => y.id == id)
-            Object.assign(this.formData, _year);
-            this.modalSubmitCaption = 'Зберегти';
-            this.modalTitle = `Редагувати дані за ${_year.year} рік`;
-            this.mode = 'update';
-            var myModal = new Modal(document.getElementById('HouseInfoModalForm'))
-            myModal.show()
-        },
-        generateCell(field) {
-            let _html = `
-                    <td v-for="year in years" :key="(year.year+'-'+year['${field}'])" class="table-cell-bordered">
-                        <template v-if="year['${field}']">
-                            так
-                        </template>
-                        <template v-else>
-                            ні
-                        </template>
-                    </td>`;
-            console.log(_html);
-            return _html;
-        }
-    },
-    components: {
-        Checkbox,
-        TableRow
-    }
-}
-</script>
-
 <template>
     <div class="pt-4">
-        <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-            +
-        </button> -->
-        <div class="row">
-        </div>
+
         <div class="row">
             <div class="col-md-9">
                 <table class="table table-bordered1 table-sm">
                     <thead>
                         <tr>
                             <th>
-                                <!-- <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"> -->
                                 <button type="button" class="btn btn-sm btn-primary" @click="newYearData($event)">
                                     Додати рік
                                 </button>
@@ -227,84 +88,114 @@ export default {
             </div>
         </div>
     </div>
-    <!-- <div class="modal fade" id="HouseInfoModalForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"> -->
-    <div class="modal fade" id="HouseInfoModalForm" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel" v-html="modalTitle"></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="clearFormData"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-1 row">
-                        <label for="year" class="col-sm-9 col-form-label">Рік</label>
-                        <div :class="['col-sm-3', hasError('year') ? 'is-invalid' : '']">
-                            <input  type="text"
-                                    :class="['form-control', hasError('year') ? 'is-invalid' : '']"
-                                    id="year"
-                                    v-model="formData.year">
-                        </div>
-                        <div id="yearValidation" class="invalid-feedback">
-                            {{ getError('year') }}
-                        </div>
-                    </div>
-                    <div class="mb-1 row">
-                        <label for="totalArea" class="col-sm-9 col-form-label">Загальна площа житлового будинку/квартири, м<sup>2</sup></label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="totalArea" v-model="formData.total_area">
-                        </div>
-                    </div>
-                    <div class="mb-1 row">
-                        <label for="totalLivingArea" class="col-sm-9 col-form-label">Загальна площа житлових приміщень, м<sup>2</sup></label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="totalLivingArea" v-model="formData.total_living_area">
-                        </div>
-                    </div>
-                    <div class="mb-1 row">
-                        <label for="livingArea" class="col-sm-9 col-form-label">з неї житлова площа, м<sup>2</sup></label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="livingArea" v-model="formData.living_area">
-                        </div>
-                    </div>
-                    <div class="mb-1 row">
-                        <label for="roomCount" class="col-sm-9 col-form-label">Кількість житлових кімнат</label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="roomCount" v-model="formData.room_count">
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <label for="totalNonLivingArea" class="col-sm-9 col-form-label">Загальна площа нежитлових будівель, м<sup>2</sup></label>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" id="totalNonLivingArea" v-model="formData.total_non_living_area">
-                        </div>
-                    </div>
-                    <div class="p-2">
-                        <div class="d-flex justify-content-between mb-3">
-                            <Checkbox v-model="formData.water_supply" id="waterSupply" image="/img/water-supply.png" title="Наявність водопроводу" />
-                            <Checkbox v-model="formData.hot_water_supply" id="hotWaterSupply" image="/img/hot-water.png" title="Наявність гарячого водопостачання" />
-                            <Checkbox v-model="formData.sewage" id="hotWaterSupply" image="/img/sewage.png" title="Наявність каналізації" />
-                        </div>
-                        <div class="d-flex justify-content-between mb-3">
-                            <Checkbox v-model="formData.central_heating" id="centralHeating" image="/img/central-heating.png" title="Наявність центрального опалення" />
-                            <Checkbox v-model="formData.individual_heating" id="individualHeating" image="/img/individual-heating.png" title="Наявність опалення від індивідуальних установок" />
-                            <Checkbox v-model="formData.furnace_heating" id="furnaceHeating" image="/img/furnace-heating.png" title="Наявність пічного опалення" />
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <Checkbox v-model="formData.natural_gas" id="naturalGas" image="/img/natural-gas.png" title="Наявність природного газу" />
-                            <Checkbox v-model="formData.liquefied_gas" id="liquefiedGas" image="/img/liquefied-gas.png" title="Наявність скрапленого газу" />
-                            <Checkbox v-model="formData.electric_stove" id="electricStove" image="/img/electric-stove.png" title="Наявність підлоговоії електричної плити" />
-                        </div>
-                    </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="clearFormData">Відмінити</button>
-                    <button type="button" class="btn btn-primary" @click="submitData">{{modalSubmitCaption}}</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <HouseYearForm :formData="formData" :action="action" @refreshData="$store('Households/fetchRecord', household_id)" />
+
 </template>
+
+<script>
+import { Modal } from 'bootstrap'
+import { computed } from 'vue'
+
+import TableRow from '../../../components/ui/TableRow.vue';
+import HouseYearForm from './HouseYearForm.vue';
+
+export default {
+    name: 'HouseInfo',
+    props: {
+        'years': {
+            type: Array,
+            required: true
+        },
+        'household_id': {
+            type: [String, Number],
+            required: true
+        }
+    },
+    data() {
+        return {
+            formData: {
+                household_id: this.household_id,
+                year: new Date().getFullYear(),
+                total_area: 0,
+                total_living_area: 0,
+                living_area: 0,
+                room_count: 0,
+                total_non_living_area: 0,
+                water_supply: false,
+                hot_water_supply: false,
+                sewage: false,
+                central_heating: false,
+                individual_heating: false,
+                furnace_heating: false,
+                natural_gas: false,
+                liquefied_gas: false,
+                electric_stove: false,
+            },
+            modalSubmitCaption: '',
+            modalTitle: '',
+            action: ''
+        }
+    },
+    provide() {
+        return {
+            modalTitle: computed(() => this.modalTitle),
+            modalSubmitCaption: computed(() => this.modalSubmitCaption),
+        }
+    },
+    methods: {
+        newYearData(e) {
+            this.modalTitle = 'Додати дані';
+            this.modalSubmitCaption = 'Додати';
+            this.action = 'create';
+
+            let yearForm = new Modal(document.getElementById('HouseInfoModalForm'))
+            if (e.ctrlKey) {
+                if (this.years.length > 0) {
+                    this.formData = Object.assign({}, this.years[this.years.length-1]);
+                    this.formData.year = parseInt(this.formData.year) + 1;
+                }
+                this.modalTitle = `Додати дані на <b>${this.formData.year}</b> рік`;
+            }
+            yearForm.show();
+        },
+        deleteYear(id) {
+            axios.delete(`/api/v1/household-houses/${id}`)
+                .then(res => {
+                    this.$store.dispatch('Households/fetchRecord', this.household_id);
+                })
+        },
+        editYear(id) {
+            let _year = this.years.find(y => y.id == id)
+            Object.assign(this.formData, _year);
+
+            this.modalSubmitCaption = 'Зберегти';
+            this.modalTitle = `Редагувати дані за ${_year.year} рік`;
+            this.action = 'update';
+
+            var yearForm = new Modal(document.getElementById('HouseInfoModalForm'))
+            yearForm.show()
+        },
+        // generateCell(field) {
+        //     let _html = `
+        //             <td v-for="year in years" :key="(year.year+'-'+year['${field}'])" class="table-cell-bordered">
+        //                 <template v-if="year['${field}']">
+        //                     так
+        //                 </template>
+        //                 <template v-else>
+        //                     ні
+        //                 </template>
+        //             </td>`;
+        //     console.log(_html);
+        //     return _html;
+        // }
+    },
+    components: {
+        TableRow,
+        HouseYearForm
+    }
+}
+</script>
 
 <style scoped>
 .table tr td:not(:first-child),
