@@ -72,4 +72,16 @@ class HouseholdMemberTest extends TestCase
         $this->assertCount(2, HouseholdMember::alive()->born()->get());
     }
 
+    public function test_member_movement_event_on_date()
+    {
+        $m = HouseholdMember::factory()->create();
+
+        HouseholdMemberMovement::factory()->create(['member_id' => $m->id, 'date' => '2020-01-01']);
+        HouseholdMemberMovement::factory()->create(['member_id' => $m->id, 'date' => '2021-01-01']);
+        HouseholdMemberMovement::factory()->create(['member_id' => $m->id, 'date' => '2022-01-01']);
+        HouseholdMemberMovement::factory()->create(['member_id' => $m->id, 'date' => '2023-01-01']);
+
+        $this->assertEquals($m->movement('2022-06-06')->date, '2022-01-01');
+
+    }
 }

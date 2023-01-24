@@ -54,6 +54,14 @@ class HouseholdMember extends Model
         return $this->hasMany(HouseholdMemberMovement::class, 'member_id')->orderBy('date', 'desc');
     }
 
+    public function movement($date = null)
+    {
+        if (is_null($date)) {
+            return $this->movements()->first();
+        }
+        return $this->movements()->where('date', '<', $date)->first();
+    }
+
     public function getStatusAttribute()
     {
         $status = 'active';
@@ -61,7 +69,7 @@ class HouseholdMember extends Model
         if (is_null($this->death_date)) {
             // linivg member
             if ($this->movements->count() > 0) {
-                $movement = $this->movements->first();
+                $movement = $this->movement();
                 if (in_array($movement->type->code, ['leave'])) {
                     $status = 'gone';
                 }
@@ -121,4 +129,5 @@ class HouseholdMember extends Model
 
         return $query->whereDay('birthdate', $day)->whereMonth('birthdate', $month);
     }
+
 }

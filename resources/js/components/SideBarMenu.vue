@@ -42,6 +42,14 @@
                             <span class="nav-title">Вікові групи населення</span>
                         </router-link>
                     </li>
+                    <li>
+                        <router-link to="/adulds-and-children">
+                            <span class="icon">
+                                <span class="mdi mdi-human-male-female-child"></span>
+                            </span>
+                            <span class="nav-title">Дорослі і діти</span>
+                        </router-link>
+                    </li>
                 </ul>
             </li>
             <li class="has-submenu">

@@ -238,6 +238,7 @@ export default {
     data() {
         return {
             formData: {
+                report: 'membersByAge',
                 sex: 0,
                 settlementId: 0,
                 date: new Date().toISOString().slice(0, 10)

@@ -50,4 +50,15 @@ class SettlementTest extends TestCase
 
         $this->assertCount(5, $settlement->members);
     }
+
+    public function test_settlement_return_households_with_particular_type()
+    {
+        $settlement = Settlement::factory()->create();
+
+        Household::factory()->count(3)->create(['settlement_id' => $settlement->id, 'household_type_id' => 1]);
+        Household::factory()->count(2)->create(['settlement_id' => $settlement->id, 'household_type_id' => 2]);
+
+        $this->assertCount(2, $settlement->households(2));
+
+    }
 }

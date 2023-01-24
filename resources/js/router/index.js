@@ -18,6 +18,7 @@ import SettlementTypes      from "../modules/SettlementTypes/Main.vue";
 import Councils             from "../modules/Councils/Main.vue";
 import CouncilsShow         from "../modules/Councils/Show.vue";
 import MembersByAge         from "../modules/Analityc/MembersByAge.vue";
+import AdultsAndChildren    from "../modules/Analityc/AdultsAndChildren.vue";
 
 const routes = [
     { path: '/',                        component: Dashboard, meta: {icon: '<span class="mdi mdi-monitor-dashboard"></span>'} },
@@ -37,7 +38,9 @@ const routes = [
     { path: '/councils',                component: Councils, meta: {name: 'Міські / сільські ради'}},
     { path: '/councils/:id',            component: CouncilsShow, name: 'CouncilsShow', props: true, meta: {name: 'Інформація'}},
     { path: '/settlement-types',        component: SettlementTypes, meta: {name: 'Типи населеного пункту'}},
-    { path: '/members-by-age',          component: MembersByAge, name: 'MembersByAge', meta: {name: 'Вікові групи населення'}}
+    { path: '/members-by-age',          component: MembersByAge, name: 'MembersByAge', meta: {name: 'Вікові групи населення'}},
+    { path: '/adulds-and-children',     component: AdultsAndChildren, name: 'AdultsAndChildren', meta: {name: 'Дорослі і діти'}}
+
 ]
 
 const router = createRouter({

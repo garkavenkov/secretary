@@ -31,9 +31,23 @@ class Settlement extends Model
         return $this->belongsTo(SettlementType::class, 'settlement_type_id');
     }
 
-    public function households()
+    public function households($type = null)
     {
-        return $this->hasMany(Household::class);
+        $h = $this->hasMany(Household::class);
+
+        if (!is_null($type)) {
+            if (is_array($type)) {
+                $h = $h->whereIn('household_type_id', $type)->get();
+            } else {
+                $h = $h->where('household_type_id', $type)->get();
+            }
+        }
+        return $h;
+    }
+
+    public function living()
+    {
+        return $this->households->whereIn('household_type_id', [1,2]);
     }
 
     public function members()
@@ -94,5 +108,18 @@ class Settlement extends Model
 
         return $members;
 
+    }
+
+    public function activeMembers($date = null)
+    {
+        return $this->members()
+                        ->alive($date)
+                        ->get()
+                        ->filter(function($m) use($date) {
+                            if ($m->movement($date)) {
+                                return $m->movement($date)->type->code != 'leave';
+                            }
+                            return true;
+                        });
     }
 }

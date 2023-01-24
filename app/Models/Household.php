@@ -100,4 +100,8 @@ class Household extends Model
         return $this->hasMany(HouseholdLand::class);
     }
 
+    public function scopeLiving($q)
+    {
+        return $q->whereIn('household_type_id', [1, 2]);
+    }
 }
