@@ -54,7 +54,8 @@ export default {
             }
         },
         goToHousehold(id) {
-            this.$router.push({ name: 'HouseholdCardsShow', params: { id: id } })
+            // this.$router.push({ name: 'HouseholdCardsShow', params: { id: id } })
+            this.$router.push({ path: `/household-cards/${id}`});
         },
         handleClick(e) {
             if (!this.$el.contains(e.target)) {

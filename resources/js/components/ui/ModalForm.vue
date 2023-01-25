@@ -13,9 +13,14 @@
                 <div class="modal-body">
                    <slot></slot>
                 </div>
-                <div class="modal-footer" v-if="showFooter">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('closeForm')">Відмінити</button>
-                    <button type="button" class="btn btn-primary" @click="$emit('submitData')">{{modalSubmitCaption}}</button>
+                <div class="modal-footer justify-content-between" v-if="showFooter">
+                    <div>
+                        <slot name="footer"></slot>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('closeForm')">Відмінити</button>
+                        <button type="button" class="btn btn-primary ms-4" @click="$emit('submitData')">{{modalSubmitCaption}}</button>
+                    </div>
                 </div>
             </div>
         </div>

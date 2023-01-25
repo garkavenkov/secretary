@@ -21,10 +21,21 @@ class HouseholdController extends Controller
         if (request()->query('search')) {
             $search = '%' . str_replace(' ', '%', request()->query('search')) . '%';
             $households = Household::with('settlement')->where('address', 'like', $search)->take(10)->get();
+        }  else if (request()->query('where')) {
+            $conditions = explode(';', request()->query('where'));
+            $households = Household::with('settlement');
+            foreach($conditions as $condition) {
+                $parts = explode('=', $condition);
+                if (count($parts) == 2) {
+                    if (Household::isFieldFilterable($parts[0])) {
+                        $households = $households->where($parts[0], $parts[1]);
+                    }
+                }
+            }
+            $households = $households->get();
         } else {
             $households = Household::with('settlement')->get();
         }
-
 
         return new HouseholdResourceCollection($households);
     }

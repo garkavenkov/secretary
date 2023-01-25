@@ -115,11 +115,12 @@ export default {
         '$route' (to, from) {
             // console.log(to, from);
             // this.fetchRecord(to.params.id);
-            this.$store.dispatch('Households/fetchRecord', to.params.id);
+            this.$store.dispatch('Households/fetchRecord', to.params.id,);
         },
 
     },
     created() {
+        // this.$store.dispatch('Households/fetchRecord', this.id, '/api/v1/houshold-cards');
         this.$store.dispatch('Households/fetchRecord', this.id);
 
     }

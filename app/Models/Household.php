@@ -20,6 +20,15 @@ class Household extends Model
         'additional_data',
     ];
 
+    protected static $filterable = [
+        'settlement_id',
+        'household_type_id',
+    ];
+
+    public static function isFieldFilterable($field) {
+        return in_array($field, self::$filterable);
+    }
+
     protected static function boot()
     {
 
