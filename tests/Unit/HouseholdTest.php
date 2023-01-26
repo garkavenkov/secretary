@@ -9,6 +9,7 @@ use App\Models\Household;
 use App\Models\HouseholdHouse;
 use App\Models\HouseholdLand;
 use App\Models\HouseholdMember;
+use App\Models\HouseholdOwner;
 use App\Models\HouseholdType;
 use App\Models\Settlement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -67,5 +68,13 @@ class HouseholdTest extends TestCase
         HouseholdLand::factory()->count(3)->create(['household_id' => $household->id]);
 
         $this->assertCount(3, $household->landYears);
+    }
+
+    public function test_household_may_have_owners()
+    {
+        $household = Household::factory()->create();
+        $owner = HouseholdOwner::factory()->create(['household_id' => $household->id]);
+
+        $this->assertEquals($household->owners[0]->name, $owner->name);
     }
 }

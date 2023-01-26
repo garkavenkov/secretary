@@ -54,7 +54,7 @@ class HouseholdResource extends JsonResource
                 'address'               =>  $this->address,
                 'special_marks'         =>  $this->special_marks,
                 'additional_data'       =>  $this->additional_data,
-                'owners'                =>  $this->owners(),
+                'owners'                =>  $this->owners,
             ],
             // 'members'               =>  HouseholdMemberResource::collection($this->whenLoaded('members')),
             'members'               =>  $members,

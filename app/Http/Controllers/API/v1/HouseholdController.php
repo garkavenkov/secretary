@@ -70,7 +70,8 @@ class HouseholdController extends Controller
                             'members.workPlace',
                             'members.movements',
                             'houseYears',
-                            'landYears'
+                            'landYears',
+                            'owners'
                         )
                         ->findOrFail($id);
 

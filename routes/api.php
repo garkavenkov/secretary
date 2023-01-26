@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\v1\RegionController;
+use App\Http\Controllers\API\v1\ReportController;
 use App\Http\Controllers\API\v1\CouncilController;
 use App\Http\Controllers\API\v1\DistrictController;
 use App\Http\Controllers\API\v1\CommunityController;
@@ -15,13 +16,13 @@ use App\Http\Controllers\API\v1\MovementTypeController;
 use App\Http\Controllers\API\v1\HouseholdLandController;
 use App\Http\Controllers\API\v1\HouseholdTypeController;
 use App\Http\Controllers\API\v1\HouseholdHouseController;
+use App\Http\Controllers\API\v1\HouseholdOwnerController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamController;
 use App\Http\Controllers\API\v1\HouseholdMemberController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
-use App\Http\Controllers\API\v1\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,7 @@ Route::group(['prefix' => 'v1'], function() {
     Route::resource('movement-types',               MovementTypeController::class);
     Route::resource('household-member-movements',   HouseholdMemberMovementController::class);
     Route::resource('household-lands',              HouseholdLandController::class);
+    Route::resource('household-owners',             HouseholdOwnerController::class);
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
