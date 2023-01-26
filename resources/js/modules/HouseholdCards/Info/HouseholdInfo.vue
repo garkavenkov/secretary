@@ -57,7 +57,7 @@
                 <div class="fw-bold border-bottom mb-2 pb-2 household-head">Голова домогосподарства</div>
                 <div class="px-md-3 px-xl-1">
                     <template v-if="info.household_head">
-                        <span draggable="true" @dragstart="pickupHead($event, info.household_head)" @dragend="pickupHeadEnded($event)">{{ info.household_head }}</span>
+                        <span :draggable="!headIsAlreadyOwner" @dragstart="pickupHead($event, info.household_head)" @dragend="pickupHeadEnded($event)">{{ info.household_head }}</span>
                     </template>
                     <template v-else>
                         <div class="text-muted text-center fs-08 pt-2">Інформація відсутня</div>
@@ -177,6 +177,15 @@ export default {
         pickupHeadEnded(e) {
             let ownersId = document.getElementById('owners');
             ownersId.classList.remove('drop-zone');
+        }
+    },
+    computed: {
+        headIsAlreadyOwner() {
+            if (this.info.household_head) {
+                return this.info.owners.findIndex(o => {
+                    return (o.name == this.info.household_head);
+                }) != -1;
+            }
         }
     },
     components: {

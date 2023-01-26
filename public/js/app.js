@@ -23125,6 +23125,16 @@ __webpack_require__.r(__webpack_exports__);
       ownersId.classList.remove('drop-zone');
     }
   },
+  computed: {
+    headIsAlreadyOwner: function headIsAlreadyOwner() {
+      var _this5 = this;
+      if (this.info.household_head) {
+        return this.info.owners.findIndex(function (o) {
+          return o.name == _this5.info.household_head;
+        }) != -1;
+      }
+    }
+  },
   components: {
     OwnerForm: _OwnerForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
@@ -28258,7 +28268,8 @@ var _hoisted_26 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_27 = {
   "class": "px-md-3 px-xl-1"
 };
-var _hoisted_28 = {
+var _hoisted_28 = ["draggable"];
+var _hoisted_29 = {
   key: 1,
   "class": "text-muted text-center fs-08 pt-2"
 };
@@ -28299,14 +28310,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, _hoisted_23, 8 /* PROPS */, _hoisted_21)])]);
   }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_24, "Інформація відсутня"))], 32 /* HYDRATE_EVENTS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [$props.info.household_head ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
     key: 0,
-    draggable: "true",
+    draggable: !$options.headIsAlreadyOwner,
     onDragstart: _cache[4] || (_cache[4] = function ($event) {
       return $options.pickupHead($event, $props.info.household_head);
     }),
     onDragend: _cache[5] || (_cache[5] = function ($event) {
       return $options.pickupHeadEnded($event);
     })
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.info.household_head), 33 /* TEXT, HYDRATE_EVENTS */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_28, "Інформація відсутня"))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n            <div class=\"col\">\n                <div class=\"fw-bold\">Голова домогосподарства</div>\n                <div>\n                    <template v-if=\"info.household_head\">\n                        {{ info.household_head }}\n                    </template>\n                    <template v-else>\n                        Інформація відсутня\n                    </template>\n                </div>\n            </div>\n        </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_OwnerForm, {
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.info.household_head), 41 /* TEXT, PROPS, HYDRATE_EVENTS */, _hoisted_28)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, "Інформація відсутня"))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n            <div class=\"col\">\n                <div class=\"fw-bold\">Голова домогосподарства</div>\n                <div>\n                    <template v-if=\"info.household_head\">\n                        {{ info.household_head }}\n                    </template>\n                    <template v-else>\n                        Інформація відсутня\n                    </template>\n                </div>\n            </div>\n        </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_OwnerForm, {
     formData: $data.ownerData,
     action: $data.action,
     onRefreshData: _cache[6] || (_cache[6] = function ($event) {
