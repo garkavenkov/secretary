@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             SettlementSeeder::class,
             AdditionalParamCategorySeeder::class,
             AdditionalParamSeeder::class,
+            MovementTypeSeeder::class,
         ]);
 
     }
