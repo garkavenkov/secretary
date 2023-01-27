@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix' => 'v1'], function() {
+Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('regions',                      RegionController::class);
     Route::resource('districts',                    DistrictController::class);
     Route::resource('communities',                  CommunityController::class);
