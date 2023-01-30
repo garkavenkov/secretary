@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\FamilyRelationship>
  */
-class FamilyRelationshipFactory extends Factory
+class FamilyRelationshipTypeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class FamilyRelationshipFactory extends Factory
     public function definition()
     {
         return [
-            'name'  =>  $this->faker->sentence(3)
+            'name'  =>  $this->faker->sentence(3),
+            'sex'   =>  $this->faker->randomElement(['чоловіча', 'жіноча']),
         ];
     }
 }

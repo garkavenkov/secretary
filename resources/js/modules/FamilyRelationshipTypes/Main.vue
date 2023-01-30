@@ -5,8 +5,10 @@
         <div class="col-md-10 col-lg-8 mx-auto">
 
             <SystemDictionaryTable
-                    :dataTable="relationships"
+                    :dataTable="relationshipTypes"
                     title='Довідник "Родинні стосунки"'
+                    :fieldsTitle="['Назва', 'Стать']"
+                    :fieldsName="['name', 'sex']"
                     @newRecord="openFormForAdd"
                     @editRecord="openFormForEdit" />
 
@@ -17,9 +19,9 @@
             :formData="formData"
             :action="action"
             :formId="formId"
-            fieldId="familyRelationshipName"
-            url="/api/v1/family-relationships"
-            @refreshData="$store.dispatch('FamilyRelationships/fetchRecords')" />
+            fieldId="familyRelationshipTypeName"
+            url="/api/v1/family-relationship-types"
+            @refreshData="$store.dispatch('FamilyRelationshipTypes/fetchRecords')" />
 
 </template>
 
@@ -32,7 +34,7 @@ import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue
 import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
 
 export default {
-    name: 'FamilyRelationshipsMain',
+    name: 'FamilyRelationshipTypesMain',
     mixins: [SystemDictionary],
     components: {
         Breadcrumbs,
@@ -41,13 +43,17 @@ export default {
     },
     data() {
         return {
-            formId: 'FamilyRelationshipForm',
+            formId: 'FamilyRelationshipTypeForm',
             modalTitleCreate: 'Новий тип родинних відносин',
             modalTitleUpdate: 'Редагування типу',
+            formData: {
+                name: '',
+                sex: ''
+            },
         }
     },
     computed: {
-        ...mapGetters('FamilyRelationships', ['relationships'])
+        ...mapGetters('FamilyRelationshipTypes', {'relationshipTypes':'types'})
     },
 }
 </script>

@@ -88,18 +88,18 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="familyRelationship" class="form-label">Родинні стосунки</label>
-                                <select :class="['form-control', hasError('family_relationship_id') ? 'is-invalid' : '']"
+                                <label for="familyRelationshipType" class="form-label">Родинні стосунки</label>
+                                <select :class="['form-control', hasError('family_relationship_type_id') ? 'is-invalid' : '']"
                                         aria-label="Default select example"
-                                        v-model="_form.family_relationship_id"
+                                        v-model="_form.family_relationship_type_id"
                                         :disabled="!isInEditMode">
                                     <option disabled value="0">Оберить тип родинних стосунків</option>
-                                    <option :value="relationship.id" v-for="relationship in relationships" :key="relationship.id">
+                                    <option :value="relationship.id" v-for="relationship in relationshipTypes" :key="relationship.id">
                                         {{relationship.name}}
                                     </option>
                                 </select>
-                                <div id="familyRelationshipValidation" class="invalid-feedback">
-                                    {{ getError('family_relationship_id') }}
+                                <div id="familyRelationshipTypeValidation" class="invalid-feedback">
+                                    {{ getError('family_relationship_type_id') }}
                                 </div>
                             </div>
                         </div>
@@ -609,7 +609,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('FamilyRelationships', ['relationships']),
+        ...mapGetters('FamilyRelationshipTypes', {'relationshipTypes': 'types'}),
         ...mapGetters('WorkPlaces', ['places']),
         readyForSave() {
             return JSON.stringify(this.formData) !== JSON.stringify(this._form);

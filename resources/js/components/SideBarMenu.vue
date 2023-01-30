@@ -139,11 +139,11 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/family-relationships">
+                        <router-link to="/family-relationship-types">
                             <span class="icon">
                                 <span class="mdi mdi-family-tree"></span>
                             </span>
-                            <span class="nav-title">Родинні стосунки</span>
+                            <span class="nav-title">Типи родинних стосунків</span>
                         </router-link>
                     </li>
                 </ul>
@@ -169,7 +169,7 @@ export default {
         this.appVersion = window.app.version;
         this.$store.dispatch('Regions/fetchRecords');
         this.$store.dispatch('Districts/fetchRecords');
-        this.$store.dispatch('FamilyRelationships/fetchRecords');
+        this.$store.dispatch('FamilyRelationshipTypes/fetchRecords');
         this.$store.dispatch('HouseholdTypes/fetchRecords');
         this.$store.dispatch('WorkPlaces/fetchRecords');
         this.$store.dispatch('SettlementTypes/fetchRecords');

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources\API\v1\FamilyRelationship;
+namespace App\Http\Resources\API\v1\FamilyRelationshipType;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FamilyRelationshipResource extends JsonResource
+class FamilyRelationshipTypeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,8 @@ class FamilyRelationshipResource extends JsonResource
     {
         return [
             'id'    =>  (int)   $this->id,
-            'name'  =>  $this->name
+            'name'  =>  $this->name,
+            'sex'   =>  $this->sex,
         ];
     }
 }

@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('family_relationships', function (Blueprint $table) {
+        Schema::create('family_relationship_types', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('sex')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('family_relationships');
+        Schema::dropIfExists('family_relationship_types');
     }
 };

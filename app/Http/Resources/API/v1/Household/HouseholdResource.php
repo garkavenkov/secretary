@@ -30,7 +30,7 @@ class HouseholdResource extends JsonResource
         if ($members->count() > 0) {
             $head = $members->first(function($m) {
                 // dd($m);
-                return $m->familyRelationship->name == 'голова домогосподарства';
+                return $m->familyRelationshipType->name == 'голова домогосподарства';
             });
             if ($head) {
                 $household_head = $head->surname . ' ' . $head->name . ' ' . $head->patronymic;

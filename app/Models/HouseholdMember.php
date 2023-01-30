@@ -24,7 +24,7 @@ class HouseholdMember extends Model
         'patronymic',
         'sex',
         'birthdate',
-        'family_relationship_id',
+        'family_relationship_type_id',
         'employment_information',
         'work_place_id',
         'social_information',
@@ -39,9 +39,9 @@ class HouseholdMember extends Model
 
     protected $appends = array('status', 'fullAge');
 
-    public function familyRelationship()
+    public function familyRelationshipType()
     {
-        return $this->belongsTo(FamilyRelationship::class);
+        return $this->belongsTo(FamilyRelationshipType::class, 'family_relationship_type_id');
     }
 
     public function workPlace()

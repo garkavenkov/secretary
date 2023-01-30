@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FamilyRelationship extends Model
+class FamilyRelationshipType extends Model
 {
     use HasFactory;
 
+    protected $table = 'family_relationship_types';
+
     protected $fillable = [
-        'name'
+        'name',
+        'sex'
     ];
 }

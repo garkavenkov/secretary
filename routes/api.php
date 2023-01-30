@@ -20,7 +20,7 @@ use App\Http\Controllers\API\v1\HouseholdOwnerController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamController;
 use App\Http\Controllers\API\v1\HouseholdMemberController;
-use App\Http\Controllers\API\v1\FamilyRelationshipController;
+use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
 
@@ -49,7 +49,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('settlement-types',             SettlementTypeController::class);
     Route::resource('settlements',                  SettlementController::class);
     Route::resource('work-places',                  WorkPlaceController::class);
-    Route::resource('family-relationships',         FamilyRelationshipController::class);
+    Route::resource('family-relationship-types',    FamilyRelationshipTypeController::class);
     Route::resource('household-types',              HouseholdTypeController::class);
     Route::resource('land-plot-types',              LandPlotTypeController::class);
     Route::resource('households',                   HouseholdController::class);

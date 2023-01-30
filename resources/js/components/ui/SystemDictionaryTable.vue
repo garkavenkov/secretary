@@ -15,14 +15,18 @@
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>
-                        <th>Назва</th>
+                        <th v-for="(title,index) in fieldsTitle" :key="index">
+                            {{ title }}
+                        </th>
                         <th></th>
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
-                        <td>{{record.name}}</td>
+                        <td v-for="(name,index) in fieldsName" :key="index">
+                            {{ record[name] }}
+                        </td>
                         <td>
                             <button class="btn btn-sm btn-outline-secondary"
                                     @click="$emit('editRecord', record)"
@@ -52,7 +56,18 @@ export default {
         'dataTable': {
             type: Array,
             required: true
+        },
+        'fieldsTitle': {
+            type: Array,
+            required: false,
+            default: () => ['Назва']
+        },
+        'fieldsName': {
+            type: Array,
+            required: false,
+            default: () => ['name']
         }
+
     },
     data() {
         return {

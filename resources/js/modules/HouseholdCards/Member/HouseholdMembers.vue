@@ -2,17 +2,16 @@
     <div id="members">
         <div class="p-3 d-flex justify-content-between">
             <div>
-                <!-- <button type="button"
+                <button type="button"
                         class="btn btn-sm btn-light me-2"
                         @click="toggleFullScreen" title="Повний єкран">
-                    <i class="bi bi-fullscreen"></i>
-                </button> -->
+                    <span class="mdi mdi-family-tree"></span>
+                </button>
                 <button type="button"
                         id="newMember"
                         class="btn btn-sm btn-primary"
                         @click="newMember($event)">
-                    <!-- <i class="bi bi-person-add"></i> -->
-                    <span class="mdi mdi-account-plus-outline me-1"></span>
+                    <span class="mdi mdi-account-plus-outline"></span>
                     новий член
                 </button>
                 <button type="button"
@@ -21,8 +20,13 @@
                         title="Відобразити всіх"
                         v-if="hiddenMemebersExist"
                         @click="showAllMembers = !showAllMembers">
-                    <!-- <i class="bi bi-person-fill-check"></i> -->
                     <span class="mdi mdi-account-question-outline"></span>
+                </button>
+                <button type="button"
+                        id="membersComposition"
+                        class="btn btn-sm btn-outline-primary ms-2"
+                        @click="openMembersCompositionForm">
+                    <span class="mdi mdi-family-tree"></span>
                 </button>
             </div>
             <div>
@@ -31,7 +35,6 @@
                         class="btn btn-sm btn-outline-secondary me-2"
                         :class="{'active' : viewMode == 'card'}"
                         @click="viewMode = 'card'">
-                    <!-- <i class="bi bi-person-vcard"></i> -->
                     <span class="mdi mdi-card-account-details-outline"></span>
                 </button>
                 <button type="button"
@@ -39,7 +42,6 @@
                         class="btn btn-sm btn-outline-secondary"
                         :class="{'active' : viewMode == 'table'}"
                         @click="viewMode = 'table'">
-                    <!-- <i class="bi bi-table"></i> -->
                     <span class="mdi mdi-table-account"></span>
                 </button>
             </div>
@@ -57,17 +59,15 @@
                             <div class="member-name">{{member.name}} {{member.patronymic}}</div>
                         </div>
                         <h4 class="mt-2" v-if="member.family_relationship == 'голова домогосподарства'">
-                            <!-- <i class="bi bi-person-bounding-box" title="Голова домогосподарства"></i> -->
                             <span class="mdi mdi-head-alert-outline" title="Голова домогосподарства"></span>
                         </h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex mb-2 align-items-center family-relationship">
                             <span class="mdi mdi-family-tree me-3" style="color:blue" title="Родинні відносини"></span>
-                            {{member.family_relationship}}
+                            {{member.family_relationship_type}}
                         </div>
                         <div class="d-flex mb-2 flex-column">
-                            <!-- <i class="bi bi-gift me-3" style="color:red" title="Дата народження"></i> -->
                             <div>
                                 <span class="mdi mdi-cake-variant-outline me-3" style="color:red" title="Дата народження"></span>
                                 <span>{{formatedDate(member.birthdate)}}</span>
@@ -127,7 +127,7 @@
                                     {{formatedDate(member.death_date)}}
                                 </template>
                             </td>
-                            <td>{{member.family_relationship}}</td>
+                            <td>{{member.family_relationship_type}}</td>
                             <!-- <td>
                                 <template v-if="member.work_place">
                                     {{member.work_place.name}}
@@ -143,16 +143,19 @@
 
     <HouseholdMemberForm :formData="formData" @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
     <HouseholdMemberInfo :formData="formData" @refreshData="refreshMemberInfo" v-if="formIsReady" @closeMemberInfoForm="closeMemberInfoForm"/>
+    <!-- <HouseholdMembersComposition :members="members" v-if="isFamilyCompositionFormShown" @closeForm="isFamilyCompositionFormShown = false" /> -->
+    <HouseholdMembersComposition :members="members" />
 
 </template>
 
 <script>
-import { Modal } from 'bootstrap'
-import { computed } from 'vue'
+import { Modal } from 'bootstrap';
+import { computed } from 'vue';
 import DateFormat from '../../../minixs/DateFormat';
 
-import HouseholdMemberForm from './HouseholdMemberForm.vue'
-import HouseholdMemberInfo from './HouseholdMemberInfo.vue'
+import HouseholdMemberForm from './HouseholdMemberForm.vue';
+import HouseholdMemberInfo from './HouseholdMemberInfo.vue';
+import HouseholdMembersComposition from './HouseholdMembersComposition.vue';
 
 export default {
     name: 'HouseholdMembers',
@@ -176,7 +179,7 @@ export default {
                 patronymic: '',
                 sex: '',
                 birthdate: null,
-                family_relationship_id: 0,
+                family_relationship_type_id: 0,
                 employment_information: '',
                 social_information: '',
                 additional_information: '',
@@ -193,6 +196,7 @@ export default {
             viewMode: 'card',
             formIsReady: false,
             showAllMembers: false,
+            isFamilyCompositionFormShown: false
         }
     },
     provide() {
@@ -252,8 +256,8 @@ export default {
                 .then(res => {
                     this.$store.dispatch('Households/fetchHousehold', this.household_id);
                     this.clearFormData();
-                    var myModalForm = Modal.getInstance('#HouseholdMemberForm');
-                    myModalForm.hide();
+                    let memberForm = Modal.getInstance('#HouseholdMemberForm');
+                    memberForm.hide();
                 })
         },
         toggleFullScreen() {
@@ -286,6 +290,12 @@ export default {
                 element.msRequestFullscreen();
               }
             }
+        },
+        openMembersCompositionForm() {
+            this.modalTitle = 'Родині відносини';
+            this.isFamilyCompositionFormShown = true;
+            let membersCompositionForm = new Modal(document.getElementById('HouseholdMembersComposition'));
+            membersCompositionForm.show();
         }
     },
     computed: {
@@ -300,7 +310,8 @@ export default {
     },
     components: {
         HouseholdMemberForm,
-        HouseholdMemberInfo
+        HouseholdMemberInfo,
+        HouseholdMembersComposition
     }
 }
 </script>

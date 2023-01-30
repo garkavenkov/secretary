@@ -66,7 +66,7 @@ class HouseholdController extends Controller
     {
         $household = Household::with('settlement',
                             'type',
-                            'members.familyRelationship',
+                            'members.familyRelationshipType',
                             'members.workPlace',
                             'members.movements',
                             'houseYears',

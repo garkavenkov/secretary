@@ -79,17 +79,16 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="familyRelationship" class="form-label">Родинні стосунки</label>
-                            <select :class="['form-control', hasError('family_relationship_id') ? 'is-invalid' : '']"
-                                    aria-label="Default select example"
-                                    v-model="formData.family_relationship_id">
+                            <label for="familyRelationshipType" class="form-label">Родинні стосунки</label>
+                            <select :class="['form-control', hasError('family_relationship_type_id') ? 'is-invalid' : '']"
+                                    v-model="formData.family_relationship_type_id">
                                 <option disabled value="0">Оберить тип родинних стосунків</option>
-                                <option :value="relationship.id" v-for="relationship in relationships" :key="relationship.id">
+                                <option :value="relationship.id" v-for="relationship in relationshipTypes" :key="relationship.id">
                                     {{relationship.name}}
                                 </option>
                             </select>
-                            <div id="familyRelationshipValidation" class="invalid-feedback">
-                                {{ getError('family_relationship_id') }}
+                            <div id="familyRelationshipTypeValidation" class="invalid-feedback">
+                                {{ getError('family_relationship_type_id') }}
                             </div>
                         </div>
                     </div>
@@ -330,7 +329,7 @@ export default {
                 this.formData.patronymic = '';
                 this.formData.sex = '';
                 this.formData.birthdate = null;
-                this.formData.family_relationship_id = 0;
+                this.formData.family_relationship_type_id = 0;
                 this.formData.employment_information = '';
                 this.formData.work_place_id = 0;
 
@@ -352,7 +351,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters('FamilyRelationships', ['relationships']),
+        ...mapGetters('FamilyRelationshipTypes', {'relationshipTypes':'types'}),
         ...mapGetters('WorkPlaces', ['places']),
     },
     components: {

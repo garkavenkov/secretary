@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
             LandPlotTypeSeeder::class,
             SettlementTypeSeeder::class,
             WorkPlaceSeeder::class,
-            FamilyRelationshipSeeder::class,
+            FamilyRelationshipTypeSeeder::class,
             RegionSeeder::class,
             DistrictSeeder::class,
             CommunitySeeder::class,
