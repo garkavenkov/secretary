@@ -20,6 +20,7 @@ use App\Http\Controllers\API\v1\HouseholdOwnerController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamController;
 use App\Http\Controllers\API\v1\HouseholdMemberController;
+use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
@@ -50,6 +51,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('settlements',                  SettlementController::class);
     Route::resource('work-places',                  WorkPlaceController::class);
     Route::resource('family-relationship-types',    FamilyRelationshipTypeController::class);
+    Route::resource('family-relationships',         FamilyRelationshipController::class);
     Route::resource('household-types',              HouseholdTypeController::class);
     Route::resource('land-plot-types',              LandPlotTypeController::class);
     Route::resource('households',                   HouseholdController::class);
@@ -64,4 +66,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
+    Route::post('establish-family-relationships',   [FamilyRelationshipController::class, 'establishRelationships'])->name('establish-family-relationships');
+    Route::post('family-composition-report',        [ReportController::class, 'familyComposition']);
 });

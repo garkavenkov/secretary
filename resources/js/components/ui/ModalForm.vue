@@ -19,7 +19,7 @@
                     </div>
                     <div>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('closeForm')">Відмінити</button>
-                        <button type="button" class="btn btn-primary ms-4" @click="$emit('submitData')">{{modalSubmitCaption}}</button>
+                        <button type="button" class="btn btn-primary ms-4" @click="$emit('submitData')" :disabled="sumbitIsDisabled">{{modalSubmitCaption}}</button>
                     </div>
                 </div>
             </div>
@@ -45,6 +45,11 @@ export default {
             type: Boolean,
             required: false,
             default: () => true
+        },
+        'sumbitIsDisabled': {
+            type: Boolean,
+            required: false,
+            default: () => false
         }
     },
     inject: {

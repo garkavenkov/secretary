@@ -1,6 +1,10 @@
 <template>
 
-    <ModalForm formId="HouseholdMembersComposition" @submitData="submitData" @closeForm="closeForm" modalClass="modal-fullscreen">
+    <ModalForm  formId="HouseholdMembersComposition"
+                @submitData="submitData"
+                @closeForm="closeForm"
+                modalClass="modal-fullscreen"
+                :sumbitIsDisabled="submitIsDisabled">
 
         <table class="table table-bordered table-sm">
 
@@ -11,7 +15,7 @@
                         <div class="member-name__horizontal">
                             <span>{{ member.surname }}</span>
                             <span>{{ member.name }} {{ member.patronymic }}</span>
-                            <span>{{ member.birthdate }}</span>
+                            <!-- <span>{{ member.birthdate }}</span> -->
                         </div>
                     </th>
                 </tr>
@@ -24,7 +28,7 @@
                             <div class="member-name__horizontal">
                                 <span>{{ member.surname }}</span>
                                 <span>{{ member.name }} {{ member.patronymic }}</span>
-                                <span>{{ member.birthdate }}</span>
+                                <!-- <span>{{ member.birthdate }}</span> -->
                             </div>
                         </td>
                         <template v-for="cell in members" :key="`cell-${cell.id}`">
@@ -37,7 +41,7 @@
                                         :data-sex="cell.sex"
                                         class="form-control"
                                         @change="relationshipSelected($event)"
-                                        v-model="links[`${member.id}.${cell.id}`]"
+                                        v-model="availableLinks[`${member.id}.${cell.id}`]"
                                         :title="`Ким являється ${cell.surname} ${cell.name} ${cell.patronymic} по відношенню  до  ${member.surname} ${member.name} ${member.patronymic}`">
                                     <option value="0" disabled>оберіть зв'язок</option>
                                     <template v-if="cell.sex == 'чоловіча'">
@@ -62,9 +66,9 @@
             </tbody>
 
         </table>
-        <pre>
-            {{ links }}
-        </pre>
+        <!-- <pre>
+            {{ availableLinks }}
+        </pre> -->
     </ModalForm>
 
 </template>
@@ -84,12 +88,20 @@ export default {
     },
     data() {
         return {
-            links: {},
-            linksPairs: {},
+            availableLinks: {},
+            establishedLinks: {},
+            relativePairs: {},
         }
     },
     methods: {
-        submitData() {},
+        submitData() {
+            if (JSON.stringify(this.availableLinks) !== JSON.stringify(this.establishedLinks)) {
+                axios.post('/api/v1/establish-family-relationships', this.availableLinks)
+                    .then(res => {
+                        this.$emit('refreshData');
+                    })
+            }
+        },
         closeForm() {
             this.$emit('closeForm');
         },
@@ -100,88 +112,95 @@ export default {
                 let rest = this.members
                                 .filter(m => m.id !== member.id)
                                 .map(m => {
-                                    return { [`${member.id}.${m.id}`] : 0}
+                                    // console.log(member.relatives);
+                                    var relationship_type_id  = 0
+                                    let relative = member.relatives.find(r => r.relative_id == m.id);
+                                    if (relative) {
+                                        relationship_type_id = relative.relationship_type_id;
+                                    }
 
+
+                                    return {
+                                        [`${member.id}.${m.id}`] : relationship_type_id
+                                    }
                                 });
 
                 pairs.push(...rest);
             });
 
             pairs.forEach(p => {
-                this.links[Object.keys(p)[0]] = Object.values(p)[0];
+                this.availableLinks[Object.keys(p)[0]] = Object.values(p)[0];
             })
+            // this.establishedLinks = Object.assign({}, this.availableLinks);
 
-            this.linksPairs['чоловік.жіноча']    = "дружина";
-            this.linksPairs['дружина.чоловіча']  = "чоловік";
+            this.establishedLinks = {...this.availableLinks};
 
-            this.linksPairs['син.чоловіча']      = "батько";
-            this.linksPairs['син.жіноча']        = "мати";
+            this.relativePairs['чоловік.жіноча']    = "дружина";
+            this.relativePairs['дружина.чоловіча']  = "чоловік";
 
-            this.linksPairs['донька.чоловіча']   = "батько";
-            this.linksPairs['донька.жіноча']     = "мати";
+            this.relativePairs['син.чоловіча']      = "батько";
+            this.relativePairs['син.жіноча']        = "мати";
 
-            this.linksPairs['батько.чоловіча']   = "син";
-            this.linksPairs['батько.жіноча']     = "донька";
+            this.relativePairs['дочка.чоловіча']    = "батько";
+            this.relativePairs['дочка.жіноча']      = "мати";
 
-            this.linksPairs['мати.чоловіча']     = "син";
-            this.linksPairs['мати.жіноча']       = "донька";
+            this.relativePairs['батько.чоловіча']   = "син";
+            this.relativePairs['батько.жіноча']     = "дочка";
 
-            this.linksPairs['тесть.чоловіча']    = "зять";
-            this.linksPairs['теща.жіноча']       = "зять";
+            this.relativePairs['мати.чоловіча']     = "син";
+            this.relativePairs['мати.жіноча']       = "дочка";
 
-            this.linksPairs['свекор.чоловіча']   = "невістка";
-            this.linksPairs['свекруха.жіноча']   = "невістка";
+            this.relativePairs['тесть.чоловіча']    = "зять";
+            this.relativePairs['теща.жіноча']       = "зять";
 
-            this.linksPairs['невістка.чоловіча'] = "свекор";
-            this.linksPairs['невістка.жіноча']   = "свекруха";
+            this.relativePairs['свекор.чоловіча']   = "невістка";
+            this.relativePairs['свекруха.жіноча']   = "невістка";
 
-            this.linksPairs['дід.чоловіча']      = "онук";
-            this.linksPairs['дід.жіноча']        = "онука";
+            this.relativePairs['невістка.чоловіча'] = "свекор";
+            this.relativePairs['невістка.жіноча']   = "свекруха";
 
-            this.linksPairs['баба.чоловіча']     = "онук";
-            this.linksPairs['баба.жіноча']       = "онука";
+            this.relativePairs['дід.чоловіча']      = "онук";
+            this.relativePairs['дід.жіноча']        = "онука";
 
-            this.linksPairs['онука.чоловіча']    = "дід";
-            this.linksPairs['онука.жіноча']      = "баба";
+            this.relativePairs['баба.чоловіча']     = "онук";
+            this.relativePairs['баба.жіноча']       = "онука";
 
-            this.linksPairs['онук.чоловіча']     = "дід";
-            this.linksPairs['онук.жіноча']       = "баба";
+            this.relativePairs['онука.чоловіча']    = "дід";
+            this.relativePairs['онука.жіноча']      = "баба";
 
-            this.linksPairs['брат.чоловіча']     = "брат";
-            this.linksPairs['брат.жіноча']       = "сестра";
+            this.relativePairs['онук.чоловіча']     = "дід";
+            this.relativePairs['онук.жіноча']       = "баба";
 
-            this.linksPairs['сестра.чоловіча']   = "брат";
-            this.linksPairs['сестра.жіноча']     = "сестра";
+            this.relativePairs['брат.чоловіча']     = "брат";
+            this.relativePairs['брат.жіноча']       = "сестра";
 
-            this.linksPairs['прадід.чоловіча']   = "правнук";
-            this.linksPairs['прадід.жіноча']     = "правнука";
+            this.relativePairs['сестра.чоловіча']   = "брат";
+            this.relativePairs['сестра.жіноча']     = "сестра";
 
-            this.linksPairs['прабаба.чоловіча']  = "правнук";
-            this.linksPairs['прабаба.жіноча']    = "правнучка";
+            this.relativePairs['прадід.чоловіча']   = "правнук";
+            this.relativePairs['прадід.жіноча']     = "правнука";
 
-            // console.log(this.links);
-            // this.links = {}
+            this.relativePairs['прабаба.чоловіча']  = "правнук";
+            this.relativePairs['прабаба.жіноча']    = "правнучка";
+
         },
         relationshipSelected(e) {
-            // console.log(e)
-            // let relation = e.target.options[e.target.value].text;
             let relation = e.target.selectedOptions[0].text;
-            // console.log(relation);
-
+            console.log(`Relation: ${relation}`);
             let corMemberId = e.target.id.split('.').reverse().join('.');
             let corMemberEl = document.getElementById(corMemberId);
-            // console.log(corMemberEl);
             let corSex = corMemberEl.dataset.sex;
-
-            let corRelation = this.linksPairs[`${relation}.${corSex}`];
-            // console.log(corRelation);
+            console.log(`Correspondent sex: ${corSex}`);
+            console.log(`Correspondent: ${relation}.${corSex}`);
+            let corRelation = this.relativePairs[`${relation}.${corSex}`];
+            console.log(`Correspondent Relation: ${corRelation}`);
 
             if (corSex == 'чоловіча') {
-                // console.log('Чоловіча: ', this.maleRelationships.find(r => r.name == corRelation))
-                this.links[corMemberId] = this.maleRelationships.find(r => r.name == corRelation).id;
+                console.log('Чоловіча: ', this.maleRelationships.find(r => r.name == corRelation))
+                this.availableLinks[corMemberId] = this.maleRelationships.find(r => r.name == corRelation).id;
             } else {
-                // console.log('Жіноча: ', this.femaleRelationships.find(r => r.name == corRelation))
-                this.links[corMemberId] = this.femaleRelationships.find(r => r.name == corRelation).id;
+                console.log('Жіноча: ', this.femaleRelationships.find(r => r.name == corRelation))
+                this.availableLinks[corMemberId] = this.femaleRelationships.find(r => r.name == corRelation).id;
             }
 
 
@@ -194,6 +213,9 @@ export default {
         },
         femaleRelationships() {
             return this.relationshipTypes.filter(r => r.sex == 'жіноча')
+        },
+        submitIsDisabled() {
+            return JSON.stringify(this.availableLinks) === JSON.stringify(this.establishedLinks)
         }
     },
     created() {

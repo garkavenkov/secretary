@@ -2,16 +2,17 @@
     <div id="members">
         <div class="p-3 d-flex justify-content-between">
             <div>
-                <button type="button"
+                <!-- <button type="button"
                         class="btn btn-sm btn-light me-2"
                         @click="toggleFullScreen" title="Повний єкран">
                     <span class="mdi mdi-family-tree"></span>
-                </button>
+                </button> -->
                 <button type="button"
                         id="newMember"
                         class="btn btn-sm btn-primary"
+                        title="Додати нового члена домогосподарства"
                         @click="newMember($event)">
-                    <span class="mdi mdi-account-plus-outline"></span>
+                    <span class="mdi mdi-account-plus-outline me-1"></span>
                     новий член
                 </button>
                 <button type="button"
@@ -25,9 +26,17 @@
                 <button type="button"
                         id="membersComposition"
                         class="btn btn-sm btn-outline-primary ms-2"
+                        title="Встановити родинні зв'язки"
                         @click="openMembersCompositionForm">
-                    <span class="mdi mdi-family-tree"></span>
+                    <span class="mdi mdi-family-tree me-1"></span>
+                    Родинні зв'язки
                 </button>
+                <!-- <button type="button"
+                        id="membersComposition"
+                        class="btn btn-sm btn-outline-primary ms-2"
+                        @click="openFamilyCompositionReportForm(0)">
+                    <span class="mdi mdi-human-capacity-decrease"></span>
+                </button> -->
             </div>
             <div>
                 <button type="button"
@@ -58,7 +67,7 @@
                             <div class="member-surname">{{member.surname}}</div>
                             <div class="member-name">{{member.name}} {{member.patronymic}}</div>
                         </div>
-                        <h4 class="mt-2" v-if="member.family_relationship == 'голова домогосподарства'">
+                        <h4 class="mt-2" v-if="member.family_relationship_type == 'голова домогосподарства'">
                             <span class="mdi mdi-head-alert-outline" title="Голова домогосподарства"></span>
                         </h4>
                     </div>
@@ -86,7 +95,25 @@
                             </span>
                         </div> -->
                     </div>
-                    <div class="card-footer d-flex justify-content-center">
+                    <div class="card-footer d-flex justify-content-between">
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    title="Друк документів">
+                                <span class="mdi mdi-file"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" @click="openFamilyCompositionReportForm(member.id)">
+                                        <span class="mdi mdi-human-capacity-decrease me-2"></span>
+                                        Довідка про склад сім'ї
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
                         <button class="btn btn-sm btn-outline-secondary" @click="showHouseholdMemberInfo(member.id)">
                             <span class="mdi mdi-eye-outline"></span>
                         </button>
@@ -144,7 +171,11 @@
     <HouseholdMemberForm :formData="formData" @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
     <HouseholdMemberInfo :formData="formData" @refreshData="refreshMemberInfo" v-if="formIsReady" @closeMemberInfoForm="closeMemberInfoForm"/>
     <!-- <HouseholdMembersComposition :members="members" v-if="isFamilyCompositionFormShown" @closeForm="isFamilyCompositionFormShown = false" /> -->
-    <HouseholdMembersComposition :members="members" />
+    <HouseholdMembersComposition :members="shownMembers" @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
+    <FamilyCompositionReportForm
+            :members="shownMembers"
+            :selectedMember="selectedMember"
+            @closeFamilyCompositionReportForm="selectedMember = 0"/>
 
 </template>
 
@@ -156,6 +187,7 @@ import DateFormat from '../../../minixs/DateFormat';
 import HouseholdMemberForm from './HouseholdMemberForm.vue';
 import HouseholdMemberInfo from './HouseholdMemberInfo.vue';
 import HouseholdMembersComposition from './HouseholdMembersComposition.vue';
+import FamilyCompositionReportForm from './FamilyCompositionReportForm.vue';
 
 export default {
     name: 'HouseholdMembers',
@@ -193,23 +225,26 @@ export default {
                 movements: [],
             },
             modalTitle: '',
+            modalSubmitCaption: '',
             viewMode: 'card',
             formIsReady: false,
             showAllMembers: false,
-            isFamilyCompositionFormShown: false
+            isFamilyCompositionFormShown: false,
+            selectedMember: 0
         }
     },
     provide() {
         return {
             modalTitle: computed(() => this.modalTitle),
-            // modalTitle: 'Новий член домогосподарства',
-            // modalSubmitCaption: computed(() => this.modalSubmitCaption),
+            modalSubmitCaption: computed(() => this.modalSubmitCaption),
         }
     },
     methods: {
         newMember(e) {
-            let myModal = new Modal(document.getElementById('HouseholdMemberForm'))
             this.modalTitle = 'Новий член домогосподарства';
+            this.modalSubmitCaption = 'Додати';
+
+            let myModal = new Modal(document.getElementById('HouseholdMemberForm'))
             myModal.show();
         },
         showHouseholdMemberInfo(id) {
@@ -293,9 +328,20 @@ export default {
         },
         openMembersCompositionForm() {
             this.modalTitle = 'Родині відносини';
+            this.modalSubmitCaption = 'Встановити';
+
             this.isFamilyCompositionFormShown = true;
+
             let membersCompositionForm = new Modal(document.getElementById('HouseholdMembersComposition'));
             membersCompositionForm.show();
+        },
+        openFamilyCompositionReportForm(id) {
+            this.modalTitle = 'Довідка про стан родини';
+            this.modalSubmitCaption = 'Друк';
+            this.selectedMember = id;
+
+            let familyCompositionReportForm = new Modal(document.getElementById('FamilyCompositionReportForm'));
+            familyCompositionReportForm.show();
         }
     },
     computed: {
@@ -311,7 +357,8 @@ export default {
     components: {
         HouseholdMemberForm,
         HouseholdMemberInfo,
-        HouseholdMembersComposition
+        HouseholdMembersComposition,
+        FamilyCompositionReportForm
     }
 }
 </script>

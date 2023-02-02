@@ -84,27 +84,6 @@ class Household extends Model
         return $category->params();
     }
 
-    // public function owners()
-    // {
-    //     $category = AdditionalParamCategory::where('code', get_class($this))->first();
-    //     $param = AdditionalParam::where('code', 'owner')->where('category_id', $category->id)->first();
-    //     $owners = AdditionalParamValue::where('owner_id', $this->id)->where('param_id', $param->id)->get();
-
-    //     $owners = $owners->map(function($owner) {
-    //         $parts = explode('|', $owner->value);
-    //         $data = [];
-    //         $data['id'] = $owner->id;
-    //         if (count($parts) > 1) {
-    //             $data['name'] = $parts[0];
-    //             $data['address'] = $parts[1];
-    //         } else {
-    //             $data['name'] = $owner->value;
-    //         }
-    //         return $data;
-    //     });
-    //     return $owners;
-    // }
-
     public function landYears()
     {
         return $this->hasMany(HouseholdLand::class);
@@ -118,5 +97,15 @@ class Household extends Model
     public function owners(): HasMany
     {
         return $this->hasMany(HouseholdOwner::class);
+    }
+
+    public function fullAddress()
+    {
+        $settlement = $this->settlement->name;
+        $settlement_type = mb_strtolower($this->settlement->type->name);
+        $district = $this->settlement->council->community->district;
+        $region = $district->region->name;
+
+        return "$this->address, $settlement_type $settlement, $district->name, $region";
     }
 }

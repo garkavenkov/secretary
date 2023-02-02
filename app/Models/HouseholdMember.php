@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use DateTime;
 use App\Models\WorkPlace;
 use App\Models\FamilyRelationship;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
-use DateTime;
 
 class HouseholdMember extends Model
 {
@@ -128,6 +129,43 @@ class HouseholdMember extends Model
         // dd("month - $month, day - $day");
 
         return $query->whereDay('birthdate', $day)->whereMonth('birthdate', $month);
+    }
+
+    public function relatives()
+    {
+        // return $this
+        //         ->belongsToMany(
+        //             HouseholdMember::class,
+        //             FamilyRelationship::class,
+        //             'member_id',
+        //             'relative_id',
+        //             'id',
+        //             'id',
+        //         )
+        //         ->withPivot('relationship_type_id');
+
+        return  DB::table('household_members as m')
+                ->select(
+                    'r.id as relative_id',
+                    'r.surname',
+                    'r.name',
+                    'r.patronymic',
+                    'r.birthdate',
+                    'r.sex',
+                    'fr.relationship_type_id',
+                    'frt.name as relation'
+                )
+                ->join('family_relationships as fr', 'm.id', '=', 'fr.member_id')
+                ->leftJoin('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')
+                ->join('household_members as r', 'fr.relative_id', '=', 'r.id')
+                ->where('m.id', '=', $this->id)
+                ->orderBy('r.birthdate')
+                ->get();
+    }
+
+    public function household()
+    {
+        return $this->belongsTo(Household::class);
     }
 
 }
