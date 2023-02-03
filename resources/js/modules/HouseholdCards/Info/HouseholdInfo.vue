@@ -2,36 +2,28 @@
     <div class="pt-4">
         <div class="row justify-content-around mb-xl-4 mb-md-4">
             <div class="col-xl-5 col-md-12 mb-md-4">
-                <div class="fw-bold">Адреса</div>
-                <div v-if="info.address" class="px-md-3 px-xl-1">
+                <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">Адреса</div>
+                <div v-if="info.address">
                     {{ info.address }}
                 </div>
             </div>
             <div class="col-xl-5 col-md-12 mb-md-4">
-                <div class="fw-bold">Тип</div>
-                <div v-if="info.household_type" class="px-md-3 px-xl-1">
-                    {{ info.household_type.name}}
-                </div>
-            </div>
-        </div>
-        <!-- <div class="row mb-4">
-            <div class="col-md-5">
-                <div class="fw-bold">Тип</div>
+                <div class="fw-bold border-bottom mb-xl-2 pb-xl-2">Тип</div>
                 <div v-if="info.household_type">
                     {{ info.household_type.name}}
                 </div>
             </div>
-        </div> -->
-        <div class="row justify-content-around mb-xl-4">
-            <div class="col-xl-5 col-md-12  mb-md-4">
-                <div class="d-flex justify-content-between align-items-center border-bottom mb-2 pb-2">
+        </div>
+        <div class="row justify-content-around mb-xl-4 mb-md-4">
+            <div class="col-xl-5 col-md-12 mb-md-4">
+                <div class="d-flex justify-content-between align-items-center border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">
                     <span class="fw-bold">Власник<span v-if="info.owners && (info.owners.length > 1)">и</span></span>
                     <button class="btn btn-sm btn-light ms-3 text-muted" @click="newOwner" title="Додати нового власника">
                         <span class="mdi mdi-plus"></span>
                         Додати власника
                     </button>
                 </div>
-                <div id="owners" class="owner-wrapper px-md-3 px-xl-1"  @drop="dropHead($event)" @dragover.prevent @dragenter.prevent>
+                <div id="owners" class="owner-wrapper"  @drop="dropHead($event)" @dragover.prevent @dragenter.prevent>
                     <template v-if="info.owners && (info.owners.length > 0)">
                         <div class="d-flex justify-content-between" v-for="owner in info.owners" :key="owner.id">
                                 <div class="d-flex flex-column">
@@ -49,35 +41,39 @@
                         </div>
                     </template>
                     <template v-else>
-                        <div class="text-muted text-center fs-08">Інформація відсутня</div>
+                        <div class="text-muted text-center fs-08 p-2">Інформація відсутня</div>
                     </template>
                 </div>
             </div>
-            <div class="col-xl-5 col-md-12">
-                <div class="fw-bold border-bottom mb-2 pb-2 household-head">Голова домогосподарства</div>
-                <div class="px-md-3 px-xl-1">
+            <div class="col-xl-5 col-md-12 mb-md-4">
+                <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1 household-head">Голова домогосподарства</div>
+                <div>
                     <template v-if="info.household_head">
-                        <span :draggable="!headIsAlreadyOwner" @dragstart="pickupHead($event, info.household_head)" @dragend="pickupHeadEnded($event)">{{ info.household_head }}</span>
+                        <span   :draggable="!headIsAlreadyOwner"
+                                style="cursor:grabbing;"
+                                @dragstart="pickupHead($event, info.household_head)"
+                                @dragend="pickupHeadEnded($event)">
+                            {{ info.household_head }}
+                        </span>
                     </template>
                     <template v-else>
-                        <div class="text-muted text-center fs-08 pt-2">Інформація відсутня</div>
+                        <div class="text-muted text-center fs-08 p-2">Інформація відсутня</div>
                     </template>
                 </div>
             </div>
         </div>
-        <!-- <div class="row mb-3">
-            <div class="col">
-                <div class="fw-bold">Голова домогосподарства</div>
-                <div>
-                    <template v-if="info.household_head">
-                        {{ info.household_head }}
-                    </template>
-                    <template v-else>
-                        Інформація відсутня
-                    </template>
-                </div>
+        <div class="row justify-content-around mb-xl-4">
+            <div class="col-xl-5 col-md-12 mb-md-4">
+                <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">Спеціальні відмітки</div>
+                <div v-if="info.special_marks">{{ info.special_marks }}</div>
+                <div v-else class="text-muted text-center fs-08 p-2">Інформація відсутня</div>
             </div>
-        </div> -->
+            <div class="col-xl-5 col-md-12 mb-md-4">
+                <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">Додаткові відомості</div>
+                <div v-if="info.additional_data">{{ info.additional_data }}</div>
+                <div v-else class="text-muted text-center fs-08 p-2">Інформація відсутня</div>
+            </div>
+        </div>
     </div>
 
     <OwnerForm
@@ -197,7 +193,7 @@ export default {
 
 <style lang="scss" scoped>
 .owner-wrapper {
-    padding: 0.5rem;
+    // padding: 0.5rem;
     border-width: 1px;
     border-style: dashed;
     border-radius: 5px;
@@ -221,9 +217,14 @@ export default {
     }
 }
 
-.household-head {
-    height: 39px;
+@media (min-width:1200px) {
+    // height: 0;
+    .household-head {
+        height: 39px;
+
+    }
 }
+
 .fs-08 {
     font-size: 0.8rem;
 }

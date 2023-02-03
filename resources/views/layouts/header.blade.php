@@ -12,7 +12,7 @@
         <div id="sidebar-toggler">
             <span class="mdi mdi-menu"></span>
         </div>
-        <div id="fullscreen-toggler" data-screen="collapse" class="ms-2" title="Розгорнути на повний екран">
+        <div id="fullscreen-toggler" data-screen="collapse" class="ms-2 d-none d-xl-block" title="Розгорнути на повний екран">
             <span class="mdi mdi-fullscreen"></span>
         </div>
 
