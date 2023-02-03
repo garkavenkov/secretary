@@ -13,7 +13,7 @@
                 </button>
             </div>
             <div>
-                <button :class="['btn btn-sm btn-outline-success', filter.isFiltered ? 'active' : '' ]"
+                <button :class="['btn btn-sm btn-outline-secondary', filter.isFiltered ? 'active' : '' ]"
                         @click.exact="openFilterForm"
                         @click.ctrl="resetFilter"
                         title="Фільтр облікових карток">

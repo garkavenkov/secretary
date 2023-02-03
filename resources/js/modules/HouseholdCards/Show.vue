@@ -4,6 +4,29 @@
     <div class="card">
         <div class="card-header">
             <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card__number">{{ household.number }}</span></h5>
+            <div class="dropdown" v-if="currentTab == 'HouseholdInfo'">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="mdi mdi-cogs"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" @click="openHouseholdForm">
+                            <span class="mdi mdi-pencil me-1"></span>
+                            Редагувати
+                        </a>
+                    </li>
+                    <!-- <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item disabled">
+                            <span class="mdi mdi-trash-can me-1"></span>
+                            Видалити
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+            <!-- <button class="btn btn-sm btn-light" title="Редагувати облікову картку" @click="openHouseholdForm" v-if="currentTab == 'HouseholdInfo'">
+                <span class="mdi mdi-pencil"></span>
+            </button> -->
         </div>
         <div class="card-body">
 
@@ -41,6 +64,10 @@
         </div>
     </div>
 
+    <HouseholdForm
+            :formData="formData"
+            action="update"
+            @refreshData="$store.dispatch('Households/fetchRecord', id)" />
 
 </template>
 
@@ -50,7 +77,10 @@ import HouseholdMembers from './Member/HouseholdMembers.vue';
 import HouseInfo        from './House/HouseInfo.vue';
 import LandInfo         from './Land/LandInfo.vue';
 import HouseholdInfo    from './Info/HouseholdInfo.vue';
-import { mapActions, mapGetters } from 'vuex';
+import HouseholdForm    from './HouseholdForm.vue';
+
+import { mapGetters }   from 'vuex';
+import { Modal }        from 'bootstrap';
 
 export default {
     name: 'ShowCard',
@@ -59,6 +89,7 @@ export default {
         HouseInfo,
         LandInfo,
         HouseholdInfo,
+        HouseholdForm
     },
     props: {
         'id': {
@@ -68,10 +99,36 @@ export default {
     },
     data() {
         return {
+            formData: {
+                id: this.id,
+                settlement_id: 0,
+                household_type_id: 0,
+                address: '',
+                special_marks: '',
+                additional_data: ''
+            },
             currentTab: 'HouseholdInfo',
         }
     },
-    methods: {},
+    provide() {
+        return {
+            modalTitle: 'Редагування обліковох картки',
+            modalSubmitCaption: 'Зберегти',
+        }
+    },
+    methods: {
+        openHouseholdForm() {
+            this.formData.id                = this.id,
+            this.formData.settlement_id     = this.household.info.settlement_id,
+            this.formData.household_type_id = this.household.info.household_type_id,
+            this.formData.address           = this.household.info.address,
+            this.formData.special_marks     = this.household.info.special_marks,
+            this.formData.additional_data   = this.household.info.additional_data
+
+            let householdForm = new Modal(document.getElementById('HouseholdForm'));
+            householdForm.show();
+        }
+    },
     computed: {
         componentProps() {
             if (this.currentTab == 'HouseholdInfo') {
@@ -101,14 +158,11 @@ export default {
     },
     watch: {
         '$route' (to, from) {
-            // console.log(to, from);
-            // this.fetchRecord(to.params.id);
             this.$store.dispatch('Households/fetchRecord', to.params.id,);
         },
 
     },
     created() {
-        // this.$store.dispatch('Households/fetchRecord', this.id, '/api/v1/houshold-cards');
         this.$store.dispatch('Households/fetchRecord', this.id);
 
     }
@@ -117,6 +171,11 @@ export default {
 
 
 <style lang="scss" scoped>
+.card-header {
+    h5 {
+        margin: 1px 0;
+    }
+}
 a.nav-link.active {
     background: linear-gradient(#e9ecef, #f8fafc);
 }
@@ -124,6 +183,13 @@ a.nav-link.active {
 .household-card__number {
     font-weight: 600;
     margin-left: 0.5rem;
+}
+
+.dropdown-menu {
+    .dropdown-item:hover {
+        // color: var(--bs-dropdown-link-active-color);
+        background-color: var(--bs-secondary-bg);
+    }
 }
 
 </style>

@@ -95,14 +95,25 @@ export default {
     },
     methods: {
         submitData() {
-            axios.post('/api/v1/households', this.formData)
-                .then(res => {
-                    this.clearFormData();
-                    this.$emit('refreshData');
-                })
-                .catch(err => {
-                    this.errors = err.response.data.errors;
-                })
+            if(this.action == 'create') {
+                axios.post('/api/v1/households', this.formData)
+                    .then(res => {
+                        this.clearFormData();
+                        this.$emit('refreshData');
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors;
+                    })
+            } else if (this.action == 'update') {
+                axios.patch(`/api/v1/households/${this.formData.id}`, this.formData)
+                    .then(res => {
+                        // this.clearFormData();
+                        this.$emit('refreshData');
+                    })
+                    .catch(err => {
+                        this.errors = err.response.data.errors;
+                    })
+            }
         },
         clearFormData() {
             this.formData.settlement_id = 0;
