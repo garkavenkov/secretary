@@ -100,13 +100,15 @@
 
 <script>
 
-import Checkbox from '../../../components/ui/Chekbox.vue';
-import ModalForm from '../../../components/ui/ModalForm.vue';
-import FormValidator from '../../../minixs/FormValidator';
+import Checkbox         from '../../../components/ui/Chekbox.vue';
+import ModalForm        from '../../../components/ui/ModalForm.vue';
+
+import FormValidator    from '../../../minixs/FormValidator';
+import SubmitData       from '../../../minixs/SubmitData';
 
 export default {
     name: 'HouseholdYearForm',
-    mixins: [FormValidator],
+    mixins: [FormValidator, SubmitData],
     props: {
         'formData': {
             type: Object,
@@ -125,6 +127,7 @@ export default {
     },
     data() {
         return {
+            apiUrl: '/api/v1/household-houses'
         }
     },
     methods: {
@@ -146,26 +149,6 @@ export default {
             this.formData.electric_stove = false;
 
             this.errors = [];
-        },
-        submitData() {
-            if (this.action == 'create') {
-                axios.post('/api/v1/household-houses', this.formData)
-                    .then(res => {
-                        this.$store.dispatch('Households/fetchRecord', this.formData.household_id);
-                        this.clearFormData();
-                    })
-                    .catch(err => {
-                        this.errors = err.response.data.errors;
-                    })
-            } else if (this.action == 'update') {
-                axios.patch(`/api/v1/household-houses/${this.formData.id}`, this.formData)
-                    .then(res => {
-                        this.$store.dispatch('Households/fetchRecord', this.formData.household_id);
-                    })
-                    .catch(err => {
-                        this.errors = err.response.data.errors;
-                    })
-            }
         },
     },
     components: {

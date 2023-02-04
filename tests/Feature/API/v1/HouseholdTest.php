@@ -5,6 +5,7 @@ namespace Tests\Feature\API\v1;
 use App\Models\Community;
 use Tests\TestCase;
 use App\Models\Household;
+use App\Models\HouseholdMember;
 use App\Models\HouseholdType;
 use App\Models\Settlement;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -100,5 +101,14 @@ class HouseholdTest extends TestCase
             'address is empty'                  =>  ['address',             ''],
             'address in not long enough'        =>  ['address',           'qw'],
         ];
+    }
+
+    public function test_api_MUST_NOT_delete_household_if_exists_information_about_members()
+    {
+        $household = Household::factory()->create();
+
+        HouseholdMember::factory()->create(['household_id' => $household->id]);
+
+        $this->delete("$this->url/$household->id")->assertStatus(500);
     }
 }

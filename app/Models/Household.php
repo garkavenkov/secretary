@@ -52,7 +52,7 @@ class Household extends Model
 
     public function houseYears()
     {
-        return $this->hasMany(HouseholdHouse::class);
+        return $this->hasMany(HouseholdHouse::class)->orderBy('year');
     }
 
     public function settlement()
@@ -86,7 +86,7 @@ class Household extends Model
 
     public function landYears()
     {
-        return $this->hasMany(HouseholdLand::class);
+        return $this->hasMany(HouseholdLand::class)->orderBy('year');
     }
 
     public function scopeLiving($q)

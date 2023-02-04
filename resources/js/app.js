@@ -46,9 +46,58 @@ app.config.unwrapInjectedRef = true;
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+app.config.globalProperties.$axios = axios;
+
+import Swal from 'sweetalert2';
+
+app.config.globalProperties.$confirmDelete = function(title, icon = 'question') {
+    return  new Swal({
+                title: title,
+                icon: icon,
+                showCancelButton: true,
+                cancelButtonText: 'Відмінити',
+                confirmButtonText: 'Видалити',
+                confirmButtonColor: '#d33',
+                // reverseButtons: true,
+                customClass: {
+                    title: 'swal-dialog-title',
+                    actions: 'justify-content-around w-100',
+                }
+            });
+}
+
+app.config.globalProperties.$toast = function(msg, icon = 'success') {
+    return  new Swal({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 1500,
+                html:msg,
+                icon: icon,
+            });
+}
+
+app.config.globalProperties.$errorMessage = function(title,error,button = 'ОК') {
+    return  new Swal({
+                title: title,
+                html:error,
+                icon: 'error',
+                confirmButtonText: button,
+                customClass: {
+                    title: 'swal-dialog-title',
+                    htmlContainer: 'swal-dialog-body'
+                }
+            });
+}
+
+
+
+
 import router from './router';
 
 import store from './store';
+
+
 
 
 app.use(router);

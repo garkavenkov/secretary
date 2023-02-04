@@ -69,14 +69,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import FormValidator from '../../minixs/FormValidator';
+import { mapGetters }   from 'vuex';
+import FormValidator    from '../../minixs/FormValidator';
+import SubmitData       from '../../minixs/SubmitData';
 
-import ModalForm from '../../components/ui/ModalForm.vue';
+import ModalForm        from '../../components/ui/ModalForm.vue';
 
 export default {
     name: 'HouseholdForm',
-    mixins: [FormValidator],
+    mixins: [FormValidator, SubmitData],
     props: {
         'formData': {
             type: Object,
@@ -90,31 +91,10 @@ export default {
     },
     data() {
         return {
-
+            apiUrl: '/api/v1/households',
         }
     },
     methods: {
-        submitData() {
-            if(this.action == 'create') {
-                axios.post('/api/v1/households', this.formData)
-                    .then(res => {
-                        this.clearFormData();
-                        this.$emit('refreshData');
-                    })
-                    .catch(err => {
-                        this.errors = err.response.data.errors;
-                    })
-            } else if (this.action == 'update') {
-                axios.patch(`/api/v1/households/${this.formData.id}`, this.formData)
-                    .then(res => {
-                        // this.clearFormData();
-                        this.$emit('refreshData');
-                    })
-                    .catch(err => {
-                        this.errors = err.response.data.errors;
-                    })
-            }
-        },
         clearFormData() {
             this.formData.settlement_id = 0;
             this.formData.household_type_id = 0;

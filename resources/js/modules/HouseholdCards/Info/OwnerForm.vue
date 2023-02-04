@@ -63,6 +63,7 @@ export default {
                     .then(res => {
                         this.clearFormData();
                         this.$emit('refreshData');
+                        this.$toast(res.data.message);
                     })
                     .catch(err => {
                         this.errors = err.response.data.errors;
@@ -71,6 +72,7 @@ export default {
                 axios.patch(`/api/v1/household-owners/${this.formData.id}`, this.formData)
                     .then(res => {
                         this.$emit('refreshData');
+                        this.$toast(res.data.message);
                     })
                     .catch(err => {
                         this.errors = err.response.data.errors;

@@ -15,13 +15,13 @@
                             Редагувати
                         </a>
                     </li>
-                    <!-- <li><hr class="dropdown-divider"></li>
+                    <li><hr class="dropdown-divider"></li>
                     <li>
-                        <a class="dropdown-item disabled">
+                        <a class="dropdown-item" @click="deleteHouseholdCard(household.id)">
                             <span class="mdi mdi-trash-can me-1"></span>
                             Видалити
                         </a>
-                    </li> -->
+                    </li>
                 </ul>
             </div>
             <!-- <button class="btn btn-sm btn-light" title="Редагувати облікову картку" @click="openHouseholdForm" v-if="currentTab == 'HouseholdInfo'">
@@ -127,6 +127,22 @@ export default {
 
             let householdForm = new Modal(document.getElementById('HouseholdForm'));
             householdForm.show();
+        },
+        deleteHouseholdCard(id) {
+            this.$confirmDelete('Ви дійсно бажаєти видалити облікову картку')
+                .then(res => {
+                    if(res.isConfirmed) {
+                        axios.delete(`/api/v1/households/${id}`)
+                            .then(res => {
+                                this.$store.dispatch('Households/fetchRecords');
+                                this.$toast(res.data.message);
+                                this.$router.push({name: 'HouseholdCards'});
+                            })
+                            .catch(err => {
+                                this.$errorMessage('Неможливо видалити картку', err.response.data.message, 'Зрозуміло');
+                            });
+                    }
+                })
         }
     },
     computed: {

@@ -139,10 +139,16 @@ export default {
             ownerForm.show();
         },
         deleteOwner(id) {
-            axios.delete(`/api/v1/household-owners/${id}`)
+            this.$confirmDelete('Ви дійсно бажаєте видалити власника')
                 .then(res => {
-                    this.$store.dispatch('Households/fetchRecord', this.info.household_id)
-                });
+                    if (res.isConfirmed) {
+                        axios.delete(`/api/v1/household-owners/${id}`)
+                            .then(res => {
+                                this.$store.dispatch('Households/fetchRecord', this.info.household_id)
+                                this.$toast(res.data.message);
+                            });
+                    }
+                })
         },
         pickupHead(e, head) {
             let index = this.info.owners.findIndex(o => {
@@ -166,7 +172,8 @@ export default {
 
                 axios.post('/api/v1/household-owners', data)
                     .then(res => {
-                         this.$store.dispatch('Households/fetchRecord', this.info.household_id);
+                        this.$store.dispatch('Households/fetchRecord', this.info.household_id);
+                        this.$toast(res.data.message);
                     })
             }
         },

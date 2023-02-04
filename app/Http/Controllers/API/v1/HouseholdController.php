@@ -106,6 +106,30 @@ class HouseholdController extends Controller
     {
         $household = Household::findOrFail($id);
 
+        $msg = '';
+        if ($household->members->count() > 0) {
+            $members_count =  $household->members->count();
+            $msg =  'В картці ' . ($members_count > 1 ? ' присутні ' : ' присутній ')
+                    . trans_choice('plural.member', $members_count, ['value' => $members_count])
+                    . ' домогосподарства.<br>';
+        }
+        if ($household->houseYears->count() > 0) {
+            $house_years_count = $household->houseYears->count();
+            $msg =  $msg
+                    . 'В картці присутня інформація по будинку за '
+                    . trans_choice('plural.years', $house_years_count, ['value' => $house_years_count]) . '<br>';
+        }
+        if ($household->landYears->count() > 0) {
+            $land_years_count = $household->landYears->count();
+            $msg =  $msg
+                    . 'В картці присутня інформація по землі за '
+                    . trans_choice('plural.years', $land_years_count, ['value' => $land_years_count]) . '<br>';
+        }
+        if ($msg !== '') {
+            $msg = $msg . '<br>Видаліть цю інформацию і спробуйте знову.';
+            return response()->json(['message' => $msg], 500);
+        }
+
         if ($household->delete()) {
             return response()->json(['message' => 'Облікова картка була успішно видалена']);
         }

@@ -1,6 +1,6 @@
 <template>
 
-    <ModalForm  formId="LandForm" @submitData="submitData" @closeForm="clearFormData" modalClass="modal-600">
+    <ModalForm  formId="LandYearForm" @submitData="submitData" @closeForm="clearFormData" modalClass="modal-600">
 
         <div class="row mb-3">
             <label  for="landYear" class="col-form-label col-md-9">Рік</label>
@@ -57,12 +57,13 @@
 
 <script>
 
-import ModalForm from '../../../components/ui/ModalForm.vue';
-import FormValidator from '../../../minixs/FormValidator';
+import ModalForm        from '../../../components/ui/ModalForm.vue';
+import FormValidator    from '../../../minixs/FormValidator';
+import SubmitData       from '../../../minixs/SubmitData';
 
 export default {
     name: 'LandForm',
-    mixins: [FormValidator],
+    mixins: [FormValidator, SubmitData],
     props: {
         'formData': {
             type: Object,
@@ -76,30 +77,10 @@ export default {
     },
     data() {
         return {
+            apiUrl: '/api/v1/household-lands'
         }
     },
     methods: {
-        submitData() {
-            if (this.action == 'create') {
-                axios.post('/api/v1/household-lands', this.formData)
-                    .then(res => {
-                        this.clearFormData();
-                        this.$emit('refreshData');
-                    })
-                    .catch(err => {
-                        this.errors = err.response.data.errors;
-                    })
-            } else if (this.action == 'update') {
-                axios.patch(`/api/v1/household-lands/${this.formData.id}`, this.formData)
-                    .then(res => {
-                        this.errors = [];
-                        this.$emit('refreshData');
-                    })
-                    .catch(err => {
-                        this.errors = err.response.data.errors;
-                    })
-            }
-        },
         clearFormData() {
             this.formData.year = '';
             this.formData.maintenance = 0;

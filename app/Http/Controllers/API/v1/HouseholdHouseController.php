@@ -18,9 +18,9 @@ class HouseholdHouseController extends Controller
      */
     public function index()
     {
-        $info = HouseholdHouse::all();
+        $year = HouseholdHouse::all();
 
-        return HouseholdHouseResource::collection($info);
+        return HouseholdHouseResource::collection($year);
     }
 
     /**
@@ -31,9 +31,9 @@ class HouseholdHouseController extends Controller
      */
     public function store(HouseholdHouseRequest $request)
     {
-        $info = HouseholdHouse::create($request->validated());
+        $year = HouseholdHouse::create($request->validated());
 
-        if ($info) {
+        if ($year) {
             return response()->json(['message' => 'Дані успішно додані'], 201);
         }
     }
@@ -46,9 +46,9 @@ class HouseholdHouseController extends Controller
      */
     public function show($id)
     {
-        $info = HouseholdHouse::findOrFail($id);
+        $year = HouseholdHouse::findOrFail($id);
 
-        return new HouseholdHouseResource($info);
+        return new HouseholdHouseResource($year);
     }
 
     /**
@@ -60,10 +60,10 @@ class HouseholdHouseController extends Controller
      */
     public function update(HouseholdHouseRequest $request, $id)
     {
-        $info = HouseholdHouse::findOrFail($id);
+        $year = HouseholdHouse::findOrFail($id);
 
-        $info->update($request->validated());
-        if($info->save()) {
+        $year->update($request->validated());
+        if($year->save()) {
             return response()->json(['message' => 'Дані були успішно змінені']);
         }
     }
@@ -76,9 +76,9 @@ class HouseholdHouseController extends Controller
      */
     public function destroy($id)
     {
-        $info = HouseholdHouse::findOrFail($id);
+        $year = HouseholdHouse::findOrFail($id);
 
-        if ($info->delete()) {
+        if ($year->delete()) {
             return response()->json(['message' => 'Дані пули успішно видалені']);
         }
     }
