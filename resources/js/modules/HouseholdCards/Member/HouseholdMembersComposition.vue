@@ -99,6 +99,7 @@ export default {
                 axios.post('/api/v1/establish-family-relationships', this.availableLinks)
                     .then(res => {
                         this.$emit('refreshData');
+                        this.$toast(res.data.message);
                     })
             }
         },
@@ -186,20 +187,20 @@ export default {
         },
         relationshipSelected(e) {
             let relation = e.target.selectedOptions[0].text;
-            console.log(`Relation: ${relation}`);
+            // console.log(`Relation: ${relation}`);
             let corMemberId = e.target.id.split('.').reverse().join('.');
             let corMemberEl = document.getElementById(corMemberId);
             let corSex = corMemberEl.dataset.sex;
-            console.log(`Correspondent sex: ${corSex}`);
-            console.log(`Correspondent: ${relation}.${corSex}`);
+            // console.log(`Correspondent sex: ${corSex}`);
+            // console.log(`Correspondent: ${relation}.${corSex}`);
             let corRelation = this.relativePairs[`${relation}.${corSex}`];
-            console.log(`Correspondent Relation: ${corRelation}`);
+            // console.log(`Correspondent Relation: ${corRelation}`);
 
             if (corSex == 'чоловіча') {
-                console.log('Чоловіча: ', this.maleRelationships.find(r => r.name == corRelation))
+                // console.log('Чоловіча: ', this.maleRelationships.find(r => r.name == corRelation))
                 this.availableLinks[corMemberId] = this.maleRelationships.find(r => r.name == corRelation).id;
             } else {
-                console.log('Жіноча: ', this.femaleRelationships.find(r => r.name == corRelation))
+                // console.log('Жіноча: ', this.femaleRelationships.find(r => r.name == corRelation))
                 this.availableLinks[corMemberId] = this.femaleRelationships.find(r => r.name == corRelation).id;
             }
 

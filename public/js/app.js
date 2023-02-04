@@ -24031,6 +24031,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       if (JSON.stringify(this.availableLinks) !== JSON.stringify(this.establishedLinks)) {
         axios.post('/api/v1/establish-family-relationships', this.availableLinks).then(function (res) {
           _this.$emit('refreshData');
+          _this.$toast(res.data.message);
         });
       }
     },
@@ -24097,25 +24098,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     relationshipSelected: function relationshipSelected(e) {
       var relation = e.target.selectedOptions[0].text;
-      console.log("Relation: ".concat(relation));
+      // console.log(`Relation: ${relation}`);
       var corMemberId = e.target.id.split('.').reverse().join('.');
       var corMemberEl = document.getElementById(corMemberId);
       var corSex = corMemberEl.dataset.sex;
-      console.log("Correspondent sex: ".concat(corSex));
-      console.log("Correspondent: ".concat(relation, ".").concat(corSex));
+      // console.log(`Correspondent sex: ${corSex}`);
+      // console.log(`Correspondent: ${relation}.${corSex}`);
       var corRelation = this.relativePairs["".concat(relation, ".").concat(corSex)];
-      console.log("Correspondent Relation: ".concat(corRelation));
+      // console.log(`Correspondent Relation: ${corRelation}`);
+
       if (corSex == 'чоловіча') {
-        console.log('Чоловіча: ', this.maleRelationships.find(function (r) {
-          return r.name == corRelation;
-        }));
+        // console.log('Чоловіча: ', this.maleRelationships.find(r => r.name == corRelation))
         this.availableLinks[corMemberId] = this.maleRelationships.find(function (r) {
           return r.name == corRelation;
         }).id;
       } else {
-        console.log('Жіноча: ', this.femaleRelationships.find(function (r) {
-          return r.name == corRelation;
-        }));
+        // console.log('Жіноча: ', this.femaleRelationships.find(r => r.name == corRelation))
         this.availableLinks[corMemberId] = this.femaleRelationships.find(function (r) {
           return r.name == corRelation;
         }).id;
