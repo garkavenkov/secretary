@@ -21411,7 +21411,7 @@ __webpack_require__.r(__webpack_exports__);
     goToHousehold: function goToHousehold(id) {
       // this.$router.push({ name: 'HouseholdCardsShow', params: { id: id } })
       this.$router.push({
-        path: "/household-cards/".concat(id)
+        path: "/households/".concat(id)
       });
     },
     handleClick: function handleClick(e) {
@@ -23832,13 +23832,21 @@ var _hoisted_2 = {
   "class": "search__wrapper"
 };
 var _hoisted_3 = ["value", "onClick"];
-var _hoisted_4 = ["disabled"];
+var _hoisted_4 = {
+  key: 1,
+  id: "households"
+};
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, "Нічого не знайдено. Спробуйте змінити текст", -1 /* HOISTED */);
+});
+var _hoisted_6 = [_hoisted_5];
+var _hoisted_7 = ["disabled"];
+var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-home-search"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_6 = [_hoisted_5];
+var _hoisted_9 = [_hoisted_8];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control me-2', $data.currentHousehodldItem >= 0 ? 'invisible-caret' : '']),
@@ -23855,27 +23863,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     placeholder: "Адреса домогосподарства...",
     "aria-label": "Search"
-  }, null, 34 /* CLASS, HYDRATE_EVENTS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchText]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
+  }, null, 34 /* CLASS, HYDRATE_EVENTS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchText]]), $data.households.length > 0 && $data.isVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", {
+    key: 0,
     id: "households",
     onMousedown: _cache[3] || (_cache[3] = function () {
       return $options.listHandleMouseDown && $options.listHandleMouseDown.apply($options, arguments);
     })
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.households, function (household) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
+      "class": "founded",
       value: household.id,
       key: household.id,
       onClick: function onClick($event) {
         return $options.goToHousehold(household.id);
       }
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(household.address), 9 /* TEXT, PROPS */, _hoisted_3);
-  }), 128 /* KEYED_FRAGMENT */))], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.households.length > 0 && $data.isVisible]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }), 128 /* KEYED_FRAGMENT */))], 32 /* HYDRATE_EVENTS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.households.length == 0 && $data.isVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_4, _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-outline-secondary ms-2",
     type: "buton",
     onClick: _cache[4] || (_cache[4] = function () {
       return $options.search && $options.search.apply($options, arguments);
     }),
     disabled: $data.searchText == ''
-  }, _hoisted_6, 8 /* PROPS */, _hoisted_4)]);
+  }, _hoisted_9, 8 /* PROPS */, _hoisted_7)]);
 }
 
 /***/ }),
@@ -34781,7 +34791,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".search__wrapper[data-v-48b04d4c] {\n  position: relative;\n  width: 500px;\n}\n.search__wrapper ul[data-v-48b04d4c] {\n  position: absolute;\n  list-style: none;\n  padding: 0.25rem;\n  border: 1px solid #cdd4da;\n  width: 100%;\n  background: white;\n  margin-top: 2px;\n  border-radius: 0.375rem;\n}\n.search__wrapper ul li[data-v-48b04d4c] {\n  padding: 0.75rem;\n}\n.search__wrapper ul li[data-v-48b04d4c]:hover, .search__wrapper ul li.selected[data-v-48b04d4c] {\n  border-radius: 0.375rem;\n  background: #d2e1f9;\n  color: black;\n}\n.invisible-caret[data-v-48b04d4c] {\n  caret-color: transparent;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".search__wrapper[data-v-48b04d4c] {\n  position: relative;\n  width: 500px;\n}\n.search__wrapper ul[data-v-48b04d4c] {\n  position: absolute;\n  list-style: none;\n  padding: 0.25rem;\n  border: 1px solid #cdd4da;\n  width: 100%;\n  background: white;\n  margin-top: 2px;\n  border-radius: 0.375rem;\n}\n.search__wrapper ul li[data-v-48b04d4c] {\n  padding: 0.75rem;\n}\n.search__wrapper ul li.founded[data-v-48b04d4c]:hover, .search__wrapper ul li.founded.selected[data-v-48b04d4c] {\n  border-radius: 0.375rem;\n  background: #d2e1f9;\n  color: black;\n}\n.invisible-caret[data-v-48b04d4c] {\n  caret-color: transparent;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
