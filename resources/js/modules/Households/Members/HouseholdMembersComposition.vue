@@ -119,8 +119,6 @@ export default {
                                     if (relative) {
                                         relationship_type_id = relative.relationship_type_id;
                                     }
-
-
                                     return {
                                         [`${member.id}.${m.id}`] : relationship_type_id
                                     }

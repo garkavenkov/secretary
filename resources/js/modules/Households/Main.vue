@@ -38,7 +38,7 @@
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
                         <td>
-                            <router-link :to="{name: 'HouseholdCardsShow', params: { id: record.id }}">
+                            <router-link :to="{name: 'households.show', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
@@ -88,7 +88,6 @@ export default {
                 special_marks: '',
                 additional_data: ''
             },
-            currentTab: 'HouseholdInfo',
             modalTitle: '',
             modalSubmitCaption: '',
         }

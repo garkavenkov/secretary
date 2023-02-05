@@ -25,30 +25,55 @@ export default {
     },
     data() {
         return {
-           breadcrumbs: [] ,
+        //    breadcrumbs: [] ,
+        }
+    },
+    computed: {
+        breadcrumbs() {
+            let currentPath = this.$route;
+            // console.log(currentPath);
+            // console.log(this.$router.options.routes);
+            let routes = this.$router.options.routes.filter(route => currentPath.matched[currentPath.matched.length -1].path.includes(route.path));
+            return routes.map((route, index) => {
+                // console.log(route);
+                if (route.meta.icon) {
+                    // console.log(index, route.meta.icon, route.path)
+                    return {
+                        icon: route.meta.icon,
+                        path: (index + 1 != routes.length) ? route.path : currentPath.fullPath
+                    }
+                }
+                if (route.meta.name) {
+                    // console.log(index, route.meta.name, route.path)
+                    return {
+                        name: route.meta.name,
+                        path: (index + 1 != routes.length) ? route.path : currentPath.fullPath
+                    }
+                }
+            })
         }
     },
     created() {
-        let currentPath = this.$route;
+        // let currentPath = this.$route;
 
-        let routes = this.$router.options.routes.filter(route => currentPath.matched[0].path.includes(route.path));
-        this.breadcrumbs =  routes.map((route, index) => {
-            // console.log(route);
-            if (route.meta.icon) {
-                // console.log(index, route.meta.icon, route.path)
-                return {
-                    icon: route.meta.icon,
-                    path: (index + 1 != routes.length) ? route.path : currentPath.fullPath
-                }
-            }
-            if (route.meta.name) {
-                // console.log(index, route.meta.name, route.path)
-                return {
-                    name: route.meta.name,
-                    path: (index + 1 != routes.length) ? route.path : currentPath.fullPath
-                }
-            }
-        })
+        // let routes = this.$router.options.routes.filter(route => currentPath.matched[0].path.includes(route.path));
+        // this.breadcrumbs =  routes.map((route, index) => {
+        //     // console.log(route);
+        //     if (route.meta.icon) {
+        //         // console.log(index, route.meta.icon, route.path)
+        //         return {
+        //             icon: route.meta.icon,
+        //             path: (index + 1 != routes.length) ? route.path : currentPath.fullPath
+        //         }
+        //     }
+        //     if (route.meta.name) {
+        //         // console.log(index, route.meta.name, route.path)
+        //         return {
+        //             name: route.meta.name,
+        //             path: (index + 1 != routes.length) ? route.path : currentPath.fullPath
+        //         }
+        //     }
+        // })
     }
 
 }

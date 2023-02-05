@@ -63,37 +63,28 @@
         </table>
     </div>
 
-    <LandForm :formData="formData" :action="action" @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+    <LandYearForm :formData="formData" :action="action" @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
 
 </template>
 
 <script>
 
-import { computed } from 'vue';
+import { computed }         from 'vue';
+import { mapGetters }       from 'vuex';
 
-import TableRow from '../../../components/ui/TableRow.vue';
-import LandForm from './LandForm.vue';
+import TableRow             from '../../../components/ui/TableRow.vue';
+import LandYearForm         from './LandYearForm.vue';
 
 import NumberFormat         from '../../../minixs/NumberFormat';
 import HouseholdYearsCUD    from '../../../minixs/HouseholdYearsCUD';
 
 export default {
-    name: 'LandInfo',
-    props: {
-        'years': {
-            type: Array,
-            required: true
-        },
-        'household_id': {
-            type: [String, Number],
-            required: true
-        }
-    },
+    name: 'HouseholdLandYears',
     mixins: [NumberFormat, HouseholdYearsCUD],
     data() {
         return {
             formData: {
-                household_id: this.household_id,
+                household_id: null,
                 year:new Date().getFullYear(),
                 maintenance: 0,
                 personal_agriculture: 0,
@@ -114,9 +105,12 @@ export default {
     },
     methods: {
     },
+    computed: {
+        ...mapGetters('Households', {'years':'landYears', 'household_id': 'household_id'})
+    },
     components: {
         TableRow,
-        LandForm
+        LandYearForm
     }
 }
 </script>

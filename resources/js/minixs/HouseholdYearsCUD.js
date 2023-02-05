@@ -6,6 +6,7 @@ export default {
             this.modalTitle = 'Додати дані';
             this.modalSubmitCaption = 'Додати';
             this.action = 'create';
+            this.formData.household_id = this.household_id;
 
             let yearForm = new Modal(document.getElementById(this.yearFormId))
             if (e.ctrlKey) {

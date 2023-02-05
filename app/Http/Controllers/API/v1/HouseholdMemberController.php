@@ -17,7 +17,12 @@ class HouseholdMemberController extends Controller
      */
     public function index()
     {
-        $members = HouseholdMember::all();
+        if (request()->query('household_id')) {
+            $household_id = request()->query('household_id');
+            $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')->where('household_id', $household_id)->get();
+        } else {
+            $members = HouseholdMember::all();
+        }
 
         return HouseholdMemberResource::collection($members);
     }

@@ -17,7 +17,7 @@
                 </router-link>
             </li>
             <li title="Облікові картки">
-                <router-link to="/household-cards">
+                <router-link to="/households">
                     <span class="icon">
                         <span class="mdi mdi-folder-home"></span>
                     </span>

@@ -6,7 +6,10 @@ export const Households = {
     state: {
         households: [],
         household: {
-            info: {}
+            info: {},
+            members: [],
+            houseYears: [],
+            landYears: [],
         },
         filter: {
             settlement_id: 0,
@@ -21,7 +24,12 @@ export const Households = {
     getters: {
         households: state => state.households,
         household: state => state.household,
-        filter: state => state.filter
+        filter: state => state.filter,
+        info: state => state.household.info,
+        members: state => state.household.members,
+        household_id: state => state.household.id,
+        houseYears: state => state.household.houseYears,
+        landYears: state => state.household.landYears,
     },
     mutations: {
         ...crud.mutations,

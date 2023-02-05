@@ -157,25 +157,16 @@
 
 <script>
 
-import { computed } from 'vue'
+import { computed }         from 'vue'
+import { mapGetters }       from 'vuex';
 
-import TableRow from '../../../components/ui/TableRow.vue';
-import HouseYearForm from './HouseYearForm.vue';
+import HouseYearForm        from './HouseYearForm.vue';
 
-import HouseholdYearsCUD from '../../../minixs/HouseholdYearsCUD';
+import TableRow             from '../../../components/ui/TableRow.vue';
+import HouseholdYearsCUD    from '../../../minixs/HouseholdYearsCUD';
 
 export default {
-    name: 'HouseInfo',
-    props: {
-        'years': {
-            type: Array,
-            required: true
-        },
-        'household_id': {
-            type: [String, Number],
-            required: true
-        }
-    },
+    name: 'HouseholdHouseYears',
     mixins: [HouseholdYearsCUD],
     data() {
         return {
@@ -211,6 +202,9 @@ export default {
         }
     },
     methods: {},
+    computed: {
+        ...mapGetters('Households', {'years':'houseYears', 'household_id': 'household_id'})
+    },
     components: {
         TableRow,
         HouseYearForm

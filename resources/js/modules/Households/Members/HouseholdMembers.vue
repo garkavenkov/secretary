@@ -26,17 +26,11 @@
                 <button type="button"
                         id="membersComposition"
                         class="btn btn-sm btn-outline-primary ms-2"
-                        title="Встановити родинні зв'язки"
+                        title="Встановити родинні відносини"
                         @click="openMembersCompositionForm">
                     <span class="mdi mdi-family-tree me-1"></span>
-                    Родинні зв'язки
+                    Родинні відносини
                 </button>
-                <!-- <button type="button"
-                        id="membersComposition"
-                        class="btn btn-sm btn-outline-primary ms-2"
-                        @click="openFamilyCompositionReportForm(0)">
-                    <span class="mdi mdi-human-capacity-decrease"></span>
-                </button> -->
             </div>
             <div>
                 <button type="button"
@@ -137,7 +131,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="member in shownMembers" :key="member.id" :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
+                        <tr v-for="member in shownMembers"
+                            :key="member.id"
+                            :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
                             <td class="text-center">
                                 <button class="btn btn-sm btn-outline-secondary"
                                         @click="showHouseholdMemberInfo(member.id)">
@@ -168,10 +164,20 @@
         </div>
     </div>
 
-    <HouseholdMemberForm :formData="formData" @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
-    <HouseholdMemberInfo :formData="formData" @refreshData="refreshMemberInfo" v-if="formIsReady" @closeMemberInfoForm="closeMemberInfoForm"/>
-    <!-- <HouseholdMembersComposition :members="members" v-if="isFamilyCompositionFormShown" @closeForm="isFamilyCompositionFormShown = false" /> -->
-    <HouseholdMembersComposition :members="shownMembers" @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
+    <HouseholdMemberForm
+            :formData="formData"
+            @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
+
+    <HouseholdMemberInfo
+            :formData="formData"
+            @refreshData="refreshMemberInfo"
+            v-if="formIsReady"
+            closeMemberInfoForm="closeMemberInfoForm"/>
+
+    <HouseholdMembersComposition
+            :members="shownMembers"
+            @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
+
     <FamilyCompositionReportForm
             :members="shownMembers"
             :selectedMember="selectedMember"
@@ -180,32 +186,24 @@
 </template>
 
 <script>
-import { Modal } from 'bootstrap';
-import { computed } from 'vue';
-import DateFormat from '../../../minixs/DateFormat';
+import { Modal }        from 'bootstrap';
+import { computed }     from 'vue';
+import { mapGetters }   from 'vuex';
 
-import HouseholdMemberForm from './HouseholdMemberForm.vue';
-import HouseholdMemberInfo from './HouseholdMemberInfo.vue';
-import HouseholdMembersComposition from './HouseholdMembersComposition.vue';
-import FamilyCompositionReportForm from './FamilyCompositionReportForm.vue';
+import DateFormat       from '../../../minixs/DateFormat';
+
+import HouseholdMemberForm          from './HouseholdMemberForm.vue';
+import HouseholdMemberInfo          from './HouseholdMemberInfo.vue';
+import HouseholdMembersComposition  from './HouseholdMembersComposition.vue';
+import FamilyCompositionReportForm  from './FamilyCompositionReportForm.vue';
 
 export default {
     name: 'HouseholdMembers',
     mixins: [DateFormat],
-    props: {
-        'members': {
-            type: Array,
-            required: true
-        },
-        'household_id': {
-            type: [String, Number],
-            required: true
-        }
-    },
     data() {
         return {
             formData: {
-                household_id: this.household_id,
+                household_id: null,
                 surname: '',
                 name: '',
                 patronymic: '',
@@ -243,6 +241,7 @@ export default {
         newMember(e) {
             this.modalTitle = 'Новий член домогосподарства';
             this.modalSubmitCaption = 'Додати';
+            this.formData.household_id = this.household_id;
 
             let myModal = new Modal(document.getElementById('HouseholdMemberForm'))
             myModal.show();
@@ -342,7 +341,8 @@ export default {
 
             let familyCompositionReportForm = new Modal(document.getElementById('FamilyCompositionReportForm'));
             familyCompositionReportForm.show();
-        }
+        },
+
     },
     computed: {
         shownMembers() {
@@ -352,13 +352,14 @@ export default {
             return this.members.some(m => {
                 return ['dead', 'gone'].indexOf(m.status) !== -1;
             })
-        }
+        },
+        ...mapGetters('Households', ['members', 'household_id'])
     },
     components: {
         HouseholdMemberForm,
         HouseholdMemberInfo,
         HouseholdMembersComposition,
-        FamilyCompositionReportForm
+        FamilyCompositionReportForm,
     }
 }
 </script>
@@ -376,7 +377,7 @@ export default {
 
     &:hover, &:active {
         box-shadow: 0 0 2px 3px #e7e7e7;
-        transform: scale(1.05);
+        //transform: scale(1.05);
         transition: all 0.3s ease;
         -webkit-font-smoothing: subpixel-antialiased;
     }

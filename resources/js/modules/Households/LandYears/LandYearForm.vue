@@ -62,7 +62,7 @@ import FormValidator    from '../../../minixs/FormValidator';
 import SubmitData       from '../../../minixs/SubmitData';
 
 export default {
-    name: 'LandForm',
+    name: 'HouseholdLandYearForm',
     mixins: [FormValidator, SubmitData],
     props: {
         'formData': {

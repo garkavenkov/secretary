@@ -3,9 +3,9 @@
 
     <div class="card">
         <div class="card-header">
-            <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card__number">{{ household.number }}</span></h5>
-            <div class="dropdown" v-if="currentTab == 'HouseholdInfo'">
-                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card--number">{{ household.number }}</span></h5>
+            <div class="dropdown" v-show="$route.name == 'HouseholdCardInfo'">
+                <button class="btn btn-sm btn-outline-secondary dropdown-toggle1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span class="mdi mdi-cogs"></span>
                 </button>
                 <ul class="dropdown-menu">
@@ -24,42 +24,37 @@
                     </li>
                 </ul>
             </div>
-            <!-- <button class="btn btn-sm btn-light" title="Редагувати облікову картку" @click="openHouseholdForm" v-if="currentTab == 'HouseholdInfo'">
-                <span class="mdi mdi-pencil"></span>
-            </button> -->
         </div>
         <div class="card-body">
 
             <div class="px-3 pt-3">
                 <ul class="nav nav-tabs px-3">
                     <li class="nav-item">
-                        <a class="nav-link" :class="{'active': currentTab == 'HouseholdInfo'}" aria-current="page" @click="currentTab='HouseholdInfo'">
+                        <router-link :to="{name: 'households.show.info'}" class="nav-link">
                             <span class="mdi mdi-information-outline"></span>
                             Основна інформація
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{'active': currentTab == 'HouseholdMembers'}" aria-current="page" @click="currentTab='HouseholdMembers'">
+                        <router-link :to="{name: 'households.show.members'}" class="nav-link">
                             <span class="mdi mdi-account-multiple-outline"></span>
                             Члени домогосподарства
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-item" >
-                        <a class="nav-link" :class="{'active': currentTab == 'HouseInfo'}" @click="currentTab='HouseInfo'">
+                        <router-link :to="{name: 'households.show.house-years'}" class="nav-link">
                             <span class="mdi mdi-home-outline"></span>
                             Будинок / Квартира
-                        </a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" :class="{'active': currentTab == 'LandInfo'}" @click="currentTab='LandInfo'">
+                        <router-link :to="{name: 'households.show.land-years'}" class="nav-link">
                             <span class="mdi mdi-land-fields"></span>
                             Земля
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
-                <KeepAlive>
-                    <component :is="currentTab" v-bind="componentProps"></component>
-                </KeepAlive>
+                <router-view></router-view>
             </div>
         </div>
     </div>
@@ -73,22 +68,14 @@
 
 <script>
 
-import HouseholdMembers from './Member/HouseholdMembers.vue';
-import HouseInfo        from './House/HouseInfo.vue';
-import LandInfo         from './Land/LandInfo.vue';
-import HouseholdInfo    from './Info/HouseholdInfo.vue';
-import HouseholdForm    from './HouseholdForm.vue';
-
 import { mapGetters }   from 'vuex';
 import { Modal }        from 'bootstrap';
+
+import HouseholdForm    from './HouseholdForm.vue';
 
 export default {
     name: 'ShowCard',
     components: {
-        HouseholdMembers,
-        HouseInfo,
-        LandInfo,
-        HouseholdInfo,
         HouseholdForm
     },
     props: {
@@ -107,7 +94,6 @@ export default {
                 special_marks: '',
                 additional_data: ''
             },
-            currentTab: 'HouseholdInfo',
         }
     },
     provide() {
@@ -146,36 +132,37 @@ export default {
         }
     },
     computed: {
-        componentProps() {
-            if (this.currentTab == 'HouseholdInfo') {
-                if (this.household.info) {
-                    return {
-                        info: {...this.household.info, household_id: this.id}
-                    }
-                }
-            } else if (this.currentTab == 'HouseholdMembers') {
-                return {
-                    members: this.household.members,
-                    household_id: this.id
-                }
-            } else if (this.currentTab == 'HouseInfo') {
-                return {
-                    years: this.household.houseYears,
-                    household_id: this.id
-                }
-            } else if (this.currentTab == 'LandInfo') {
-                return {
-                    years: this.household.landYears,
-                    household_id: this.id
-                }
-            }
-        },
+        // componentProps() {
+        //     if (this.currentTab == 'HouseholdInfo') {
+        //         if (this.household.info) {
+        //             return {
+        //                 info: {...this.household.info, household_id: this.id}
+        //             }
+        //         }
+        //     } else if (this.currentTab == 'HouseholdMembers') {
+        //         return {
+        //             members: this.household.members,
+        //             household_id: this.id
+        //         }
+        //     } else if (this.currentTab == 'HouseInfo') {
+        //         return {
+        //             years: this.household.houseYears,
+        //             household_id: this.id
+        //         }
+        //     } else if (this.currentTab == 'LandInfo') {
+        //         return {
+        //             years: this.household.landYears,
+        //             household_id: this.id
+        //         }
+        //     }
+        // },
         ...mapGetters('Households', ['household'])
     },
     watch: {
-        '$route' (to, from) {
-            this.$store.dispatch('Households/fetchRecord', to.params.id,);
-        },
+        // '$route' (to, from) {
+        //     console.log(to, from);
+        //     this.$store.dispatch('Households/fetchRecord', to.params.id,);
+        // },
 
     },
     created() {
@@ -192,18 +179,20 @@ export default {
         margin: 1px 0;
     }
 }
-a.nav-link.active {
+
+a.router-link-exact-active {
     background: linear-gradient(#e9ecef, #f8fafc);
+    color: var(--bs-nav-tabs-link-active-color);
+    border-color: var(--bs-nav-tabs-link-active-border-color) !important;
 }
 
-.household-card__number {
+.household-card-number {
     font-weight: 600;
     margin-left: 0.5rem;
 }
 
 .dropdown-menu {
     .dropdown-item:hover {
-        // color: var(--bs-dropdown-link-active-color);
         background-color: var(--bs-secondary-bg);
     }
 }

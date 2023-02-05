@@ -52,13 +52,29 @@
         <div class="row mb-3">
             <div class="col">
                 <label for="householdSpecialMarks" class="form-label">Спеціальні відмітки</label>
-                <textarea class="form-control" id="householdSpecialMarks" rows="2" v-model="formData.special_marks"></textarea>
+                <textarea
+                        :class="['form-control', hasError('special_marks') ? 'is-invalid' : '']"
+                        id="householdSpecialMarks"
+                        rows="2"
+                        v-model="formData.special_marks">
+                </textarea>
+                <div id="householdSpecialMarksValidation" class="invalid-feedback">
+                    {{ getError('special_marks') }}
+                </div>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col">
-                <label for="householdAdditionalInformation" class="form-label">Додаткові відомості</label>
-                <textarea class="form-control" id="householdAdditionalInformation" rows="2" v-model="formData.additional_data"></textarea>
+                <label for="householdAdditionalData" class="form-label">Додаткові відомості</label>
+                <textarea
+                        :class="['form-control', hasError('additional_data') ? 'is-invalid' : '']"
+                        id="householdAdditionalData"
+                        rows="2"
+                        v-model="formData.additional_data">
+                </textarea>
+                <div id="householdAdditionalDataValidation" class="invalid-feedback">
+                    {{ getError('additional_data') }}
+                </div>
             </div>
         </div>
 

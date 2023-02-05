@@ -10,8 +10,7 @@ import CommunitiesShow      from "../modules/Communities/Show.vue";
 import RelationshipTypes    from "../modules/FamilyRelationshipTypes/Main.vue";
 import WorkPlaces           from "../modules/WorkPlaces/Main.vue";
 import HouseholdTypes       from "../modules/HouseholdTypes/Main.vue";
-import HouseholdCards       from "../modules/HouseholdCards/Main.vue";
-import HouseholdCardsShow   from "../modules/HouseholdCards/Show.vue";
+
 import Settlements          from "../modules/Settlements/Main.vue";
 import SettlementsShow      from "../modules/Settlements/Show.vue";
 import SettlementTypes      from "../modules/SettlementTypes/Main.vue";
@@ -19,6 +18,8 @@ import Councils             from "../modules/Councils/Main.vue";
 import CouncilsShow         from "../modules/Councils/Show.vue";
 import MembersByAge         from "../modules/Analityc/MembersByAge.vue";
 import AdultsAndChildren    from "../modules/Analityc/AdultsAndChildren.vue";
+
+import households           from './households';
 
 const routes = [
     { path: '/',                            component: Dashboard, meta: {icon: '<span class="mdi mdi-monitor-dashboard"></span>'} },
@@ -31,16 +32,17 @@ const routes = [
     { path: '/family-relationship-types',   component: RelationshipTypes, meta: {name: 'Типи родинні стосунків'} },
     { path: '/work-places',                 component: WorkPlaces, meta: {name: 'Місця роботи'} },
     { path: '/household-types',             component: HouseholdTypes, meta: {name: 'Типи погосподарського обліку'} },
-    { path: '/household-cards',             component: HouseholdCards, name: 'HouseholdCards', meta: {name: 'Облікови картки'}},
-    { path: '/household-cards/:id',         component: HouseholdCardsShow, name:'HouseholdCardsShow', props: true,  meta: {name: 'Інформація'}},
+
+
     { path: '/settlements',                 component: Settlements, meta: {name: 'Населенні пункти'}},
     { path: '/settlements/:id',             component: SettlementsShow, name: 'SettlementsShow', props: true, meta: {name: 'Інформація'}},
     { path: '/councils',                    component: Councils, meta: {name: 'Міські / сільські ради'}},
     { path: '/councils/:id',                component: CouncilsShow, name: 'CouncilsShow', props: true, meta: {name: 'Інформація'}},
     { path: '/settlement-types',            component: SettlementTypes, meta: {name: 'Типи населеного пункту'}},
     { path: '/members-by-age',              component: MembersByAge, name: 'MembersByAge', meta: {name: 'Вікові групи населення'}},
-    { path: '/adulds-and-children',         component: AdultsAndChildren, name: 'AdultsAndChildren', meta: {name: 'Дорослі і діти'}}
+    { path: '/adulds-and-children',         component: AdultsAndChildren, name: 'AdultsAndChildren', meta: {name: 'Дорослі і діти'}},
 
+    ...households
 ]
 
 const router = createRouter({

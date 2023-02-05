@@ -458,11 +458,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters }   from 'vuex';
 
-import ModalForm from '../../../components/ui/ModalForm.vue';
-import FormValidator from '../../../minixs/FormValidator';
-import DateFormat from '../../../minixs/DateFormat';
+import ModalForm        from '../../../components/ui/ModalForm.vue';
+
+import FormValidator    from '../../../minixs/FormValidator';
+import DateFormat       from '../../../minixs/DateFormat';
 
 export default {
     name: 'HouseholdMemberInfo',
@@ -634,7 +635,6 @@ export default {
     },
     components: {
         ModalForm,
-        // Timeline
     }
 }
 </script>

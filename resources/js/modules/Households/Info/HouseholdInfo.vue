@@ -79,30 +79,25 @@
     <OwnerForm
         :formData="ownerData"
         :action="action"
-        @refreshData="$store.dispatch('Households/fetchRecord', ownerData.household_id)"
+        @refreshData="$store.dispatch('Households/fetchRecord', household_id)"
         @getHouseholdAddress="ownerData.address = info.address"/>
 
 </template>
 
 <script>
-import { Modal }    from 'bootstrap'
-import { computed } from '@vue/reactivity'
+import { Modal }        from 'bootstrap'
+import { computed }     from '@vue/reactivity'
+import { mapGetters }   from 'vuex';
 
 import OwnerForm from './OwnerForm.vue';
 
 export default {
     name: 'HouseholdInfo',
-    props: {
-        'info': {
-            type: Object,
-            required: false
-        }
-    },
     data() {
         return {
             ownerData: {
                 id: null,
-                household_id: this.info.household_id,
+                household_id: null,
                 name: '',
                 address: ''
             },
@@ -122,6 +117,7 @@ export default {
             this.modalTitle = 'Додати власника домогосподарства';
             this.modalSubmitCaption = 'Додати';
             this.action = 'create';
+            this.ownerData.household_id = this.household_id;
 
             let ownerForm = new Modal(document.getElementById('HouseholdOwnerModalForm'))
             ownerForm.show();
@@ -131,6 +127,7 @@ export default {
             this.modalSubmitCaption = 'Змінити';
             this.action = 'update';
 
+            this.ownerData.household_id = this.household_id;
             this.ownerData.name = owner.name;
             this.ownerData.address = owner.address;
             this.ownerData.id = owner.id;
@@ -144,7 +141,7 @@ export default {
                     if (res.isConfirmed) {
                         axios.delete(`/api/v1/household-owners/${id}`)
                             .then(res => {
-                                this.$store.dispatch('Households/fetchRecord', this.info.household_id)
+                                this.$store.dispatch('Households/fetchRecord', this.household_id)
                                 this.$toast(res.data.message);
                             });
                     }
@@ -168,11 +165,11 @@ export default {
             let data = e.dataTransfer.getData('head');
             if (data) {
                 data = JSON.parse(data);
-                data.household_id = this.info.household_id;
+                data.household_id = this.household_id;
 
                 axios.post('/api/v1/household-owners', data)
                     .then(res => {
-                        this.$store.dispatch('Households/fetchRecord', this.info.household_id);
+                        this.$store.dispatch('Households/fetchRecord', this.household_id);
                         this.$toast(res.data.message);
                     })
             }
@@ -183,6 +180,7 @@ export default {
         }
     },
     computed: {
+        ...mapGetters('Households', ['info', 'household_id']),
         headIsAlreadyOwner() {
             if (this.info.household_head) {
                 return this.info.owners.findIndex(o => {
