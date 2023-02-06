@@ -24,6 +24,7 @@ use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
+use App\Models\Household;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,4 +69,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
     Route::post('establish-family-relationships',   [FamilyRelationshipController::class, 'establishRelationships'])->name('establish-family-relationships');
     Route::post('family-composition-report',        [ReportController::class, 'familyComposition']);
+
+    Route::post('house-additional-information',     [HouseholdController::class, 'houseInfo']);
+    Route::post('land-additional-information',      [HouseholdController::class, 'landInfo']);
 });

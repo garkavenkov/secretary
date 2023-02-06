@@ -4,22 +4,27 @@
     <div class="card">
         <div class="card-header">
             <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card--number">{{ household.number }}</span></h5>
-            <div class="dropdown" v-show="$route.name == 'HouseholdCardInfo'">
-                <button class="btn btn-sm btn-outline-secondary dropdown-toggle1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="dropdown" v-show="$route.name == 'households.show.info'">
+                <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
+                        type="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
                     <span class="mdi mdi-cogs"></span>
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <a class="dropdown-item" @click="openHouseholdForm">
-                            <span class="mdi mdi-pencil me-1"></span>
-                            Редагувати
+                        <a  class="dropdown-item"
+                            @click="openHouseholdForm">
+                                <span class="mdi mdi-pencil text-warning me-1"></span>
+                                Редагувати
                         </a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
-                        <a class="dropdown-item" @click="deleteHouseholdCard(household.id)">
-                            <span class="mdi mdi-trash-can me-1"></span>
-                            Видалити
+                        <a  class="dropdown-item"
+                            @click="deleteHouseholdCard(household.id)">
+                                <span class="mdi mdi-trash-can text-danger me-1"></span>
+                                Видалити
                         </a>
                     </li>
                 </ul>
@@ -98,7 +103,7 @@ export default {
     },
     provide() {
         return {
-            modalTitle: 'Редагування обліковох картки',
+            modalTitle: 'Редагування облікових картки',
             modalSubmitCaption: 'Зберегти',
         }
     },

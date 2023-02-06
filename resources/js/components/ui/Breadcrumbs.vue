@@ -31,7 +31,6 @@ export default {
     computed: {
         breadcrumbs() {
             let currentPath = this.$route;
-            // console.log(currentPath);
             // console.log(this.$router.options.routes);
             let routes = this.$router.options.routes.filter(route => currentPath.matched[currentPath.matched.length -1].path.includes(route.path));
             return routes.map((route, index) => {
@@ -96,6 +95,7 @@ export default {
 
         a {
             font-size: 16px;
+            text-decoration: none;
         }
 
         &.item {

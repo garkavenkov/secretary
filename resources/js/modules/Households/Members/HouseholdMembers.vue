@@ -9,11 +9,19 @@
                 </button> -->
                 <button type="button"
                         id="newMember"
-                        class="btn btn-sm btn-primary"
+                        class="btn btn-sm btn-outline-secondary"
                         title="Додати нового члена домогосподарства"
                         @click="newMember($event)">
                     <span class="mdi mdi-account-plus-outline me-1"></span>
                     новий член
+                </button>
+                <button type="button"
+                        id="membersComposition"
+                        class="btn btn-sm btn-outline-secondary ms-2"
+                        title="Встановити родинні відносини"
+                        @click="openMembersCompositionForm">
+                    <span class="mdi mdi-family-tree me-1"></span>
+                    Родинні відносини
                 </button>
                 <button type="button"
                         class="ms-2 btn btn-sm btn-outline-secondary"
@@ -22,14 +30,6 @@
                         v-if="hiddenMemebersExist"
                         @click="showAllMembers = !showAllMembers">
                     <span class="mdi mdi-account-question-outline"></span>
-                </button>
-                <button type="button"
-                        id="membersComposition"
-                        class="btn btn-sm btn-outline-primary ms-2"
-                        title="Встановити родинні відносини"
-                        @click="openMembersCompositionForm">
-                    <span class="mdi mdi-family-tree me-1"></span>
-                    Родинні відносини
                 </button>
             </div>
             <div>
@@ -91,7 +91,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                            <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
                                     type="button"
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
@@ -105,14 +105,19 @@
                                         Довідка про склад сім'ї
                                     </a>
                                 </li>
-
                             </ul>
                         </div>
-                        <button class="btn btn-sm btn-outline-secondary" @click="showHouseholdMemberInfo(member.id)">
+                        <button class="btn btn-sm btn-outline-secondary btn-transparent" @click="showHouseholdMemberInfo(member.id)">
                             <span class="mdi mdi-eye-outline"></span>
                         </button>
                     </div>
                 </div>
+                <!-- <div class="card member new-member"  @click="newMember($event)">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <span class="mdi mdi-account-plus-outline mdi-48px"></span>
+                        <span class="d-block">додати нового члена</span>
+                    </div>
+                </div> -->
             </template>
             <template v-else>
                 <table class="table table-sm table-bordered">
@@ -402,6 +407,14 @@ export default {
     //     padding-bottom: 0.25rem;
     //     border-bottom: 1px solid #e7e7e7;
     // }
+}
+
+.new-member {
+    border: none;
+
+    &:hover {
+        color: var(--bs-primary);
+    }
 }
 
 #members:fullscreen {

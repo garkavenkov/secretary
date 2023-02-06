@@ -21144,7 +21144,6 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     breadcrumbs: function breadcrumbs() {
       var currentPath = this.$route;
-      // console.log(currentPath);
       // console.log(this.$router.options.routes);
       var routes = this.$router.options.routes.filter(function (route) {
         return currentPath.matched[currentPath.matched.length - 1].path.includes(route.path);
@@ -28058,7 +28057,9 @@ var Households = {
       info: {},
       members: [],
       houseYears: [],
-      landYears: []
+      houseInfo: [],
+      landYears: [],
+      landInfo: []
     },
     filter: {
       settlement_id: 0,
@@ -28092,8 +28093,14 @@ var Households = {
     houseYears: function houseYears(state) {
       return state.household.houseYears;
     },
+    houseInfo: function houseInfo(state) {
+      return state.household.houseInfo;
+    },
     landYears: function landYears(state) {
       return state.household.landYears;
+    },
+    landInfo: function landInfo(state) {
+      return state.household.landInfo;
     }
   },
   mutations: _objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), {}, {
@@ -34743,7 +34750,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".breadcrumbs[data-v-28317240] {\n  display: flex;\n  flex-wrap: wrap;\n  padding: 0.75rem 1rem;\n  margin-bottom: 1rem;\n  list-style: none;\n  background-color: #e9ecef;\n  border-radius: 0.25rem;\n  position: relative;\n}\n.breadcrumbs li a[data-v-28317240] {\n  font-size: 16px;\n}\n.breadcrumbs li.item.disabled[data-v-28317240] {\n  pointer-events: none;\n}\n.breadcrumbs li.item.disabled a[data-v-28317240] {\n  text-decoration: none;\n  color: grey;\n}\n.breadcrumbs li.item[data-v-28317240]:not(:first-child):before {\n  content: \"/\";\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  color: grey;\n}\n.breadcrumbs li.right[data-v-28317240] {\n  position: absolute;\n  right: 1rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".breadcrumbs[data-v-28317240] {\n  display: flex;\n  flex-wrap: wrap;\n  padding: 0.75rem 1rem;\n  margin-bottom: 1rem;\n  list-style: none;\n  background-color: #e9ecef;\n  border-radius: 0.25rem;\n  position: relative;\n}\n.breadcrumbs li a[data-v-28317240] {\n  font-size: 16px;\n  text-decoration: none;\n}\n.breadcrumbs li.item.disabled[data-v-28317240] {\n  pointer-events: none;\n}\n.breadcrumbs li.item.disabled a[data-v-28317240] {\n  text-decoration: none;\n  color: grey;\n}\n.breadcrumbs li.item[data-v-28317240]:not(:first-child):before {\n  content: \"/\";\n  padding-left: 0.5rem;\n  padding-right: 0.5rem;\n  color: grey;\n}\n.breadcrumbs li.right[data-v-28317240] {\n  position: absolute;\n  right: 1rem;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

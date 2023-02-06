@@ -23,21 +23,31 @@
                         Додати власника
                     </button>
                 </div>
-                <div id="owners" class="owner-wrapper"  @drop="dropHead($event)" @dragover.prevent @dragenter.prevent>
+                <div    id="owners"
+                        class="owner-wrapper"
+                        @drop="dropHead($event)"
+                        @dragover.prevent
+                        @dragenter.prevent>
                     <template v-if="info.owners && (info.owners.length > 0)">
-                        <div class="d-flex justify-content-between" v-for="owner in info.owners" :key="owner.id">
-                                <div class="d-flex flex-column">
-                                    <span>{{ owner.name }}</span>
-                                    <span class="text-muted">{{ owner.address }}</span>
-                                </div>
-                                <div class="align-self-center">
-                                    <button class="btn btn-sm btn-outline-warning" title="Редагувати власника" @click="editOwner(owner)">
-                                        <span class="mdi mdi-pencil"></span>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger ms-3" title="Видалити власника" @click="deleteOwner(owner.id)">
-                                        <span class="mdi mdi-trash-can-outline"></span>
-                                    </button>
-                                </div>
+                        <div    class="d-flex justify-content-between"
+                                v-for="owner in info.owners"
+                                :key="owner.id">
+                            <div class="d-flex flex-column">
+                                <span>{{ owner.name }}</span>
+                                <span class="text-muted">{{ owner.address }}</span>
+                            </div>
+                            <div class="align-self-center">
+                                <button class="btn btn-sm btn-outline-warning btn-transparent"
+                                        title="Редагувати власника"
+                                        @click="editOwner(owner)">
+                                    <span class="mdi mdi-pencil"></span>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger btn-transparent ms-3"
+                                        title="Видалити власника"
+                                        @click="deleteOwner(owner.id)">
+                                    <span class="mdi mdi-trash-can-outline"></span>
+                                </button>
+                            </div>
                         </div>
                     </template>
                     <template v-else>

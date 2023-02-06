@@ -3,16 +3,44 @@
 
         <div class="row">
             <div class="col-md-9">
-                <table class="table table-bordered1 table-sm">
+                <table class="table table-sm table-bordered table-years">
                     <thead>
                         <tr>
                             <th>
-                                <button type="button" class="btn btn-sm btn-primary" @click="newYearData($event)">
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-secondary btn-transparent"
+                                        @click="newYearData($event)">
+                                    <span class="mdi mdi-plus-thick"></span>
                                     Додати рік
                                 </button>
                             </th>
-                            <th v-for="year in years" :key="year.year">
+                            <th v-for="year in years"
+                                :key="year.year">
                                 {{year.year}}
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-light btn-transparent"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false"
+                                            title="Операції з даними за рік">
+                                        <span class="mdi mdi-cog"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" @click="editYear(year)">
+                                                <span class="mdi mdi-pencil text-warning me-2"></span>
+                                                Редагувати дані
+                                            </a>
+                                        </li>
+                                        <li><hr class="dropdown-divider"></li>
+                                        <li>
+                                            <a class="dropdown-item" @click="deleteYear(year)">
+                                                <span class="mdi mdi-trash-can text-danger me-2"></span>
+                                                Видалити дані
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </th>
                         </tr>
                     </thead>
@@ -94,63 +122,85 @@
                         <TableRow   :years="years"
                                     field="total_non_living_area"
                                     rowTitle="<b>Загальна площа нежитлових будівель, м<sup>2</sup></b>" />
-
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td></td>
-                            <td v-for="year in years" :key="(year.year+'-'+'buttons')">
-                                <div  class="d-flex justify-content-around">
-                                    <button class="btn btn-sm btn-outline-danger" @click="deleteYear(year)">
-                                        <span class="mdi mdi-trash-can"></span>
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-warning" @click="editYear(year)">
-                                        <span class="mdi mdi-pencil"></span>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
             <div class="col-md-3">
                 <!-- <div>
                     № ПГО <span>02-0022-1</span>
                 </div> -->
-                <div class="card mb-3">
+                <div class="card rounded-1 mb-3">
+                    <div class="card-header thin-header align-items-center">
+                        <h6>Інформація по будинку</h6>
+                        <button class="btn btn-sm btn-light btn-transparent"
+                                @click="openHouseInfoForm">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
+                    </div>
                     <div class="card-body">
                         <table class="table table-bordered table-sm mb-0">
-                            <tbody>
+                            <tbody v-if="info && (info.length > 0)">
                                 <tr>
                                     <td>Рік побудови</td>
-                                    <td>1972</td>
+                                    <td v-if="houseInfo('house_built') !== ''">
+                                        {{ houseInfo('house_built') }}
+                                    </td>
+                                    <td v-else style="color: var(--bs-gray-600);">
+                                        не вказано
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Матеріл стін</td>
-                                    <td>цегла</td>
+                                    <td>Матеріал стін</td>
+                                    <td v-if="houseInfo('house_material_walls') !== ''">
+                                        {{ houseInfo('house_material_walls') }}
+                                    </td>
+                                    <td v-else style="color: var(--bs-gray-600);">
+                                        не вказано
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Матеріл покровлі</td>
-                                    <td>шифер</td>
+                                    <td>Матеріал даху</td>
+                                    <td v-if="houseInfo('house_material_roof') !== ''">
+                                        {{ houseInfo('house_material_roof') }}
+                                    </td>
+                                    <td v-else style="color: var(--bs-gray-600);">
+                                        не вказано
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Додаткова інформація</h5>
+                <div class="card rounded-1">
+                    <div class="card-header thin-header align-items-center">
+                        <h6>Додаткова інформація</h6>
+                        <button class="btn btn-sm btn-light btn-transparent"
+                                @click="openHouseAdditionalDataForm">
+                            <span class="mdi mdi-pencil"></span>
+                        </button>
                     </div>
-                    <div class="card-body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quas, nobis aliquid porro nulla quaerat excepturi nesciunt? Ea, dolore, reiciendis impedit ipsa quis similique quaerat quo ipsum sapiente doloremque accusantium!
+                    <div class="card-body" v-if="info && (info.length > 0)">
+                        <template v-if="houseInfo('house_additional_data') !== ''">
+                            {{ houseInfo('house_additional_data') }}
+                        </template>
+                        <template v-else>
+                            <div class="text-center" style="color: var(--bs-gray-600);">інформація відсутня</div>
+                        </template>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <HouseYearForm  :formData="formData"
+    <HouseYearForm  :formData="yearData"
                     :action="action"
+                    @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+
+    <HouseInfoForm  :formData="infoData"
+                    @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+
+    <HouseAdditionalDataForm
+                    :formData="additionalData"
                     @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
 
 </template>
@@ -159,8 +209,11 @@
 
 import { computed }         from 'vue'
 import { mapGetters }       from 'vuex';
+import { Modal }            from 'bootstrap';
 
-import HouseYearForm        from './HouseYearForm.vue';
+import HouseYearForm            from './HouseYearForm.vue';
+import HouseInfoForm            from './HouseInfoForm.vue';
+import HouseAdditionalDataForm  from './HouseAdditionalDataForm.vue';
 
 import TableRow             from '../../../components/ui/TableRow.vue';
 import HouseholdYearsCUD    from '../../../minixs/HouseholdYearsCUD';
@@ -170,8 +223,8 @@ export default {
     mixins: [HouseholdYearsCUD],
     data() {
         return {
-            formData: {
-                household_id: this.household_id,
+            yearData: {
+                household_id: null,
                 year: new Date().getFullYear(),
                 total_area: 0,
                 total_living_area: 0,
@@ -188,11 +241,22 @@ export default {
                 liquefied_gas: false,
                 electric_stove: false,
             },
+            infoData: {
+                household_id: null,
+                house_built: '',
+                house_material_walls: '',
+                house_material_roof: ''
+            },
+            additionalData: {
+                household_id: null,
+                house_additional_data: '',
+            },
             modalSubmitCaption: '',
             modalTitle: '',
             action: '',
             yearFormId: 'HouseInfoModalForm',
-            apiUrl: '/api/v1/household-houses'
+            apiUrl: '/api/v1/household-houses',
+            houseInfoIsEditable: false,
         }
     },
     provide() {
@@ -201,20 +265,49 @@ export default {
             modalSubmitCaption: computed(() => this.modalSubmitCaption),
         }
     },
-    methods: {},
+    methods: {
+        startHouseInfoEdit() {
+            this.houseInfoIsEditable = true;
+        },
+        cancelHouseInfoEdit() {
+            this.houseInfoIsEditable = false;
+        },
+        openHouseInfoForm() {
+            this.modalTitle = 'Інформація по будинку';
+            this.modalSubmitCaption = 'Зберегти'
+
+            this.infoData.house_built = this.houseInfo('house_built');
+            this.infoData.house_material_walls  = this.houseInfo('house_material_walls');
+            this.infoData.house_material_roof   = this.houseInfo('house_material_roof');
+            this.infoData.household_id = this.household_id;
+
+            var infoForm = new Modal(document.getElementById('HouseInfoForm'))
+            infoForm.show()
+        },
+        openHouseAdditionalDataForm() {
+            this.modalTitle = 'Додаткова інформація';
+            this.modalSubmitCaption = 'Зберегти'
+
+            this.additionalData.household_id = this.household_id;
+            this.additionalData.house_additional_data = this.houseInfo('house_additional_data');
+
+            var additionalDataForm = new Modal(document.getElementById('HouseAdditionalDataForm'))
+            additionalDataForm.show()
+        },
+        houseInfo(param) {
+            let additionalParam = this.info.find(i => i.param_code == param)
+            return additionalParam.param_value ? additionalParam.param_value : '';
+        }
+    },
     computed: {
-        ...mapGetters('Households', {'years':'houseYears', 'household_id': 'household_id'})
+        ...mapGetters('Households', {'years':'houseYears', 'household_id': 'household_id', 'info': 'houseInfo'})
     },
     components: {
         TableRow,
-        HouseYearForm
+        HouseYearForm,
+        HouseInfoForm,
+        HouseAdditionalDataForm
     }
 }
 </script>
 
-<style scoped>
-.table tr td:not(:first-child),
-.table tr th:not(:first-child) {
-    text-align: center;
-}
-</style>

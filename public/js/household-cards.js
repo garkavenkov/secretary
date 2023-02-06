@@ -95,6 +95,87 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=script&lang=js":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=script&lang=js ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'HouseholdHouseAdditionalDataForm',
+  props: {
+    'formData': {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {
+    submitData: function submitData() {
+      var _this = this;
+      axios.post('/api/v1/house-additional-information', this.formData).then(function (res) {
+        _this.$toast(res.data.message);
+        _this.$emit('refreshData');
+        _this.closeForm();
+      });
+    },
+    closeForm: function closeForm() {}
+  },
+  components: {
+    ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'HouseholdHouseInfoForm',
+  props: {
+    'formData': {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {
+    submitData: function submitData() {
+      var _this = this;
+      axios.post('/api/v1/house-additional-information', this.formData).then(function (res) {
+        _this.$toast(res.data.message);
+        _this.$emit('refreshData');
+      });
+    },
+    closeForm: function closeForm() {}
+  },
+  components: {
+    ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYearForm.vue?vue&type=script&lang=js":
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYearForm.vue?vue&type=script&lang=js ***!
@@ -178,10 +259,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _HouseYearForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HouseYearForm.vue */ "./resources/js/modules/Households/HouseYears/HouseYearForm.vue");
-/* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
-/* harmony import */ var _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../minixs/HouseholdYearsCUD */ "./resources/js/minixs/HouseholdYearsCUD.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var _HouseYearForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HouseYearForm.vue */ "./resources/js/modules/Households/HouseYears/HouseYearForm.vue");
+/* harmony import */ var _HouseInfoForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HouseInfoForm.vue */ "./resources/js/modules/Households/HouseYears/HouseInfoForm.vue");
+/* harmony import */ var _HouseAdditionalDataForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./HouseAdditionalDataForm.vue */ "./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue");
+/* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
+/* harmony import */ var _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../minixs/HouseholdYearsCUD */ "./resources/js/minixs/HouseholdYearsCUD.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -193,13 +277,16 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdHouseYears',
-  mixins: [_minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
-      formData: {
-        household_id: this.household_id,
+      yearData: {
+        household_id: null,
         year: new Date().getFullYear(),
         total_area: 0,
         total_living_area: 0,
@@ -216,11 +303,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         liquefied_gas: false,
         electric_stove: false
       },
+      infoData: {
+        household_id: null,
+        house_built: '',
+        house_material_walls: '',
+        house_material_roof: ''
+      },
+      additionalData: {
+        household_id: null,
+        house_additional_data: ''
+      },
       modalSubmitCaption: '',
       modalTitle: '',
       action: '',
       yearFormId: 'HouseInfoModalForm',
-      apiUrl: '/api/v1/household-houses'
+      apiUrl: '/api/v1/household-houses',
+      houseInfoIsEditable: false
     };
   },
   provide: function provide() {
@@ -234,14 +332,48 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       })
     };
   },
-  methods: {},
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('Households', {
+  methods: {
+    startHouseInfoEdit: function startHouseInfoEdit() {
+      this.houseInfoIsEditable = true;
+    },
+    cancelHouseInfoEdit: function cancelHouseInfoEdit() {
+      this.houseInfoIsEditable = false;
+    },
+    openHouseInfoForm: function openHouseInfoForm() {
+      this.modalTitle = 'Інформація по будинку';
+      this.modalSubmitCaption = 'Зберегти';
+      this.infoData.house_built = this.houseInfo('house_built');
+      this.infoData.house_material_walls = this.houseInfo('house_material_walls');
+      this.infoData.house_material_roof = this.houseInfo('house_material_roof');
+      this.infoData.household_id = this.household_id;
+      var infoForm = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('HouseInfoForm'));
+      infoForm.show();
+    },
+    openHouseAdditionalDataForm: function openHouseAdditionalDataForm() {
+      this.modalTitle = 'Додаткова інформація';
+      this.modalSubmitCaption = 'Зберегти';
+      this.additionalData.household_id = this.household_id;
+      this.additionalData.house_additional_data = this.houseInfo('house_additional_data');
+      var additionalDataForm = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('HouseAdditionalDataForm'));
+      additionalDataForm.show();
+    },
+    houseInfo: function houseInfo(param) {
+      var additionalParam = this.info.find(function (i) {
+        return i.param_code == param;
+      });
+      return additionalParam.param_value ? additionalParam.param_value : '';
+    }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapGetters)('Households', {
     'years': 'houseYears',
-    'household_id': 'household_id'
+    'household_id': 'household_id',
+    'info': 'houseInfo'
   })),
   components: {
-    TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    HouseYearForm: _HouseYearForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    HouseYearForm: _HouseYearForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    HouseInfoForm: _HouseInfoForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    HouseAdditionalDataForm: _HouseAdditionalDataForm_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 
@@ -527,6 +659,47 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'HouseholdLandAdditionalDataForm',
+  props: {
+    'formData': {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {};
+  },
+  methods: {
+    submitData: function submitData() {
+      var _this = this;
+      axios.post('/api/v1/land-additional-information', this.formData).then(function (res) {
+        _this.$toast(res.data.message);
+        _this.$emit('refreshData');
+        _this.closeForm();
+      });
+    },
+    closeForm: function closeForm() {}
+  },
+  components: {
+    ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/LandYears/LandYearForm.vue?vue&type=script&lang=js":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/LandYears/LandYearForm.vue?vue&type=script&lang=js ***!
@@ -589,11 +762,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
-/* harmony import */ var _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LandYearForm.vue */ "./resources/js/modules/Households/LandYears/LandYearForm.vue");
-/* harmony import */ var _minixs_NumberFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../minixs/NumberFormat */ "./resources/js/minixs/NumberFormat.js");
-/* harmony import */ var _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../minixs/HouseholdYearsCUD */ "./resources/js/minixs/HouseholdYearsCUD.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
+/* harmony import */ var _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LandYearForm.vue */ "./resources/js/modules/Households/LandYears/LandYearForm.vue");
+/* harmony import */ var _LandAdditionalDataForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./LandAdditionalDataForm.vue */ "./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue");
+/* harmony import */ var _minixs_NumberFormat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../minixs/NumberFormat */ "./resources/js/minixs/NumberFormat.js");
+/* harmony import */ var _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../minixs/HouseholdYearsCUD */ "./resources/js/minixs/HouseholdYearsCUD.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -606,17 +781,23 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdLandYears',
-  mixins: [_minixs_NumberFormat__WEBPACK_IMPORTED_MODULE_3__["default"], _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  mixins: [_minixs_NumberFormat__WEBPACK_IMPORTED_MODULE_5__["default"], _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
-      formData: {
+      yearData: {
         household_id: null,
         year: new Date().getFullYear(),
         maintenance: 0,
         personal_agriculture: 0,
         commercial_agriculture: 0
+      },
+      additionalData: {
+        household_id: null,
+        land_additional_data: ''
       },
       modalTitle: '',
       modalSubmitCaption: '',
@@ -636,14 +817,31 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       })
     };
   },
-  methods: {},
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('Households', {
+  methods: {
+    openLandAdditionalDataForm: function openLandAdditionalDataForm() {
+      this.modalTitle = 'Додаткова інформація';
+      this.modalSubmitCaption = 'Зберегти';
+      this.additionalData.household_id = this.household_id;
+      this.additionalData.land_additional_data = this.landInfo('land_additional_data');
+      var additionalDataForm = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('LandAdditionalDataForm'));
+      additionalDataForm.show();
+    },
+    landInfo: function landInfo(param) {
+      var additionalParam = this.info.find(function (i) {
+        return i.param_code == param;
+      });
+      return additionalParam.param_value ? additionalParam.param_value : '';
+    }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_7__.mapGetters)('Households', {
     'years': 'landYears',
-    'household_id': 'household_id'
+    'household_id': 'household_id',
+    'info': 'landInfo'
   })),
   components: {
-    TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    LandYearForm: _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    LandYearForm: _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    LandAdditionalDataForm: _LandAdditionalDataForm_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 
@@ -677,6 +875,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
+// import Breadcrumbs          from '../../minixs/Breadcrumbs';
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdCardsMain',
   components: {
@@ -684,6 +885,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     HouseholdForm: _HouseholdForm_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     HouseholdFilterForm: _HouseholdFilterForm_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
+  // mixins: [Breadcrumbs],
   data: function data() {
     return {
       formData: {
@@ -1531,7 +1733,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   provide: function provide() {
     return {
-      modalTitle: 'Редагування обліковох картки',
+      modalTitle: 'Редагування облікових картки',
       modalSubmitCaption: 'Зберегти'
     };
   },
@@ -1642,6 +1844,123 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: 1
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year[$props.field]), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */))]);
   }), 128 /* KEYED_FRAGMENT */))]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=template&id=053c6161":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=template&id=053c6161 ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "mb-3"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
+    formId: "HouseAdditionalDataForm",
+    onSubmitData: $options.submitData,
+    onCloseForm: $options.closeForm
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": "form-control",
+        id: "houseAdditionalData",
+        rows: "10",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $props.formData.house_additional_data = $event;
+        })
+      }, "\n            ", 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.house_additional_data]])])];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=template&id=23fd899e":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=template&id=23fd899e ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "row mb-2"
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "yearBuilt",
+  "class": "col-md-6 col-form-label"
+}, "Рік побудови", -1 /* HOISTED */);
+var _hoisted_3 = {
+  "class": "col-md-6"
+};
+var _hoisted_4 = {
+  "class": "row mb-2"
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "materialWalls",
+  "class": "col-md-6 col-form-label"
+}, "Матеріал стін", -1 /* HOISTED */);
+var _hoisted_6 = {
+  "class": "col-md-6"
+};
+var _hoisted_7 = {
+  "class": "row"
+};
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "materialRoof",
+  "class": "col-md-6 col-form-label"
+}, "Матеріал кровлі", -1 /* HOISTED */);
+var _hoisted_9 = {
+  "class": "col-md-6"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
+    formId: "HouseInfoForm",
+    onSubmitData: $options.submitData,
+    onCloseForm: $options.closeForm
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": "form-control",
+        id: "yearBuilt",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $props.formData.house_built = $event;
+        })
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.house_built]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": "form-control",
+        id: "materialWalls",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $props.formData.house_material_walls = $event;
+        })
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.house_material_walls]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": "form-control",
+        id: "materialRoof",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $props.formData.house_material_roof = $event;
+        })
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.house_material_roof]])])])];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
 }
 
 /***/ }),
@@ -1879,10 +2198,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c&scoped=true":
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c&scoped=true ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1891,9 +2210,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _withScopeId = function _withScopeId(n) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-ce0b4b0c"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
-};
 var _hoisted_1 = {
   "class": "pt-4"
 };
@@ -1904,54 +2220,145 @@ var _hoisted_3 = {
   "class": "col-md-9"
 };
 var _hoisted_4 = {
-  "class": "table table-bordered1 table-sm"
+  "class": "table table-sm table-bordered table-years"
 };
-var _hoisted_5 = {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus-thick"
+}, null, -1 /* HOISTED */);
+var _hoisted_6 = {
+  "class": "dropdown"
+};
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "btn btn-sm btn-light btn-transparent",
+  type: "button",
+  "data-bs-toggle": "dropdown",
+  "aria-expanded": "false",
+  title: "Операції з даними за рік"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-cog"
+})], -1 /* HOISTED */);
+var _hoisted_8 = {
+  "class": "dropdown-menu dropdown-menu-end"
+};
+var _hoisted_9 = ["onClick"];
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil text-warning me-2"
+}, null, -1 /* HOISTED */);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "dropdown-divider"
+})], -1 /* HOISTED */);
+var _hoisted_12 = ["onClick"];
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-trash-can text-danger me-2"
+}, null, -1 /* HOISTED */);
+var _hoisted_14 = {
   "class": "table-group-divider"
 };
-var _hoisted_6 = ["colspan"];
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Наявність", -1 /* HOISTED */);
-});
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", null, "(проставляється \"так\" або \"ні\")", -1 /* HOISTED */);
-});
-var _hoisted_9 = [_hoisted_7, _hoisted_8];
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, null, -1 /* HOISTED */);
-});
-var _hoisted_11 = {
-  "class": "d-flex justify-content-around"
+var _hoisted_15 = ["colspan"];
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Наявність", -1 /* HOISTED */);
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", null, "(проставляється \"так\" або \"ні\")", -1 /* HOISTED */);
+var _hoisted_18 = [_hoisted_16, _hoisted_17];
+var _hoisted_19 = {
+  "class": "col-md-3"
 };
-var _hoisted_12 = ["onClick"];
-var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-trash-can"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_14 = [_hoisted_13];
-var _hoisted_15 = ["onClick"];
-var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-pencil"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_17 = [_hoisted_16];
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-md-3\" data-v-ce0b4b0c><!-- &lt;div&gt;\n                    № ПГО &lt;span&gt;02-0022-1&lt;/span&gt;\n                &lt;/div&gt; --><div class=\"card mb-3\" data-v-ce0b4b0c><div class=\"card-body\" data-v-ce0b4b0c><table class=\"table table-bordered table-sm mb-0\" data-v-ce0b4b0c><tbody data-v-ce0b4b0c><tr data-v-ce0b4b0c><td data-v-ce0b4b0c>Рік побудови</td><td data-v-ce0b4b0c>1972</td></tr><tr data-v-ce0b4b0c><td data-v-ce0b4b0c>Матеріл стін</td><td data-v-ce0b4b0c>цегла</td></tr><tr data-v-ce0b4b0c><td data-v-ce0b4b0c>Матеріл покровлі</td><td data-v-ce0b4b0c>шифер</td></tr></tbody></table></div></div><div class=\"card\" data-v-ce0b4b0c><div class=\"card-header\" data-v-ce0b4b0c><h5 data-v-ce0b4b0c>Додаткова інформація</h5></div><div class=\"card-body\" data-v-ce0b4b0c> Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quas, nobis aliquid porro nulla quaerat excepturi nesciunt? Ea, dolore, reiciendis impedit ipsa quis similique quaerat quo ipsum sapiente doloremque accusantium! </div></div></div>", 1);
+var _hoisted_20 = {
+  "class": "card rounded-1 mb-3"
+};
+var _hoisted_21 = {
+  "class": "card-header thin-header align-items-center"
+};
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Інформація по будинку", -1 /* HOISTED */);
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
+}, null, -1 /* HOISTED */);
+var _hoisted_24 = [_hoisted_23];
+var _hoisted_25 = {
+  "class": "card-body"
+};
+var _hoisted_26 = {
+  "class": "table table-bordered table-sm mb-0"
+};
+var _hoisted_27 = {
+  key: 0
+};
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Рік побудови", -1 /* HOISTED */);
+var _hoisted_29 = {
+  key: 0
+};
+var _hoisted_30 = {
+  key: 1,
+  style: {
+    "color": "var(--bs-gray-600)"
+  }
+};
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Матеріал стін", -1 /* HOISTED */);
+var _hoisted_32 = {
+  key: 0
+};
+var _hoisted_33 = {
+  key: 1,
+  style: {
+    "color": "var(--bs-gray-600)"
+  }
+};
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, "Матеріал даху", -1 /* HOISTED */);
+var _hoisted_35 = {
+  key: 0
+};
+var _hoisted_36 = {
+  key: 1,
+  style: {
+    "color": "var(--bs-gray-600)"
+  }
+};
+var _hoisted_37 = {
+  "class": "card rounded-1"
+};
+var _hoisted_38 = {
+  "class": "card-header thin-header align-items-center"
+};
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Додаткова інформація", -1 /* HOISTED */);
+var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
+}, null, -1 /* HOISTED */);
+var _hoisted_41 = [_hoisted_40];
+var _hoisted_42 = {
+  key: 0,
+  "class": "card-body"
+};
+var _hoisted_43 = {
+  key: 1,
+  "class": "text-center",
+  style: {
+    "color": "var(--bs-gray-600)"
+  }
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TableRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TableRow");
   var _component_HouseYearForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HouseYearForm");
+  var _component_HouseInfoForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HouseInfoForm");
+  var _component_HouseAdditionalDataForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("HouseAdditionalDataForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    "class": "btn btn-sm btn-primary",
+    "class": "btn btn-sm btn-outline-secondary btn-transparent",
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.newYearData($event);
     })
-  }, " Додати рік ")]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.years, function (year) {
+  }, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати рік ")])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.years, function (year) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
       key: year.year
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year), 1 /* TEXT */);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      "class": "dropdown-item",
+      onClick: function onClick($event) {
+        return _ctx.editYear(year);
+      }
+    }, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Редагувати дані ")], 8 /* PROPS */, _hoisted_9)]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      "class": "dropdown-item",
+      onClick: function onClick($event) {
+        return _ctx.deleteYear(year);
+      }
+    }, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Видалити дані ")], 8 /* PROPS */, _hoisted_12)])])])]);
+  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: _ctx.years,
     field: "total_area",
     rowTitle: "<b>Загальна площа житлового будинку/квартири, м<sup>2</sup></b>"
@@ -1970,7 +2377,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     rowTitle: "Кількість житлових кімнат"
   }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
     colspan: _ctx.years.length + 1
-  }, _hoisted_9, 8 /* PROPS */, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, _hoisted_18, 8 /* PROPS */, _hoisted_15)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: _ctx.years,
     field: "water_supply",
     rowTitle: "водопроводу",
@@ -2028,27 +2435,35 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     years: _ctx.years,
     field: "total_non_living_area",
     rowTitle: "<b>Загальна площа нежитлових будівель, м<sup>2</sup></b>"
-  }, null, 8 /* PROPS */, ["years"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tfoot", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_10, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.years, function (year) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
-      key: year.year + '-' + 'buttons'
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-sm btn-outline-danger",
-      onClick: function onClick($event) {
-        return _ctx.deleteYear(year);
-      }
-    }, _hoisted_14, 8 /* PROPS */, _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-sm btn-outline-warning",
-      onClick: function onClick($event) {
-        return _ctx.editYear(year);
-      }
-    }, _hoisted_17, 8 /* PROPS */, _hoisted_15)])]);
-  }), 128 /* KEYED_FRAGMENT */))])])])]), _hoisted_18])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseYearForm, {
-    formData: $data.formData,
+  }, null, 8 /* PROPS */, ["years"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div>\n                    № ПГО <span>02-0022-1</span>\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-sm btn-light btn-transparent",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.openHouseInfoForm && $options.openHouseInfoForm.apply($options, arguments);
+    })
+  }, _hoisted_24)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_26, [_ctx.info && _ctx.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_28, $options.houseInfo('house_built') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_built')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_30, " не вказано "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_31, $options.houseInfo('house_material_walls') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_material_walls')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_33, " не вказано "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_34, $options.houseInfo('house_material_roof') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_material_roof')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_36, " не вказано "))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-sm btn-light btn-transparent",
+    onClick: _cache[2] || (_cache[2] = function () {
+      return $options.openHouseAdditionalDataForm && $options.openHouseAdditionalDataForm.apply($options, arguments);
+    })
+  }, _hoisted_41)]), _ctx.info && _ctx.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_42, [$options.houseInfo('house_additional_data') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_additional_data')), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_43, "інформація відсутня"))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseYearForm, {
+    formData: $data.yearData,
     action: $data.action,
-    onRefreshData: _cache[1] || (_cache[1] = function ($event) {
+    onRefreshData: _cache[3] || (_cache[3] = function ($event) {
       return _ctx.$store.dispatch('Households/fetchRecord', _ctx.household_id);
     })
-  }, null, 8 /* PROPS */, ["formData", "action"])], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["formData", "action"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseInfoForm, {
+    formData: $data.infoData,
+    onRefreshData: _cache[4] || (_cache[4] = function ($event) {
+      return _ctx.$store.dispatch('Households/fetchRecord', _ctx.household_id);
+    })
+  }, null, 8 /* PROPS */, ["formData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseAdditionalDataForm, {
+    formData: $data.additionalData,
+    onRefreshData: _cache[5] || (_cache[5] = function ($event) {
+      return _ctx.$store.dispatch('Households/fetchRecord', _ctx.household_id);
+    })
+  }, null, 8 /* PROPS */, ["formData"])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -2457,13 +2872,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "d-flex justify-content-between",
       key: owner.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(owner.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(owner.address), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-sm btn-outline-warning",
+      "class": "btn btn-sm btn-outline-warning btn-transparent",
       title: "Редагувати власника",
       onClick: function onClick($event) {
         return $options.editOwner(owner);
       }
     }, _hoisted_20, 8 /* PROPS */, _hoisted_18), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-sm btn-outline-danger ms-3",
+      "class": "btn btn-sm btn-outline-danger btn-transparent ms-3",
       title: "Видалити власника",
       onClick: function onClick($event) {
         return $options.deleteOwner(owner.id);
@@ -2569,6 +2984,44 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 34 /* CLASS, HYDRATE_EVENTS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.address]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('address')), 1 /* TEXT */)])])];
     }),
 
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=template&id=77496349":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=template&id=77496349 ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "mb-3"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
+    formId: "LandAdditionalDataForm",
+    onSubmitData: $options.submitData,
+    onCloseForm: $options.closeForm
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": "form-control",
+        id: "landAdditionalData",
+        rows: "10",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $props.formData.land_additional_data = $event;
+        })
+      }, "\n            ", 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.land_additional_data]])])];
+    }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
 }
@@ -2700,51 +3153,104 @@ var _hoisted_1 = {
   "class": "pt-4"
 };
 var _hoisted_2 = {
-  "class": "table table-bordered1 table-sm"
+  "class": "row"
 };
 var _hoisted_3 = {
-  "class": "table-group-divider"
+  "class": "col-md-9"
 };
-var _hoisted_4 = ["colspan"];
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", null, "(відповідно до документів):", -1 /* HOISTED */);
+var _hoisted_4 = {
+  "class": "table table-sm table-bordered table-years"
+};
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus-thick"
+}, null, -1 /* HOISTED */);
 var _hoisted_6 = {
-  key: 0
+  "class": "dropdown"
 };
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, null, -1 /* HOISTED */);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "btn btn-sm btn-light btn-transparent",
+  type: "button",
+  "data-bs-toggle": "dropdown",
+  "aria-expanded": "false",
+  title: "Операції з даними за рік"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-cog"
+})], -1 /* HOISTED */);
 var _hoisted_8 = {
-  "class": "d-flex justify-content-around"
+  "class": "dropdown-menu dropdown-menu-end"
 };
 var _hoisted_9 = ["onClick"];
 var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "mdi mdi-trash-can"
+  "class": "mdi mdi-pencil text-warning me-2"
 }, null, -1 /* HOISTED */);
-var _hoisted_11 = [_hoisted_10];
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+  "class": "dropdown-divider"
+})], -1 /* HOISTED */);
 var _hoisted_12 = ["onClick"];
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-trash-can text-danger me-2"
+}, null, -1 /* HOISTED */);
+var _hoisted_14 = {
+  "class": "table-group-divider"
+};
+var _hoisted_15 = ["colspan"];
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", null, "(відповідно до документів):", -1 /* HOISTED */);
+var _hoisted_17 = {
+  "class": "col-md-3"
+};
+var _hoisted_18 = {
+  "class": "card rounded-1"
+};
+var _hoisted_19 = {
+  "class": "card-header thin-header align-items-center"
+};
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Додаткова інформація", -1 /* HOISTED */);
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "mdi mdi-pencil"
 }, null, -1 /* HOISTED */);
-var _hoisted_14 = [_hoisted_13];
+var _hoisted_22 = [_hoisted_21];
+var _hoisted_23 = {
+  key: 0,
+  "class": "card-body"
+};
+var _hoisted_24 = {
+  key: 1,
+  "class": "text-center",
+  style: {
+    "color": "var(--bs-gray-600)"
+  }
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_TableRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TableRow");
   var _component_LandYearForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LandYearForm");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  var _component_LandAdditionalDataForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LandAdditionalDataForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    "class": "btn btn-sm btn-primary",
+    "class": "btn btn-sm btn-outline-secondary btn-transparent",
     onClick: _cache[0] || (_cache[0] = function () {
       return _ctx.newYearData && _ctx.newYearData.apply(_ctx, arguments);
     })
-  }, " Додати рік ")]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.years, function (year) {
+  }, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати рік ")])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.years, function (year) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
-      key: year.year,
-      "class": "text-center"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year), 1 /* TEXT */);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+      key: year.year
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      "class": "dropdown-item",
+      onClick: function onClick($event) {
+        return _ctx.editYear(year);
+      }
+    }, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Редагувати дані ")], 8 /* PROPS */, _hoisted_9)]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      "class": "dropdown-item",
+      onClick: function onClick($event) {
+        return _ctx.deleteYear(year);
+      }
+    }, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Видалити дані ")], 8 /* PROPS */, _hoisted_12)])])])]);
+  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: _ctx.years,
     field: "total",
     rowTitle: "<b>Площа земельних ділянок - усього</b>"
   }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableRow :years=\"years\" field=\"purpose\" rowTitle=\"з неї за цільовим призначенням <i>(відповідно до документів)</i>\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
     colspan: _ctx.years.length + 1
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("з неї за цільовим призначенням "), _hoisted_5], 8 /* PROPS */, _hoisted_4)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("з неї за цільовим призначенням "), _hoisted_16], 8 /* PROPS */, _hoisted_15)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: _ctx.years,
     field: "maintenance",
     rowTitle: "для будівництва і обслуговування житлового будинку",
@@ -2759,30 +3265,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     field: "commercial_agriculture",
     rowTitle: "для ведення товарного сільськогосподарського виробництва",
     rowTitleClass: "ps-3"
-  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableRow :years=\"years\" field=\"arable\" rowTitle=\"рілля\" rowTitleClass=\"ps-5\" />\n                <TableRow :years=\"years\" field=\"perennial_plantations\" rowTitle=\"багаторічні насадження\" rowTitleClass=\"ps-5\" />\n                <TableRow :years=\"years\" field=\"pastures\" rowTitle=\"сіножатні, пасовища\" rowTitleClass=\"ps-5\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                    <td :colspan=\"(years.length+1)\"><b>Наявність</b><i>(проставляється \"так\" або \"ні\")</i></td>\n                </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableRow :years=\"years\" field=\"water_supply\" rowTitle=\"водопроводу\" rowTitleClass=\"ps-5\" :fieldValue=\"true\">\n                <TableRow :years=\"years\" field=\"hot_water_supply\" rowTitle=\"горячого водопостачання\" rowTitleClass=\"ps-5\" :fieldValue=\"true\"></TableRow> ")]), _ctx.years.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tfoot", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_7, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.years, function (year) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
-      key: year.year + '-' + 'buttons',
-      "class": "border-start border-end"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-sm btn-outline-danger",
-      onClick: function onClick($event) {
-        return _ctx.deleteYear(year);
-      },
-      title: "Видалити дані"
-    }, _hoisted_11, 8 /* PROPS */, _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-sm btn-outline-warning",
-      onClick: function onClick($event) {
-        return _ctx.editYear(year);
-      },
-      title: "Змінити дані"
-    }, _hoisted_14, 8 /* PROPS */, _hoisted_12)])]);
-  }), 128 /* KEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_LandYearForm, {
-    formData: $data.formData,
+  }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableRow :years=\"years\" field=\"arable\" rowTitle=\"рілля\" rowTitleClass=\"ps-5\" />\n                        <TableRow :years=\"years\" field=\"perennial_plantations\" rowTitle=\"багаторічні насадження\" rowTitleClass=\"ps-5\" />\n                        <TableRow :years=\"years\" field=\"pastures\" rowTitle=\"сіножатні, пасовища\" rowTitleClass=\"ps-5\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <tr>\n                            <td :colspan=\"(years.length+1)\"><b>Наявність</b><i>(проставляється \"так\" або \"ні\")</i></td>\n                        </tr> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <TableRow :years=\"years\" field=\"water_supply\" rowTitle=\"водопроводу\" rowTitleClass=\"ps-5\" :fieldValue=\"true\">\n                        <TableRow :years=\"years\" field=\"hot_water_supply\" rowTitle=\"горячого водопостачання\" rowTitleClass=\"ps-5\" :fieldValue=\"true\"></TableRow> ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-sm btn-light btn-transparent",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.openLandAdditionalDataForm && $options.openLandAdditionalDataForm.apply($options, arguments);
+    })
+  }, _hoisted_22)]), _ctx.info && _ctx.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, [$options.landInfo('land_additional_data') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.landInfo('land_additional_data')), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_24, "інформація відсутня"))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_LandYearForm, {
+    formData: $data.yearData,
     action: $data.action,
-    onRefreshData: _cache[1] || (_cache[1] = function ($event) {
+    onRefreshData: _cache[2] || (_cache[2] = function ($event) {
       return _ctx.$store.dispatch('Households/fetchRecord', _ctx.household_id);
     })
-  }, null, 8 /* PROPS */, ["formData", "action"])], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["formData", "action"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_LandAdditionalDataForm, {
+    formData: $data.additionalData,
+    onRefreshData: _cache[3] || (_cache[3] = function ($event) {
+      return _ctx.$store.dispatch('Households/fetchRecord', _ctx.household_id);
+    })
+  }, null, 8 /* PROPS */, ["formData"])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -3928,15 +4429,15 @@ var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-account-question-outline"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_5 = [_hoisted_4];
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-family-tree me-1"
   }, null, -1 /* HOISTED */);
 });
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-account-question-outline"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_6 = [_hoisted_5];
 var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-card-account-details-outline"
@@ -4017,7 +4518,7 @@ var _hoisted_27 = {
 };
 var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "btn btn-sm btn-outline-secondary dropdown-toggle",
+    "class": "btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle",
     type: "button",
     "data-bs-toggle": "dropdown",
     "aria-expanded": "false",
@@ -4098,30 +4599,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button type=\"button\"\n                        class=\"btn btn-sm btn-light me-2\"\n                        @click=\"toggleFullScreen\" title=\"Повний єкран\">\n                    <span class=\"mdi mdi-family-tree\"></span>\n                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     id: "newMember",
-    "class": "btn btn-sm btn-primary",
+    "class": "btn btn-sm btn-outline-secondary",
     title: "Додати нового члена домогосподарства",
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $options.newMember($event);
     })
-  }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" новий член ")]), $options.hiddenMemebersExist ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" новий член ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    id: "membersComposition",
+    "class": "btn btn-sm btn-outline-secondary ms-2",
+    title: "Встановити родинні відносини",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.openMembersCompositionForm && $options.openMembersCompositionForm.apply($options, arguments);
+    })
+  }, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Родинні відносини ")]), $options.hiddenMemebersExist ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     type: "button",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["ms-2 btn btn-sm btn-outline-secondary", {
       'active': $data.showAllMembers
     }]),
     title: "Відобразити всіх",
-    onClick: _cache[1] || (_cache[1] = function ($event) {
+    onClick: _cache[2] || (_cache[2] = function ($event) {
       return $data.showAllMembers = !$data.showAllMembers;
     })
-  }, _hoisted_5, 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    type: "button",
-    id: "membersComposition",
-    "class": "btn btn-sm btn-outline-primary ms-2",
-    title: "Встановити родинні відносини",
-    onClick: _cache[2] || (_cache[2] = function () {
-      return $options.openMembersCompositionForm && $options.openMembersCompositionForm.apply($options, arguments);
-    })
-  }, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Родинні відносини ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, _hoisted_6, 2 /* CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     title: "Режим карток",
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-sm btn-outline-secondary me-2", {
@@ -4139,9 +4640,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[4] || (_cache[4] = function ($event) {
       return $data.viewMode = 'table';
     })
-  }, _hoisted_10, 2 /* CLASS */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [$data.viewMode == 'card' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  }, _hoisted_10, 2 /* CLASS */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [$data.viewMode == 'card' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["card member", [member.status == 'dead' ? 'dead' : '', member.status == 'gone' ? 'gone' : '']]),
       key: member.id,
@@ -4154,12 +4655,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return $options.openFamilyCompositionReportForm(member.id);
       }
     }, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Довідка про склад сім'ї ")], 8 /* PROPS */, _hoisted_30)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-sm btn-outline-secondary",
+      "class": "btn btn-sm btn-outline-secondary btn-transparent",
       onClick: function onClick($event) {
         return $options.showHouseholdMemberInfo(member.id);
       }
     }, _hoisted_34, 8 /* PROPS */, _hoisted_32)])], 42 /* CLASS, PROPS, HYDRATE_EVENTS */, _hoisted_12);
-  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_36, _hoisted_37, _hoisted_38, _hoisted_39, _hoisted_40, _hoisted_41, $data.showAllMembers ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_42, "Дата смерті")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <th>Місце роботи</th>\n                            <th>Відомості про зайнятість / незайнятість</th> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
+  }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"card member new-member\"  @click=\"newMember($event)\">\n                    <div class=\"card-body d-flex flex-column justify-content-center align-items-center\">\n                        <span class=\"mdi mdi-account-plus-outline mdi-48px\"></span>\n                        <span class=\"d-block\">додати нового члена</span>\n                    </div>\n                </div> ")], 64 /* STABLE_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_36, _hoisted_37, _hoisted_38, _hoisted_39, _hoisted_40, _hoisted_41, $data.showAllMembers ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_42, "Дата смерті")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <th>Місце роботи</th>\n                            <th>Відомості про зайнятість / незайнятість</th> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: member.id,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
@@ -4328,7 +4829,7 @@ var _hoisted_4 = {
 };
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "btn btn-sm btn-outline-secondary dropdown-toggle1",
+    "class": "btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle",
     type: "button",
     "data-bs-toggle": "dropdown",
     "aria-expanded": "false"
@@ -4341,7 +4842,7 @@ var _hoisted_6 = {
 };
 var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-pencil me-1"
+    "class": "mdi mdi-pencil text-warning me-1"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
@@ -4351,7 +4852,7 @@ var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-trash-can me-1"
+    "class": "mdi mdi-trash-can text-danger me-1"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_10 = {
@@ -4411,7 +4912,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.deleteHouseholdCard(_ctx.household.id);
     })
-  }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Видалити ")])])])], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$route.name == 'HouseholdCardInfo']])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Видалити ")])])])], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$route.name == 'households.show.info']])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
       name: 'households.show.info'
     },
@@ -4480,14 +4981,14 @@ __webpack_require__.r(__webpack_exports__);
       this.modalTitle = 'Додати дані';
       this.modalSubmitCaption = 'Додати';
       this.action = 'create';
-      this.formData.household_id = this.household_id;
+      this.yearData.household_id = this.household_id;
       var yearForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById(this.yearFormId));
       if (e.ctrlKey) {
         if (this.years.length > 0) {
-          this.formData = Object.assign({}, this.years[this.years.length - 1]);
-          this.formData.year = parseInt(this.formData.year) + 1;
+          this.yearmData = Object.assign({}, this.years[this.years.length - 1]);
+          this.yearData.year = parseInt(this.yearData.year) + 1;
         }
-        this.modalTitle = "\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u043D\u0430 <b>".concat(this.formData.year, "</b> \u0440\u0456\u043A");
+        this.modalTitle = "\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u043D\u0430 <b>".concat(this.yearData.year, "</b> \u0440\u0456\u043A");
       }
       yearForm.show();
     },
@@ -4505,7 +5006,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     editYear: function editYear(year) {
-      Object.assign(this.formData, year);
+      Object.assign(this.yearData, year);
       this.modalSubmitCaption = 'Зберегти';
       this.modalTitle = "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u0437\u0430 ".concat(year.year, " \u0440\u0456\u043A");
       this.action = 'update';
@@ -4708,7 +5209,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".member[data-v-6a1328b5] {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n  width: 200px;\n}\n.member[data-v-6a1328b5]:hover, .member[data-v-6a1328b5]:active {\n  box-shadow: 0 0 2px 3px #e7e7e7;\n  transition: all 0.3s ease;\n  -webkit-font-smoothing: subpixel-antialiased;\n}\n.member-surname[data-v-6a1328b5] {\n  font-size: 1.1rem;\n  font-weight: bold;\n}\n.member .family-relationship[data-v-6a1328b5] {\n  height: 2rem;\n}\n.member.dead[data-v-6a1328b5] {\n  background: lightgray;\n}\n.member.gone[data-v-6a1328b5] {\n  border-color: red;\n}\n#members[data-v-6a1328b5]:-webkit-full-screen {\n  padding: 2rem;\n}\n#members[data-v-6a1328b5]:fullscreen {\n  padding: 2rem;\n}\n#members:-webkit-full-screen button#newMember[data-v-6a1328b5] {\n  display: none;\n}\n#members:fullscreen button#newMember[data-v-6a1328b5] {\n  display: none;\n}\n[data-v-6a1328b5]:not(:root):-webkit-full-screen::backdrop {\n  padding: 2rem;\n  background: #f8fafc;\n}\n[data-v-6a1328b5]:not(:root):fullscreen::backdrop {\n  padding: 2rem;\n  background: #f8fafc;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".member[data-v-6a1328b5] {\n  user-select: none;\n  -moz-user-select: none;\n  -webkit-user-select: none;\n  -ms-user-select: none;\n  width: 200px;\n}\n.member[data-v-6a1328b5]:hover, .member[data-v-6a1328b5]:active {\n  box-shadow: 0 0 2px 3px #e7e7e7;\n  transition: all 0.3s ease;\n  -webkit-font-smoothing: subpixel-antialiased;\n}\n.member-surname[data-v-6a1328b5] {\n  font-size: 1.1rem;\n  font-weight: bold;\n}\n.member .family-relationship[data-v-6a1328b5] {\n  height: 2rem;\n}\n.member.dead[data-v-6a1328b5] {\n  background: lightgray;\n}\n.member.gone[data-v-6a1328b5] {\n  border-color: red;\n}\n.new-member[data-v-6a1328b5] {\n  border: none;\n}\n.new-member[data-v-6a1328b5]:hover {\n  color: var(--bs-primary);\n}\n#members[data-v-6a1328b5]:-webkit-full-screen {\n  padding: 2rem;\n}\n#members[data-v-6a1328b5]:fullscreen {\n  padding: 2rem;\n}\n#members:-webkit-full-screen button#newMember[data-v-6a1328b5] {\n  display: none;\n}\n#members:fullscreen button#newMember[data-v-6a1328b5] {\n  display: none;\n}\n[data-v-6a1328b5]:not(:root):-webkit-full-screen::backdrop {\n  padding: 2rem;\n  background: #f8fafc;\n}\n[data-v-6a1328b5]:not(:root):fullscreen::backdrop {\n  padding: 2rem;\n  background: #f8fafc;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4755,29 +5256,6 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, ".card-header h5[data-v-1c2a2f22] {\n  margin: 1px 0;\n}\na.router-link-exact-active[data-v-1c2a2f22] {\n  background: linear-gradient(#e9ecef, #f8fafc);\n  color: var(--bs-nav-tabs-link-active-color);\n  border-color: var(--bs-nav-tabs-link-active-border-color) !important;\n}\n.household-card-number[data-v-1c2a2f22] {\n  font-weight: 600;\n  margin-left: 0.5rem;\n}\n.dropdown-menu .dropdown-item[data-v-1c2a2f22]:hover {\n  background-color: var(--bs-secondary-bg);\n}", ""]);
-// Exports
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.table tr td[data-v-ce0b4b0c]:not(:first-child),\n.table tr th[data-v-ce0b4b0c]:not(:first-child) {\n    text-align: center;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5016,35 +5494,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseYears_vue_vue_type_style_index_0_id_ce0b4b0c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseYears_vue_vue_type_style_index_0_id_ce0b4b0c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseYears_vue_vue_type_style_index_0_id_ce0b4b0c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
-
-/***/ }),
-
 /***/ "./resources/js/components/ui/Chekbox.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/ui/Chekbox.vue ***!
@@ -5105,6 +5554,60 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue":
+/*!********************************************************************************!*\
+  !*** ./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _HouseAdditionalDataForm_vue_vue_type_template_id_053c6161__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HouseAdditionalDataForm.vue?vue&type=template&id=053c6161 */ "./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=template&id=053c6161");
+/* harmony import */ var _HouseAdditionalDataForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HouseAdditionalDataForm.vue?vue&type=script&lang=js */ "./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=script&lang=js");
+/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_HouseAdditionalDataForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HouseAdditionalDataForm_vue_vue_type_template_id_053c6161__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/modules/Households/HouseYears/HouseInfoForm.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/modules/Households/HouseYears/HouseInfoForm.vue ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _HouseInfoForm_vue_vue_type_template_id_23fd899e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HouseInfoForm.vue?vue&type=template&id=23fd899e */ "./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=template&id=23fd899e");
+/* harmony import */ var _HouseInfoForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HouseInfoForm.vue?vue&type=script&lang=js */ "./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=script&lang=js");
+/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_HouseInfoForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HouseInfoForm_vue_vue_type_template_id_23fd899e__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Households/HouseYears/HouseInfoForm.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/modules/Households/HouseYears/HouseYearForm.vue":
 /*!**********************************************************************!*\
   !*** ./resources/js/modules/Households/HouseYears/HouseYearForm.vue ***!
@@ -5142,18 +5645,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _HouseYears_vue_vue_type_template_id_ce0b4b0c_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HouseYears.vue?vue&type=template&id=ce0b4b0c&scoped=true */ "./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c&scoped=true");
+/* harmony import */ var _HouseYears_vue_vue_type_template_id_ce0b4b0c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HouseYears.vue?vue&type=template&id=ce0b4b0c */ "./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c");
 /* harmony import */ var _HouseYears_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HouseYears.vue?vue&type=script&lang=js */ "./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=script&lang=js");
-/* harmony import */ var _HouseYears_vue_vue_type_style_index_0_id_ce0b4b0c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css */ "./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css");
-/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-
-
-const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_HouseYears_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HouseYears_vue_vue_type_template_id_ce0b4b0c_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render],['__scopeId',"data-v-ce0b4b0c"],['__file',"resources/js/modules/Households/HouseYears/HouseYears.vue"]])
+const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_HouseYears_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_HouseYears_vue_vue_type_template_id_ce0b4b0c__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Households/HouseYears/HouseYears.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -5265,6 +5765,33 @@ __webpack_require__.r(__webpack_exports__);
 
 ;
 const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_OwnerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_OwnerForm_vue_vue_type_template_id_0af4fd3b__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Households/Info/OwnerForm.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _LandAdditionalDataForm_vue_vue_type_template_id_77496349__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LandAdditionalDataForm.vue?vue&type=template&id=77496349 */ "./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=template&id=77496349");
+/* harmony import */ var _LandAdditionalDataForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LandAdditionalDataForm.vue?vue&type=script&lang=js */ "./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=script&lang=js");
+/* harmony import */ var _mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_mnt_Work_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_LandAdditionalDataForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_LandAdditionalDataForm_vue_vue_type_template_id_77496349__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -5561,6 +6088,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseAdditionalDataForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseAdditionalDataForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseAdditionalDataForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseInfoForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseInfoForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseInfoForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/modules/Households/HouseYears/HouseYearForm.vue?vue&type=script&lang=js":
 /*!**********************************************************************************************!*\
   !*** ./resources/js/modules/Households/HouseYears/HouseYearForm.vue?vue&type=script&lang=js ***!
@@ -5647,6 +6204,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_OwnerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_OwnerForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./OwnerForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/Info/OwnerForm.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LandAdditionalDataForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LandAdditionalDataForm_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LandAdditionalDataForm.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -5816,6 +6388,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=template&id=053c6161":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=template&id=053c6161 ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseAdditionalDataForm_vue_vue_type_template_id_053c6161__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseAdditionalDataForm_vue_vue_type_template_id_053c6161__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseAdditionalDataForm.vue?vue&type=template&id=053c6161 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue?vue&type=template&id=053c6161");
+
+
+/***/ }),
+
+/***/ "./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=template&id=23fd899e":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=template&id=23fd899e ***!
+  \****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseInfoForm_vue_vue_type_template_id_23fd899e__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseInfoForm_vue_vue_type_template_id_23fd899e__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseInfoForm.vue?vue&type=template&id=23fd899e */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseInfoForm.vue?vue&type=template&id=23fd899e");
+
+
+/***/ }),
+
 /***/ "./resources/js/modules/Households/HouseYears/HouseYearForm.vue?vue&type=template&id=5a6bae2d":
 /*!****************************************************************************************************!*\
   !*** ./resources/js/modules/Households/HouseYears/HouseYearForm.vue?vue&type=template&id=5a6bae2d ***!
@@ -5831,17 +6433,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c&scoped=true":
-/*!*************************************************************************************************************!*\
-  !*** ./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c&scoped=true ***!
-  \*************************************************************************************************************/
+/***/ "./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c ***!
+  \*************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseYears_vue_vue_type_template_id_ce0b4b0c_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseYears_vue_vue_type_template_id_ce0b4b0c__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseYears_vue_vue_type_template_id_ce0b4b0c_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseYears.vue?vue&type=template&id=ce0b4b0c&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c&scoped=true");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseYears_vue_vue_type_template_id_ce0b4b0c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseYears.vue?vue&type=template&id=ce0b4b0c */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=template&id=ce0b4b0c");
 
 
 /***/ }),
@@ -5902,6 +6504,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_OwnerForm_vue_vue_type_template_id_0af4fd3b__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_OwnerForm_vue_vue_type_template_id_0af4fd3b__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./OwnerForm.vue?vue&type=template&id=0af4fd3b */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/Info/OwnerForm.vue?vue&type=template&id=0af4fd3b");
+
+
+/***/ }),
+
+/***/ "./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=template&id=77496349":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=template&id=77496349 ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LandAdditionalDataForm_vue_vue_type_template_id_77496349__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_LandAdditionalDataForm_vue_vue_type_template_id_77496349__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./LandAdditionalDataForm.vue?vue&type=template&id=77496349 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue?vue&type=template&id=77496349");
 
 
 /***/ }),
@@ -6133,18 +6750,6 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_use_3_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_style_index_0_id_1c2a2f22_lang_scss_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!../../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Show.vue?vue&type=style&index=0&id=1c2a2f22&lang=scss&scoped=true */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12.use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12.use[3]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/Show.vue?vue&type=style&index=0&id=1c2a2f22&lang=scss&scoped=true");
-
-
-/***/ }),
-
-/***/ "./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css":
-/*!***************************************************************************************************************************!*\
-  !*** ./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css ***!
-  \***************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_HouseYears_vue_vue_type_style_index_0_id_ce0b4b0c_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Households/HouseYears/HouseYears.vue?vue&type=style&index=0&id=ce0b4b0c&scoped=true&lang=css");
 
 
 /***/ })

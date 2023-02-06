@@ -139,4 +139,48 @@ class HouseholdController extends Controller
     {
         dd($request->all());
     }
+
+    public function houseInfo(Request $request)
+    {
+        if (!isset($request->household_id)) {
+            throw new \Exception('Відсутній ID домогосподарства');
+        }
+        $household = Household::findOrFail($request->household_id);
+        $request->request->remove('household_id');
+
+        foreach($request->all() as $param => $value) {
+            $param = $household->getAdditionalParam($param);
+
+            if ($param) {
+                if ($value) {
+                    $household->setAdditionalParamValue($param->id, $value);
+                } else {
+                    $household->clearAdditionalParam($param->id);
+                }
+            }
+        }
+        return response()->json(['message' => 'Інформация по будинку була успішно додана']);
+    }
+
+    public function landInfo(Request $request)
+    {
+        if (!isset($request->household_id)) {
+            throw new \Exception('Відсутній ID домогосподарства');
+        }
+        $household = Household::findOrFail($request->household_id);
+        $request->request->remove('household_id');
+
+        foreach($request->all() as $param => $value) {
+            $param = $household->getAdditionalParam($param);
+
+            if ($param) {
+                if ($value) {
+                    $household->setAdditionalParamValue($param->id, $value);
+                } else {
+                    $household->clearAdditionalParam($param->id);
+                }
+            }
+        }
+        return response()->json(['message' => 'Інформация по землі була успішно додана']);
+    }
 }

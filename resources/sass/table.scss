@@ -1,0 +1,37 @@
+.table-years tr td:not(:first-child),
+.table-years tr th:not(:first-child) {
+    text-align: center;
+}
+
+.table-years thead {
+
+    background: #f1f3f5;
+
+    tr th:not(:first-child) {
+        position: relative;
+        border-right: 1px solid #dee2e6;
+        border-left: 1px solid #dee2e6;
+        width: 125px;
+        vertical-align: middle;
+    }
+
+    .dropdown {
+        position:absolute;
+        right: 5px;
+        top:4px;
+
+        button {
+            color: var(--bs-gray-500);
+
+            &:hover, &:active, &.show {
+                color: var(--bs-gray-700);
+            }
+
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--bs-secondary-bg);
+        }
+
+    }
+}

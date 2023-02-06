@@ -38,6 +38,12 @@ class HouseholdResource extends JsonResource
 
         }
 
+        // $houseInfo = [...$this->houseInfo()->map(function($i) {
+        //     return [
+        //         $i->param_code => $i->param_value
+        //     ];
+        // })];
+
         return [
             'id'                    =>  (int)   $this->id,
             'number'                =>  str_pad($this->settlement->inner_code, 2, '0', STR_PAD_LEFT)
@@ -59,7 +65,9 @@ class HouseholdResource extends JsonResource
             // 'members'               =>  HouseholdMemberResource::collection($this->whenLoaded('members')),
             'members'               =>  $members,
             'houseYears'            =>  HouseholdHouseResource::collection($this->whenLoaded('houseYears')),
-            'landYears'             =>  HouseholdLandResource::collection($this->whenLoaded('landYears'))
+            'houseInfo'             =>  $this->houseInfo(),
+            'landYears'             =>  HouseholdLandResource::collection($this->whenLoaded('landYears')),
+            'landInfo'              =>  $this->landInfo(),
         ];
     }
 }

@@ -5,9 +5,10 @@ namespace App\Models;
 use App\Models\Settlement;
 use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Household extends Model
 {
@@ -77,11 +78,11 @@ class Household extends Model
         return $category ?? null;
     }
 
-    public function params()
+    public function additionalParams($params = [])
     {
         $category = AdditionalParamCategory::where('code', get_class($this))->first();
 
-        return $category->params();
+        return $category->params($params);
     }
 
     public function landYears()
@@ -107,5 +108,78 @@ class Household extends Model
         $region = $district->region->name;
 
         return "$this->address, $settlement_type $settlement, $district->name, $region";
+    }
+
+    protected function additionalParamValues($params = [])
+    {
+        return DB::table('additional_params as ap')
+                    ->select(
+                        'ap.id as param_id',
+                        'ap.code as param_code',
+                        'ap.name as param_name',
+                        'apv.value as param_value'
+                    )
+                    ->join('additional_param_categories as apc', 'apc.id', '=', 'ap.category_id')
+                    ->leftJoin('additional_param_values as apv', function($join) {
+                        $join->on('apv.param_id', '=', 'ap.id');
+                        $join->on('apv.owner_id', '=', $this->id);
+                    })
+                    ->where('apc.code', get_class($this))
+                    ->whereIn('ap.code', $params)
+                    ->get();
+    }
+
+    public function houseInfo()
+    {
+        $params = ['house_built', 'house_material_walls', 'house_material_roof', 'house_additional_data'];
+
+        return $this->additionalParamValues($params);
+
+    }
+
+    public function landInfo()
+    {
+        $params = ['land_additional_data'];
+
+        return $this->additionalParamValues($params);
+    }
+
+    public function getAdditionalParam($param)
+    {
+        return DB::table('additional_params as ap')
+                ->select('ap.*')
+                ->join('additional_param_categories as apc', 'apc.id', '=', 'ap.category_id')
+                ->where('apc.code', get_class($this))
+                ->where('ap.code', $param)
+                ->first();
+    }
+
+    public function setAdditionalParamValue($param_id, $value)
+    {
+        $apv =  AdditionalParamValue::where('param_id', $param_id)->where('owner_id', $this->id)->first();
+
+        if (!$apv) {
+            return AdditionalParamValue::create([
+                'owner_id' => $this->id,
+                'param_id' => $param_id,
+                'value' => $value
+            ]);
+        } else {
+            if ($apv->value !== $value) {
+                $apv->value = $value;
+                $apv->save();
+            }
+        }
+        return $apv;
+    }
+
+    public function clearAdditionalParam($id)
+    {
+        $apv =  AdditionalParamValue::where('param_id', $id)->where('owner_id', $this->id)->first();
+        if ($apv) {
+            return ($apv->delete());
+        } else {
+            return null;
+        }
     }
 }

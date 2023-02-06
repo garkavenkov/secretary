@@ -9,7 +9,9 @@ export const Households = {
             info: {},
             members: [],
             houseYears: [],
+            houseInfo: [],
             landYears: [],
+            landInfo: [],
         },
         filter: {
             settlement_id: 0,
@@ -29,7 +31,9 @@ export const Households = {
         members: state => state.household.members,
         household_id: state => state.household.id,
         houseYears: state => state.household.houseYears,
+        houseInfo: state => state.household.houseInfo,
         landYears: state => state.household.landYears,
+        landInfo: state => state.household.landInfo,
     },
     mutations: {
         ...crud.mutations,
