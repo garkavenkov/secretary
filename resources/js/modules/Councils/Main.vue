@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
-                <span>Довідник "Міські / сільські ради"</span>
+                <span>Довідник 'Міські / сільські ради'</span>
                 <button class="btn btn-sm btn-primary" @click="openCouncilForm">
                     <span class="mdi mdi-plus"></span>
                 </button>
@@ -34,7 +34,7 @@
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
                         <td>
-                            <router-link :to="{name: 'CouncilsShow', params: { id: record.id }}">
+                            <router-link :to="{name: 'councils.show', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
@@ -60,8 +60,8 @@
 import { mapGetters }   from 'vuex';
 import { Modal }        from 'bootstrap';
 
-import DataTable    from '../../components/ui/DataTable.vue';
-import CouncilForm  from './Form.vue';
+import DataTable        from '../../components/ui/DataTable.vue';
+import CouncilForm      from './Form.vue';
 
 export default {
     name: 'CouncilsMain',
@@ -81,8 +81,6 @@ export default {
                 edrpou:             '',
                 koatuu:             '',
             },
-            // districts: [],
-            // communities: [],
         }
     },
     provide() {

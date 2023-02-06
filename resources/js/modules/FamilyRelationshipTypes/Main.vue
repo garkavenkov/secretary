@@ -6,7 +6,7 @@
 
             <SystemDictionaryTable
                     :dataTable="relationshipTypes"
-                    title='Довідник "Родинні стосунки"'
+                    title="Довідник 'Родинні стосунки'"
                     :fieldsTitle="['Назва', 'Стать']"
                     :fieldsName="['name', 'sex']"
                     @newRecord="openFormForAdd"
@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import SystemDictionary from '../../minixs/SystemDictionary';
+import { mapGetters }           from 'vuex';
 
-import Breadcrumbs from '../../components/ui/Breadcrumbs.vue';
-import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
-import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
+import SystemDictionary         from '../../minixs/SystemDictionary';
+import Breadcrumbs              from '../../components/ui/Breadcrumbs.vue';
+import SystemDictionaryTable    from '../../components/ui/SystemDictionaryTable.vue';
+import SystemDictionaryForm     from '../../components/ui/SystemDictionaryForm.vue';
 
 export default {
     name: 'FamilyRelationshipTypesMain',

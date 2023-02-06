@@ -5,7 +5,7 @@
 
             <SystemDictionaryTable
                     :dataTable="settlementTypes"
-                    title='Довідник "Тип населеного пункту"'
+                    title="Довідник 'Тип населеного пункту'"
                     @newRecord="openFormForAdd"
                     @editRecord="openFormForEdit" />
 
@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters }           from 'vuex';
 
-import SystemDictionary from '../../minixs/SystemDictionary';
-import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
-import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
+import SystemDictionary         from '../../minixs/SystemDictionary';
+import SystemDictionaryForm     from '../../components/ui/SystemDictionaryForm.vue';
+import SystemDictionaryTable    from '../../components/ui/SystemDictionaryTable.vue';
 
 export default {
     name: 'SettlementTypesMain',

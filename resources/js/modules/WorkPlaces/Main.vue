@@ -5,7 +5,7 @@
 
             <SystemDictionaryTable
                     :dataTable="places"
-                    title='Довідник "Коди місця роботи (заняття)"'
+                    title="Довідник 'Коди місця роботи (заняття)'"
                     @newRecord="openFormForAdd"
                     @editRecord="openFormForEdit" />
 
@@ -23,11 +23,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import SystemDictionary from '../../minixs/SystemDictionary';
+import { mapGetters }           from 'vuex';
 
-import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
-import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
+import SystemDictionary         from '../../minixs/SystemDictionary';
+
+import SystemDictionaryTable    from '../../components/ui/SystemDictionaryTable.vue';
+import SystemDictionaryForm     from '../../components/ui/SystemDictionaryForm.vue';
 
 export default {
     name: 'WorkPlacesMain',

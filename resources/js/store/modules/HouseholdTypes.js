@@ -1,5 +1,4 @@
 import crud from '../core/crud';
-import axios from 'axios';
 
 export const HouseholdTypes = {
     namespaced: true,

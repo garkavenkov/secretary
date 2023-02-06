@@ -167,13 +167,15 @@ export default {
     },
     created() {
         this.appVersion = window.app.version;
-        this.$store.dispatch('Regions/fetchRecords');
-        this.$store.dispatch('Districts/fetchRecords');
+
         this.$store.dispatch('FamilyRelationshipTypes/fetchRecords');
         this.$store.dispatch('HouseholdTypes/fetchRecords');
         this.$store.dispatch('WorkPlaces/fetchRecords');
-        this.$store.dispatch('SettlementTypes/fetchRecords');
         this.$store.dispatch('Settlements/fetchRecords');
+
+        this.$store.dispatch('Regions/fetchRecords');
+        this.$store.dispatch('Districts/fetchRecords');
+        this.$store.dispatch('SettlementTypes/fetchRecords');
         this.$store.dispatch('Councils/fetchRecords');
         this.$store.dispatch('CouncilTypes/fetchData');
         this.$store.dispatch('Communities/fetchRecords');

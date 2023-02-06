@@ -1,8 +1,8 @@
 export default [
     {
         path: '/households',
-        component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/Main.vue'),
         name: 'households',
+        component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/Main.vue'),
         meta: {name: 'Облікови картки'}
     },
     {

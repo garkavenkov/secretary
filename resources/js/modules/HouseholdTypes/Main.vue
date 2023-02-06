@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import SystemDictionary from '../../minixs/SystemDictionary';
+import { mapGetters }           from 'vuex';
 
-import SystemDictionaryTable from '../../components/ui/SystemDictionaryTable.vue';
-import SystemDictionaryForm from '../../components/ui/SystemDictionaryForm.vue';
+import SystemDictionary         from '../../minixs/SystemDictionary';
+import SystemDictionaryTable    from '../../components/ui/SystemDictionaryTable.vue';
+import SystemDictionaryForm     from '../../components/ui/SystemDictionaryForm.vue';
 
 export default {
     name: 'HouseholdTypesMain',

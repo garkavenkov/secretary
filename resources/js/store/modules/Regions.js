@@ -1,4 +1,3 @@
-import axios from 'axios';
 import crud from '../core/crud';
 
 export const Regions = {

@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters }   from 'vuex';
 
-import ModalForm from '../../components/ui/ModalForm.vue';
-import FormValidator from '../../minixs/FormValidator';
+import ModalForm        from '../../components/ui/ModalForm.vue';
+import FormValidator    from '../../minixs/FormValidator';
 
 export default {
     name: 'DistrictForm',
@@ -61,13 +61,6 @@ export default {
         'formData': {
             type: Object,
             required: true,
-            // default() {
-            //     return {
-            //         region_id: 0,
-            //         name: '',
-            //         center: ''
-            //     }
-            // }
         },
         'action': {
             type: String,
@@ -81,8 +74,7 @@ export default {
         }
     },
     data() {
-        return {
-        }
+        return {}
     },
     methods: {
         submitData() {

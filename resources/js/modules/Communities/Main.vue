@@ -1,53 +1,10 @@
-<script>
-import { mapGetters } from 'vuex';
-import { Modal } from 'bootstrap';
-import DataTable from '../../components/ui/DataTable.vue';
-import CommunityForm from './Form.vue';
-
-export default {
-    name: 'DistrictsMain',
-    components: {
-        DataTable,
-        CommunityForm
-    },
-    data() {
-        return {
-            communityFormData: {
-                region_id: 0,
-                district_id: 0,
-                name:   '',
-                center: '',
-                address:'',
-                edrpou: '',
-                koatuu: ''
-            }
-        }
-    },
-    provide() {
-        return {
-            modalTitle: 'Нова громада',
-        }
-    },
-    methods: {
-        openCommunityForm() {
-            let myModal = new Modal(document.getElementById('CommunityForm'))
-            myModal.show();
-        }
-    },
-    computed: {
-        ...mapGetters('Communities', ['communities'])
-    }
-
-}
-</script>
-
-
 <template>
     <breadcrumbs />
+
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
-                <span>Довідник "Громади"</span>
+                <span>Довідник 'Громади'</span>
                 <button class="btn btn-sm btn-primary" title="Додати громаду" @click="openCommunityForm">
                     <span class="mdi mdi-plus"></span>
                 </button>
@@ -76,13 +33,13 @@ export default {
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
                         <td>
-                            <router-link :to="{name: 'CommunitiesShow', params: { id: record.id }}">
+                            <router-link :to="{name: 'communities.show', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
                         <td>{{record.district.name}}</td>
                         <td>
-                            <router-link :to="{name: 'CommunitiesShow', params: { id: record.id }}">
+                            <router-link :to="{name: 'communities.show', params: { id: record.id }}">
                                 {{record.name}}
                             </router-link>
                         </td>
@@ -95,6 +52,52 @@ export default {
         </div>
     </div>
 
-    <CommunityForm :formData="communityFormData" @refreshData="$store.dispatch('Communities/fetchRecords')"/>
+    <CommunityForm
+            :formData="communityFormData"
+            @refreshData="$store.dispatch('Communities/fetchRecords')"/>
 
 </template>
+
+<script>
+import { mapGetters }   from 'vuex';
+import { Modal }        from 'bootstrap';
+
+import DataTable        from '../../components/ui/DataTable.vue';
+import CommunityForm    from './Form.vue';
+
+export default {
+    name: 'DistrictsMain',
+    components: {
+        DataTable,
+        CommunityForm
+    },
+    data() {
+        return {
+            communityFormData: {
+                region_id: 0,
+                district_id: 0,
+                name:   '',
+                center: '',
+                address:'',
+                edrpou: '',
+                koatuu: ''
+            }
+        }
+    },
+    provide() {
+        return {
+            modalTitle: 'Нова громада',
+        }
+    },
+    methods: {
+        openCommunityForm() {
+            let communitForm = new Modal(document.getElementById('CommunityForm'))
+            communitForm.show();
+        }
+    },
+    computed: {
+        ...mapGetters('Communities', ['communities'])
+    }
+
+}
+</script>

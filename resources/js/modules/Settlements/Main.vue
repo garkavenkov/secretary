@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
-                <span>Довідник "Населенні пункти"</span>
+                <span>Довідник 'Населенні пункти'</span>
                 <button class="btn btn-sm btn-primary" @click="openSettlementForm">
                     <span class="mdi mdi-plus"></span>
                 </button>
@@ -33,7 +33,7 @@
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
                         <td>
-                            <router-link :to="{name: 'SettlementsShow', params: { id: record.id }}">
+                            <router-link :to="{name: 'settlements.show', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
@@ -90,8 +90,8 @@ export default {
     },
     methods: {
         openSettlementForm() {
-            var myModal = new Modal(document.getElementById('SettlementForm'));
-            myModal.show();
+            var settlementForm = new Modal(document.getElementById('SettlementForm'));
+            settlementForm.show();
         }
     },
     computed: {

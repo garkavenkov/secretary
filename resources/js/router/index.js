@@ -1,48 +1,31 @@
 import {createRouter, createWebHashHistory } from 'vue-router';
-// import store from '../store';
-import Dashboard            from "../modules/Dashboard/Main.vue";
-import Regions              from "../modules/Regions/Main.vue";
-import RegionsShow          from "../modules/Regions/Show.vue";
-import Districts            from "../modules/Districts/Main.vue";
-import DistrictsShow        from "../modules/Districts/Show.vue";
-import Communities          from "../modules/Communities/Main.vue";
-import CommunitiesShow      from "../modules/Communities/Show.vue";
-import RelationshipTypes    from "../modules/FamilyRelationshipTypes/Main.vue";
-import WorkPlaces           from "../modules/WorkPlaces/Main.vue";
-import HouseholdTypes       from "../modules/HouseholdTypes/Main.vue";
 
-import Settlements          from "../modules/Settlements/Main.vue";
-import SettlementsShow      from "../modules/Settlements/Show.vue";
-import SettlementTypes      from "../modules/SettlementTypes/Main.vue";
-import Councils             from "../modules/Councils/Main.vue";
-import CouncilsShow         from "../modules/Councils/Show.vue";
-import MembersByAge         from "../modules/Analityc/MembersByAge.vue";
-import AdultsAndChildren    from "../modules/Analityc/AdultsAndChildren.vue";
-
+import dashboard            from './dashboard';
+import settlement_types     from './settlement_types';
 import households           from './households';
+import regions              from './regions';
+import districts            from './districts';
+import communities          from './communities';
+import settlements          from './settlements';
+import councils             from './councils';
+import household_types      from './household_types';
+import relationship_types   from './relationship_types';
+import work_places          from './work_places';
+import analitics            from './analitics';
 
 const routes = [
-    { path: '/',                            component: Dashboard, meta: {icon: '<span class="mdi mdi-monitor-dashboard"></span>'} },
-    { path: '/regions',                     component: Regions, meta: {name: 'Регіони'} },
-    { path: '/regions/:id',                 component: RegionsShow, name: 'RegionsShow', props: true, meta: {name: 'Інформація'} },
-    { path: '/districts',                   component: Districts, meta: {name: 'Райони'} },
-    { path: '/districts/:id',               component: DistrictsShow, name: 'DistrictsShow', props: true, meta: {name: 'Інформація'} },
-    { path: '/communities',                 component: Communities, meta: {name: 'Громади'} },
-    { path: '/communities/:id',             component: CommunitiesShow, name: 'CommunitiesShow', props: true, meta: {name: 'Інформація'} },
-    { path: '/family-relationship-types',   component: RelationshipTypes, meta: {name: 'Типи родинні стосунків'} },
-    { path: '/work-places',                 component: WorkPlaces, meta: {name: 'Місця роботи'} },
-    { path: '/household-types',             component: HouseholdTypes, meta: {name: 'Типи погосподарського обліку'} },
-
-
-    { path: '/settlements',                 component: Settlements, meta: {name: 'Населенні пункти'}},
-    { path: '/settlements/:id',             component: SettlementsShow, name: 'SettlementsShow', props: true, meta: {name: 'Інформація'}},
-    { path: '/councils',                    component: Councils, meta: {name: 'Міські / сільські ради'}},
-    { path: '/councils/:id',                component: CouncilsShow, name: 'CouncilsShow', props: true, meta: {name: 'Інформація'}},
-    { path: '/settlement-types',            component: SettlementTypes, meta: {name: 'Типи населеного пункту'}},
-    { path: '/members-by-age',              component: MembersByAge, name: 'MembersByAge', meta: {name: 'Вікові групи населення'}},
-    { path: '/adulds-and-children',         component: AdultsAndChildren, name: 'AdultsAndChildren', meta: {name: 'Дорослі і діти'}},
-
-    ...households
+    ...dashboard,
+    ...settlement_types,
+    ...household_types,
+    ...relationship_types,
+    ...work_places,
+    ...regions,
+    ...districts,
+    ...communities,
+    ...settlements,
+    ...councils,
+    ...households,
+    ...analitics,
 ]
 
 const router = createRouter({

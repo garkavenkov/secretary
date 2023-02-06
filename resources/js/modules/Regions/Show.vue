@@ -7,8 +7,9 @@
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
-                        <button class="btn btn-sm btn-light" @click="openRegionForm" title="Редагувати дані">
-                            <!-- <i class="bi bi-pencil"></i> -->
+                        <button class="btn btn-sm btn-light btn-transparent"
+                                @click="openRegionForm"
+                                title="Редагувати дані">
                             <span class="mdi mdi-pencil"></span>
                         </button>
                     </div>
@@ -36,8 +37,9 @@
                         <div class="card-header">
                             <div class="dictionary-name__wrapper flex-grow-1 justify-content-between">
                                 <span>Районі в регіоні</span>
-                                <button class="btn btn-sm btn-light" title="Додати район" @click="openDistrictForm">
-                                    <!-- <i class="bi bi-plus-lg"></i> -->
+                                <button class="btn btn-sm btn-light btn-transparent"
+                                        title="Додати район"
+                                        @click="openDistrictForm">
                                     <span class="mdi mdi-plus"></span>
                                 </button>
                             </div>
@@ -56,7 +58,7 @@
                                         <tr     v-for="record in slotProps.paginatedData"
                                                 :key="record.id">
                                             <td>
-                                                <router-link :to="{name: 'DistrictsShow', params: { id: record.id }}">
+                                                <router-link :to="{name: 'districts.show', params: { id: record.id }}">
                                                     <td>{{record.name}}</td>
                                                 </router-link>
                                             </td>
@@ -77,19 +79,25 @@
         </div>
     </div>
 
-    <RegionForm :formData="regionFormData" action="update"/>
-    <DistrictForm :formData="districtFormData" @refreshData="$store.dispatch('Regions/fetchRegion', id)" :disabled-fields="['region_id']"/>
+    <RegionForm
+            :formData="regionFormData"
+            action="update"/>
+
+    <DistrictForm
+            :formData="districtFormData"
+            @refreshData="$store.dispatch('Regions/fetchRegion', id)"
+            :disabled-fields="['region_id']"/>
 
 </template>
 
 <script>
-import { Modal } from 'bootstrap';
-import { computed } from 'vue';
-import { mapGetters } from 'vuex';
+import { Modal }        from 'bootstrap';
+import { computed }     from 'vue';
+import { mapGetters }   from 'vuex';
 
-import DataTable from '../../components/ui/DataTable.vue';
-import RegionForm from './Form.vue';
-import DistrictForm from '../Districts/Form.vue';
+import DataTable        from '../../components/ui/DataTable.vue';
+import RegionForm       from './Form.vue';
+import DistrictForm     from '../Districts/Form.vue';
 
 export default {
     name: 'RegionsShow',

@@ -127,7 +127,7 @@ export default {
                             .then(res => {
                                 this.$store.dispatch('Households/fetchRecords');
                                 this.$toast(res.data.message);
-                                this.$router.push({name: 'HouseholdCards'});
+                                this.$router.push({name: 'households'});
                             })
                             .catch(err => {
                                 this.$errorMessage('Неможливо видалити картку', err.response.data.message, 'Зрозуміло');
@@ -137,30 +137,6 @@ export default {
         }
     },
     computed: {
-        // componentProps() {
-        //     if (this.currentTab == 'HouseholdInfo') {
-        //         if (this.household.info) {
-        //             return {
-        //                 info: {...this.household.info, household_id: this.id}
-        //             }
-        //         }
-        //     } else if (this.currentTab == 'HouseholdMembers') {
-        //         return {
-        //             members: this.household.members,
-        //             household_id: this.id
-        //         }
-        //     } else if (this.currentTab == 'HouseInfo') {
-        //         return {
-        //             years: this.household.houseYears,
-        //             household_id: this.id
-        //         }
-        //     } else if (this.currentTab == 'LandInfo') {
-        //         return {
-        //             years: this.household.landYears,
-        //             household_id: this.id
-        //         }
-        //     }
-        // },
         ...mapGetters('Households', ['household'])
     },
     watch: {

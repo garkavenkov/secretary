@@ -33,8 +33,8 @@
 
 <script>
 
-import ModalForm from '../../components/ui/ModalForm.vue';
-import FormValidator from '../../minixs/FormValidator';
+import ModalForm        from '../../components/ui/ModalForm.vue';
+import FormValidator    from '../../minixs/FormValidator';
 
 export default {
     name: 'RegionsForm',
@@ -43,12 +43,6 @@ export default {
         'formData': {
             type: Object,
             required: true,
-            // default() {
-            //     return {
-            //         name: '',
-            //         center: ''
-            //     }
-            // }
         },
         'action': {
             type: String,
@@ -57,8 +51,7 @@ export default {
         }
     },
     data() {
-        return {
-        }
+        return {}
     },
     methods: {
         submitData() {
@@ -67,7 +60,6 @@ export default {
                     .then(res => {
                         this.clearFormData();
                         this.$emit('refreshData');
-                        // this.$store.dispatch('Regions/fetchRegions');
                     })
                     .catch(err => {
                         this.errors = err.response.data.errors;
@@ -77,7 +69,6 @@ export default {
                     .then(res => {
                         this.errors = [];
                         this.$emit('refreshData');
-                        // this.$store.dispatch('Regions/fetchRegion', this.formData.id);
                     })
                     .catch(err => {
                         this.errors = err.response.data.errors;

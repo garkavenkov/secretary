@@ -72,8 +72,6 @@ import DataTable            from '../../components/ui/DataTable.vue';
 import HouseholdForm        from './HouseholdForm.vue';
 import HouseholdFilterForm  from './HouseholdFilterForm.vue';
 
-// import Breadcrumbs          from '../../minixs/Breadcrumbs';
-
 export default {
     name: 'HouseholdCardsMain',
     components: {
@@ -81,7 +79,6 @@ export default {
         HouseholdForm,
         HouseholdFilterForm,
     },
-    // mixins: [Breadcrumbs],
     data() {
         return {
             formData: {
@@ -125,9 +122,6 @@ export default {
     },
     computed: {
         ...mapGetters('Households', ['households', 'filter']),
-    },
-    created() {
-        // this.$store.dispatch('Households/fetchRecords');
     }
 }
 </script>

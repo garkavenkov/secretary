@@ -7,7 +7,9 @@
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
-                        <button class="btn btn-sm btn-light" @click="openDistrictForm" title="Редагувати дані">
+                        <button class="btn btn-sm btn-light btn-transparent"
+                                @click="openDistrictForm"
+                                title="Редагувати дані">
                             <span class="mdi mdi-pencil"></span>
                         </button>
                     </div>
@@ -35,7 +37,7 @@
                                 Регіон
                             </div>
                             <div class="col-md-9">
-                                <router-link :to="{name: 'RegionsShow', params: {id: district.region_id}}">
+                                <router-link :to="{name: 'regions.show', params: {id: district.region_id}}">
                                     {{ district.region.name }}
                                 </router-link>
                             </div>
@@ -45,7 +47,9 @@
                         <div class="card-header">
                             <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Громади в районі</span>
-                                <button class="btn btn-sm btn-light" title="Додати громаду" @click="openCommunityForm">
+                                <button class="btn btn-sm btn-light btn-transparent"
+                                        title="Додати громаду"
+                                        @click="openCommunityForm">
                                     <span class="mdi mdi-plus"></span>
                                 </button>
                             </div>
@@ -63,7 +67,7 @@
                                     <tr     v-for="record in slotProps.paginatedData"
                                             :key="record.id">
                                         <td>
-                                            <router-link :to="{name: 'CommunitiesShow', params: { id: record.id }}">
+                                            <router-link :to="{name: 'communities.show', params: { id: record.id }}">
                                                 <td>{{record.name}}</td>
                                             </router-link>
                                         </td>
@@ -91,13 +95,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { computed } from 'vue';
-import { Modal } from 'bootstrap';
+import { mapGetters }   from 'vuex';
+import { computed }     from 'vue';
+import { Modal }        from 'bootstrap';
 
-import DataTable from '../../components/ui/DataTable.vue'
-import DistrictForm from './Form.vue';
-import CommunityForm from '../Communities/Form.vue';
+import DataTable        from '../../components/ui/DataTable.vue'
+import DistrictForm     from './Form.vue';
+import CommunityForm    from '../Communities/Form.vue';
 
 export default {
     name: 'DistrictsShow',

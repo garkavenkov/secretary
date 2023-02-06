@@ -61,7 +61,7 @@
                                 Міська / сільська рада
                             </div>
                             <div class="col-md-9">
-                                <router-link :to="{name: 'CouncilsShow', params: {id: settlement.council_id}}">
+                                <router-link :to="{name: 'councils.show', params: {id: settlement.council_id}}">
                                     {{ settlement.council.name }}
                                 </router-link>
                             </div>
@@ -71,7 +71,7 @@
                                 Громада
                             </div>
                             <div class="col-md-9">
-                                <router-link :to="{name: 'CommunitiesShow', params: {id: settlement.council.community_id}}">
+                                <router-link :to="{name: 'communities.show', params: {id: settlement.council.community_id}}">
                                     {{ settlement.council.community.name }}
                                 </router-link>
                             </div>
@@ -81,7 +81,7 @@
                                 Район
                             </div>
                             <div class="col-md-9">
-                                <router-link :to="{name: 'DistrictsShow', params: {id: settlement.council.community.district_id}}">
+                                <router-link :to="{name: 'districts.show', params: {id: settlement.council.community.district_id}}">
                                     {{ settlement.council.community.district.name }}
                                 </router-link>
                             </div>
@@ -91,7 +91,7 @@
                                 Регіон
                             </div>
                             <div class="col-md-9">
-                                <router-link :to="{name: 'RegionsShow', params: {id: settlement.council.community.district.region_id}}">
+                                <router-link :to="{name: 'regions.show', params: {id: settlement.council.community.district.region_id}}">
                                     {{ settlement.council.community.district.region.name }}
                                 </router-link>
                             </div>
@@ -111,10 +111,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { Modal } from 'bootstrap';
+import { mapGetters }   from 'vuex'
+import { Modal }        from 'bootstrap';
 
-import SettlementForm from './Form.vue';
+import SettlementForm   from './Form.vue';
 
 export default {
     name: 'SettlementsShow',
@@ -149,7 +149,7 @@ export default {
     },
     methods: {
         openSettlementForm() {
-            let myModal = new Modal(document.getElementById('SettlementForm'))
+            let settlementForm = new Modal(document.getElementById('SettlementForm'))
 
             this.settlementFormData.id                  =   this.settlement.id;
             this.settlementFormData.region_id           =   this.settlement.council.community.district.region_id;
@@ -162,7 +162,7 @@ export default {
             this.settlementFormData.inner_code          =   this.settlement.inner_code;
             this.settlementFormData.katottg             =   this.settlement.katottg;
 
-            myModal.show();
+            settlementForm.show();
         }
     },
     computed: {

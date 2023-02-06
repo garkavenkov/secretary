@@ -59,7 +59,7 @@
                                 Район
                             </div>
                             <div class="col-md-9">
-                                <router-link :to="{name: 'DistrictsShow', params: {id: community.district.id}}">
+                                <router-link :to="{name: 'districts.show', params: {id: community.district.id}}">
                                     {{ community.district.name }}
                                 </router-link>
                             </div>
@@ -69,7 +69,7 @@
                                 Регіон
                             </div>
                             <div class="col-md-9">
-                                <router-link :to="{name: 'RegionsShow', params: {id: community.district.region.id}}">
+                                <router-link :to="{name: 'regions.show', params: {id: community.district.region.id}}">
                                     {{ community.district.region.name }}
                                 </router-link>
                             </div>
@@ -79,7 +79,9 @@
                         <div class="card-header">
                             <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Міські / сільські ради в громаді</span>
-                                <button class="btn btn-sm btn-light" title="Додати раду"  @click="openCouncilForm">
+                                <button class="btn btn-sm btn-light btn-transparent"
+                                        title="Додати раду"
+                                        @click="openCouncilForm">
                                     <span class="mdi mdi-plus"></span>
                                 </button>
                             </div>
@@ -97,7 +99,7 @@
                                     <tr     v-for="record in slotProps.paginatedData"
                                             :key="record.id">
                                         <td>
-                                            <router-link :to="{name: 'CouncilsShow', params: { id: record.id }}">
+                                            <router-link :to="{name: 'councils.show', params: { id: record.id }}">
                                                 <td>{{record.name}}</td>
                                             </router-link>
                                         </td>
@@ -125,13 +127,13 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { computed } from 'vue';
-import { Modal } from 'bootstrap';
+import { mapGetters }   from 'vuex';
+import { computed }     from 'vue';
+import { Modal }        from 'bootstrap';
 
-import DataTable from '../../components/ui/DataTable.vue';
-import CommunityForm from './Form.vue';
-import CouncilForm from '../Councils/Form.vue';
+import DataTable        from '../../components/ui/DataTable.vue';
+import CommunityForm    from './Form.vue';
+import CouncilForm      from '../Councils/Form.vue';
 
 export default {
     name: 'CommunitiesShow',
@@ -175,7 +177,7 @@ export default {
     },
     methods: {
         openCommunityForm() {
-            let myModal = new Modal(document.getElementById('CommunityForm'))
+            let communityForm = new Modal(document.getElementById('CommunityForm'))
 
             this.modalTitle         = 'Редагувати громаду';
             this.modalSubmitCaption = 'Зберегти';
@@ -189,10 +191,10 @@ export default {
             this.communityFormData.edrpou       =   this.community.edrpou;
             this.communityFormData.koatuu       =   this.community.koatuu;
 
-            myModal.show();
+            communityForm.show();
         },
         openCouncilForm() {
-            let myModal = new Modal(document.getElementById('CouncilForm'))
+            let councilForm = new Modal(document.getElementById('CouncilForm'))
 
             this.modalTitle         = 'Нава рада';
             this.modalSubmitCaption = 'Додати';
@@ -200,13 +202,8 @@ export default {
             this.councilFormData.region_id      =   this.community.district.region_id;
             this.councilFormData.district_id    =   this.community.district_id;
             this.councilFormData.community_id   =   this.community.id;
-            // this.councilFormData.council_type_id
-            // this.councilFormData.name
-            // this.councilFormData.address
-            // this.councilFormData.edrpou
-            // this.councilFormData.koatuu
 
-            myModal.show();
+            councilForm.show();
         }
     },
     computed: {

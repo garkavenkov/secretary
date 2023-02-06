@@ -1,5 +1,15 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/settlement-types.js": "/js/settlement-types.js",
     "/js/household-cards.js": "/js/household-cards.js",
+    "/js/regions.js": "/js/regions.js",
+    "/js/districts.js": "/js/districts.js",
+    "/js/communitites.js": "/js/communitites.js",
+    "/js/settlements.js": "/js/settlements.js",
+    "/js/councils.js": "/js/councils.js",
+    "/js/household-types.js": "/js/household-types.js",
+    "/js/relationships-types.js": "/js/relationships-types.js",
+    "/js/work-places.js": "/js/work-places.js",
+    "/js/analitycs.js": "/js/analitycs.js",
     "/css/app.css": "/css/app.css"
 }

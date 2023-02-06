@@ -7,7 +7,9 @@
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація о раді</span>
-                        <button class="btn btn-sm btn-light" @click="openCouncilForm" title="Редагувати дані">
+                        <button class="btn btn-sm btn-light btn-transparent"
+                                @click="openCouncilForm"
+                                title="Редагувати дані">
                             <span class="mdi mdi-pencil"></span>
                         </button>
                     </div>
@@ -33,7 +35,7 @@
                         <div class="row mb-2">
                             <div class="col-md-3">Громада</div>
                             <div class="col-md-9">
-                                <router-link :to="{name: 'CommunitiesShow', params: {id: council.community_id}}">
+                                <router-link :to="{name: 'communities.show', params: {id: council.community_id}}">
                                     {{ council.community.name }}
                                 </router-link>
                             </div>
@@ -43,7 +45,9 @@
                         <div class="card-header">
                             <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                                 <span>Підпорядковані населенні пункти</span>
-                                <button class="btn btn-sm btn-light" title="Додати населенний пункт" @click="openSettlementForm">
+                                <button class="btn btn-sm btn-light btn-transparent"
+                                        title="Додати населенний пункт"
+                                        @click="openSettlementForm">
                                     <span class="mdi mdi-plus"></span>
                                 </button>
                             </div>
@@ -62,8 +66,7 @@
                                     <tr     v-for="record in slotProps.paginatedData"
                                             :key="record.id">
                                         <td>
-                                            <router-link :to="{name: 'SettlementsShow', params: { id: record.id }}">
-                                                <!-- <i class="bi bi-eye"></i> -->
+                                            <router-link :to="{name: 'settlements.show', params: { id: record.id }}">
                                                 <td>{{record.name}}</td>
                                             </router-link>
                                         </td>
@@ -93,13 +96,13 @@
 </template>
 
 <script>
-import { Modal } from 'bootstrap';
-import { computed } from 'vue';
-import { mapGetters } from 'vuex';
+import { Modal }        from 'bootstrap';
+import { computed }     from 'vue';
+import { mapGetters }   from 'vuex';
 
-import DataTable from '../../components/ui/DataTable.vue';
-import CouncilForm from './Form.vue';
-import SettlementForm from '../Settlements/Form.vue';
+import DataTable        from '../../components/ui/DataTable.vue';
+import CouncilForm      from './Form.vue';
+import SettlementForm   from '../Settlements/Form.vue';
 
 export default {
     name: 'CouncilsShow',
@@ -145,7 +148,7 @@ export default {
     },
     methods: {
         openCouncilForm() {
-            let myModal = new Modal(document.getElementById('CouncilForm'))
+            let councilForm = new Modal(document.getElementById('CouncilForm'))
 
             this.modalTitle         = 'Редагувати раду';
             this.modalSubmitCaption = 'Зберегти';
@@ -161,10 +164,10 @@ export default {
             this.councilFormData.edrpou             =   this.council.edrpou;
             this.councilFormData.koatuu             =   this.council.koatuu;
 
-            myModal.show();
+            councilForm.show();
         },
         openSettlementForm() {
-            let myModal = new Modal(document.getElementById('SettlementForm'))
+            let settlementForm = new Modal(document.getElementById('SettlementForm'))
 
             this.modalTitle         = 'Новий населенний пункт';
             this.modalSubmitCaption = 'Додати';
@@ -174,7 +177,7 @@ export default {
             this.settlementFormData.community_id       =   this.council.community_id;
             this.settlementFormData.council_id         =   this.council.id;
 
-            myModal.show();
+            settlementForm.show();
         }
     },
     computed: {

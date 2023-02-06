@@ -4,13 +4,15 @@
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
-                <span>Довідник "Регіони"</span>
-                <button class="btn btn-sm btn-primary" @click="addRegion" title="Додати новий регіон">
-                    <!-- <i class="bi bi-plus"></i> -->
+                <span>Довідник 'Регіони'</span>
+                <button class="btn btn-sm btn-primary"
+                        @click="addRegion"
+                        title="Додати новий регіон">
                     <span class="mdi mdi-plus"></span>
                 </button>
-                <button class="btn btn-sm btn-outline-primary ms-2" @click="$store.dispatch('Regions/fetchRegions')" title="Оновити дані">
-                    <!-- <i class="bi bi-arrow-repeat"></i> -->
+                <button class="btn btn-sm btn-outline-primary ms-2"
+                        @click="$store.dispatch('Regions/fetchRegions')"
+                        title="Оновити дані">
                     <span class="mdi mdi-refresh"></span>
                 </button>
             </div>
@@ -31,8 +33,7 @@
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
                         <td>
-                            <router-link :to="{name: 'RegionsShow', params: {id: record.id}}">
-                                <!-- <i class="bi bi-eye"></i> -->
+                            <router-link :to="{name: 'regions.show', params: {id: record.id}}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
@@ -45,24 +46,25 @@
         </div>
     </div>
 
-    <RegionForm  :formData="form" @refreshData="$store.dispatch('Regions/fetchRegions')"/>
+    <RegionForm
+            :formData="form"
+            @refreshData="$store.dispatch('Regions/fetchRecords')"/>
 
 </template>
 
 
 <script>
-import { mapGetters } from 'vuex';
-import { Modal } from 'bootstrap';
+import { mapGetters }   from 'vuex';
+import { Modal }        from 'bootstrap';
 
-import DataTable from '../../components/ui/DataTable.vue';
-import RegionForm from './Form.vue';
+import DataTable        from '../../components/ui/DataTable.vue';
+import RegionForm       from './Form.vue';
 
 export default {
     components: {
         DataTable,
         RegionForm
     },
-
     data() {
         return {
             form: {
