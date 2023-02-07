@@ -67,7 +67,7 @@
     <HouseholdForm
             :formData="formData"
             action="update"
-            @refreshData="$store.dispatch('Households/fetchRecord', id)" />
+            @refreshData="refreshData" />
 
 </template>
 
@@ -95,7 +95,11 @@ export default {
                 id: this.id,
                 settlement_id: 0,
                 household_type_id: 0,
-                address: '',
+                address_street_type: '',
+                address_street_name: '',
+                address_house: '',
+                address_corps: '',
+                address_apartment: '',
                 special_marks: '',
                 additional_data: ''
             },
@@ -112,9 +116,15 @@ export default {
             this.formData.id                = this.id,
             this.formData.settlement_id     = this.household.info.settlement_id,
             this.formData.household_type_id = this.household.info.household_type_id,
-            this.formData.address           = this.household.info.address,
             this.formData.special_marks     = this.household.info.special_marks,
             this.formData.additional_data   = this.household.info.additional_data
+
+            const address_part_names = ['address_street_type', 'address_street_name', 'address_house', 'address_corps', 'address_apartment'];
+            const address_part_values = this.household.info.raw_address.split(',');
+
+            address_part_values.forEach((value, index) => {
+                this.formData[address_part_names[index]] = value;
+            });
 
             let householdForm = new Modal(document.getElementById('HouseholdForm'));
             householdForm.show();
@@ -134,6 +144,10 @@ export default {
                             });
                     }
                 })
+        },
+        refreshData() {
+            this.$store.dispatch('Households/fetchRecord', this.id);
+            this.$store.dispatch('Households/fetchRecords');
         }
     },
     computed: {
@@ -147,7 +161,7 @@ export default {
 
     },
     created() {
-        this.$store.dispatch('Households/fetchRecord', this.id);
+        // this.$store.dispatch('Households/fetchRecord', this.id);
 
     }
 }

@@ -21702,7 +21702,6 @@ var _hoisted_2 = {
 };
 var _hoisted_3 = ["value", "onClick"];
 var _hoisted_4 = {
-  key: 1,
   id: "households"
 };
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
@@ -21732,8 +21731,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     placeholder: "Адреса домогосподарства...",
     "aria-label": "Search"
-  }, null, 34 /* CLASS, HYDRATE_EVENTS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchText]]), $data.households.length > 0 && $data.isVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", {
-    key: 0,
+  }, null, 34 /* CLASS, HYDRATE_EVENTS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchText]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", {
     id: "households",
     onMousedown: _cache[3] || (_cache[3] = function () {
       return $options.listHandleMouseDown && $options.listHandleMouseDown.apply($options, arguments);
@@ -21747,7 +21745,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return $options.goToHousehold(household.id);
       }
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(household.address), 9 /* TEXT, PROPS */, _hoisted_3);
-  }), 128 /* KEYED_FRAGMENT */))], 32 /* HYDRATE_EVENTS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.households.length == 0 && $data.isVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_4, _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }), 128 /* KEYED_FRAGMENT */))], 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.households.length > 0 && $data.isVisible]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_4, _hoisted_6, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.households.length == 0 && $data.isVisible]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-outline-secondary ms-2",
     type: "buton",
     onClick: _cache[4] || (_cache[4] = function () {
@@ -22228,19 +22226,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
-/* harmony import */ var _dashboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dashboard */ "./resources/js/router/dashboard.js");
-/* harmony import */ var _settlement_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./settlement_types */ "./resources/js/router/settlement_types.js");
-/* harmony import */ var _households__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./households */ "./resources/js/router/households.js");
-/* harmony import */ var _regions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./regions */ "./resources/js/router/regions.js");
-/* harmony import */ var _districts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./districts */ "./resources/js/router/districts.js");
-/* harmony import */ var _communities__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./communities */ "./resources/js/router/communities.js");
-/* harmony import */ var _settlements__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./settlements */ "./resources/js/router/settlements.js");
-/* harmony import */ var _councils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./councils */ "./resources/js/router/councils.js");
-/* harmony import */ var _household_types__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./household_types */ "./resources/js/router/household_types.js");
-/* harmony import */ var _relationship_types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./relationship_types */ "./resources/js/router/relationship_types.js");
-/* harmony import */ var _work_places__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./work_places */ "./resources/js/router/work_places.js");
-/* harmony import */ var _analitics__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./analitics */ "./resources/js/router/analitics.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+/* harmony import */ var _dashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard */ "./resources/js/router/dashboard.js");
+/* harmony import */ var _settlement_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./settlement_types */ "./resources/js/router/settlement_types.js");
+/* harmony import */ var _households__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./households */ "./resources/js/router/households.js");
+/* harmony import */ var _regions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./regions */ "./resources/js/router/regions.js");
+/* harmony import */ var _districts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./districts */ "./resources/js/router/districts.js");
+/* harmony import */ var _communities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./communities */ "./resources/js/router/communities.js");
+/* harmony import */ var _settlements__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./settlements */ "./resources/js/router/settlements.js");
+/* harmony import */ var _councils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./councils */ "./resources/js/router/councils.js");
+/* harmony import */ var _household_types__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./household_types */ "./resources/js/router/household_types.js");
+/* harmony import */ var _relationship_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./relationship_types */ "./resources/js/router/relationship_types.js");
+/* harmony import */ var _work_places__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./work_places */ "./resources/js/router/work_places.js");
+/* harmony import */ var _analitics__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./analitics */ "./resources/js/router/analitics.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -22260,24 +22259,21 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-var routes = [].concat(_toConsumableArray(_dashboard__WEBPACK_IMPORTED_MODULE_0__["default"]), _toConsumableArray(_settlement_types__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_household_types__WEBPACK_IMPORTED_MODULE_8__["default"]), _toConsumableArray(_relationship_types__WEBPACK_IMPORTED_MODULE_9__["default"]), _toConsumableArray(_work_places__WEBPACK_IMPORTED_MODULE_10__["default"]), _toConsumableArray(_regions__WEBPACK_IMPORTED_MODULE_3__["default"]), _toConsumableArray(_districts__WEBPACK_IMPORTED_MODULE_4__["default"]), _toConsumableArray(_communities__WEBPACK_IMPORTED_MODULE_5__["default"]), _toConsumableArray(_settlements__WEBPACK_IMPORTED_MODULE_6__["default"]), _toConsumableArray(_councils__WEBPACK_IMPORTED_MODULE_7__["default"]), _toConsumableArray(_households__WEBPACK_IMPORTED_MODULE_2__["default"]), _toConsumableArray(_analitics__WEBPACK_IMPORTED_MODULE_11__["default"]));
-var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_12__.createRouter)({
-  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_12__.createWebHashHistory)(),
+
+var routes = [].concat(_toConsumableArray(_dashboard__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_settlement_types__WEBPACK_IMPORTED_MODULE_2__["default"]), _toConsumableArray(_household_types__WEBPACK_IMPORTED_MODULE_9__["default"]), _toConsumableArray(_relationship_types__WEBPACK_IMPORTED_MODULE_10__["default"]), _toConsumableArray(_work_places__WEBPACK_IMPORTED_MODULE_11__["default"]), _toConsumableArray(_regions__WEBPACK_IMPORTED_MODULE_4__["default"]), _toConsumableArray(_districts__WEBPACK_IMPORTED_MODULE_5__["default"]), _toConsumableArray(_communities__WEBPACK_IMPORTED_MODULE_6__["default"]), _toConsumableArray(_settlements__WEBPACK_IMPORTED_MODULE_7__["default"]), _toConsumableArray(_councils__WEBPACK_IMPORTED_MODULE_8__["default"]), _toConsumableArray(_households__WEBPACK_IMPORTED_MODULE_3__["default"]), _toConsumableArray(_analitics__WEBPACK_IMPORTED_MODULE_12__["default"]));
+var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_13__.createRouter)({
+  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_13__.createWebHashHistory)(),
   routes: routes
 });
-
-// router.beforeEach((to, from, next) => {
-//     if (to.name === 'HouseholdCardsShow') {
-//         store.dispatch('Households/fetchHousehold', to.params.id)
-//             .then(res => {
-//                 next();
-//             })
-//     }
-
-//     next();
-
-// });
-
+router.beforeEach(function (to, from, next) {
+  if (to.matched[0].name === 'households.show') {
+    _store__WEBPACK_IMPORTED_MODULE_0__["default"].dispatch('Households/fetchRecord', to.params.id).then(function (res) {
+      next();
+    });
+  } else {
+    next();
+  }
+});
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),

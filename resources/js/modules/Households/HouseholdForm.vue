@@ -1,6 +1,6 @@
 <template>
 
-    <ModalForm formId="HouseholdForm" @submitData="submitData" @closeForm="clearFormData" modalClass="modal-lg">
+    <ModalForm formId="HouseholdForm" @submitData="saveData" @closeForm="clearFormData" modalClass="modal-lg" :sumbitIsDisabled="!addressIsFilled">
         <div class="row mb-3">
             <div class="col">
                 <label for="householdType" class="form-label">Населений пункт</label>
@@ -35,19 +35,66 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <label for="householdAddress" class="form-label">Місцезнаходження / адреса</label>
+        </div>
         <div class="row mb-3">
-            <div class="col">
-                <label for="householdAddress" class="form-label">Місцезнаходження / адреса</label>
-                <textarea
+            <!-- <div class="col"> -->
+                <!-- <textarea
                         :class="['form-control', hasError('address') ? 'is-invalid' : '']"
                         id="householdAddress"
                         rows="2"
                         v-model="formData.address">
-                </textarea>
-                <div id="householdAddressValidation" class="invalid-feedback">
-                    {{ getError('address') }}
-                </div>
-            </div>
+                </textarea> -->
+                <!-- <div class="col">
+                    <div class="row"> -->
+
+                           <div class="col-md-2">
+                               <label for="streetType" class="form-label address-label">тип вулиці</label>
+                               <select  :class="['form-control', hasError('address') ? 'is-invalid' : '']"
+                                        id="streetType"
+                                        v-model="formData.address_street_type">
+                                   <option value="вул.">вулиця</option>
+                                   <option value="пр.">проспект</option>
+                                   <option value="пров.">провулок</option>
+                                   <option value="пл.">площа</option>
+                               </select>
+                           </div>
+                           <div class="col-md-4">
+                               <label for="streetName" class="form-label address-label">вулиця</label>
+                               <input   type="text"
+                                        :class="['form-control', hasError('address') ? 'is-invalid' : '']"
+                                        id="streetName"
+                                        v-model="formData.address_street_name">
+                           </div>
+                           <div class="col-md-2">
+                               <label for="houseNumber" class="form-label address-label">будинок</label>
+                               <input   type="text"
+                                        :class="['form-control', hasError('address') ? 'is-invalid' : '']"
+                                        id="houseNumber"
+                                        v-model="formData.address_house">
+                           </div>
+                           <div class="col-md-2">
+                               <label for="corpsNumber" class="form-label address-label">корпус</label>
+                               <input   type="text"
+                                        :class="['form-control', (hasError('address') && (formData.address_corps !==''))? 'is-invalid' : '']"
+                                        id="corps"
+                                        v-model="formData.address_corps">
+                           </div>
+                           <div class="col-md-2">
+                               <label for="apartmentNumber" class="form-label address-label">квартира</label>
+                               <input   type="text"
+                                        :class="['form-control', (hasError('address') && (formData.address_apartment !== ''))? 'is-invalid' : '']"
+                                        id="apartmentNumber"
+                                        v-model="formData.address_apartment">
+                           </div>
+                           <div id="householdAddressValidation" :class="['invalid-feedback', hasError('address') ? 'd-block' : '']">
+                               {{ getError('address') }}
+                           </div>
+
+
+            <!--    </div> -->
+            <!-- </div> -->
         </div>
         <div class="row mb-3">
             <div class="col">
@@ -108,23 +155,76 @@ export default {
     data() {
         return {
             apiUrl: '/api/v1/households',
+            excludeFiledsFromCreateWatch: [
+                'address_street_type',
+                'address_street_name',
+                'address_house',
+                'address_corps',
+                'address_apartment'
+            ]
         }
     },
     methods: {
         clearFormData() {
             this.formData.settlement_id = 0;
             this.formData.household_type_id = 0;
+
+            this.formData.address_street_type = '';
+            this.formData.address_street_name = '';
+            this.formData.address_house = '';
+            this.formData.address_corps = '';
+            this.formData.address_apartment = '';
+
             this.formData.address = '';
             this.formData.special_marks =  '';
             this.formData.additional_data = '';
+
+            this.errors = [];
+        },
+        saveData() {
+            if (this.formData.address_street_type == '' ||
+                this.formData.address_street_name == '' ||
+                this.formData.address_house == '' ) return;
+
+            let address = '';
+
+            address = this.formData.address_street_type + ',';
+            address = address + this.formData.address_street_name + ',';
+            address = address + this.formData.address_house + ',';
+            address = address + this.formData.address_corps + ',';
+            address = address + this.formData.address_apartment;
+
+            this.formData.address = address;
+            this.submitData();
         }
     },
     computed: {
         ...mapGetters('Settlements', ['settlements']),
-        ...mapGetters('HouseholdTypes', ['householdTypes'])
+        ...mapGetters('HouseholdTypes', ['householdTypes']),
+        addressIsFilled() {
+            return  (this.formData.address_street_type !== '') &&
+                    (this.formData.address_street_name !== '') &&
+                    (this.formData.address_house);
+        }
+    },
+    created() {
+        var vm = this;
+        this.excludeFiledsFromCreateWatch.forEach(function(f) {
+            let field = `formData.${f}`
+            vm.$watch(field, function() {
+                if (this.errors['address']) delete this.errors['address'];
+            });
+        });
     },
     components: {
         ModalForm
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.address-label {
+    font-size: 0.8rem;
+    color: grey;
+}
+</style>

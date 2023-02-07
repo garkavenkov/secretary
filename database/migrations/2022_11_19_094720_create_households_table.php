@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('special_marks')->nullable();
             $table->string('additional_data')->nullable();
             $table->timestamps();
+            $table->unique(['settlement_id', 'address']);
         });
     }
 

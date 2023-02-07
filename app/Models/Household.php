@@ -46,7 +46,6 @@ class Household extends Model
             } else {
                 $number = $number + 1;
             }
-
             $model->number = $number;
         });
     }
@@ -100,14 +99,28 @@ class Household extends Model
         return $this->hasMany(HouseholdOwner::class);
     }
 
-    public function fullAddress()
+    public function getAddress()
+    {
+        $parts = explode(',', $this->address);
+        $address = "$parts[0] $parts[1], буд. $parts[2]";
+
+        // корпус
+        $address = $address . ($parts[3] !== '' ? ", корп. $parts[3]" : "");
+
+        // квартира
+        $address = $address . ($parts[4] !== '' ? ", кв. $parts[4]" : "");
+
+        return $address;
+    }
+
+    public function getFullAddress()
     {
         $settlement = $this->settlement->name;
         $settlement_type = mb_strtolower($this->settlement->type->name);
         $district = $this->settlement->council->community->district;
         $region = $district->region->name;
 
-        return "$this->address, $settlement_type $settlement, $district->name, $region";
+        return $this->getAddress() . ", $settlement_type $settlement, $district->name, $region";
     }
 
     protected function additionalParamValues($params = [])

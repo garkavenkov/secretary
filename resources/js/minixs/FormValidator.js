@@ -21,12 +21,16 @@ export default {
     created() {
         var vm = this;
         var fields = Object.keys(this.formData);
+
+        if (this.excludeFiledsFromCreateWatch) {
+            fields = fields.filter(f => !this.excludeFiledsFromCreateWatch.includes(f));
+        }
+
         fields.forEach(function(f) {
             let field = `formData.${f}`
             vm.$watch(field, function() {
                 if (this.errors[f]) delete this.errors[f];
             });
         });
-
     },
 }

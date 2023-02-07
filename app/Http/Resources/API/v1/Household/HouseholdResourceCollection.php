@@ -29,7 +29,8 @@ class HouseholdResourceCollection extends ResourceCollection
                                             . str_pad($household->number, 4, '0', STR_PAD_LEFT)
                                             . '-'
                                             . $household->household_type_id,
-                'address'               =>  $household->address,
+                'raw_address'           =>  $household->address,
+                'address'               =>  $household->getAddress(),
                 // 'special_marks'         =>  $household->special_marks,
                 // 'additional_data'       =>  $household->additional_data
             ];

@@ -23,6 +23,7 @@
         </div>
         <div class="card-body">
             <DataTable
+                    v-if="households.length > 0"
                     :dataTable="households"
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
@@ -49,6 +50,9 @@
                     </tr>
                 </template>
             </DataTable>
+            <div v-else class="text-muted text-center p-3">
+                Немає даних для відображення.
+            </div>
         </div>
     </div>
 
@@ -84,7 +88,12 @@ export default {
             formData: {
                 settlement_id: 0,
                 household_type_id: 0,
-                address: '',
+                // address: '',
+                address_street_type: '',
+                address_street_name: '',
+                address_house: '',
+                address_corps: '',
+                address_apartment: '',
                 special_marks: '',
                 additional_data: ''
             },

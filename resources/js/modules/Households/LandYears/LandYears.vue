@@ -75,7 +75,7 @@
                 </table>
             </div>
             <div class="col-md-3">
-                <div class="card rounded-1">
+                <div class="card rounded-0">
                     <div class="card-header thin-header align-items-center">
                         <h6>Додаткова інформація</h6>
                         <button class="btn btn-sm btn-light btn-transparent"

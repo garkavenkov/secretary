@@ -1,5 +1,7 @@
 import {createRouter, createWebHashHistory } from 'vue-router';
 
+import store from '../store';
+
 import dashboard            from './dashboard';
 import settlement_types     from './settlement_types';
 import households           from './households';
@@ -33,16 +35,19 @@ const router = createRouter({
     routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//     if (to.name === 'HouseholdCardsShow') {
-//         store.dispatch('Households/fetchHousehold', to.params.id)
-//             .then(res => {
-//                 next();
-//             })
-//     }
+router.beforeEach((to, from, next) => {
 
-//     next();
+    if (to.matched[0].name === 'households.show') {
+        store.dispatch('Households/fetchRecord', to.params.id)
+            .then(res => {
+                next();
+            })
+    } else {
 
-// });
+        next();
+    }
+
+
+});
 
 export default router;

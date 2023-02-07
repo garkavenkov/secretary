@@ -3,8 +3,13 @@
         <div class="row justify-content-around mb-xl-4 mb-md-4">
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">Адреса</div>
-                <div v-if="info.address">
-                    {{ info.address }}
+                <div v-if="info.address" class="household-address">
+                    <span>
+                        {{ info.address }}
+                    </span>
+                    <span>
+                        {{ restOfAddress }}
+                    </span>
                 </div>
             </div>
             <div class="col-xl-5 col-md-12 mb-md-4">
@@ -191,6 +196,9 @@ export default {
     },
     computed: {
         ...mapGetters('Households', ['info', 'household_id']),
+        restOfAddress() {
+            return this.info.full_address.substring(this.info.address.length);
+        },
         headIsAlreadyOwner() {
             if (this.info.household_head) {
                 return this.info.owners.findIndex(o => {
@@ -207,6 +215,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.household-address {
+
+    span:last-of-type {
+        color: var(--bs-gray-500);
+
+        &:hover {
+            color: var(--bs-card-color);
+        }
+    }
+
+}
 .owner-wrapper {
     // padding: 0.5rem;
     border-width: 1px;

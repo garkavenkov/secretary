@@ -1257,8 +1257,14 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
+    var _this = this;
     var vm = this;
     var fields = Object.keys(this.formData);
+    if (this.excludeFiledsFromCreateWatch) {
+      fields = fields.filter(function (f) {
+        return !_this.excludeFiledsFromCreateWatch.includes(f);
+      });
+    }
     fields.forEach(function (f) {
       var field = "formData.".concat(f);
       vm.$watch(field, function () {

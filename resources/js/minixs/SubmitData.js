@@ -5,8 +5,8 @@ export default {
                 axios.post(this.apiUrl, this.formData)
                     .then(res => {
                         this.clearFormData();
-                        this.$toast(res.data.message);
                         this.$emit('refreshData');
+                        this.$toast(res.data.message);
                     })
                     .catch(err => {
                         this.errors = err.response?.data.errors;
@@ -15,8 +15,8 @@ export default {
                 axios.patch(`${this.apiUrl}/${this.formData.id}`, this.formData)
                     .then(res => {
                         this.errors = [];
-                        this.$toast(res.data.message);
                         this.$emit('refreshData');
+                        this.$toast(res.data.message);
                     })
                     .catch(err => {
                         this.errors = err.response?.data.errors;

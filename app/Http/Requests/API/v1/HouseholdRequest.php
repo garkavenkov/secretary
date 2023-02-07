@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API\v1;
 
+use App\Rules\CompoundUniqueIndexValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class HouseholdRequest extends FormRequest
@@ -26,7 +27,15 @@ class HouseholdRequest extends FormRequest
         return [
             'settlement_id'     =>  'required|exists:settlements,id',
             'household_type_id' =>  'required|exists:household_types,id',
-            'address'           =>  'required|min:3',
+            'address'           =>  [
+                                        'required',
+                                        'min:3',
+                                        new CompoundUniqueIndexValidation(
+                                            model: 'App\Models\Household',
+                                            field: 'settlement_id',
+                                            msg: "Домогосподарство з такою адресою вже існує в указаному населеному пункті"
+                                        )
+                                    ],
             'special_marks'     =>  'nullable|min:3',
             'additional_data'   =>  'nullable|min:3'
         ];

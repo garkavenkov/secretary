@@ -9,7 +9,7 @@
                     @keydown="searchHandleDownKey"
                     placeholder="Адреса домогосподарства..."
                     aria-label="Search">
-            <ul v-if="(households.length > 0) && isVisible" id="households" @mousedown="listHandleMouseDown">
+            <ul v-show="(households.length > 0) && isVisible" id="households" @mousedown="listHandleMouseDown">
                 <li v-for="household in households"
                     class="founded"
                     :value="household.id"
@@ -18,7 +18,7 @@
                         {{ household.address }}
                 </li>
             </ul>
-            <ul v-if="(households.length == 0) && isVisible" id="households">
+            <ul v-show="(households.length == 0) && isVisible" id="households">
                 <li>Нічого не знайдено. Спробуйте змінити текст</li>
             </ul>
         </div>
