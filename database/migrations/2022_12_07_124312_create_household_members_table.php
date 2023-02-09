@@ -20,10 +20,18 @@ return new class extends Migration
             $table->string('name');
             $table->string('patronymic');
             $table->enum('sex',['чоловіча','жіноча']);
-            $table->date('birthday');
+            $table->date('birthdate');
             $table->integer('family_relationship_type_id');
             $table->string('employment_information')->nullable();
             $table->integer('work_place_id')->nullable();
+            $table->string('social_information')->nullable()->default('');
+            $table->string('additional_information')->nullable()->default('');
+            $table->integer('land_owned')->nullable()->default(0);
+            $table->integer('land_rented')->nullable()->default(0);
+            $table->integer('land_leased')->nullable()->default(0);
+            $table->date('death_date')->nullable();
+            $table->string('death_register_number')->nullable();
+            $table->string('death_register_office')->nullable();
             $table->timestamps();
         });
     }
