@@ -39,8 +39,8 @@ trait AdditionalParams
                 ->join('additional_param_categories as apc', 'apc.id', '=', 'ap.category_id')
                 ->join('additional_param_value_types as apvt', 'apvt.id', '=', 'ap.value_type_id')
                 ->leftJoin('additional_param_values as apv', function($join) {
-                    $join->on('apv.param_id', '=', 'ap.id');
-                    $join->on('apv.owner_id', '=', $this->id);
+                    $join->on('apv.param_id', '=', 'ap.id')
+                        ->where('apv.owner_id', $this->id);
                 })
                 ->where('apc.code', get_class($this));
 
