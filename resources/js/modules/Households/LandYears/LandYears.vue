@@ -161,8 +161,8 @@ export default {
             additionalDataForm.show()
         },
         landInfo(param) {
-            let additionalParam = this.info.find(i => i.param_code == param)
-            return additionalParam.param_value ? additionalParam.param_value : '';
+            let additionalParam = this.info.find(i => i.code == param)
+            return additionalParam.value ? additionalParam.value : '';
         }
     },
     computed: {

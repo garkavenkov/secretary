@@ -146,6 +146,14 @@
                             <span class="nav-title">Типи родинних стосунків</span>
                         </router-link>
                     </li>
+                    <li>
+                        <router-link to="/additional-params">
+                            <span class="icon">
+                                <span class="mdi mdi-tag-multiple"></span>
+                            </span>
+                            <span class="nav-title">Додаткові параметри</span>
+                        </router-link>
+                    </li>
                 </ul>
             </li>
         </ul>

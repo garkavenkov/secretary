@@ -4,6 +4,8 @@ namespace Tests\Unit;
 
 use App\Models\AdditionalParam;
 use App\Models\AdditionalParamCategory;
+use App\Models\AdditionalParamValue;
+use App\Models\AdditionalParamValueType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -18,5 +20,39 @@ class AdditionalParamTest extends TestCase
         $param = AdditionalParam::factory()->create(['category_id' => $category->id, 'code' => 'param']);
 
         $this->assertEquals($param->category->code, $category->code);
+    }
+
+    public function test_additinal_param_MUST_HAVE_value_type()
+    {
+        $apvt = AdditionalParamValueType::factory()->create(['code' => 'test']);
+
+        $param = AdditionalParam::factory()->create(['value_type_id' => $apvt->id]);
+
+        $this->assertEquals($param->valueType->code, $apvt->code);
+    }
+
+    public function test_additional_param_may_have_values()
+    {
+        $param = AdditionalParam::factory()->create();
+
+        $value = AdditionalParamValue::factory()->create(['param_id' => $param->id]);
+
+        $this->assertEquals($param->values[0]->value, $value->value);
+    }
+
+    public function test_additional_param_MUST_delete_values_during_deleting()
+    {
+        $param = AdditionalParam::factory()->create();
+
+        AdditionalParamValue::factory()->create([
+            'owner_id'  =>  1,
+            'param_id'  =>  $param->id,
+        ]);
+
+        $param->delete();
+        $this->assertDatabaseMissing('additional_params', ['id' => $param->id]);
+        $this->assertDatabaseCount('additional_param_values', 0);
+
+
     }
 }

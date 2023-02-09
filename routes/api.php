@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Household;
 use Illuminate\Http\Request;
+use App\Models\HouseholdMember;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\v1\RegionController;
 use App\Http\Controllers\API\v1\ReportController;
@@ -24,7 +26,7 @@ use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
-use App\Models\Household;
+use App\Http\Controllers\API\v1\AdditionalParamValueTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +61,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('household-houses',             HouseholdHouseController::class);
     Route::resource('household-members',            HouseholdMemberController::class);
     Route::resource('additional-param-categories',  AdditionalParamCategoryController::class);
+    Route::resource('additional-param-value-types', AdditionalParamValueTypeController::class);
     Route::resource('additional-params',            AdditionalParamController::class);
     Route::resource('movement-types',               MovementTypeController::class);
     Route::resource('household-member-movements',   HouseholdMemberMovementController::class);
@@ -72,4 +75,5 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
 
     Route::post('house-additional-information',     [HouseholdController::class, 'houseInfo']);
     Route::post('land-additional-information',      [HouseholdController::class, 'landInfo']);
+    Route::post('member-additional-params',         [HouseholdMemberController::class, 'setAdditionalParams'] );
 });

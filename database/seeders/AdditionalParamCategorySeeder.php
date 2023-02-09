@@ -20,11 +20,11 @@ class AdditionalParamCategorySeeder extends Seeder
 
         DB::table('additional_param_categories')->insert([
             [
-                'code'  =>  'household',
+                'code'  =>  'App\Models\Household',
                 'name'  =>  'Домогосподарство'
             ],
             [
-                'code'  =>  'household-member',
+                'code'  =>  'App\Models\HouseholdMember',
                 'name'  =>  'Член домогосподарства'
             ]
         ]);

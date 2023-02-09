@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('additional_params', function (Blueprint $table) {
+        Schema::create('additional_param_value_types', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
-            $table->string('code');
-            $table->string('name');
-            $table->integer('value_type_id');
-            $table->boolean('is_system')->default(false);
+            $table->string('code')->unique();
+            $table->string('name')->unique();
+            $table->string('description');
             $table->timestamps();
-            $table->unique(['category_id', 'code']);
-            $table->unique(['category_id', 'name']);
         });
     }
 
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('additional_params');
+        Schema::dropIfExists('additional_param_value_types');
     }
 };

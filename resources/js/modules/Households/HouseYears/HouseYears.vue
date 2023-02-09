@@ -142,8 +142,8 @@
                             <tbody v-if="info && (info.length > 0)">
                                 <tr>
                                     <td>Рік побудови</td>
-                                    <td v-if="houseInfo('house_built') !== ''">
-                                        {{ houseInfo('house_built') }}
+                                    <td v-if="houseInfo('house_year_of_construction') !== ''">
+                                        {{ houseInfo('house_year_of_construction') }}
                                     </td>
                                     <td v-else style="color: var(--bs-gray-600);">
                                         не вказано
@@ -243,7 +243,7 @@ export default {
             },
             infoData: {
                 household_id: null,
-                house_built: '',
+                house_year_of_construction: '',
                 house_material_walls: '',
                 house_material_roof: ''
             },
@@ -276,10 +276,10 @@ export default {
             this.modalTitle = 'Інформація по будинку';
             this.modalSubmitCaption = 'Зберегти'
 
-            this.infoData.house_built = this.houseInfo('house_built');
-            this.infoData.house_material_walls  = this.houseInfo('house_material_walls');
-            this.infoData.house_material_roof   = this.houseInfo('house_material_roof');
-            this.infoData.household_id = this.household_id;
+            this.infoData.household_id                  = this.household_id;
+            this.infoData.house_year_of_construction    = this.houseInfo('house_year_of_construction');
+            this.infoData.house_material_walls          = this.houseInfo('house_material_walls');
+            this.infoData.house_material_roof           = this.houseInfo('house_material_roof');
 
             var infoForm = new Modal(document.getElementById('HouseInfoForm'))
             infoForm.show()
@@ -295,8 +295,8 @@ export default {
             additionalDataForm.show()
         },
         houseInfo(param) {
-            let additionalParam = this.info.find(i => i.param_code == param)
-            return additionalParam.param_value ? additionalParam.param_value : '';
+            let additionalParam = this.info.find(i => i.code == param)
+            return additionalParam.value ? additionalParam.value : '';
         }
     },
     computed: {

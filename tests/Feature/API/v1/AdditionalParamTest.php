@@ -5,6 +5,7 @@ namespace Tests\Feature\API\v1;
 use Tests\TestCase;
 use App\Models\AdditionalParam;
 use App\Models\AdditionalParamCategory;
+use App\Models\AdditionalParamValue;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -104,7 +105,9 @@ class AdditionalParamTest extends TestCase
             'code is already exists for category'   =>  ['code',       'param'],
             'name is empty'                         =>  ['name',            ''],
             'name is not long enough'               =>  ['name',          'qw'],
-            'name is already exists for category'   =>  ['name',    'Параметр']
+            'name is already exists for category'   =>  ['name',    'Параметр'],
+            'value_type_id is empty'                =>  ['value_type_id',   ''],
+            'value_type_id does not exist'          =>  ['value_type_id',   99],
         ];
     }
 }

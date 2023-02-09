@@ -21527,7 +21527,15 @@ var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-title"
 }, "Типи родинних стосунків", -1 /* HOISTED */);
-var _hoisted_43 = {
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-tag-multiple"
+})], -1 /* HOISTED */);
+var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "nav-title"
+}, "Додаткові параметри", -1 /* HOISTED */);
+var _hoisted_45 = {
   key: 0,
   "class": "app-version"
 };
@@ -21624,7 +21632,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [_hoisted_41, _hoisted_42];
     }),
     _: 1 /* STABLE */
-  })])])])]), $data.appVersion ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Версія : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.appVersion), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/additional-params"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_43, _hoisted_44];
+    }),
+    _: 1 /* STABLE */
+  })])])])]), $data.appVersion ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Версія : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.appVersion), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -21840,14 +21855,17 @@ app.config.unwrapInjectedRef = true;
 app.config.globalProperties.$axios = axios;
 
 app.config.globalProperties.$confirmDelete = function (title) {
-  var icon = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'question';
+  var msg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var icon = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'question';
   return new (sweetalert2__WEBPACK_IMPORTED_MODULE_5___default())({
     title: title,
     icon: icon,
+    html: msg,
     showCancelButton: true,
     cancelButtonText: 'Відмінити',
     confirmButtonText: 'Видалити',
     confirmButtonColor: '#d33',
+    focusCancel: true,
     // reverseButtons: true,
     customClass: {
       title: 'swal-dialog-title',
@@ -21956,6 +21974,30 @@ window.axios.interceptors.response.use(function (response) {
 //     forceTLS: (import.meta.env.MIX_PUSHER_SCHEME ?? 'https') === 'https',
 //     enabledTransports: ['ws', 'wss'],
 // });
+
+/***/ }),
+
+/***/ "./resources/js/router/additional_params.js":
+/*!**************************************************!*\
+  !*** ./resources/js/router/additional_params.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
+  path: '/additional-params',
+  name: 'additional.params',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | additional-params */ "additional-params").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/AdditionalParams/Main.vue */ "./resources/js/modules/AdditionalParams/Main.vue"));
+  },
+  meta: {
+    name: 'Додаткові параметри'
+  }
+}]);
 
 /***/ }),
 
@@ -22226,7 +22268,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
 /* harmony import */ var _dashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard */ "./resources/js/router/dashboard.js");
 /* harmony import */ var _settlement_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./settlement_types */ "./resources/js/router/settlement_types.js");
@@ -22240,6 +22282,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _relationship_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./relationship_types */ "./resources/js/router/relationship_types.js");
 /* harmony import */ var _work_places__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./work_places */ "./resources/js/router/work_places.js");
 /* harmony import */ var _analitics__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./analitics */ "./resources/js/router/analitics.js");
+/* harmony import */ var _additional_params__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./additional_params */ "./resources/js/router/additional_params.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -22260,9 +22303,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-var routes = [].concat(_toConsumableArray(_dashboard__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_settlement_types__WEBPACK_IMPORTED_MODULE_2__["default"]), _toConsumableArray(_household_types__WEBPACK_IMPORTED_MODULE_9__["default"]), _toConsumableArray(_relationship_types__WEBPACK_IMPORTED_MODULE_10__["default"]), _toConsumableArray(_work_places__WEBPACK_IMPORTED_MODULE_11__["default"]), _toConsumableArray(_regions__WEBPACK_IMPORTED_MODULE_4__["default"]), _toConsumableArray(_districts__WEBPACK_IMPORTED_MODULE_5__["default"]), _toConsumableArray(_communities__WEBPACK_IMPORTED_MODULE_6__["default"]), _toConsumableArray(_settlements__WEBPACK_IMPORTED_MODULE_7__["default"]), _toConsumableArray(_councils__WEBPACK_IMPORTED_MODULE_8__["default"]), _toConsumableArray(_households__WEBPACK_IMPORTED_MODULE_3__["default"]), _toConsumableArray(_analitics__WEBPACK_IMPORTED_MODULE_12__["default"]));
-var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_13__.createRouter)({
-  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_13__.createWebHashHistory)(),
+
+var routes = [].concat(_toConsumableArray(_dashboard__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_settlement_types__WEBPACK_IMPORTED_MODULE_2__["default"]), _toConsumableArray(_household_types__WEBPACK_IMPORTED_MODULE_9__["default"]), _toConsumableArray(_relationship_types__WEBPACK_IMPORTED_MODULE_10__["default"]), _toConsumableArray(_work_places__WEBPACK_IMPORTED_MODULE_11__["default"]), _toConsumableArray(_regions__WEBPACK_IMPORTED_MODULE_4__["default"]), _toConsumableArray(_districts__WEBPACK_IMPORTED_MODULE_5__["default"]), _toConsumableArray(_communities__WEBPACK_IMPORTED_MODULE_6__["default"]), _toConsumableArray(_settlements__WEBPACK_IMPORTED_MODULE_7__["default"]), _toConsumableArray(_councils__WEBPACK_IMPORTED_MODULE_8__["default"]), _toConsumableArray(_households__WEBPACK_IMPORTED_MODULE_3__["default"]), _toConsumableArray(_analitics__WEBPACK_IMPORTED_MODULE_12__["default"]), _toConsumableArray(_additional_params__WEBPACK_IMPORTED_MODULE_13__["default"]));
+var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_14__.createRouter)({
+  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_14__.createWebHashHistory)(),
   routes: routes
 });
 router.beforeEach(function (to, from, next) {
@@ -43714,7 +43758,7 @@ function useRoute() {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"settlement-types":1,"household-cards":1,"regions":1,"districts":1,"communitites":1,"settlements":1,"councils":1,"household-types":1,"relationships-types":1,"work-places":1,"analitycs":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"settlement-types":1,"household-cards":1,"regions":1,"districts":1,"communitites":1,"settlements":1,"councils":1,"household-types":1,"relationships-types":1,"work-places":1,"analitycs":1,"additional-params":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

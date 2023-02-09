@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\v1\HouseholdMember;
 
+use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResource;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -42,6 +43,7 @@ class HouseholdMemberResource extends JsonResource
             'land_owned'                    =>  (float) $this->land_owned,
             'land_rented'                   =>  (float) $this->land_rented,
             'land_leased'                   =>  (float) $this->land_leased,
+            'additional_params'             =>  AdditionalParamValueResource::collection($this->memberInfo()),
         ];
     }
 }

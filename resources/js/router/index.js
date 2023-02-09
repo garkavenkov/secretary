@@ -14,6 +14,7 @@ import household_types      from './household_types';
 import relationship_types   from './relationship_types';
 import work_places          from './work_places';
 import analitics            from './analitics';
+import additional_params    from './additional_params';
 
 const routes = [
     ...dashboard,
@@ -28,6 +29,7 @@ const routes = [
     ...councils,
     ...households,
     ...analitics,
+    ...additional_params
 ]
 
 const router = createRouter({

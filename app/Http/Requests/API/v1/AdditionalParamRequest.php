@@ -44,6 +44,20 @@ class AdditionalParamRequest extends FormRequest
                                         msg: 'Додатковий параметр с такою назвою вже існує в указаній категорії'
                                     )
                                 ],
+            'value_type_id' =>  'required|exists:additional_param_value_types,id'
+        ];
+    }
+
+    /**
+     * Custom messages for validation
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'value_type_id.required'    =>  'Ви не указали тип значення додаткового параметру',
+            'value_type_id.exists'      =>  'Указаний тип значення не існує',
         ];
     }
 }

@@ -12,8 +12,20 @@ class AdditionalParam extends Model
     protected $fillable = [
         'category_id',
         'code',
-        'name'
+        'name',
+        'value_type_id',
+        'is_system',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function($model) {
+            $model->values()->delete();
+        });
+
+    }
 
     public function category()
     {
@@ -23,5 +35,10 @@ class AdditionalParam extends Model
     public function values()
     {
         return $this->hasMany(AdditionalParamValue::class, 'param_id');
+    }
+
+    public function valueType()
+    {
+        return $this->belongsTo(AdditionalParamValueType::class, 'value_type_id');
     }
 }

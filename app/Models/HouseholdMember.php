@@ -7,13 +7,13 @@ use App\Models\WorkPlace;
 use App\Models\FamilyRelationship;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
+use App\Traits\Models\AdditionalParams;
 
 class HouseholdMember extends Model
 {
-    use HasFactory;
+    use HasFactory, AdditionalParams;
 
     const MALE = 'чоловіча';
     const FEMALE = 'жіноча';
@@ -168,4 +168,8 @@ class HouseholdMember extends Model
         return $this->belongsTo(Household::class);
     }
 
+    public function memberInfo()
+    {
+        return $this->additionalParamValue();
+    }
 }

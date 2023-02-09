@@ -4,9 +4,11 @@ export default {
             if (this.action == 'create') {
                 axios.post(this.apiUrl, this.formData)
                     .then(res => {
-                        this.clearFormData();
                         this.$emit('refreshData');
                         this.$toast(res.data.message);
+                        if (typeof this.clearFormData !== "undefined") {
+                            this.clearFormData();
+                        }
                     })
                     .catch(err => {
                         this.errors = err.response?.data.errors;

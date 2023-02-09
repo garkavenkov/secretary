@@ -235,7 +235,7 @@ class ReportController extends Controller
         // dd($relatives);
 
         // dd($ids);
-        $address =$member->household->fullAddress();
+        $address =$member->household->getFullAddress();
 
 
         $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));

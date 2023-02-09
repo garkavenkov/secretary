@@ -17,11 +17,20 @@
                 </button>
                 <button type="button"
                         id="membersComposition"
+                        v-if="members.length > 0"
                         class="btn btn-sm btn-outline-secondary ms-2"
                         title="Встановити родинні відносини"
                         @click="openMembersCompositionForm">
                     <span class="mdi mdi-family-tree me-1"></span>
                     Родинні відносини
+                </button>
+                <button type="button"
+                        id="familyAdditionalParams"
+                        v-if="members.length > 0"
+                        class="btn btn-sm btn-outline-secondary ms-2"
+                        title="Встановити додаткові параметри для родини">
+                    <span class="mdi mdi-tag-multiple me-1"></span>
+                    Інформація о родині
                 </button>
                 <button type="button"
                         class="ms-2 btn btn-sm btn-outline-secondary"
@@ -112,6 +121,13 @@
                         </button>
                     </div>
                 </div>
+                <div class="new-member"  @click="newMember($event)">
+                    <!-- <div class="d-flex flex-column justify-content-center align-items-center" title="Додати нового члена домогосподарства"> -->
+                    <div title="Додати нового члена домогосподарства">
+                        <span class="mdi mdi-account-plus-outline mdi-36px"></span>
+                        <!-- <span class="d-block">додати нового члена</span> -->
+                    </div>
+                </div>
                 <!-- <div class="card member new-member"  @click="newMember($event)">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center">
                         <span class="mdi mdi-account-plus-outline mdi-48px"></span>
@@ -177,7 +193,7 @@
             :formData="formData"
             @refreshData="refreshMemberInfo"
             v-if="formIsReady"
-            closeMemberInfoForm="closeMemberInfoForm"/>
+            @closeMemberInfoForm="closeMemberInfoForm"/>
 
     <HouseholdMembersComposition
             :members="shownMembers"
@@ -226,6 +242,7 @@ export default {
                 death_register_number: '',
                 death_register_office: '',
                 movements: [],
+                additional_params: []
             },
             modalTitle: '',
             modalSubmitCaption: '',
@@ -264,23 +281,24 @@ export default {
                 })
         },
         closeMemberInfoForm() {
-            this.formData.surname                   = '';
-            this.formData.name                      = '';
-            this.formData.patronymic                = '';
-            this.formData.sex                       = '';
-            this.formData.birthdate                 = null;
-            this.formData.family_relationship_id    = 0;
-            this.formData.employment_information    = '';
-            this.formData.social_information        = '';
-            this.formData.additional_information    = '';
-            this.formData.work_place_id             = 0;
-            this.formData.land_owned                = 0;
-            this.formData.land_rented               = 0;
-            this.formData.land_leased               = 0;
-            this.formData.death_date                = null;
-            this.formData.death_register_number     = '';
-            this.formData.death_register_office     = '';
-            this.formData.movements                 = [];
+            this.formData.surname                       = '';
+            this.formData.name                          = '';
+            this.formData.patronymic                    = '';
+            this.formData.sex                           = '';
+            this.formData.birthdate                     = null;
+            this.formData.family_relationship_type_id   = 0;
+            this.formData.employment_information        = '';
+            this.formData.social_information            = '';
+            this.formData.additional_information        = '';
+            this.formData.work_place_id                 = 0;
+            this.formData.land_owned                    = 0;
+            this.formData.land_rented                   = 0;
+            this.formData.land_leased                   = 0;
+            this.formData.death_date                    = null;
+            this.formData.death_register_number         = '';
+            this.formData.death_register_office         = '';
+            this.formData.movements                     = [];
+            this.formData.additional_params             = [];
 
             this.formIsReady = false;
         },
@@ -410,11 +428,36 @@ export default {
 }
 
 .new-member {
-    border: none;
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
 
-    &:hover {
-        color: var(--bs-primary);
+    div {
+        border: 2px solid #e7e7e7;
+        border-radius: 999px;
+        width: 72px;
+        height: 72px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+
+        span {
+            color: #6c757d;
+        }
+
+        &:hover {
+            border-color: var(--bs-primary);
+            transform: scale(1.1);
+
+            span {
+                color: var(--bs-primary);
+            }
+        }
     }
+
+
+
 }
 
 #members:fullscreen {

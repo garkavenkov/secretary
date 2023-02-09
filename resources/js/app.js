@@ -50,14 +50,16 @@ app.config.globalProperties.$axios = axios;
 
 import Swal from 'sweetalert2';
 
-app.config.globalProperties.$confirmDelete = function(title, icon = 'question') {
+app.config.globalProperties.$confirmDelete = function(title, msg = '', icon = 'question') {
     return  new Swal({
                 title: title,
                 icon: icon,
+                html: msg,
                 showCancelButton: true,
                 cancelButtonText: 'Відмінити',
                 confirmButtonText: 'Видалити',
                 confirmButtonColor: '#d33',
+                focusCancel: true,
                 // reverseButtons: true,
                 customClass: {
                     title: 'swal-dialog-title',

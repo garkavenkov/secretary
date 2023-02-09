@@ -87,4 +87,27 @@ class HouseholdMemberController extends Controller
             return response()->json(['message' => 'Член домогосподарства був успішно відален']);
         }
     }
+
+    public function setAdditionalParams(Request $request)
+    {
+        // dd($request->all());
+        if (!isset($request->owner_id)) {
+            throw new \Exception('Відсутній ID члена родини');
+        }
+        $member = HouseholdMember::findOrFail($request->owner_id);
+        $request->request->remove('owner_id');
+
+        foreach($request->all() as $param => $value) {
+            $param = $member->getAdditionalParam($param);
+
+            if ($param) {
+                if ($value) {
+                    $member->setAdditionalParamValue($param->id, $value);
+                } else {
+                    $member->clearAdditionalParam($param->id);
+                }
+            }
+        }
+        return response()->json(['message' => 'Додаткова параметри були успішно додані']);
+    }
 }

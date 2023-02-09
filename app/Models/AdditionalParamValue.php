@@ -16,4 +16,5 @@ class AdditionalParamValue extends Model
         // unique value for [owner_id, param_id, value]
         // validation rule  (validate value before creating|saving)
     ];
+
 }

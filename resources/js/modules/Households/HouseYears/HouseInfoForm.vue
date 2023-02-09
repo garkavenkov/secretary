@@ -5,7 +5,7 @@
         <div class="row mb-2">
             <label for="yearBuilt" class="col-md-6 col-form-label">Рік побудови</label>
             <div class="col-md-6">
-                <input type="text" class="form-control" id="yearBuilt" v-model="formData.house_built">
+                <input type="text" class="form-control" id="yearBuilt" v-model="formData.house_year_of_construction">
             </div>
         </div>
         <div class="row mb-2">

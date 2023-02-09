@@ -11983,6 +11983,7 @@ input:-webkit-autofill:active{
 .card .card-header .dictionary-name__wrapper {
   display: flex;
   align-items: center;
+  height: 1.875rem;
 }
 .card .card-header .dictionary-name__wrapper > span {
   font-size: 16px;

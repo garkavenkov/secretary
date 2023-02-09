@@ -240,6 +240,19 @@
                                 Реєстрація / Переміщення
                             </button>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link"
+                                    id="additional-param-tab"
+                                    data-bs-toggle="tab"
+                                    data-bs-target="#additional-param-tab-pane"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="additional-param-tab-pane"
+                                    aria-selected="false">
+                                <span class="mdi mdi-tag-multiple me-1"></span>
+                                Додаткова параметри
+                            </button>
+                        </li>
                     </ul>
                     <div class="tab-content p-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="work-tab-pane" role="tabpanel" aria-labelledby="work-tab" tabindex="0">
@@ -448,6 +461,55 @@
                                 </template>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="additional-param-tab-pane" role="tabpanel" aria-labelledby="additional-param-tab" tabindex="0">
+                            <!-- <div class="row mb-2 border-bottom" v-for="param in _form.additional_params" :key="param.id">
+                                <div class="col">{{ param.param_name }}</div>
+                                <div class="col">{{ param.param_value }}</div>
+                            </div> -->
+                            <div v-if="(_form.additional_params) ?? (_form.additional_params.length > 0)">
+                                <div class="row">
+                                    <div class="col-md-10 mx-auto">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr v-for="param in _form.additional_params" :key="param.id">
+                                                    <td>
+                                                        {{ param.name }}
+                                                    </td>
+                                                    <td>
+                                                        <template v-if="param.value_type_code == 'boolean'">
+                                                            <div class="form-check form-switch">
+                                                                <input  class="form-check-input"
+                                                                        type="checkbox"
+                                                                        role="switch"
+                                                                        :disabled="!isInEditMode"
+                                                                        :id="param.code"
+                                                                        v-model="param.value">
+                                                            </div>
+                                                        </template>
+                                                        <template v-else>
+                                                            <input  type="text"
+                                                                    class="form-control"
+                                                                    :id="param.code"
+                                                                    :disabled="!isInEditMode"
+                                                                    v-model="param.value">
+                                                        </template>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-end pt-2">
+                                            <button class="btn btn-sm btn-outline-primary"
+                                                    title="Встановити додаткові параметри"
+                                                    @click="updateAdditionalParams"
+                                                    :disabled="!additionalParamsWereChanged">
+                                                <span class="mdi mdi-check-all"></span>
+                                                Встановити
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -478,7 +540,9 @@ export default {
         return {
             movementTypes: [],
             isInEditMode: false,
-            _form: {},
+            _form: {
+                additional_params: []
+            },
             movementEventFormIsVisible: false,
             eventForm: {
                 member_id: null,
@@ -489,6 +553,7 @@ export default {
             movementAction: '',
             movementEventCancelButtonTitle: '',
             movementEventSubmitButtonTitle: '',
+            additionalParamData: {}
         }
     },
     methods: {
@@ -522,6 +587,7 @@ export default {
         closeForm() {
             this.$emit('closeMemberInfoForm');
             this.isInEditMode = false;
+            this.errors = [];
         },
         showMovementEventForm() {
             this.movementEventFormIsVisible = true;
@@ -558,7 +624,9 @@ export default {
                             .then(res => {
                                 this.$store.dispatch('Households/fetchRecord', this._form.household_id);
                                 this.$emit('refreshData', this._form.id);
-                                Object.assign(this._form, res.data.data);
+                                this._form = JSON.parse(JSON.stringify(res.data.data));
+                                // Object.assign(this._form, res.data.data);
+                                // this.clearMovementEventForm();
                                 this.clearMovementEventForm();
                             })
                     })
@@ -572,8 +640,8 @@ export default {
                             .then(res => {
                                 this.$store.dispatch('Households/fetchRecord', this._form.household_id);
                                 this.$emit('refreshData', this._form.id);
-                                Object.assign(this._form, res.data.data);
-                                // this.clearMovementEventForm();
+                                this._form = JSON.parse(JSON.stringify(res.data.data));
+                                // Object.assign(this._form, res.data.data);
                             })
                     })
                     .catch(err => {
@@ -588,9 +656,33 @@ export default {
                         .then(res => {
                                 this.$store.dispatch('Households/fetchRecord', this._form.household_id);
                                 this.$emit('refreshData', this._form.id);
-                                Object.assign(this._form, res.data.data);
+                                this._form = JSON.parse(JSON.stringify(res.data.data));
                         })
                 })
+        },
+        updateAdditionalParams() {
+            var vm = this;
+            let changed_params = this._form.additional_params.filter(function(element, index) {
+                return element.value !== vm.formData.additional_params[index].value;
+            });
+
+            if (changed_params.length > 0) {
+                changed_params.forEach(p => {
+                    this.additionalParamData[p.code] = p.value;
+                });
+
+                this.additionalParamData['owner_id'] = this._form?.id;
+                axios.post('/api/v1/member-additional-params', this.additionalParamData)
+                    .then(res => {
+                        this.$toast(res.data.message);
+                        axios.get(`/api/v1/household-members/${this._form.id}`)
+                            .then(res => {
+                                this.$store.dispatch('Households/fetchRecord', this._form.household_id);
+                                this.$emit('refreshData', this._form.id);
+                                this._form = JSON.parse(JSON.stringify(res.data.data));
+                            });
+                    });
+            }
         }
     },
     computed: {
@@ -606,11 +698,19 @@ export default {
                 }
             }
             return true;
+        },
+        additionalParamsWereChanged() {
+            var vm = this;
+            // return this._form.additional_params.every(function(element, index) {
+            //     return element.param_value == vm.formData.additional_params[index].param_name;
+            // });
+            return JSON.stringify(this.formData.additional_params) !== JSON.stringify(this._form.additional_params);
         }
     },
     mounted() {
        this.$nextTick(function() {
-            this._form = {...this.formData}
+            this._form = JSON.parse(JSON.stringify(this.formData));
+            // Object.assign({},this.formData
        })
     },
     created() {
