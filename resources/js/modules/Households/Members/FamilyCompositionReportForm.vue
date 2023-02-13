@@ -96,10 +96,14 @@ export default {
                     const link = document.createElement('a');
 
                     link.href = url;
-                    link.setAttribute('download', "Довідка про стан родини.docx"); // set custom file name
+                    let member = this.members.find(m => m.id == this.memberId);
+                    let fileName = `${member.surname} ${member.name} ${member.patronymic}. Довідка про склад родини.docx`;
+                    // link.setAttribute('download', "Довідка про стан родини.docx"); // set custom file name
+                    link.setAttribute('download', fileName);
                     document.body.appendChild(link);
 
                     link.click();
+                    this.closeForm();
                 })
         },
         closeForm() {

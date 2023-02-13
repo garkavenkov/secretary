@@ -1,8 +1,10 @@
 <template>
     <section class="sidebar-menu">
         <div class="logo__wrapper">
-            <img src="/img/logo.svg" alt="" class="logo" style="height:48px">
-            <span>Secretary</span>
+            <!-- <img src="/img/logo.svg" alt="" class="logo" style="height:48px"> -->
+            <!-- <img src="/img/household_logo.png" alt="" class="logo" style="height:48px"> -->
+            <img src="/img/household_logo.png" alt="" class="logo" style="height:48px">
+            <span>Погосподарський облік</span>
             <!-- <a class="navbar-brand" href="{{ url('/') }}"> -->
                 <!-- {{ config('app.name', 'Laravel') }} -->
             <!-- </a> -->
@@ -48,6 +50,14 @@
                                 <span class="mdi mdi-human-male-female-child"></span>
                             </span>
                             <span class="nav-title">Дорослі і діти</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/reports-manager">
+                            <span class="icon">
+                                <span class="mdi mdi-file-cog-outline"></span>
+                            </span>
+                            <span class="nav-title">Менеджер звітів</span>
                         </router-link>
                     </li>
                 </ul>

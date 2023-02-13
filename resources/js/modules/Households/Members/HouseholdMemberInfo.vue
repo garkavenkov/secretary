@@ -473,7 +473,9 @@
                                             <tbody>
                                                 <tr v-for="param in _form.additional_params" :key="param.id">
                                                     <td>
-                                                        {{ param.name }}
+                                                        <label :for="param.code" :style="[isInEditMode ? 'cursor: pointer;' : '']">
+                                                            {{ param.name }}
+                                                        </label>
                                                     </td>
                                                     <td>
                                                         <template v-if="param.value_type_code == 'boolean'">
@@ -650,14 +652,20 @@ export default {
             }
         },
         deleteMovementEvent(id) {
-            axios.delete(`/api/v1/household-member-movements/${id}`)
+            this.$confirmDelete('Ви дійсно бажаєте видалити інформацію о реєстрації / переміщенні')
                 .then(res => {
-                    axios.get(`/api/v1/household-members/${this._form.id}`)
-                        .then(res => {
-                                this.$store.dispatch('Households/fetchRecord', this._form.household_id);
-                                this.$emit('refreshData', this._form.id);
-                                this._form = JSON.parse(JSON.stringify(res.data.data));
-                        })
+                    if (res.isConfirmed) {
+
+                        axios.delete(`/api/v1/household-member-movements/${id}`)
+                            .then(res => {
+                                axios.get(`/api/v1/household-members/${this._form.id}`)
+                                    .then(res => {
+                                            this.$store.dispatch('Households/fetchRecord', this._form.household_id);
+                                            this.$emit('refreshData', this._form.id);
+                                            this._form = JSON.parse(JSON.stringify(res.data.data));
+                                    })
+                            })
+                    }
                 })
         },
         updateAdditionalParams() {

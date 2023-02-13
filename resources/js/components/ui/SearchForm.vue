@@ -6,16 +6,24 @@
                     type="search"
                     v-model="searchText"
                     @click="searchFocus"
-                    @keydown="searchHandleDownKey"
-                    placeholder="Адреса домогосподарства..."
+                    @keydown="searchHandleDownKey($event)"
+                    placeholder="Пошук домогосподарства за адресою або прізвищем людини..."
                     aria-label="Search">
-            <ul v-show="(households.length > 0) && isVisible" id="households" @mousedown="listHandleMouseDown">
-                <li v-for="household in households"
+            <ul v-show="(households.length > 0) && isVisible" id="households">
+                <li v-for="(household, index) in households"
                     class="founded"
                     :value="household.id"
-                    :key="household.id"
-                    @click="goToHousehold(household.id)">
-                        {{ household.address }}
+                    :key="index">
+                        <router-link :to="{path: `/households/${household.id}/members`}" v-if="household.member_full_name">
+                            <div>
+                                {{ household.member_full_name }}
+                                <br>
+                                <small>{{ household.address }}</small>
+                            </div>
+                        </router-link>
+                        <router-link :to="{path: `/households/${household.id}`}" v-else>
+                            {{ household.address }}
+                        </router-link>
                 </li>
             </ul>
             <ul v-show="(households.length == 0) && isVisible" id="households">
@@ -23,7 +31,7 @@
             </ul>
         </div>
         <button class="btn btn-outline-secondary ms-2" type="buton" @click="search" :disabled="searchText == ''">
-            <span class="mdi mdi-home-search"></span>
+            <span class="mdi mdi-magnify"></span>
         </button>
     </form>
 </template>
@@ -60,10 +68,6 @@ export default {
                 this.isVisible = true;
             }
         },
-        goToHousehold(id) {
-            // this.$router.push({ name: 'HouseholdCardsShow', params: { id: id } })
-            this.$router.push({ path: `/households/${id}`});
-        },
         handleClick(e) {
             if (!this.$el.contains(e.target)) {
                 this.isVisible = false;
@@ -71,14 +75,12 @@ export default {
         },
         searchHandleDownKey(e) {
             if (this.isVisible) {
-
                 if (e.key == 'ArrowDown') {
                     this.currentHousehodldItem++;
                     if (this.currentHousehodldItem > this.foundedHouseholds.length-1) {
                         this.currentHousehodldItem = this.foundedHouseholds.length-1;
                     }
                     this.toggleHouseholdClass('selected');
-
                 } else if (e.key == 'ArrowUp') {
                     if (this.currentHousehodldItem >= 0) {
                         this.currentHousehodldItem--;
@@ -94,22 +96,14 @@ export default {
                         }
                     }
                 } else if (e.key == 'Enter') {
-                    let id = this.foundedHouseholds[this.currentHousehodldItem].value;
-                    this.goToHousehold(id);
+                    if (this.currentHousehodldItem >= 0) {
+                        this.foundedHouseholds[this.currentHousehodldItem].children[0].click();
+                    }
                 } else if (e.key == 'Escape') {
                     e.preventDefault();
                     this.isVisible = false;
                 }
             }
-        },
-        listHandleMouseDown(e) {
-            e.preventDefault();
-            let id = e.target.value;
-
-            this.removeHouseholdClass('selected');
-            this.currentHousehodldItem = Array.from(this.foundedHouseholds).findIndex(h => h.value == id);
-
-            this.goToHousehold(id);
         },
         removeHouseholdClass(name) {
             Array.from(this.foundedHouseholds).forEach(h => h.classList.remove(name))
@@ -159,12 +153,36 @@ export default {
 
 
         li {
-            padding: 0.75rem;
-            &.founded:hover, &.founded.selected {
+            padding: 0.5rem 0.75rem;
+
+            a {
+                text-decoration: none;
+            }
+
+            &:not(:last-of-type) {
+                border-bottom: 1px dotted #e7e7e7;
+            }
+            &.founded:hover,
+            &.founded.selected {
                 border-radius: 0.375rem;
                 background: #d2e1f9;
                 color: black;
             }
+
+            div {
+                pointer-events: none;
+
+                small {
+                    font-size: 0.85rem;
+                    color: #555;
+                }
+            }
+
+            span {
+                // margin: 0.25rem 0.25rem;
+                display: inline-block;
+            }
+
         }
     }
 }

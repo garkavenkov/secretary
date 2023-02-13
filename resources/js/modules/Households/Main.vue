@@ -58,6 +58,7 @@
 
     <HouseholdForm
             :formData="formData"
+            :disabledFields="disabledFields"
             @refreshData="$store.dispatch('Households/fetchRecords')" />
 
 
@@ -88,7 +89,7 @@ export default {
             formData: {
                 settlement_id: 0,
                 household_type_id: 0,
-                // address: '',
+                number: '',
                 address_street_type: '',
                 address_street_name: '',
                 address_house: '',
@@ -97,6 +98,7 @@ export default {
                 special_marks: '',
                 additional_data: ''
             },
+            disabledFields: [],
             modalTitle: '',
             modalSubmitCaption: '',
         }
@@ -112,6 +114,24 @@ export default {
             this.modalTitle = 'Нова облікова картка';
             this.modalSubmitCaption = 'Додати';
 
+            if (this.filter.isFiltered) {
+                if (this.filter.settlement_id > 0) {
+                    this.formData.settlement_id     = this.filter.settlement_id;
+                    this.disabledFields.push('settlement_id');
+                } else {
+                    this.disabledFields = this.disabledFields.filter(f => f !== 'settlement_id');
+                }
+
+                if (this.filter.household_type_id > 0) {
+                    this.formData.household_type_id     = this.filter.household_type_id;
+                    this.disabledFields.push('household_type_id');
+                } else {
+                    this.disabledFields = this.disabledFields.filter(f => f !== 'household_type_id');
+                }
+            } else {
+                this.disabledFields = [];
+            }
+            // console.log(this.disabledFields);
             let householdForm = new Modal(document.getElementById('HouseholdForm'));
             householdForm.show();
         },

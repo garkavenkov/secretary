@@ -6,12 +6,13 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h5>Авторізація в системі</h5>
+                    <h5>Авторізація в системі "{{ config('app.name', 'Laravel') }}"</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col text-center">
-                            <img src="/img/community.png" alt="" class="login-logo">
+                            <!-- <img src="/img/community.png" alt="" class="login-logo"> -->
+                            <img src="/img/household.png" alt="" class="login-logo">
                         </div>
                         <div class="col">
                             <form method="POST" action="{{ route('login') }}">

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Models\Household;
 use Illuminate\Http\Request;
+use App\Models\HouseholdMember;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\HouseholdRequest;
 use App\Http\Resources\API\v1\Household\HouseholdResource;
@@ -20,7 +22,75 @@ class HouseholdController extends Controller
     {
         if (request()->query('search')) {
             $search = '%' . str_replace(' ', '%', request()->query('search')) . '%';
-            $households = Household::with('settlement')->where('address', 'like', $search)->take(10)->get();
+            // $households = Household::with('settlement')
+            //                     ->where('address', 'like', $search)
+            //                     ->take(10);
+                                // ->get();
+            $households = DB::table('households as h')
+                                ->select(
+                                    'h.id',
+                                    'h.address',
+                                    's.name as settlement',
+                                    'st.name as settlement_type'
+                                )
+                                ->join('settlements as s', 's.id', '=', 'h.settlement_id')
+                                ->join('settlement_types as st', 'st.id', '=', 's.settlement_type_id')
+                                ->where('h.address', 'like', $search)
+                                ->get()
+                                ->toArray();
+
+            $result = array_map(function($h) {
+                                $household['id'] = $h->id;
+                                $address_parts = explode(',', $h->address);
+                                $household['address'] = mb_substr(mb_strtolower($h->settlement_type), 0,1) . '. ' .
+                                                        $h->settlement . ', ' . // settlement
+                                                        $address_parts[0] . ' ' . $address_parts[1] . // street
+                                                        ', буд. ' . $address_parts[2] . // house
+                                                        ($address_parts[3] !== '' ? ", корп. $address_parts[3]" : '') . // corps
+                                                        ($address_parts[4] !== '' ? ", кв. $address_parts[4]" : ''); // apartment
+                                return $household;
+                            }, $households);
+
+            // Try search by member
+            if (count($households) == 0) {
+                $name_parts = explode(' ', request()->query('search'));
+                $conditions = array();
+                $fields = ['hm.surname', 'hm.name', 'hm.patronymic'];
+                foreach($name_parts as $index => $part) {
+                    $conditions[] = [$fields[$index], 'like', '%' . $part . '%'];
+                }
+                $members = DB::table('household_members as hm')
+                            ->select(
+                                'h.id',
+                                'hm.id as user_id',
+                                'hm.surname',
+                                'hm.name',
+                                'hm.patronymic',
+                                'h.address',
+                                's.name as settlement'
+                            )
+                            ->join('households as h', 'h.id', '=', 'hm.household_id')
+                            ->join('settlements as s', 's.id', '=', 'h.settlement_id')
+                            ->where($conditions)
+                            ->get()
+                            ->toArray();
+
+                $result =   array_map(function($m) {
+                                    $member['id'] = $m->id;
+                                    $member['user_id'] = $m->user_id;
+                                    $member['member_full_name'] = $m->surname . ' ' . $m->name . ' ' . $m->patronymic;
+                                    $address_parts = explode(',', $m->address);
+                                    $member['address'] =    $m->settlement . ', ' . // settlement
+                                                            $address_parts[0] . ' ' . $address_parts[1] . // street
+                                                            ', буд. ' . $address_parts[2] . // house
+                                                            ($address_parts[3] !== '' ? ", корп. $address_parts[3]" : '') . // corps
+                                                            ($address_parts[4] !== '' ? ", кв. $address_parts[4]" : ''); // apartment
+                                    return $member;
+                            }, $members);
+
+                // return response()->json(['data' => $members]);
+            }
+            return response()->json(['data' => $result]);
         }  else if (request()->query('where')) {
             $conditions = explode(';', request()->query('where'));
             $households = Household::with('settlement');
@@ -32,10 +102,11 @@ class HouseholdController extends Controller
                     }
                 }
             }
-            $households = $households->get();
+            // $households = $households->get();
         } else {
-            $households = Household::with('settlement')->get();
+            $households = Household::with('settlement');//->get();
         }
+        $households = $households->orderBy('number')->get();
 
         return new HouseholdResourceCollection($households);
     }

@@ -50,7 +50,7 @@ class HouseholdMemberController extends Controller
      */
     public function show($id)
     {
-        $member = HouseholdMember::with('movements.type')->findOrFail($id);
+        $member = HouseholdMember::with('workPlace', 'movements.type')->findOrFail($id);
 
         return new HouseholdMemberResource($member);
     }

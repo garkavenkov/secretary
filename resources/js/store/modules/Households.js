@@ -31,8 +31,10 @@ export const Households = {
         members: state => state.household.members,
         household_id: state => state.household.id,
         houseYears: state => state.household.houseYears,
+        availableHouseYears: state => state.household.houseYears.map(y => y.year),
         houseInfo: state => state.household.houseInfo,
         landYears: state => state.household.landYears,
+        availableLandYears: state => state.household.landYears.map(y => y.year).sort((a, b) => b - a),
         landInfo: state => state.household.landInfo,
     },
     mutations: {

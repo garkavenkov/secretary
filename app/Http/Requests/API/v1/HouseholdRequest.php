@@ -36,6 +36,17 @@ class HouseholdRequest extends FormRequest
                                             msg: "Домогосподарство з такою адресою вже існує в указаному населеному пункті"
                                         )
                                     ],
+            'number'            =>  [
+                                        'required',
+                                        'numeric',
+                                        'gt:0',
+                                        new CompoundUniqueIndexValidation(
+                                            model: 'App\Models\Household',
+                                            field: 'settlement_id',
+                                            // msg: "Домогосподарство з таким номером вже існує в указаному населеному пункті"
+                                            msg: 'Номер вже існує'
+                                        )
+                                    ],
             'special_marks'     =>  'nullable|min:3',
             'additional_data'   =>  'nullable|min:3'
         ];
@@ -57,7 +68,9 @@ class HouseholdRequest extends FormRequest
             'settlement_id.exists'          => 'Населений пункт не існує в довіднику або не обран',
             'household_type_id.required'    => 'Ви не указали тип об\'єкта',
             'household_type_id.exists'      => 'Тип об\'єкта не існує в довіднику або не обран',
-
+            'number.required'               => 'Ви не указали номер',
+            'number.numeric'                => 'Укажіть число',
+            'number.gt'                     => 'Номер меньше 1',
         ];
     }
 }

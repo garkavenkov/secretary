@@ -17,6 +17,7 @@ class Household extends Model
     protected $fillable = [
         'settlement_id',
         'household_type_id',
+        'number',
         'address',
         'special_marks',
         'additional_data',
@@ -36,18 +37,18 @@ class Household extends Model
 
         parent::boot();
 
-        static::creating(function($model)
-        {
-            $settlement = Settlement::findOrFail($model->settlement_id);
+        // static::creating(function($model)
+        // {
+        //     $settlement = Settlement::findOrFail($model->settlement_id);
 
-            $number = Household::where('settlement_id', $settlement->id)->max('number');
-            if (is_null($number)) {
-                $number = 1;
-            } else {
-                $number = $number + 1;
-            }
-            $model->number = $number;
-        });
+        //     $number = Household::where('settlement_id', $settlement->id)->max('number');
+        //     if (is_null($number)) {
+        //         $number = 1;
+        //     } else {
+        //         $number = $number + 1;
+        //     }
+        //     $model->number = $number;
+        // });
     }
 
     public function houseYears()

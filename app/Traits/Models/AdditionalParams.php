@@ -52,7 +52,7 @@ trait AdditionalParams
             }
         }
                 // ->whereIn('ap.code', $params)
-        return $q->orderBy('ap.id')->get();
+        return $q->orderBy('ap.code')->get();
     }
 
     // ??? not sure if this method will be needed.

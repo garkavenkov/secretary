@@ -24,14 +24,14 @@
                     <span class="mdi mdi-family-tree me-1"></span>
                     Родинні відносини
                 </button>
-                <button type="button"
+                <!-- <button type="button"
                         id="familyAdditionalParams"
                         v-if="members.length > 0"
                         class="btn btn-sm btn-outline-secondary ms-2"
                         title="Встановити додаткові параметри для родини">
                     <span class="mdi mdi-tag-multiple me-1"></span>
                     Інформація о родині
-                </button>
+                </button> -->
                 <button type="button"
                         class="ms-2 btn btn-sm btn-outline-secondary"
                         :class="{'active' : showAllMembers}"
@@ -42,6 +42,51 @@
                 </button>
             </div>
             <div>
+                <!-- <button type="button"
+                        id="familyAdditionalParams"
+                        v-if="members.length > 0"
+                        class="btn btn-sm btn-outline-secondary me-5"
+                        title="Встановити додаткові параметри для родини">
+                    <span class="mdi mdi-tag-multiple me-1"></span>
+                    Інформація о родині
+                </button> -->
+                <!-- <div class="dropdown me-5">
+                    <button class="btn btn-outlinesecondary dropdown-toggle"
+                            type="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        <span class="mdi mdi-tag-multiple me-1"></span>
+                        Інформація о родині
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="d-flex">
+                            <div>
+                                <label for="switch1">
+                                    Неповна родина
+                                </label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input  class="form-check-input"
+                                        type="checkbox"
+                                        role="switch"
+                                        id="switch1">
+                            </div>
+                        </li>
+                        <li class="d-flex">
+                            <div>
+                                <label for="switch2">
+                                    Багатодітна родина
+                                </label>
+                            </div>
+                            <div class="form-check form-switch">
+                                <input  class="form-check-input"
+                                        type="checkbox"
+                                        role="switch"
+                                        id="switch2">
+                            </div>
+                        </li>
+                    </ul>
+                </div> -->
                 <button type="button"
                         title="Режим карток"
                         class="btn btn-sm btn-outline-secondary me-2"
@@ -60,80 +105,87 @@
         </div>
         <div class="px-3 d-flex gap-3 flex-wrap">
             <template v-if="viewMode == 'card'">
-                <div    class="card member"
-                        :class="[member.status == 'dead' ? 'dead' : '',  member.status == 'gone' ? 'gone' : '']"
-                        v-for="member in shownMembers"
-                        :key="member.id"
-                        @dblclick="showHouseholdMemberInfo(member.id)">
-                    <div class="card-header d-flex justify-content-between">
-                        <div>
-                            <div class="member-surname">{{member.surname}}</div>
-                            <div class="member-name">{{member.name}} {{member.patronymic}}</div>
-                        </div>
-                        <h4 class="mt-2" v-if="member.family_relationship_type == 'голова домогосподарства'">
-                            <span class="mdi mdi-head-alert-outline" title="Голова домогосподарства"></span>
-                        </h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex mb-2 align-items-center family-relationship">
-                            <span class="mdi mdi-family-tree me-3" style="color:blue" title="Родинні відносини"></span>
-                            {{member.family_relationship_type}}
-                        </div>
-                        <div class="d-flex mb-2 flex-column">
+                    <div    class="card member"
+                            :class="[member.status == 'dead' ? 'dead' : '',  member.status == 'gone' ? 'gone' : '']"
+                            v-for="member in shownMembers"
+                            :key="member.id"
+                            @dblclick="showHouseholdMemberInfo(member.id)">
+                        <div class="card-header d-flex justify-content-between">
                             <div>
-                                <span class="mdi mdi-cake-variant-outline me-3" style="color:red" title="Дата народження"></span>
-                                <span>{{formatedDate(member.birthdate)}}</span>
+                                <div class="member-surname">{{member.surname}}</div>
+                                <div class="member-name">{{member.name}} {{member.patronymic}}</div>
                             </div>
-                            <div v-if="member.death_date != null">
-                                <span class="mdi mdi-coffin me-3" title="Дата смерті"></span>
-                                <span>{{formatedDate(member.death_date)}}</span>
-                            </div>
+                            <h4 class="mt-2" v-if="member.family_relationship_type == 'голова домогосподарства'">
+                                <span class="mdi mdi-head-alert-outline" title="Голова домогосподарства"></span>
+                            </h4>
                         </div>
-                        <!-- <div class="member-sex">
-                            <span v-if="member.sex=='чоловіча'" title="чоловік">
-                                &#9794;
-                            </span>
-                            <span v-else title="жінка">
-                                &#9792;
-                            </span>
-                        </div> -->
-                    </div>
-                    <div class="card-footer d-flex justify-content-between">
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    title="Друк документів">
-                                <span class="mdi mdi-file"></span>
+                        <div class="card-body">
+                            <div class="d-flex mb-2 align-items-center family-relationship">
+                                <span class="mdi mdi-family-tree me-3" style="color:blue" title="Родинні відносини"></span>
+                                {{member.family_relationship_type}}
+                            </div>
+                            <div class="d-flex mb-2 flex-column">
+                                <div>
+                                    <span class="mdi mdi-cake-variant-outline me-3" style="color:red" title="Дата народження"></span>
+                                    <span>{{formatedDate(member.birthdate)}}</span>
+                                </div>
+                                <div v-if="member.death_date != null">
+                                    <span class="mdi mdi-coffin me-3" title="Дата смерті"></span>
+                                    <span>{{formatedDate(member.death_date)}}</span>
+                                </div>
+                            </div>
+                            <!-- <div class="member-sex">
+                                <span v-if="member.sex=='чоловіча'" title="чоловік">
+                                    &#9794;
+                                </span>
+                                <span v-else title="жінка">
+                                    &#9792;
+                                </span>
+                            </div> -->
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        title="Друк документів">
+                                    <span class="mdi mdi-file"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" @click="openFamilyCompositionReportForm(member.id)">
+                                            <span class="mdi mdi-human-capacity-decrease me-2" style="color:blue;"></span>
+                                            Довідка про склад сім'ї
+                                        </a>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <a class="dropdown-item pe-0">
+                                            <span class="mdi mdi-land-fields me-2" style="color:green;"></span>
+                                            <span>Довідка про склад земельної ділянки на</span>
+                                        </a>
+                                        <select name="selectedLandYear" id="selectedLandYear" class="select-year">
+                                            <option v-for="year in availableLandYears"
+                                                    :key="year"
+                                                    :value="year">
+                                                {{ year }}
+                                            </option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-sm btn-outline-secondary btn-transparent" @click="showHouseholdMemberInfo(member.id)">
+                                <span class="mdi mdi-eye-outline"></span>
                             </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" @click="openFamilyCompositionReportForm(member.id)">
-                                        <span class="mdi mdi-human-capacity-decrease me-2"></span>
-                                        Довідка про склад сім'ї
-                                    </a>
-                                </li>
-                            </ul>
                         </div>
-                        <button class="btn btn-sm btn-outline-secondary btn-transparent" @click="showHouseholdMemberInfo(member.id)">
-                            <span class="mdi mdi-eye-outline"></span>
-                        </button>
                     </div>
-                </div>
-                <div class="new-member"  @click="newMember($event)">
-                    <!-- <div class="d-flex flex-column justify-content-center align-items-center" title="Додати нового члена домогосподарства"> -->
-                    <div title="Додати нового члена домогосподарства">
-                        <span class="mdi mdi-account-plus-outline mdi-36px"></span>
-                        <!-- <span class="d-block">додати нового члена</span> -->
+                    <div class="new-member">
+                        <div title="Додати нового члена домогосподарства" @click="newMember($event)">
+                            <span class="mdi mdi-account-plus-outline mdi-36px"></span>
+                        </div>
                     </div>
-                </div>
-                <!-- <div class="card member new-member"  @click="newMember($event)">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                        <span class="mdi mdi-account-plus-outline mdi-48px"></span>
-                        <span class="d-block">додати нового члена</span>
-                    </div>
-                </div> -->
+
+
             </template>
             <template v-else>
                 <table class="table table-sm table-bordered">
@@ -202,7 +254,7 @@
     <FamilyCompositionReportForm
             :members="shownMembers"
             :selectedMember="selectedMember"
-            @closeFamilyCompositionReportForm="selectedMember = 0"/>
+            @closeFamilyCompositionReportForm="closeFamilyCompositionReportForm"/>
 
 </template>
 
@@ -365,6 +417,11 @@ export default {
             let familyCompositionReportForm = new Modal(document.getElementById('FamilyCompositionReportForm'));
             familyCompositionReportForm.show();
         },
+        closeFamilyCompositionReportForm() {
+            let familyCompositionReportForm = Modal.getInstance('#FamilyCompositionReportForm');
+            familyCompositionReportForm.hide();
+            this.selectedMember = 0;
+        }
 
     },
     computed: {
@@ -376,7 +433,7 @@ export default {
                 return ['dead', 'gone'].indexOf(m.status) !== -1;
             })
         },
-        ...mapGetters('Households', ['members', 'household_id'])
+        ...mapGetters('Households', ['members', 'household_id', 'availableLandYears'])
     },
     components: {
         HouseholdMemberForm,
@@ -472,5 +529,27 @@ export default {
     padding: 2rem;
     background: #f8fafc;
 }
+
+.dropdown-menu {
+    .select-year {
+        border-color: #f8fafc;
+        border-radius: 0.175rem;
+        color: #555;
+        background: #f8fafc;
+        padding: 0 0.75rem 0 0.25rem;
+        cursor: pointer;
+
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
+
+        &:focus-visible {
+            outline: none;
+        }
+    }
+
+}
+
 
 </style>

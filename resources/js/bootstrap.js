@@ -32,12 +32,21 @@ window.axios.interceptors.response.use(
                 icon:'error',
             });
         }
-        // if (error.response.status == 500) {
-        //     Swal.fire({
-        //         html:error.response.data.message,
-        //         icon:'error',
-        //     });
-        // }
+        if (error.response.status == 500) {
+            // console.log(error);
+            let errorMsg = ''
+            if (error.response.request.responseType === 'arraybuffer' && error.response.data.toString() === '[object ArrayBuffer]' ) {
+                errorMsg = JSON.parse(Buffer.from(error.response.data).toString('utf8')).message;
+                // console.log(errorMsg);
+            } else {
+                errorMsg = error.response.data.message;
+            }
+
+            Swal.fire({
+                html: errorMsg,
+                icon: 'error',
+            });
+        }
         return Promise.reject(error);
     }
 );

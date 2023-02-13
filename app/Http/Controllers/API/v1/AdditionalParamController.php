@@ -18,7 +18,7 @@ class AdditionalParamController extends Controller
     public function index()
     {
         if (request()->input('category_id')) {
-            $params = AdditionalParam::with('valueType')->where('category_id', request()->input('category_id'))->get();
+            $params = AdditionalParam::with('valueType')->where('category_id', request()->input('category_id'))->orderBy('code')->get();
         } else {
             $params = AdditionalParam::with('valueType')->get();
         }

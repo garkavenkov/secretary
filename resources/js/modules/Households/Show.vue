@@ -95,6 +95,7 @@ export default {
                 id: this.id,
                 settlement_id: 0,
                 household_type_id: 0,
+                number: '',
                 address_street_type: '',
                 address_street_name: '',
                 address_house: '',
@@ -116,8 +117,10 @@ export default {
             this.formData.id                = this.id,
             this.formData.settlement_id     = this.household.info.settlement_id,
             this.formData.household_type_id = this.household.info.household_type_id,
+            this.formData.number            = this.household.info.number,
             this.formData.special_marks     = this.household.info.special_marks,
             this.formData.additional_data   = this.household.info.additional_data
+
 
             const address_part_names = ['address_street_type', 'address_street_name', 'address_house', 'address_corps', 'address_apartment'];
             const address_part_values = this.household.info.raw_address.split(',');

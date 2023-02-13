@@ -3,11 +3,15 @@
     <ModalForm  formId="LandYearForm" @submitData="submitData" @closeForm="clearFormData" modalClass="modal-600">
 
         <div class="row mb-3">
-            <label  for="landYear" class="col-form-label col-md-9">Рік</label>
+            <label  for="landYear"
+                    class="col-form-label col-md-9">
+                Рік
+            </label>
             <div :class="['col-md-3',  hasError('year') ? 'is-invalid' : '']">
                 <input  type="text"
                         :class="['form-control', hasError('year') ? 'is-invalid' : '']"
                         id="landYear"
+                        name="landYear"
                         v-model="formData.year" />
             </div>
             <div id="landYearValidation" class="invalid-feedback col-md-12">
@@ -15,8 +19,11 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label  for="landMaintenance" class="col-form-label col-md-9">для будівництва і обслуговування житлового будинку</label>
-            <div :class="['col-md-3',  hasError('maintenance') ? 'is-invalid' : '']">
+            <label  for="landMaintenance"
+                    class="col-form-label col-md-9">
+                для будівництва і обслуговування житлового будинку
+            </label>
+            <div  :class="['col-md-3',  hasError('maintenance') ? 'is-invalid' : '']">
                 <input  type="text"
                         :class="['form-control col-md-3', hasError('maintenance') ? 'is-invalid' : '']"
                         id="landMaintenance"
@@ -27,7 +34,10 @@
             </div>
         </div>
         <div class="row mb-3">
-            <label  for="landPersonalAgriculture" class="col-form-label col-md-9">для ведення особистого селянського господарства</label>
+            <label  for="landPersonalAgriculture"
+                    class="col-form-label col-md-9">
+                для ведення особистого селянського господарства
+            </label>
             <div :class="['col-md-3',  hasError('personal_agriculture') ? 'is-invalid' : '']">
                 <input  type="text"
                         :class="['form-control', hasError('personal_agriculture') ? 'is-invalid' : '']"
@@ -38,8 +48,11 @@
                 {{ getError('personal_agriculture') }}
             </div>
         </div>
-        <div :class="['row mb-3', hasError('commercial_agriculture') ? 'is-invalid' : '']">
-            <label  for="landCommercialAgriculture" class="col-form-label col-md-9">для ведення товарного сільськогосподарського виробництва</label>
+        <div    :class="['row mb-3', hasError('commercial_agriculture') ? 'is-invalid' : '']">
+            <label  for="landCommercialAgriculture"
+                    class="col-form-label col-md-9">
+                для ведення товарного сільськогосподарського виробництва
+            </label>
             <div :class="['col-md-3',  hasError('commercial_agriculture') ? 'is-invalid' : '']">
                 <input  type="text"
                         :class="['form-control',  hasError('commercial_agriculture') ? 'is-invalid' : '']"

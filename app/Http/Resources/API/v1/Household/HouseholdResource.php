@@ -56,6 +56,7 @@ class HouseholdResource extends JsonResource
                 'settlement'            =>  new SettlementResource($this->whenLoaded('settlement')),
                 'household_type_id'     =>  (int)   $this->household_type_id,
                 'household_type'        =>  new HouseholdTypeResource($this->whenLoaded('type')),
+                'number'                =>  (int)   $this->number,
                 'household_head'        =>  $household_head,
                 'raw_address'           =>  $this->address,
                 'address'               =>  $this->getAddress(),

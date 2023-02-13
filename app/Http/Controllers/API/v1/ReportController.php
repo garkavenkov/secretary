@@ -15,8 +15,10 @@ use DateTime;
 use DateTimeImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
-
+use JsonException;
 use PhpOffice\PhpWord\TemplateProcessor;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 use function PHPUnit\Framework\throwException;
 
 class ReportController extends Controller
@@ -216,6 +218,16 @@ class ReportController extends Controller
     // public function familyComposition(Request $request)
     public function familyComposition($params)
     {
+        try {
+            $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));
+        } catch (Exception $e) {
+
+            $msg = 'Шаблон звіту FamilyComposition.docx не знайден. Завантажіть шаблон';
+            throw new Exception($msg,500);
+
+        }
+        // dd($templateProcessor->getVariables());
+
         if(!isset($params['member_id'])) {
             throw new Exception('Member did not pass');
         }
@@ -236,14 +248,17 @@ class ReportController extends Controller
 
         // dd($ids);
         $address =$member->household->getFullAddress();
+        $person_address_registration = ($member->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') .
+                                        " за адресою: $address";
 
-
-        $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));
+        // $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));
         // $phpWord = new PhpWord();
 
+        $register = $member->sex == 'чоловіча' ?  'зареєстрований' : 'зареєстрована';
         $templateProcessor->setValue('person_name', $member_name);
         $templateProcessor->setValue('person_birthdate', $member_birthdate);
-        $templateProcessor->setValue('person_address', $address);
+        $templateProcessor->setValue('person_address_registration', $person_address_registration);
+
 
         $rels = [];
         // dd($relatives);
@@ -258,8 +273,9 @@ class ReportController extends Controller
         // $filename = "temp.docx";
         // $templateProcessor->saveAs(storage_path("app/documents/".  $filename));
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8');
-        // when pass $filename into header , something crash... need to watch in the morning!!!!
+        // $filename = $member_name . 'Стан родини.docx';
         header("Content-Disposition: attachment; filename='familyComposition.docx");
+        // header("Content-Disposition: attachment; filename='$filename'");
 
 
         $templateProcessor->saveAs('php://output');
@@ -272,5 +288,26 @@ class ReportController extends Controller
         // unlink(storage_path('app/documents/'. $filename));  // remove temp file
         // exit();
         // return response()->download(storage_path('app/documents/'. $filename));
+    }
+
+
+    public function uploadTemplate(Request $request, $id)
+    {
+        $path = $request->file->store('templates');
+
+        // dd($path, Storage::path($path));
+        $variables = [];
+        try {
+            // $templateProcessor = new TemplateProcessor(storage_path($path));
+            $templateProcessor = new TemplateProcessor( Storage::path($path));
+            // dd($templateProcessor);
+            $variables = $templateProcessor->getVariables();
+
+        } catch (Exception $e) {
+            $msg = 'Шаблон звіту FamilyComposition1.docx не знайден. Завантажіть шаблон';
+            throw new Exception($msg,500);
+        }
+        return response()->json(['message' => 'Шаблон був успішно завантажен', 'variables' => $variables]);
+        // dd($path);
     }
 }

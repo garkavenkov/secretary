@@ -79,6 +79,13 @@ class HouseholdTest extends TestCase
     {
         $settlement = Settlement::factory()->create();
         $household_type = HouseholdType::factory()->create();
+        Household::factory()
+                ->create([
+                    'settlement_id' => $settlement->id,
+                    'household_type_id' => $household_type->id,
+                    'address'   =>  'str.,Cent,1',
+                    'number' => 1
+                ]);
         $household = Household::factory()
                         ->make([
                             'settlement_id' => $settlement->id,
@@ -88,7 +95,7 @@ class HouseholdTest extends TestCase
 
         $this->post($this->url, $household)->assertSessionHasErrors($field);
 
-        $this->assertDatabaseCount('households', 0);
+        $this->assertDatabaseCount('households', 1);
     }
 
     public function dataProvider(): array
@@ -98,8 +105,13 @@ class HouseholdTest extends TestCase
             'settlement_id does not exist'      =>  ['settlement_id',       99],
             'household_type_id'                 =>  ['household_type_id',   ''],
             'household_type_id does not exist'  =>  ['household_type_id',   99],
+            'number is empty'                   =>  ['number',              ''],
+            'number is not number'              =>  ['number',            'qw'],
+            'number is lest than 0'             =>  ['number',               0],
+            'number is already exists'          =>  ['number',               1],
             'address is empty'                  =>  ['address',             ''],
             'address in not long enough'        =>  ['address',           'qw'],
+            'address is already exists'         =>  ['address',  'str.,Cent,1'],
         ];
     }
 

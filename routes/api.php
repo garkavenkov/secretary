@@ -70,6 +70,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
+    Route::post('upload-report-template/{id}',      [ReportController::class, 'uploadTemplate'])->name('upload-report-template');
     Route::post('establish-family-relationships',   [FamilyRelationshipController::class, 'establishRelationships'])->name('establish-family-relationships');
     Route::post('family-composition-report',        [ReportController::class, 'familyComposition']);
 

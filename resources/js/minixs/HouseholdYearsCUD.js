@@ -11,7 +11,7 @@ export default {
             let yearForm = new Modal(document.getElementById(this.yearFormId))
             if (e.ctrlKey) {
                 if (this.years.length > 0) {
-                    this.yearmData = Object.assign({}, this.years[this.years.length-1]);
+                    this.yearData = Object.assign({}, this.years[this.years.length-1]);
                     this.yearData.year = parseInt(this.yearData.year) + 1;
                 }
                 this.modalTitle = `Додати дані на <b>${this.yearData.year}</b> рік`;

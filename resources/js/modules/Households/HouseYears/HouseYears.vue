@@ -129,7 +129,7 @@
                 <!-- <div>
                     № ПГО <span>02-0022-1</span>
                 </div> -->
-                <div class="card rounded-0 mb-3">
+                <div class="card rounded-0 mb-4">
                     <div class="card-header thin-header align-items-center">
                         <h6>Інформація по будинку</h6>
                         <button class="btn btn-sm btn-light btn-transparent"
