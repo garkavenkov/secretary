@@ -159,7 +159,7 @@
                                             Довідка про склад сім'ї
                                         </a>
                                     </li>
-                                    <li class="d-flex align-items-center">
+                                    <li class="d-flex align-items-center" v-if="availableLandYears.length > 0">
                                         <a class="dropdown-item pe-0">
                                             <span class="mdi mdi-land-fields me-2" style="color:green;"></span>
                                             <span>Довідка про склад земельної ділянки на</span>
