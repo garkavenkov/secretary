@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Settlement;
 use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
+use DeclensionUkrainian\Toponym;
 use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -115,7 +116,13 @@ class Household extends Model
         $district = $this->settlement->council->community->district;
         $region = $district->region->name;
 
-        return $this->getAddress() . ", $settlement_type $settlement, $district->name, $region";
+        $district = explode(' ', $district->name);
+        $district = Toponym::inGenetive(['name' => $district[0], 'type' => $district[1]]);
+
+        $region = explode(' ', $region);
+        $region = Toponym::inGenetive(['name' => $region[0], 'type' => $region[1]]);
+
+        return $this->getAddress() . ", $settlement_type $settlement, $district, $region";
     }
 
     public function houseInfo()

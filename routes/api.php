@@ -23,6 +23,7 @@ use App\Http\Controllers\API\v1\SettlementTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamController;
 use App\Http\Controllers\API\v1\HouseholdMemberController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
+use App\Http\Controllers\API\v1\HouseholdMemberLandController;
 use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
@@ -65,6 +66,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('additional-params',            AdditionalParamController::class);
     Route::resource('movement-types',               MovementTypeController::class);
     Route::resource('household-member-movements',   HouseholdMemberMovementController::class);
+    Route::resource('household-member-lands',       HouseholdMemberLandController::class);
     Route::resource('household-lands',              HouseholdLandController::class);
     Route::resource('household-owners',             HouseholdOwnerController::class);
 

@@ -2,10 +2,10 @@
 
     <div class="modal fade" :id="formId" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" :class="modalClass">
-            <div class="modal-content">
+            <div class="modal-content" :class="modalContentClass">
                 <div class="modal-header">
                     <div class="d-flex align-items-center">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel" v-html="modalTitle"></h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel" v-html="modalFormTitle"></h1>
                         <slot name="modalHeader"></slot>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="$emit('closeForm')"></button>
@@ -19,7 +19,7 @@
                     </div>
                     <div>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('closeForm')">Відмінити</button>
-                        <button type="button" class="btn btn-primary ms-4" @click="$emit('submitData')" :disabled="sumbitIsDisabled">{{modalSubmitCaption}}</button>
+                        <button type="button" class="btn btn-primary ms-4" @click="$emit('submitData')" :disabled="sumbitIsDisabled">{{modalFormSubmitCaption}}</button>
                     </div>
                 </div>
             </div>
@@ -41,6 +41,11 @@ export default {
             required: false,
             default: ''
         },
+        'modalContentClass': {
+            type: String,
+            required: false,
+            default: ''
+        },
         'showFooter': {
             type: Boolean,
             required: false,
@@ -50,6 +55,16 @@ export default {
             type: Boolean,
             required: false,
             default: () => false
+        },
+        'title': {
+            type: String,
+            required: false,
+            default: ''
+        },
+        'submitCaption': {
+            type: String,
+            required: false,
+            default: ''
         }
     },
     inject: {
@@ -65,5 +80,13 @@ export default {
     data() {
         return {}
     },
+    computed: {
+        modalFormTitle() {
+            return this.title ? this.title : this.modalTitle;
+        },
+        modalFormSubmitCaption() {
+            return this.submitCaption ? this.submitCaption : this.modalSubmitCaption;
+        }
+    }
 }
 </script>

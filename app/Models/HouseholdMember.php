@@ -172,4 +172,9 @@ class HouseholdMember extends Model
     {
         return $this->additionalParamValue();
     }
+
+    public function land($years = 5)
+    {
+        return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc')->limit($years);
+    }
 }

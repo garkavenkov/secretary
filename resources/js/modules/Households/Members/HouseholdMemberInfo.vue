@@ -26,7 +26,7 @@
         <div class="col-10 mx-auto h-100">
             <div class="row h-100">
                 <div class="col-4 border-end">
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label  for="memberSurname" class="form-label">Прізвище</label>
                         <input  type="text"
                                 id="memberSurname"
@@ -37,7 +37,7 @@
                             {{ getError('surname') }}
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                         <div class="col">
                             <label  for="memberName" class="form-label">Ім'я</label>
                             <input  type="text"
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                         <div class="col">
                             <label  for="memberBirthdate" class="form-label">Дата народження</label>
                             <input  type="date"
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                         <div class="col">
                             <label for="familyRelationshipType" class="form-label">Родинні стосунки</label>
                             <select :class="['form-control', hasError('family_relationship_type_id') ? 'is-invalid' : '']"
@@ -107,7 +107,39 @@
                             </div>
                         </div>
                     </div>
+                    <!-- <div class="row mb-1">
+                        <div class="col">
+                            <label for="workPlace" class="form-label">Місце роботи залежно від територіального розташування</label>
+                            <select
+                                    :class="['form-select', hasError('work_place_id') ? 'is-invalid' : '']"
+                                    v-model="_form.work_place_id"
+                                    :disabled="!isInEditMode">
+                                <option disabled value="0">Оберить місце роботи</option>
+                                <option :value="place.id" v-for="place in places" :key="place.id">
+                                    {{place.name}}
+                                </option>
+                            </select>
+                            <div id="workPlaceValidation" class="invalid-feedback">
+                                {{ getError('work_place_id') }}
+                            </div>
+                        </div>
+                    </div>
                     <div class="row mb-3">
+                        <div class="col">
+                            <label for="employmentInformation" class="form-label">Відомості про зайнятість / незайнятість</label>
+                            <textarea
+                                    :class="['form-control', hasError('employment_information') ? 'is-invalid' : '']"
+                                    id="employmentInformation"
+                                    rows="2"
+                                    v-model="_form.employment_information"
+                                    :disabled="isEmploymentInformationDisabled">
+                            </textarea>
+                            <div id="employmentInformationValidation" class="invalid-feedback">
+                                {{ getError('employment_information') }}
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="row mb-2">
                         <div class="col">
                             <label for="socialInformation" class="form-label">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>
                             <textarea
@@ -122,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    <div class="row mb-2">
                         <div class="col">
                             <label for="additionalInformation" class="form-label">Додаткова інформація</label>
                             <textarea
@@ -161,7 +193,7 @@
                             </div>
                         </div>
                    </div>
-                   <div class="row mb-3">
+                   <div class="row mb-2">
                        <div class="col">
                            <label  for="memberDeathRegisterOffice" class="form-label">Орган</label>
                            <input  type="text"
@@ -177,18 +209,6 @@
                 </div>
                 <div class="col-8">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <!-- <li class="nav-item" role="presentation">
-                            <button class="nav-link active"
-                                    id="main-tab"
-                                    data-bs-toggle="tab"
-                                    data-bs-target="#main-tab-pane"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="main-tab-pane"
-                                    aria-selected="true">
-                                Головна
-                            </button>
-                        </li> -->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active"
                                     id="work-tab"
@@ -215,18 +235,6 @@
                                 Земля
                             </button>
                         </li>
-                        <!-- <li class="nav-item" role="presentation">
-                            <button class="nav-link"
-                                    id="peasant-economy-tab"
-                                    data-bs-toggle="tab"
-                                    data-bs-target="#peasant-economy-tab-pane"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="peasant-economy-tab-pane"
-                                    aria-selected="false">
-                                Селянське господарство
-                            </button>
-                        </li> -->
                         <li class="nav-item" role="presentation">
                             <button class="nav-link"
                                     id="movement-tab"
@@ -290,71 +298,84 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="land-tab-pane" role="tabpanel" aria-labelledby="land-tab" tabindex="0">
-                            <div class="row mb-3">
-                                <h5>Наявність земельної ділянки</h5>
-                                <div class="col">
-                                    <label for="landOwned" class="form-label">у власності</label>
-                                    <input  type="text"
-                                            :class="['form-control', hasError('land_owned') ? 'is-invalid' : '']"
-                                            id="landOwned"
-                                            v-model="_form.land_owned"
-                                            :disabled="!isInEditMode" />
-                                    <div id="landOwnedValidation" class="invalid-feedback">
-                                        {{ getError('land_owned') }}
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <label  for="landRented" class="form-label">взято в оренду</label>
-                                    <input  type="text"
-                                            :class="['form-control', hasError('land_rented') ? 'is-invalid' : '']"
-                                            id="landRented"
-                                            v-model="_form.land_rented"
-                                            :disabled="!isInEditMode" />
-                                    <div id="landRentedValidation" class="invalid-feedback">
-                                        {{ getError('land_rented') }}
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <label for="landLeased" class="form-label">знадо в оренду</label>
-                                    <input  type="text"
-                                            :class="['form-control', hasError('land_leased') ? 'is-invalid' : '']"
-                                            id="landLeased"
-                                            v-model="_form.land_leased"
-                                            :disabled="!isInEditMode" />
-                                    <div id="landLeasedValidation" class="invalid-feedback">
-                                        {{ getError('land_leased') }}
-                                    </div>
-                                </div>
-                            </div>
+                            <table class="table table-sm  table-bordered table-years" v-if="_form.land">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <button type="button"
+                                                    class="btn btn-sm btn-outline-secondary btn-transparent"
+                                                    @click="newYearData">
+                                                <span class="mdi mdi-plus-thick"></span>
+                                                Додати рік
+                                            </button>
+                                        </th>
+                                        <th v-for="year in _form.land.sort((a, b) => a.year - b.year)"
+                                            :key="year.year">
+                                            {{year.year}}
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-light btn-transparent"
+                                                        type="button"
+                                                        data-bs-toggle="dropdown"
+                                                        aria-expanded="false"
+                                                        title="Операції з даними за рік">
+                                                    <span class="mdi mdi-cog"></span>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li>
+                                                        <a class="dropdown-item" @click="landOwnedReport(year)">
+                                                            <span class="mdi mdi-pencil text-warning me-2"></span>
+                                                            Звіт про склад земельної ділянки
+                                                        </a>
+                                                    </li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li>
+                                                        <a class="dropdown-item" @click="editYear(year)">
+                                                            <span class="mdi mdi-pencil text-warning me-2"></span>
+                                                            Редагувати дані
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item" @click="deleteYear(year)">
+                                                            <span class="mdi mdi-trash-can text-danger me-2"></span>
+                                                            Видалити дані
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-group-divider">
+                                    <TableRow   :years="_form.land"
+                                                field="total"
+                                                rowTitle="<b>Площа земельних ділянок - усього</b>" />
+                                    <TableRow   :years="_form.land"
+                                                field="maintenance"
+                                                rowTitle="під забудовою"
+                                                rowTitleClass="ps-3"/>
+                                    <TableRow   :years="_form.land"
+                                                field="personal_agriculture"
+                                                rowTitle="для ведення  <abbr title='особистого селянського господарства'>ОСГ</abbr>"
+                                                rowTitleClass="ps-3"/>
+                                    <TableRow   :years="_form.land"
+                                                field="hay_cutting"
+                                                rowTitle="сінокосіння"
+                                                rowTitleClass="ps-3"/>
+                                    <TableRow   :years="_form.land"
+                                                field="pastures"
+                                                rowTitle="пасовища"
+                                                rowTitleClass="ps-3"/>
+                                    <TableRow   :years="_form.land"
+                                                field="land_share"
+                                                rowTitle="земельний пай"
+                                                rowTitleClass="ps-3"/>
+                                    <TableRow   :years="_form.land"
+                                                field="property_share"
+                                                rowTitle="майновий пай"
+                                                rowTitleClass="ps-3"/>
+                                </tbody>
+                            </table>
                         </div>
-                        <!-- <div class="tab-pane fade" id="peasant-economy-tab-pane" role="tabpanel" aria-labelledby="peasant-economy-tab" tabindex="0">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="exampleFormControlInput1" class="form-label">у власності</label>
-                                    <input  type="email"
-                                            class="form-control"
-                                            id="exampleFormControlInput1"
-                                            v-model="_form.surname"
-                                            :disabled="!isInEditMode" />
-                                </div>
-                                <div class="col">
-                                    <label for="exampleFormControlInput1" class="form-label">взято в оренду</label>
-                                    <input  type="email"
-                                            class="form-control"
-                                            id="exampleFormControlInput1"
-                                            v-model="_form.name"
-                                            :disabled="!isInEditMode" />
-                                </div>
-                                <div class="col">
-                                    <label  for="exampleFormControlInput1" class="form-label">знадо в оренду</label>
-                                    <input  type="email"
-                                            class="form-control"
-                                            id="exampleFormControlInput1"
-                                            v-model="_form.patronymic"
-                                            :disabled="!isInEditMode" />
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="tab-pane fade" id="movement-tab-pane" role="tabpanel" aria-labelledby="movement-tab" tabindex="0">
                             <div>
                                 <div class="mb-3">
@@ -462,16 +483,12 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="additional-param-tab-pane" role="tabpanel" aria-labelledby="additional-param-tab" tabindex="0">
-                            <!-- <div class="row mb-2 border-bottom" v-for="param in _form.additional_params" :key="param.id">
-                                <div class="col">{{ param.param_name }}</div>
-                                <div class="col">{{ param.param_value }}</div>
-                            </div> -->
                             <div v-if="(_form.additional_params) ?? (_form.additional_params.length > 0)">
                                 <div class="row">
                                     <div class="col-md-10 mx-auto">
-                                        <table class="table">
+                                        <table class="table table-sm">
                                             <tbody>
-                                                <tr v-for="param in _form.additional_params" :key="param.id">
+                                                <tr v-for="param in _form.additional_params" :key="param.id" class="align-middle">
                                                     <td>
                                                         <label :for="param.code" :style="[isInEditMode ? 'cursor: pointer;' : '']">
                                                             {{ param.name }}
@@ -490,7 +507,7 @@
                                                         </template>
                                                         <template v-else>
                                                             <input  type="text"
-                                                                    class="form-control"
+                                                                    class="form-control form-control-sm"
                                                                     :id="param.code"
                                                                     :disabled="!isInEditMode"
                                                                     v-model="param.value">
@@ -519,15 +536,28 @@
 
     </ModalForm>
 
+    <LandYearForm
+            :formData="yearData"
+            :title="title"
+            :submitCaption="submitCaption"
+            :action="yearDataAction"
+            @closeYearForm="closeYearForm"
+            @refreshData="refreshData"/>
+
 </template>
 
 <script>
 import { mapGetters }   from 'vuex';
+import { Modal }        from 'bootstrap';
+
 
 import ModalForm        from '../../../components/ui/ModalForm.vue';
+import TableRow         from '../../../components/ui/TableRow.vue';
 
 import FormValidator    from '../../../minixs/FormValidator';
 import DateFormat       from '../../../minixs/DateFormat';
+
+import LandYearForm     from './LandYearForm.vue';
 
 export default {
     name: 'HouseholdMemberInfo',
@@ -543,7 +573,9 @@ export default {
             movementTypes: [],
             isInEditMode: false,
             _form: {
-                additional_params: []
+                additional_params: [],
+                land: [],
+                movements: []
             },
             movementEventFormIsVisible: false,
             eventForm: {
@@ -555,9 +587,29 @@ export default {
             movementAction: '',
             movementEventCancelButtonTitle: '',
             movementEventSubmitButtonTitle: '',
-            additionalParamData: {}
+            additionalParamData: {},
+            yearData: {
+                id: null,
+                member_id: null,
+                year: new Date().getFullYear(),
+                maintenance: 0,
+                personal_agriculture: 0,
+                hay_cutting: 0,
+                pastures: 0,
+                land_share: 0,
+                property_share: 0
+            },
+            yearDataAction: '',
+            title: '',
+            submitCaption: '',
         }
     },
+    // provide() {
+    //     return {
+    //         modalTitle: computed(() => this.modalTitle),
+    //         modalSubmitCaption: computed(() => this.modalSubmitCaption),
+    //     }
+    // },
     methods: {
         submitData() {
             let form = Object.assign({}, this._form);
@@ -570,7 +622,7 @@ export default {
             axios.patch(`/api/v1/household-members/${form.id}`, form)
                 .then(res => {
                     this.$store.dispatch('Households/fetchRecord', form.household_id);
-                    this.$emit('refreshData', form.id);
+                    this.$emit('refreshData', _form.id);
                     this.errors = [];
                     this.$nextTick(function() {
                         this._form = {...this._form};
@@ -691,6 +743,78 @@ export default {
                             });
                     });
             }
+        },
+        newYearData() {
+            this.title = 'Додати інформацію про землю';
+            this.submitCaption = 'Додати';
+            this.yearDataAction = 'create';
+
+            this.yearData.member_id = this.formData.id;
+
+            let landYearForm = new Modal(document.getElementById('LandYearForm'))
+            landYearForm.show();
+        },
+        editYear(year) {
+            Object.assign(this.yearData, year);
+            this.yearData.member_id = this.formData.id;
+
+            this.title = `Редагувати дані за ${year.year} рік`;
+            this.submitCaption = 'Зберегти';
+            this.yearDataAction = 'update';
+
+            var landYearForm = new Modal(document.getElementById('LandYearForm'))
+            landYearForm.show()
+        },
+        deleteYear(year) {
+        },
+        refreshData() {
+            // console.log('Refresh data after LandYearForm data was changed');
+            // this.$emit('refreshData', this.formData.id);
+            axios.get(`/api/v1/household-members/${this._form.id}`)
+                .then(res => {
+                    // this.$store.dispatch('Households/fetchRecord', this._form.household_id); ???
+                    this.$emit('refreshData', this._form.id);
+                    this._form = JSON.parse(JSON.stringify(res.data.data));
+                });
+            // this.$nextTick(function() {
+            // this._form = JSON.parse(JSON.stringify(this.formData));
+            //     // Object.assign({},this.formData
+            // });
+        },
+        closeYearForm() {
+            this.yearData.id = null;
+            this.yearData.year = new Date().getFullYear();
+            this.yearData.maintenance = 0;
+            this.yearData.personal_agriculture = 0;
+            this.yearData.hay_cutting = 0;
+            this.yearData.pastures = 0;
+            this.yearData.land_share = 0;
+            this.yearData.property_shar = 0;
+
+        },
+        landOwnedReport({year, member_id}) {
+            let data = {
+                report: 'landOwned',
+                year: year,
+                member_id: member_id
+            }
+
+            axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
+                .then(res => {
+
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+
+                    link.href = url;
+                    // let member = this.members.find(m => m.id == this.memberId);
+                    // let fileName = `${member.surname} ${member.name} ${member.patronymic}. Довідка про склад земельної ділянки.docx`;
+                    let fileName = 'Довідка про склад земельної ділянки.docx';
+                    // link.setAttribute('download', "Довідка про стан родини.docx"); // set custom file name
+                    link.setAttribute('download', fileName);
+                    document.body.appendChild(link);
+
+                    link.click();
+                })
         }
     },
     computed: {
@@ -743,6 +867,8 @@ export default {
     },
     components: {
         ModalForm,
+        LandYearForm,
+        TableRow
     }
 }
 </script>

@@ -160,11 +160,11 @@
                                         </a>
                                     </li>
                                     <li class="d-flex align-items-center" v-if="availableLandYears.length > 0">
-                                        <a class="dropdown-item pe-0">
+                                        <a class="dropdown-item pe-0"  @click="landOwnedReport(member)">
                                             <span class="mdi mdi-land-fields me-2" style="color:green;"></span>
                                             <span>Довідка про склад земельної ділянки на</span>
                                         </a>
-                                        <select name="selectedLandYear" id="selectedLandYear" class="select-year">
+                                        <select name="selectedLandYear" id="selectedLandYear" class="select-year" v-model="selectedLandYear">
                                             <option v-for="year in availableLandYears"
                                                     :key="year"
                                                     :value="year">
@@ -287,12 +287,13 @@ export default {
                 social_information: '',
                 additional_information: '',
                 work_place_id: 0,
-                land_owned: 0,
-                land_rented: 0,
-                land_leased: 0,
+                // land_owned: 0,
+                // land_rented: 0,
+                // land_leased: 0,
                 death_date: null,
                 death_register_number: '',
                 death_register_office: '',
+                land: [],
                 movements: [],
                 additional_params: []
             },
@@ -302,7 +303,8 @@ export default {
             formIsReady: false,
             showAllMembers: false,
             isFamilyCompositionFormShown: false,
-            selectedMember: 0
+            selectedMember: 0,
+            selectedLandYear: 0
         }
     },
     provide() {
@@ -343,12 +345,13 @@ export default {
             this.formData.social_information            = '';
             this.formData.additional_information        = '';
             this.formData.work_place_id                 = 0;
-            this.formData.land_owned                    = 0;
-            this.formData.land_rented                   = 0;
-            this.formData.land_leased                   = 0;
+            // this.formData.land_owned                    = 0;
+            // this.formData.land_rented                   = 0;
+            // this.formData.land_leased                   = 0;
             this.formData.death_date                    = null;
             this.formData.death_register_number         = '';
             this.formData.death_register_office         = '';
+            this.formData.land                          = [];
             this.formData.movements                     = [];
             this.formData.additional_params             = [];
 
@@ -421,6 +424,29 @@ export default {
             let familyCompositionReportForm = Modal.getInstance('#FamilyCompositionReportForm');
             familyCompositionReportForm.hide();
             this.selectedMember = 0;
+        },
+        landOwnedReport(member) {
+            let data = {
+                report: 'landOwned',
+                year: this.selectedLandYear,
+                member_id: member.id
+            }
+
+            axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
+                .then(res => {
+
+                    const url = window.URL.createObjectURL(new Blob([res.data]));
+                    const link = document.createElement('a');
+
+                    link.href = url;
+                    // let member = this.members.find(m => m.id == this.memberId);
+                    let fileName = `${member.surname} ${member.name} ${member.patronymic}. Довідка про склад земельної ділянки.docx`;
+                    // link.setAttribute('download', "Довідка про стан родини.docx"); // set custom file name
+                    link.setAttribute('download', fileName);
+                    document.body.appendChild(link);
+
+                    link.click();
+                })
         }
 
     },
@@ -539,8 +565,8 @@ export default {
         padding: 0 0.75rem 0 0.25rem;
         cursor: pointer;
 
-        -webkit-appearance: none;
-        -moz-appearance: none;
+        // -webkit-appearance: none;
+        // -moz-appearance: none;
         text-indent: 1px;
         text-overflow: '';
 

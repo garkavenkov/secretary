@@ -80,6 +80,7 @@ import HouseholdForm    from './HouseholdForm.vue';
 
 export default {
     name: 'ShowCard',
+    inheritAttrs:false,
     components: {
         HouseholdForm
     },

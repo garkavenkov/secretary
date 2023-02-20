@@ -13,6 +13,7 @@ use PhpOffice\PhpWord\Style\Font;
 use App\Http\Controllers\Controller;
 use DateTime;
 use DateTimeImmutable;
+use DeclensionUkrainian\Anthroponym;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 use JsonException;
@@ -90,6 +91,7 @@ class ReportController extends Controller
         if (!isset($request->report)) {
             return response()->json(['message' => 'Report did not pass'], 404);
         }
+        // Select from DB info about report: variables, etc.
 
         $report = $request->report;
         if (!method_exists($this, $report)) {
@@ -215,7 +217,7 @@ class ReportController extends Controller
         return $result;
     }
 
-    // public function familyComposition(Request $request)
+
     public function familyComposition($params)
     {
         try {
@@ -248,6 +250,7 @@ class ReportController extends Controller
 
         // dd($ids);
         $address =$member->household->getFullAddress();
+
         $person_address_registration = ($member->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') .
                                         " за адресою: $address";
 
@@ -270,24 +273,11 @@ class ReportController extends Controller
         }
 
         $templateProcessor->cloneBlock('relatives', 0, true, false, $rels);
-        // $filename = "temp.docx";
-        // $templateProcessor->saveAs(storage_path("app/documents/".  $filename));
-        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8');
-        // $filename = $member_name . 'Стан родини.docx';
-        header("Content-Disposition: attachment; filename='familyComposition.docx");
-        // header("Content-Disposition: attachment; filename='$filename'");
 
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8');
+        header("Content-Disposition: attachment; filename='familyComposition.docx");
 
         $templateProcessor->saveAs('php://output');
-
-
-        // $objWriter->save('php://output');
-        // $templateProcessor->save('php://output');
-        // file_get_contents($temp_file);
-        // readfile($temp_file); // or echo file_get_contents($temp_file);
-        // unlink(storage_path('app/documents/'. $filename));  // remove temp file
-        // exit();
-        // return response()->download(storage_path('app/documents/'. $filename));
     }
 
 
@@ -300,6 +290,7 @@ class ReportController extends Controller
         try {
             // $templateProcessor = new TemplateProcessor(storage_path($path));
             $templateProcessor = new TemplateProcessor( Storage::path($path));
+            // $templateProcessor = new TemplateProcessor($request->file);
             // dd($templateProcessor);
             $variables = $templateProcessor->getVariables();
 
@@ -309,5 +300,58 @@ class ReportController extends Controller
         }
         return response()->json(['message' => 'Шаблон був успішно завантажен', 'variables' => $variables]);
         // dd($path);
+    }
+
+    public function landOwned($params)
+    {
+        if(!isset($params['member_id'])) {
+            throw new Exception('Member did not pass', 500);
+        }
+        if (!isset($params['year'])) {
+            throw new Exception('Year does not passed', 500);
+        }
+
+        try {
+            $templateProcessor = new TemplateProcessor(storage_path('app/documents/LandOwned.docx'));
+        } catch (Exception $e) {
+
+            $msg = 'Шаблон звіту LandOwned.docx не знайден. Завантажіть шаблон';
+            throw new Exception($msg,500);
+
+        }
+        // dd($templateProcessor->getVariables());
+
+        $member = HouseholdMember::findOrFail($params['member_id']);
+        $member_name = $member->surname . ' ' . $member->name . ' ' . $member->patronymic;
+
+
+        $member_name = Anthroponym::inDative([
+            'gender'    =>  $member->sex,
+            'surname'   =>  $member->surname,
+            'name'      =>  $member->name,
+            'patronymic'=>  $member->patronymic,
+        ]);
+        //  ReportVariable::where('report', $report)->where('name','member_name')->first(); ($member_name) ????
+        //  person_name => Anthroponym::inDative($member) ?????
+
+        $member_birthdate =  (new DateTimeImmutable($member->birthdate))->format('d.m.Y');
+
+        $address =$member->household->getFullAddress();
+
+        $person_address_registration = ($member->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') .
+                                        " за адресою: $address";
+
+
+        $templateProcessor->setValue('person_name', $member_name);
+        $templateProcessor->setValue('person_birthdate', $member_birthdate);
+        $templateProcessor->setValue('person_address_registration', $person_address_registration);
+        $templateProcessor->setValue('land_year', $params['year']);
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8');
+        header("Content-Disposition: attachment; filename='landOwned.docx");
+
+
+        $templateProcessor->saveAs('php://output');
+
     }
 }

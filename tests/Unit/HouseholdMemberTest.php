@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\HouseholdMember;
+use App\Models\HouseholdMemberLand;
 use App\Models\HouseholdMemberMovement;
 use App\Models\MovementType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -83,5 +84,16 @@ class HouseholdMemberTest extends TestCase
 
         $this->assertEquals($m->movement('2022-06-06')->date, '2022-01-01');
 
+    }
+
+    public function test_member_may_have_land()
+    {
+        $m = HouseholdMember::factory()->create();
+
+        HouseholdMemberLand::factory()->create(['member_id' => $m->id, 'year' => 2021]);
+        HouseholdMemberLand::factory()->create(['member_id' => $m->id, 'year' => 2022]);
+        HouseholdMemberLand::factory()->create(['member_id' => $m->id, 'year' => 2023]);
+
+        $this->assertCount(3, $m->land);
     }
 }

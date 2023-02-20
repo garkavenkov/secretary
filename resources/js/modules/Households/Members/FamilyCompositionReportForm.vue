@@ -90,7 +90,6 @@ export default {
 
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
                 .then(res => {
-                    console.log(res.headers);
 
                     const url = window.URL.createObjectURL(new Blob([res.data]));
                     const link = document.createElement('a');

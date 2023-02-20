@@ -3,8 +3,10 @@
 namespace App\Http\Resources\API\v1\HouseholdMember;
 
 use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
+use App\Http\Resources\API\v1\HouseholdMemberLand\HouseholdMemberLandResource;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResource;
+use App\Models\HouseholdMemberLand;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 use function PHPUnit\Framework\isNull;
@@ -40,9 +42,10 @@ class HouseholdMemberResource extends JsonResource
             'death_date'                    =>  $this->death_date,
             'death_register_number'         =>  $this->death_register_number,
             'death_register_office'         =>  $this->death_register_office,
-            'land_owned'                    =>  (float) $this->land_owned,
-            'land_rented'                   =>  (float) $this->land_rented,
-            'land_leased'                   =>  (float) $this->land_leased,
+            'land'                          =>  HouseholdMemberLandResource::collection($this->whenLoaded('land')),
+            // 'land_owned'                    =>  (float) $this->land_owned,
+            // 'land_rented'                   =>  (float) $this->land_rented,
+            // 'land_leased'                   =>  (float) $this->land_leased,
             'additional_params'             =>  AdditionalParamValueResource::collection($this->memberInfo()),
         ];
     }
