@@ -159,7 +159,7 @@
                                             Довідка про склад сім'ї
                                         </a>
                                     </li>
-                                    <li class="d-flex align-items-center" v-if="availableLandYears.length > 0">
+                                    <!-- <li class="d-flex align-items-center" v-if="availableLandYears.length > 0">
                                         <a class="dropdown-item pe-0"  @click="landOwnedReport(member)">
                                             <span class="mdi mdi-land-fields me-2" style="color:green;"></span>
                                             <span>Довідка про склад земельної ділянки на</span>
@@ -171,10 +171,10 @@
                                                 {{ year }}
                                             </option>
                                         </select>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
-                            <button class="btn btn-sm btn-outline-secondary btn-transparent" @click="showHouseholdMemberInfo(member.id)">
+                            <button class="btn btn-sm btn-outline-secondary btn-transparent" @click="showHouseholdMemberInfo(member)">
                                 <span class="mdi mdi-eye-outline"></span>
                             </button>
                         </div>
@@ -209,7 +209,7 @@
                             :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
                             <td class="text-center">
                                 <button class="btn btn-sm btn-outline-secondary"
-                                        @click="showHouseholdMemberInfo(member.id)">
+                                        @click="showHouseholdMemberInfo(member)">
                                     <span class="mdi mdi-eye-outline"></span>
                                 </button>
                             </td>
@@ -224,12 +224,6 @@
                                 </template>
                             </td>
                             <td>{{member.family_relationship_type}}</td>
-                            <!-- <td>
-                                <template v-if="member.work_place">
-                                    {{member.work_place.name}}
-                                </template>
-                            </td>
-                            <td>{{member.employment_information}}</td> -->
                         </tr>
                     </tbody>
                 </table>
@@ -287,9 +281,6 @@ export default {
                 social_information: '',
                 additional_information: '',
                 work_place_id: 0,
-                // land_owned: 0,
-                // land_rented: 0,
-                // land_leased: 0,
                 death_date: null,
                 death_register_number: '',
                 death_register_office: '',
@@ -322,13 +313,14 @@ export default {
             let myModal = new Modal(document.getElementById('HouseholdMemberForm'))
             myModal.show();
         },
-        showHouseholdMemberInfo(id) {
-            axios.get(`/api/v1/household-members/${id}`)
+        showHouseholdMemberInfo(member) {
+            axios.get(`/api/v1/household-members/${member.id}`)
                 .then(res => {
                     this.formIsReady = true;
                     this.$nextTick(function() {
                         let myModal = new Modal(document.getElementById('HouseholdMemberInfo'))
-                        this.modalTitle = 'Інформація о члені домогосподарства';
+                        // this.modalTitle = 'Інформація о члені домогосподарства';
+                        this.modalTitle = `${member.surname} ${member.name} ${member.patronymic}`
                         Object.assign(this.formData, res.data.data);
                         myModal.show();
                     });
@@ -361,6 +353,7 @@ export default {
             axios.get(`/api/v1/household-members/${id}`)
                 .then(res => {
                     Object.assign(this.formData, res.data.data);
+                    this.modalTitle = `${this.formData.surname} ${this.formData.name} ${this.formData.patronymic}`
                 })
         },
         deleteMember(id) {

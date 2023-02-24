@@ -19,4 +19,14 @@ class HouseholdMemberLand extends Model
         'hay_cutting',
         'pastures'
     ];
+
+    public function getTotalAttribute()
+    {
+        return  $this->maintenance +
+                $this->personal_agriculture +
+                $this->land_share +
+                $this->property_share +
+                $this->hay_cutting +
+                $this->pastures;
+    }
 }

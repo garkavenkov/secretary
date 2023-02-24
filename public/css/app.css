@@ -11776,10 +11776,17 @@ input:-webkit-autofill:active{
   max-width: 600px;
 }
 
+.modal-1200 {
+  width: 1200px;
+  min-width: 1200px;
+  max-width: 1200px;
+}
+
 .second-modal {
   border-width: 1px;
   border-color: #6c757d;
   background: #f8f9fa;
+  margin-top: 5rem;
 }
 
 .btn-transparent {
@@ -12008,9 +12015,6 @@ input:-webkit-autofill:active{
   text-align: center;
 }
 
-.table-years thead {
-  background: #f1f3f5;
-}
 .table-years thead tr th:not(:first-child) {
   position: relative;
   border-right: 1px solid #dee2e6;

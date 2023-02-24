@@ -11,6 +11,7 @@ use PhpOffice\PhpWord\IOFactory;
 
 use PhpOffice\PhpWord\Style\Font;
 use App\Http\Controllers\Controller;
+use App\Models\HouseholdMemberLand;
 use DateTime;
 use DateTimeImmutable;
 use DeclensionUkrainian\Anthroponym;
@@ -311,6 +312,14 @@ class ReportController extends Controller
             throw new Exception('Year does not passed', 500);
         }
 
+        $member = HouseholdMember::findOrFail($params['member_id']);
+
+        $year = HouseholdMemberLand::where('year', $params['year'])->where('member_id', $params['member_id'])->first();
+
+        if (is_null($year)) {
+            throw new Exception("Інформація за ". $params['year'] . " відсутня", 404);
+        }
+
         try {
             $templateProcessor = new TemplateProcessor(storage_path('app/documents/LandOwned.docx'));
         } catch (Exception $e) {
@@ -341,11 +350,39 @@ class ReportController extends Controller
         $person_address_registration = ($member->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') .
                                         " за адресою: $address";
 
-
         $templateProcessor->setValue('person_name', $member_name);
         $templateProcessor->setValue('person_birthdate', $member_birthdate);
         $templateProcessor->setValue('person_address_registration', $person_address_registration);
         $templateProcessor->setValue('land_year', $params['year']);
+        $templateProcessor->setValue(
+            'land_total',
+            $year->total > 0 ? (number_format($year->total, 4) . ' га') : 'немає'
+        );
+
+        $templateProcessor->setValue(
+            'land_maintenance',
+            $year->maintenance > 0 ? (number_format($year->maintenance, 4) . ' га'): 'немає'
+        );
+        $templateProcessor->setValue(
+            'land_personal_agriculture',
+            $year->personal_agriculture > 0 ? (number_format($year->personal_agriculture, 4). ' га') : 'немає
+        ');
+        $templateProcessor->setValue(
+            'land_share',
+            $year->land_share > 0 ? (number_format($year->land_share, 4) . ' га') : 'немає'
+        );
+        $templateProcessor->setValue(
+            'land_property_share',
+            $year->property_share > 0 ? (number_format($year->property_share, 4). ' га') : 'немає'
+        );
+        $templateProcessor->setValue(
+            'land_hay_cutting',
+            $year->hay_cutting > 0 ? (number_format($year->hay_cutting, 4) . ' га') : 'немає'
+        );
+        $templateProcessor->setValue(
+            'land_pastures',
+            $year->pastures > 0 ? (number_format($year->pastures, 4) . ' га') : 'немає'
+        );
 
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8');
         header("Content-Disposition: attachment; filename='landOwned.docx");

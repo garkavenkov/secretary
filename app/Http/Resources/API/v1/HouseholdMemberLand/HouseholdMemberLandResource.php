@@ -14,17 +14,17 @@ class HouseholdMemberLandResource extends JsonResource
      */
     public function toArray($request)
     {
-        $total =    $this->maintenance +
-                    $this->personal_agriculture +
-                    $this->land_share +
-                    $this->property_share +
-                    $this->hay_cutting +
-                    $this->pastures;
+        // $total =    $this->maintenance +
+        //             $this->personal_agriculture +
+        //             $this->land_share +
+        //             $this->property_share +
+        //             $this->hay_cutting +
+        //             $this->pastures;
         return [
             'id'                        =>  (int)   $this->id,
             'member_id'                 =>  (int)   $this->member_id,
             'year'                      =>  (int)   $this->year,
-            'total'                     =>  number_format($total, 4),
+            'total'                     =>  number_format($this->total, 4),
             'maintenance'               =>  number_format($this->maintenance, 4),
             'personal_agriculture'      =>  number_format($this->personal_agriculture, 4),
             'land_share'                =>  number_format($this->land_share, 4),

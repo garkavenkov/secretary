@@ -33,9 +33,6 @@ class HouseholdMember extends Model
         'death_date',
         'death_register_number',
         'death_register_office',
-        'land_owned',
-        'land_rented',
-        'land_leased'
     ];
 
     protected $appends = array('status', 'fullAge');
