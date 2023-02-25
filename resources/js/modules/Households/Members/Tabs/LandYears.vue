@@ -78,13 +78,15 @@
         </tbody>
     </table>
 
-    <LandYearForm
-            :formData="yearData"
-            :title="title"
-            :submitCaption="submitCaption"
-            :action="yearDataAction"
-            @closeYearForm="closeYearForm"
-            @refreshData="$emit('refreshData')"/>
+    <teleport to="body">
+        <LandYearForm
+                :formData="yearData"
+                :title="title"
+                :submitCaption="submitCaption"
+                :action="yearDataAction"
+                @closeYearForm="closeYearForm"
+                @refreshData="$emit('refreshData')"/>
+    </teleport>
 
 
 </template>

@@ -149,6 +149,7 @@ export default {
             required: true
         },
     },
+    emits: ['refreshData'],
     data() {
         return {
             apiUrl: '/api/v1/household-member-lands'
@@ -156,7 +157,7 @@ export default {
     },
     methods: {
         closeForm() {
-            this.$emit('closeYearForm');
+        //     this.$emit('closeYearForm');
         }
     },
     components: {

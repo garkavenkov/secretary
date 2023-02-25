@@ -46,13 +46,15 @@
         </div>
     </template>
 
-    <MovementForm
-            :formData="eventForm"
-            :title="title"
-            :submitCaption="submitCaption"
-            :action="movementAction"
-            :movementTypes="movementTypes"
-            @refreshData="$emit('refreshData')"/>
+    <teleport to="body">
+        <MovementForm
+                :formData="eventForm"
+                :title="title"
+                :submitCaption="submitCaption"
+                :action="movementAction"
+                :movementTypes="movementTypes"
+                @refreshData="$emit('refreshData')"/>
+    </teleport>
 
 </template>
 

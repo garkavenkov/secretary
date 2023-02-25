@@ -41,15 +41,15 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
 
-    if (to.matched[0].name === 'households.show') {
-        store.dispatch('Households/fetchRecord', to.params.id)
-            .then(res => {
-                next();
-            })
-    } else {
+    // if (to.matched[0].name === 'households.show') {
+    //     store.dispatch('Households/fetchRecord', to.params.id)
+    //         .then(res => {
+    //             next();
+    //         })
+    // } else {
 
         next();
-    }
+    // }
 
 
 });

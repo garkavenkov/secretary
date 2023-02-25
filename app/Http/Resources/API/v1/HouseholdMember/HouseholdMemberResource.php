@@ -27,7 +27,7 @@ class HouseholdMemberResource extends JsonResource
             'surname'                       =>  $this->surname,
             'name'                          =>  $this->name,
             'patronymic'                    =>  $this->patronymic,
-            'full_name'                     =>  $this->surname . ' ' . mb_substr($this->name, 0, 1) . '.' . mb_substr($this->patronymic, 0, 1) . '.',
+            'full_name'                     =>  $this->full_name,
             'sex'                           =>  $this->sex,
             'birthdate'                     =>  $this->birthdate,
             'family_relationship_type_id'   =>  (int)   $this->family_relationship_type_id,

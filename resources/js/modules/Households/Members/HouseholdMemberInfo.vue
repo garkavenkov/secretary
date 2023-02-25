@@ -1,6 +1,9 @@
 <template>
 
-    <ModalForm formId="HouseholdMemberInfo" @closeForm="closeForm" modalClass="modal-1200" :showFooter="false">
+    <VueModal   v-if="member.id"
+                :title="member.full_name"
+                :showFooter="false"
+                @close="goToHouseholdMembers">
 
         <div class="row">
             <div class="col">
@@ -46,7 +49,7 @@
                     <KeepAlive>
                         <component  :is="currentTab"
                                     v-bind="componentProps"
-                                    @refreshData="$emit('refreshData',formData.id)">
+                                    @refreshData="fetchMember">
                         </component>
                     </KeepAlive>
                 </div>
@@ -54,14 +57,13 @@
             </div>
         </div>
 
-    </ModalForm>
-
+    </VueModal>
 
 </template>
 
 <script>
 
-import ModalForm        from '../../../components/ui/ModalForm.vue';
+import VueModal from '../../../components/ui/VueModal.vue';
 
 import MainInfo         from './Tabs/MainInfo.vue';
 import LandYears        from './Tabs/LandYears.vue';
@@ -70,62 +72,67 @@ import AdditionalParams from './Tabs/AdditionalParams.vue'
 
 export default {
     name: 'HouseholdMemberInfo',
-    props: {
-        'formData': {
-            type: Object,
-            required: true,
-        },
-    },
     data() {
         return {
             currentTab: 'MainInfo',
+            member: {}
         }
     },
     methods: {
-
-        closeForm() {},
-        cancelEditInfo() {}
+        fetchMember() {
+            let memberId = this.$route.params.memberId;
+            axios.get(`/api/v1/household-members/${memberId}`)
+                .then(res => {
+                    this.member = res.data.data;
+                })
+        },
+        goToHouseholdMembers() {
+            this.$router.push({name: 'households.show.members', params: {id: this.$route.params.id}});
+        }
 
     },
     computed: {
         componentProps() {
             if (this.currentTab == 'MainInfo') {
                 return {
-                    formData: Object.assign({}, this.formData),
+                    formData: Object.assign({}, this.member),
                 }
             }
             if (this.currentTab == 'LandYears') {
                 let member = {
-                    id: this.formData.id,
-                    surname: this.formData.surname,
-                    name: this.formData.name,
-                    patronymic: this.formData.patronymic,
+                    id: this.member.id,
+                    surname: this.member.surname,
+                    name: this.member.name,
+                    patronymic: this.member.patronymic,
                 }
                 return {
                     member: member,
-                    years: this.formData.land,
+                    years: this.member.land,
                 }
             }
             if (this.currentTab == 'Movements') {
                 return {
-                    member_id: this.formData.id,
-                    movements: this.formData.movements,
+                    member_id: this.member.id,
+                    movements: this.member.movements,
                 }
             }
             if (this.currentTab == 'AdditionalParams') {
                 return {
-                    member_id: this.formData.id,
-                    additionalParams: this.formData.additional_params,
+                    member_id: this.member.id,
+                    additionalParams: this.member.additional_params,
                 }
             }
         },
     },
+    created() {
+        this.fetchMember();
+    },
     components: {
-        ModalForm,
         MainInfo,
         LandYears,
         Movements,
-        AdditionalParams
+        AdditionalParams,
+        VueModal
     }
 }
 </script>

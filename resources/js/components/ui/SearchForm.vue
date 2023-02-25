@@ -14,7 +14,7 @@
                     class="founded"
                     :value="household.id"
                     :key="index">
-                        <router-link :to="{path: `/households/${household.id}/members`}" v-if="household.member_full_name">
+                        <router-link :to="{path: `/households/${household.id}/members/${household.member_id}`}" v-if="household.member_full_name">
                             <div>
                                 {{ household.member_full_name }}
                                 <br>
