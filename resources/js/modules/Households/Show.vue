@@ -158,14 +158,13 @@ export default {
         ...mapGetters('Households', ['household'])
     },
     watch: {
-        // '$route' (to, from) {
-        //     console.log(to, from);
-        //     this.$store.dispatch('Households/fetchRecord', to.params.id,);
-        // },
+        '$route' (to, from) {
+            this.$store.dispatch('Households/fetchRecord', to.params.id,);
+        },
 
     },
     created() {
-        // this.$store.dispatch('Households/fetchRecord', this.id);
+        this.$store.dispatch('Households/fetchRecord', this.id);
 
     }
 }

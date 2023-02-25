@@ -65,6 +65,7 @@
     <HouseholdFilterForm
             @resetFilter="resetFilter"/>
 
+
 </template>
 
 <script>
@@ -101,6 +102,7 @@ export default {
             disabledFields: [],
             modalTitle: '',
             modalSubmitCaption: '',
+            fancyModalIsVisible: false
         }
     },
     provide() {
@@ -147,6 +149,9 @@ export default {
             this.filter.household_type_id = 0;
             this.filter.isFiltered = false;
             this.$store.dispatch('Households/applyFilter', this.filter);
+        },
+        openCustomModal() {
+
         }
     },
     computed: {

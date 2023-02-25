@@ -81,6 +81,11 @@ class HouseholdMember extends Model
 
     public function getFullNameAttribute()
     {
+        return  $this->surname . ' ' . $this->name . ' ' . $this->patronymic;
+    }
+
+    public function getShortNameAttribute()
+    {
         return  $this->surname . ' ' . mb_substr($this->name, 0, 1) . '.' . mb_substr($this->patronymic, 0, 1) . '.';
     }
 

@@ -230,16 +230,18 @@
             </template>
         </div>
     </div>
+    <router-view></router-view>
+
 
     <HouseholdMemberForm
             :formData="formData"
             @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
 
-    <HouseholdMemberInfo
+    <!-- <HouseholdMemberInfo
             :formData="formData"
             @refreshData="refreshMemberInfo"
             v-if="formIsReady"
-            @closeMemberInfoForm="closeMemberInfoForm"/>
+            @closeMemberInfoForm="closeMemberInfoForm"/> -->
 
     <HouseholdMembersComposition
             :members="shownMembers"
@@ -314,17 +316,18 @@ export default {
             myModal.show();
         },
         showHouseholdMemberInfo(member) {
-            axios.get(`/api/v1/household-members/${member.id}`)
-                .then(res => {
-                    this.formIsReady = true;
-                    this.$nextTick(function() {
-                        let myModal = new Modal(document.getElementById('HouseholdMemberInfo'))
-                        // this.modalTitle = 'Інформація о члені домогосподарства';
-                        this.modalTitle = `${member.surname} ${member.name} ${member.patronymic}`
-                        Object.assign(this.formData, res.data.data);
-                        myModal.show();
-                    });
-                })
+            this.$router.push({name: 'households.show.members.info', params: {memberId: member.id}})
+            // axios.get(`/api/v1/household-members/${member.id}`)
+            //     .then(res => {
+            //         this.formIsReady = true;
+            //         this.$nextTick(function() {
+            //             let myModal = new Modal(document.getElementById('HouseholdMemberInfo'))
+            //             // this.modalTitle = 'Інформація о члені домогосподарства';
+            //             this.modalTitle = `${member.surname} ${member.name} ${member.patronymic}`
+            //             Object.assign(this.formData, res.data.data);
+            //             myModal.show();
+            //         });
+            //     })
         },
         closeMemberInfoForm() {
             this.formData.surname                       = '';

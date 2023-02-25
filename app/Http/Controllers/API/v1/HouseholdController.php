@@ -62,7 +62,7 @@ class HouseholdController extends Controller
                 $members = DB::table('household_members as hm')
                             ->select(
                                 'h.id',
-                                'hm.id as user_id',
+                                'hm.id as member_id',
                                 'hm.surname',
                                 'hm.name',
                                 'hm.patronymic',
@@ -77,7 +77,7 @@ class HouseholdController extends Controller
 
                 $result =   array_map(function($m) {
                                     $member['id'] = $m->id;
-                                    $member['user_id'] = $m->user_id;
+                                    $member['member_id'] = $m->member_id;
                                     $member['member_full_name'] = $m->surname . ' ' . $m->name . ' ' . $m->patronymic;
                                     $address_parts = explode(',', $m->address);
                                     $member['address'] =    $m->settlement . ', ' . // settlement

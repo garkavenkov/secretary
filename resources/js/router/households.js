@@ -29,22 +29,22 @@ export default [
                 // redirect: {
                 //     name: 'households.show.members'
                 // },
-                // children: [
-                //     {
-                //         path: '',
-                //         component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/Members/HouseholdMembers.vue'),
-                //         name: 'households.show.members',
-                //         meta: {name: 'Члени родини'},
-                //     },
-                // ]
+                children: [
+                    // {
+                    //     path: '',
+                    //     component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/Members/HouseholdMembers.vue'),
+                    //     name: 'households.show.members.main',
+                    //     meta: {name: 'Члени родини'},
+                    // },
+                    {
+                        path: ':memberId',
+                        component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/Members/HouseholdMemberInfo.vue'),
+                        name: 'households.show.members.info',
+                        meta: {name: 'Інформація'},
+                        props: true
+                    },
+                ]
             },
-            // {
-            //     path: 'members/:memberId',
-            //     component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/Members/MemberInfo.vue'),
-            //     name: 'households.show.members.info',
-            //     meta: {name: 'Інформація'},
-            //     props: true
-            // },
             {
                 path: 'houses',
                 component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/HouseYears/HouseYears.vue'),
