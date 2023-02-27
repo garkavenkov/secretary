@@ -21962,6 +21962,19 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
+  if ([401, 419].includes(error.response.status)) {
+    sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+      title: 'Сеанс закінчився',
+      html: 'Необхідно авторизуватися в системі.<br>Бажаєте, щоб вас переспрямували на сторінку авторизації?',
+      type: "warning",
+      // showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Авторизація",
+      closeOnConfirm: true
+    }).then(function (res) {
+      if (res.isConfirmed) window.location = '/login';
+    });
+  }
   if (error.response.status == 403) {
     sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
       html: error.response.data.message,

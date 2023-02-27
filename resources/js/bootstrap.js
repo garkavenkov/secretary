@@ -26,6 +26,20 @@ window.axios.interceptors.response.use(
         return response;
     },
     function (error) {
+        if ([401,419].includes(error.response.status)) {
+            Swal.fire({
+                    title: 'Сеанс закінчився',
+                    html: 'Необхідно авторизуватися в системі.<br>Бажаєте, щоб вас переспрямували на сторінку авторизації?',
+                    type: "warning",
+                    // showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Авторизація",
+                    closeOnConfirm: true
+                })
+                .then(res => {
+                    if (res.isConfirmed)  window.location = '/login';
+                })
+        }
         if (error.response.status == 403) {
             Swal.fire({
                 html:error.response.data.message,
