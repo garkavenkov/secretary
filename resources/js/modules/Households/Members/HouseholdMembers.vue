@@ -109,7 +109,7 @@
                             :class="[member.status == 'dead' ? 'dead' : '',  member.status == 'gone' ? 'gone' : '']"
                             v-for="member in shownMembers"
                             :key="member.id"
-                            @dblclick="showHouseholdMemberInfo(member.id)">
+                            @dblclick="showHouseholdMemberInfo(member)">
                         <div class="card-header d-flex justify-content-between">
                             <div>
                                 <div class="member-surname">{{member.surname}}</div>

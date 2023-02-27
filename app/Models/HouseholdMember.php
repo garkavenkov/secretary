@@ -135,17 +135,6 @@ class HouseholdMember extends Model
 
     public function relatives()
     {
-        // return $this
-        //         ->belongsToMany(
-        //             HouseholdMember::class,
-        //             FamilyRelationship::class,
-        //             'member_id',
-        //             'relative_id',
-        //             'id',
-        //             'id',
-        //         )
-        //         ->withPivot('relationship_type_id');
-
         return  DB::table('household_members as m')
                 ->select(
                     'r.id as relative_id',
@@ -178,5 +167,33 @@ class HouseholdMember extends Model
     public function land($years = 5)
     {
         return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc')->limit($years);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function($member)
+        {
+            // Delete land years information
+            $member->land()->delete();
+
+            // Delete additional params values
+            DB::table('additional_param_values as apv')
+                ->join('additional_params as ap', 'ap.id', '=', 'apv.param_id')
+                ->join('additional_param_categories as apc', 'apc.id', '=', 'ap.category_id')
+                ->where('apc.code', get_class($member))
+                ->where('apv.owner_id', $member->id)
+                ->delete();
+
+            // Movements
+            $member->movements()->delete();
+
+            // Family relationships
+            DB::table('family_relationships as fr')
+                ->where('fr.member_id',$member->id)
+                ->orWhere('fr.relative_id', $member->id)
+                ->delete();
+        });
     }
 }

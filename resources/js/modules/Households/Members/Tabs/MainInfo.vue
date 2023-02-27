@@ -189,28 +189,39 @@
     </div>
 </div>
 <div class="row">
-    <div class="d-flex justify-content-end">
-        <button v-if="!isInEditMode"
-                class="btn btn-sm btn-outline-secondary"
-                title="Редагувати дані"
-                @click="editData">
-            <span class="mdi mdi-pencil"></span>
-            Редагувати
-        </button>
-        <button v-if="isInEditMode"
-                class="btn btn-sm btn-outline-secondary"
-                title="Відмінити редагування"
-                @click="cancelEdit">
-            <!-- <span class="mdi mdi-check-all"></span> -->
-            Відмінити
-        </button>
-        <button v-if="isInEditMode"
-                class="btn btn-sm btn-outline-primary ms-3"
-                title="Зберегти дані"
-                @click="saveData">
-            <span class="mdi mdi-check-all"></span>
-            Зберегти
-        </button>
+    <div class="d-flex justify-content-between">
+        <div>
+            <button v-if="!isInEditMode"
+                    class="btn btn-sm btn-outline-danger"
+                    title="Видалити члена домогосподарства"
+                    @click="deleteData">
+                <span class="mdi mdi-trash-can-outline"></span>
+                Видалити
+            </button>
+        </div>
+        <div>
+            <button v-if="!isInEditMode"
+                    class="btn btn-sm btn-outline-secondary"
+                    title="Редагувати дані"
+                    @click="editData">
+                <span class="mdi mdi-pencil"></span>
+                Редагувати
+            </button>
+            <button v-if="isInEditMode"
+                    class="btn btn-sm btn-outline-secondary"
+                    title="Відмінити редагування"
+                    @click="cancelEdit">
+                <!-- <span class="mdi mdi-check-all"></span> -->
+                Відмінити
+            </button>
+            <button v-if="isInEditMode"
+                    class="btn btn-sm btn-outline-primary ms-3"
+                    title="Зберегти дані"
+                    @click="saveData">
+                <span class="mdi mdi-check-all"></span>
+                Зберегти
+            </button>
+        </div>
     </div>
 </div>
 
@@ -264,7 +275,24 @@ export default {
                 .catch(err => {
                     this.errors = err.response?.data.errors;
                 })
+        },
+        deleteData() {
+            this.$confirmDelete('Ви дійсно бажаєти видалити інформацію о члені домогосподарства')
+                .then(res => {
+                    if(res.isConfirmed) {
+                        axios.delete(`/api/v1/household-members/${this.formData.id}`)
+                            .then(res => {
+                                this.$toast(res.data.message);
+                                this.$router.push({name: 'households.show.members', params: {id: this.formData.household_id}});
+                            })
+                            .catch(err => {
+                                this.$errorMessage('Неможливо видалити члена домогосподарства', err.response.data.message, 'Зрозуміло');
+                            });
+                    }
+                })
         }
+
+
     },
     computed: {
         ...mapGetters('FamilyRelationshipTypes', {'relationshipTypes': 'types'}),

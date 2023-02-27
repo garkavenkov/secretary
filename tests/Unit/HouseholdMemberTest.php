@@ -2,15 +2,22 @@
 
 namespace Tests\Unit;
 
+use Tests\TestCase;
+use App\Models\MovementType;
+use App\Models\AdditionalParam;
 use App\Models\HouseholdMember;
 use App\Models\HouseholdMemberLand;
+use App\Models\AdditionalParamValue;
+use App\Models\AdditionalParamCategory;
+use App\Models\FamilyRelationship;
+use App\Models\FamilyRelationshipType;
 use App\Models\HouseholdMemberMovement;
-use App\Models\MovementType;
+use Illuminate\Database\Eloquent\Factories\Relationship;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 
 class HouseholdMemberTest extends TestCase
 {
+
     use RefreshDatabase;
 
     public function test_household_member_may_have_movements()
@@ -96,4 +103,64 @@ class HouseholdMemberTest extends TestCase
 
         $this->assertCount(3, $m->land);
     }
+
+    public function test_member_land_information_MUST_BE_DELETED_during_member_deleting()
+    {
+        $m = HouseholdMember::factory()->create();
+
+        HouseholdMemberLand::factory()->create(['member_id' => $m->id, 'year' => 2021]);
+        HouseholdMemberLand::factory()->create(['member_id' => $m->id, 'year' => 2022]);
+        HouseholdMemberLand::factory()->create(['member_id' => $m->id, 'year' => 2023]);
+
+        $m->delete();
+
+        $this->assertDatabaseMissing('household_member_lands', ['member_id' => $m->id]);
+    }
+
+    public function test_member_additional_information_MUST_BE_DELETED_during_member_deleting()
+    {
+        $m = HouseholdMember::factory()->create();
+
+        $apc = AdditionalParamCategory::factory()->create(['code' => 'App\Models\HouseholdMember']);
+        $ap = AdditionalParam::factory()->create(['category_id' => $apc->id, 'code' => 'passport_seria']);
+        AdditionalParamValue::factory()->create([
+            'param_id'  =>  $ap->id,
+            'owner_id'  =>  $m->id,
+            'value'     =>  'AA'
+        ]);
+
+        $m->delete();
+
+        $this->assertDatabaseMissing('additional_param_values', ['owner_id' => $m->id, 'param_id' => $ap->id]);
+    }
+
+    public function test_member_movements_MUST_BE_DELETED_during_member_deleting()
+    {
+        $m = HouseholdMember::factory()->create();
+
+        $mt = MovementType::factory()->create();
+        HouseholdMemberMovement::factory()->create(['member_id' => $m->id, 'movement_type_id' => $mt->id]);
+
+        $m->delete();
+
+        $this->assertDatabaseMissing('household_member_movements', ['member_id' => $m->id]);
+    }
+
+    public function test_member_family_relationships_MUST_BE_DELETED_during_member_deleting()
+    {
+        $m = HouseholdMember::factory()->create();
+        $r = HouseholdMember::factory()->create();
+
+        $relation_type_1 = FamilyRelationshipType::factory()->create();
+        $relation_type_2 = FamilyRelationshipType::factory()->create();
+
+        FamilyRelationship::factory()->create(['member_id' => $m->id, 'relationship_type_id' => $relation_type_1->id, 'relative_id' => $r->id]);
+        FamilyRelationship::factory()->create(['member_id' => $r->id, 'relationship_type_id' => $relation_type_2->id, 'relative_id' => $m->id]);
+
+        $m->delete();
+
+        $this->assertDatabaseMissing('family_relationships', ['member_id' => $m->id]);
+        $this->assertDatabaseMissing('family_relationships', ['relative_id' => $m->id]);
+    }
+
 }
