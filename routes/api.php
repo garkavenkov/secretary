@@ -4,6 +4,7 @@ use App\Models\Household;
 use Illuminate\Http\Request;
 use App\Models\HouseholdMember;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\v1\RoleController;
 use App\Http\Controllers\API\v1\RegionController;
 use App\Http\Controllers\API\v1\ReportController;
 use App\Http\Controllers\API\v1\CouncilController;
@@ -69,6 +70,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('household-member-lands',       HouseholdMemberLandController::class);
     Route::resource('household-lands',              HouseholdLandController::class);
     Route::resource('household-owners',             HouseholdOwnerController::class);
+    Route::resource('roles',                        RoleController::class);
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
