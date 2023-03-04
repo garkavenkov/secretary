@@ -14,6 +14,7 @@ use App\Http\Controllers\API\v1\UserRoleController;
 use App\Http\Controllers\API\v1\CommunityController;
 use App\Http\Controllers\API\v1\HouseholdController;
 use App\Http\Controllers\API\v1\WorkPlaceController;
+use App\Http\Controllers\API\v1\PermissionController;
 use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
 use App\Http\Controllers\API\v1\LandPlotTypeController;
@@ -73,6 +74,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('household-lands',              HouseholdLandController::class);
     Route::resource('household-owners',             HouseholdOwnerController::class);
     Route::resource('roles',                        RoleController::class);
+    Route::resource('permissions',                  PermissionController::class);
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
