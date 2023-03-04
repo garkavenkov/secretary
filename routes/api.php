@@ -5,10 +5,12 @@ use Illuminate\Http\Request;
 use App\Models\HouseholdMember;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\v1\RoleController;
+use App\Http\Controllers\API\v1\UserController;
 use App\Http\Controllers\API\v1\RegionController;
 use App\Http\Controllers\API\v1\ReportController;
 use App\Http\Controllers\API\v1\CouncilController;
 use App\Http\Controllers\API\v1\DistrictController;
+use App\Http\Controllers\API\v1\UserRoleController;
 use App\Http\Controllers\API\v1\CommunityController;
 use App\Http\Controllers\API\v1\HouseholdController;
 use App\Http\Controllers\API\v1\WorkPlaceController;
@@ -81,4 +83,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::post('house-additional-information',     [HouseholdController::class, 'houseInfo']);
     Route::post('land-additional-information',      [HouseholdController::class, 'landInfo']);
     Route::post('member-additional-params',         [HouseholdMemberController::class, 'setAdditionalParams'] );
+
+    Route::post('assign-user-role',                 [UserRoleController::class, 'assignRole']);
+    Route::post('reject-user-role',                 [UserRoleController::class, 'rejectRole']);
 });
