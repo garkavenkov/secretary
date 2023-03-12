@@ -56,8 +56,8 @@
 <script>
 import ModalForm        from "../../components/ui/ModalForm.vue"
 
-import SubmitData       from '../../minixs/SubmitData';
-import FormValidator    from "../../minixs/FormValidator";
+import SubmitData       from '../../mixins/SubmitData';
+import FormValidator    from "../../mixins/FormValidator";
 
 export default {
     name: 'AdditionalParamForm',

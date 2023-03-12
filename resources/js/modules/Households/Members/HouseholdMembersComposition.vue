@@ -74,9 +74,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters }   from 'vuex';
 
-import ModalForm from '../../../components/ui/ModalForm.vue';
+import ModalForm        from '../../../components/ui/ModalForm.vue';
 
 export default {
     name: 'HouseholdMembersComposition',

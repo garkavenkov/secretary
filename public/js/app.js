@@ -21477,10 +21477,10 @@ var _hoisted_33 = {
 var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "icon"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "mdi mdi-table-cog"
+  "class": "mdi mdi-cog"
 })]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-title"
-}, "Системні довідники"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+}, "Налаштування"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "mdi mdi-chevron-down"
 })], -1 /* HOISTED */);
 var _hoisted_35 = {
@@ -21488,48 +21488,90 @@ var _hoisted_35 = {
 };
 var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
   "class": "sub-menu-title"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Системні довідники")], -1 /* HOISTED */);
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Налаштування")], -1 /* HOISTED */);
 var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-shield-account-variant-outline"
+})], -1 /* HOISTED */);
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "nav-title"
+}, "Ролі", -1 /* HOISTED */);
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-shield-key-outline"
+})], -1 /* HOISTED */);
+var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "nav-title"
+}, "Дозволи", -1 /* HOISTED */);
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-account-key-outline"
+})], -1 /* HOISTED */);
+var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "nav-title"
+}, "Керування правами дозволу", -1 /* HOISTED */);
+var _hoisted_43 = {
+  "class": "has-submenu"
+};
+var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-table-cog"
+})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "nav-title"
+}, "Системні довідники"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-chevron-down"
+})], -1 /* HOISTED */);
+var _hoisted_45 = {
+  "class": "sub-menu"
+};
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  "class": "sub-menu-title"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Системні довідники")], -1 /* HOISTED */);
+var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "icon"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "mdi mdi-home-circle-outline"
 })], -1 /* HOISTED */);
-var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-title"
 }, "Типи погосподарського обліку", -1 /* HOISTED */);
-var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "icon"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "mdi mdi-store-cog"
 })], -1 /* HOISTED */);
-var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-title"
 }, "Типи населеного пункту", -1 /* HOISTED */);
-var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "icon"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "mdi mdi-wrench-cog"
 })], -1 /* HOISTED */);
-var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-title"
 }, "Коди місця роботи (заняття)", -1 /* HOISTED */);
-var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "icon"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "mdi mdi-family-tree"
 })], -1 /* HOISTED */);
-var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-title"
 }, "Типи родинних стосунків", -1 /* HOISTED */);
-var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "icon"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "mdi mdi-tag-multiple"
 })], -1 /* HOISTED */);
-var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "nav-title"
 }, "Додаткові параметри", -1 /* HOISTED */);
-var _hoisted_47 = {
+var _hoisted_57 = {
   key: 0,
   "class": "app-version"
 };
@@ -21606,41 +21648,62 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     _: 1 /* STABLE */
   })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "/household-types"
+    to: "/roles"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_37, _hoisted_38];
     }),
     _: 1 /* STABLE */
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "/settlement-types"
+    to: "/permissions"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_39, _hoisted_40];
     }),
     _: 1 /* STABLE */
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-    to: "/work-places"
+    to: "/permission-rights"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_41, _hoisted_42];
+    }),
+    _: 1 /* STABLE */
+  })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_43, [_hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_45, [_hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/household-types"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_47, _hoisted_48];
+    }),
+    _: 1 /* STABLE */
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/settlement-types"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_49, _hoisted_50];
+    }),
+    _: 1 /* STABLE */
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/work-places"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_51, _hoisted_52];
     }),
     _: 1 /* STABLE */
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/family-relationship-types"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_43, _hoisted_44];
+      return [_hoisted_53, _hoisted_54];
     }),
     _: 1 /* STABLE */
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: "/additional-params"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_45, _hoisted_46];
+      return [_hoisted_55, _hoisted_56];
     }),
     _: 1 /* STABLE */
-  })])])])]), $data.appVersion ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Версія : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.appVersion), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  })])])])]), $data.appVersion ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Версія : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.appVersion), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -22333,7 +22396,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.mjs");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
 /* harmony import */ var _dashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard */ "./resources/js/router/dashboard.js");
 /* harmony import */ var _settlement_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./settlement_types */ "./resources/js/router/settlement_types.js");
@@ -22349,6 +22412,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _analitics__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./analitics */ "./resources/js/router/analitics.js");
 /* harmony import */ var _additional_params__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./additional_params */ "./resources/js/router/additional_params.js");
 /* harmony import */ var _reports__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./reports */ "./resources/js/router/reports.js");
+/* harmony import */ var _roles__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./roles */ "./resources/js/router/roles.js");
+/* harmony import */ var _permissions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./permissions */ "./resources/js/router/permissions.js");
+/* harmony import */ var _permission_rights__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./permission_rights */ "./resources/js/router/permission_rights.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -22371,9 +22437,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
-var routes = [].concat(_toConsumableArray(_dashboard__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_settlement_types__WEBPACK_IMPORTED_MODULE_2__["default"]), _toConsumableArray(_household_types__WEBPACK_IMPORTED_MODULE_9__["default"]), _toConsumableArray(_relationship_types__WEBPACK_IMPORTED_MODULE_10__["default"]), _toConsumableArray(_work_places__WEBPACK_IMPORTED_MODULE_11__["default"]), _toConsumableArray(_regions__WEBPACK_IMPORTED_MODULE_4__["default"]), _toConsumableArray(_districts__WEBPACK_IMPORTED_MODULE_5__["default"]), _toConsumableArray(_communities__WEBPACK_IMPORTED_MODULE_6__["default"]), _toConsumableArray(_settlements__WEBPACK_IMPORTED_MODULE_7__["default"]), _toConsumableArray(_councils__WEBPACK_IMPORTED_MODULE_8__["default"]), _toConsumableArray(_households__WEBPACK_IMPORTED_MODULE_3__["default"]), _toConsumableArray(_analitics__WEBPACK_IMPORTED_MODULE_12__["default"]), _toConsumableArray(_additional_params__WEBPACK_IMPORTED_MODULE_13__["default"]), _toConsumableArray(_reports__WEBPACK_IMPORTED_MODULE_14__["default"]));
-var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_15__.createRouter)({
-  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_15__.createWebHashHistory)(),
+
+
+
+var routes = [].concat(_toConsumableArray(_dashboard__WEBPACK_IMPORTED_MODULE_1__["default"]), _toConsumableArray(_settlement_types__WEBPACK_IMPORTED_MODULE_2__["default"]), _toConsumableArray(_household_types__WEBPACK_IMPORTED_MODULE_9__["default"]), _toConsumableArray(_relationship_types__WEBPACK_IMPORTED_MODULE_10__["default"]), _toConsumableArray(_work_places__WEBPACK_IMPORTED_MODULE_11__["default"]), _toConsumableArray(_regions__WEBPACK_IMPORTED_MODULE_4__["default"]), _toConsumableArray(_districts__WEBPACK_IMPORTED_MODULE_5__["default"]), _toConsumableArray(_communities__WEBPACK_IMPORTED_MODULE_6__["default"]), _toConsumableArray(_settlements__WEBPACK_IMPORTED_MODULE_7__["default"]), _toConsumableArray(_councils__WEBPACK_IMPORTED_MODULE_8__["default"]), _toConsumableArray(_households__WEBPACK_IMPORTED_MODULE_3__["default"]), _toConsumableArray(_analitics__WEBPACK_IMPORTED_MODULE_12__["default"]), _toConsumableArray(_additional_params__WEBPACK_IMPORTED_MODULE_13__["default"]), _toConsumableArray(_reports__WEBPACK_IMPORTED_MODULE_14__["default"]), _toConsumableArray(_roles__WEBPACK_IMPORTED_MODULE_15__["default"]), _toConsumableArray(_permissions__WEBPACK_IMPORTED_MODULE_16__["default"]), _toConsumableArray(_permission_rights__WEBPACK_IMPORTED_MODULE_17__["default"]));
+var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_18__.createRouter)({
+  history: (0,vue_router__WEBPACK_IMPORTED_MODULE_18__.createWebHashHistory)(),
   routes: routes
 });
 router.beforeEach(function (to, from, next) {
@@ -22389,6 +22458,64 @@ router.beforeEach(function (to, from, next) {
 });
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
+
+/***/ }),
+
+/***/ "./resources/js/router/permission_rights.js":
+/*!**************************************************!*\
+  !*** ./resources/js/router/permission_rights.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
+  path: '/permission-rights',
+  name: 'permission.rights',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | permission-rights */ "permission-rights").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/PermissionRights/Main.vue */ "./resources/js/modules/PermissionRights/Main.vue"));
+  },
+  meta: {
+    name: 'Керування правами дозволу'
+  }
+}]);
+
+/***/ }),
+
+/***/ "./resources/js/router/permissions.js":
+/*!********************************************!*\
+  !*** ./resources/js/router/permissions.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
+  path: '/permissions',
+  name: 'permissions',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | permissions */ "permissions").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/Permissions/Main.vue */ "./resources/js/modules/Permissions/Main.vue"));
+  },
+  meta: {
+    name: 'Дозволи'
+  }
+}, {
+  path: '/permissions/:id',
+  name: 'permissions.show',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | permissions */ "permissions").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/Permissions/Show.vue */ "./resources/js/modules/Permissions/Show.vue"));
+  },
+  meta: {
+    name: 'Інформація'
+  },
+  props: true
+}]);
 
 /***/ }),
 
@@ -22480,6 +22607,40 @@ __webpack_require__.r(__webpack_exports__);
   meta: {
     name: 'Інформація'
   }
+}]);
+
+/***/ }),
+
+/***/ "./resources/js/router/roles.js":
+/*!**************************************!*\
+  !*** ./resources/js/router/roles.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ([{
+  path: '/roles',
+  name: 'roles',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | roles */ "roles").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/Roles/Main.vue */ "./resources/js/modules/Roles/Main.vue"));
+  },
+  meta: {
+    name: 'Ролі'
+  }
+}, {
+  path: '/roles/:id',
+  name: 'roles.show',
+  component: function component() {
+    return __webpack_require__.e(/*! import() | roles */ "roles").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/Roles/Show.vue */ "./resources/js/modules/Roles/Show.vue"));
+  },
+  meta: {
+    name: 'Інформація'
+  },
+  props: true
 }]);
 
 /***/ }),
@@ -43874,7 +44035,7 @@ function useRoute() {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"settlement-types":1,"household-cards":1,"regions":1,"districts":1,"communitites":1,"settlements":1,"councils":1,"household-types":1,"relationships-types":1,"work-places":1,"analitycs":1,"additional-params":1,"reports-manager":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"settlement-types":1,"household-cards":1,"regions":1,"districts":1,"communitites":1,"settlements":1,"councils":1,"household-types":1,"relationships-types":1,"work-places":1,"analitycs":1,"additional-params":1,"reports-manager":1,"roles":1,"permissions":1,"permission-rights":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

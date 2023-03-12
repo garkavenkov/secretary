@@ -104,7 +104,7 @@ import { Modal }        from 'bootstrap'
 import { computed }     from '@vue/reactivity'
 import { mapGetters }   from 'vuex';
 
-import OwnerForm from './OwnerForm.vue';
+import OwnerForm        from './OwnerForm.vue';
 
 export default {
     name: 'HouseholdInfo',

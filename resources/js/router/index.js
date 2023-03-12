@@ -16,6 +16,9 @@ import work_places          from './work_places';
 import analitics            from './analitics';
 import additional_params    from './additional_params';
 import reports              from './reports';
+import roles                from './roles';
+import permissions          from './permissions';
+import permission_rights    from './permission_rights';
 
 const routes = [
     ...dashboard,
@@ -31,7 +34,10 @@ const routes = [
     ...households,
     ...analitics,
     ...additional_params,
-    ...reports
+    ...reports,
+    ...roles,
+    ...permissions,
+    ...permission_rights
 ]
 
 const router = createRouter({

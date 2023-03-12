@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
@@ -46,5 +47,12 @@ class UserTest extends TestCase
         ]);
 
         $this->assertCount(3, $this->user->roles);
+    }
+
+    public function test_user_may_have_permission()
+    {
+        $this->user->grantPermission(Permission::factory()->create());
+
+        $this->assertCount(1, $this->user->permissions);
     }
 }

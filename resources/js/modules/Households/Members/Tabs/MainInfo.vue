@@ -231,7 +231,7 @@
 
 import { mapGetters }   from 'vuex';
 
-import FormValidator    from '../../../../minixs/FormValidator';
+import FormValidator    from '../../../../mixins/FormValidator';
 
 export default {
     name: 'MemberMainInfoTab',

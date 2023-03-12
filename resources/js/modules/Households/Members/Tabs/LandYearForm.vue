@@ -124,8 +124,8 @@
 
 import ModalForm        from '../../../../components/ui/ModalForm.vue';
 
-import FormValidator    from '../../../../minixs/FormValidator';
-import SubmitData       from '../../../../minixs/SubmitData';
+import FormValidator    from '../../../../mixins/FormValidator';
+import SubmitData       from '../../../../mixins/SubmitData';
 
 export default {
     name: 'LandYearForm',

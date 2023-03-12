@@ -66,7 +66,7 @@
 
 <script>
 
-import FormValidator    from '../../minixs/FormValidator';
+import FormValidator    from '../../mixins/FormValidator';
 
 import ModalForm        from '../../components/ui/ModalForm.vue';
 

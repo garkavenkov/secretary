@@ -54,8 +54,8 @@
 
 <script>
 
-import ModalForm from '../../../components/ui/ModalForm.vue';
-import DateFormate from '../../../minixs/DateFormat';
+import ModalForm    from '../../../components/ui/ModalForm.vue';
+import DateFormate  from '../../../mixins/DateFormat';
 
 export default {
     name: 'FamilyCompositionReportForm',

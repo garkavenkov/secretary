@@ -424,15 +424,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _components_ui_Chekbox_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/Chekbox.vue */ "./resources/js/components/ui/Chekbox.vue");
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
-/* harmony import */ var _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../minixs/SubmitData */ "./resources/js/minixs/SubmitData.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
+/* harmony import */ var _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/SubmitData */ "./resources/js/mixins/SubmitData.js");
 
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdHouseYearForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_2__["default"], _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_2__["default"], _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_3__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -501,7 +501,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HouseInfoForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HouseInfoForm.vue */ "./resources/js/modules/Households/HouseYears/HouseInfoForm.vue");
 /* harmony import */ var _HouseAdditionalDataForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./HouseAdditionalDataForm.vue */ "./resources/js/modules/Households/HouseYears/HouseAdditionalDataForm.vue");
 /* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
-/* harmony import */ var _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../minixs/HouseholdYearsCUD */ "./resources/js/minixs/HouseholdYearsCUD.js");
+/* harmony import */ var _mixins_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../mixins/HouseholdYearsCUD */ "./resources/js/mixins/HouseholdYearsCUD.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -518,7 +518,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdHouseYears',
-  mixins: [_minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  mixins: [_mixins_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
       yearData: {
@@ -670,8 +670,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
-/* harmony import */ var _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../minixs/SubmitData */ "./resources/js/minixs/SubmitData.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
+/* harmony import */ var _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/SubmitData */ "./resources/js/mixins/SubmitData.js");
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -685,7 +685,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_0__["default"], _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_0__["default"], _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -903,14 +903,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
-/* harmony import */ var _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../minixs/SubmitData */ "./resources/js/minixs/SubmitData.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
+/* harmony import */ var _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/SubmitData */ "./resources/js/mixins/SubmitData.js");
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdOwnerForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -993,14 +993,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
-/* harmony import */ var _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../minixs/SubmitData */ "./resources/js/minixs/SubmitData.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
+/* harmony import */ var _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/SubmitData */ "./resources/js/mixins/SubmitData.js");
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdLandYearForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -1049,8 +1049,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
 /* harmony import */ var _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LandYearForm.vue */ "./resources/js/modules/Households/LandYears/LandYearForm.vue");
 /* harmony import */ var _LandAdditionalDataForm_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./LandAdditionalDataForm.vue */ "./resources/js/modules/Households/LandYears/LandAdditionalDataForm.vue");
-/* harmony import */ var _minixs_NumberFormat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../minixs/NumberFormat */ "./resources/js/minixs/NumberFormat.js");
-/* harmony import */ var _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../minixs/HouseholdYearsCUD */ "./resources/js/minixs/HouseholdYearsCUD.js");
+/* harmony import */ var _mixins_NumberFormat__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/NumberFormat */ "./resources/js/mixins/NumberFormat.js");
+/* harmony import */ var _mixins_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../mixins/HouseholdYearsCUD */ "./resources/js/mixins/HouseholdYearsCUD.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -1067,7 +1067,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdLandYears',
-  mixins: [_minixs_NumberFormat__WEBPACK_IMPORTED_MODULE_5__["default"], _minixs_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  mixins: [_mixins_NumberFormat__WEBPACK_IMPORTED_MODULE_5__["default"], _mixins_HouseholdYearsCUD__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
       yearData: {
@@ -1253,7 +1253,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_DateFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../minixs/DateFormat */ "./resources/js/minixs/DateFormat.js");
+/* harmony import */ var _mixins_DateFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/DateFormat */ "./resources/js/mixins/DateFormat.js");
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1269,7 +1269,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": 0
     }
   },
-  mixins: [_minixs_DateFormat__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_DateFormat__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       memberId: this.selectedMember,
@@ -1385,8 +1385,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
-/* harmony import */ var _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../minixs/SubmitData */ "./resources/js/minixs/SubmitData.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
+/* harmony import */ var _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/SubmitData */ "./resources/js/mixins/SubmitData.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -1399,7 +1399,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdMemeberForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -1557,7 +1557,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _minixs_DateFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../minixs/DateFormat */ "./resources/js/minixs/DateFormat.js");
+/* harmony import */ var _mixins_DateFormat__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../mixins/DateFormat */ "./resources/js/mixins/DateFormat.js");
 /* harmony import */ var _HouseholdMemberForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HouseholdMemberForm.vue */ "./resources/js/modules/Households/Members/HouseholdMemberForm.vue");
 /* harmony import */ var _HouseholdMemberInfo_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./HouseholdMemberInfo.vue */ "./resources/js/modules/Households/Members/HouseholdMemberInfo.vue");
 /* harmony import */ var _HouseholdMembersComposition_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./HouseholdMembersComposition.vue */ "./resources/js/modules/Households/Members/HouseholdMembersComposition.vue");
@@ -1578,7 +1578,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdMembers',
-  mixins: [_minixs_DateFormat__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_DateFormat__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       formData: {
@@ -2023,14 +2023,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
-/* harmony import */ var _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../minixs/SubmitData */ "./resources/js/minixs/SubmitData.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
+/* harmony import */ var _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../mixins/SubmitData */ "./resources/js/mixins/SubmitData.js");
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'LandYearForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -2206,7 +2206,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -2217,7 +2217,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'MemberMainInfoTab',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_0__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -2326,14 +2326,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
 
-
-// import SubmitData       from '../../../../minixs/SubmitData';
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'MovementForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -2415,14 +2413,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-/* harmony import */ var _minixs_DateFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../minixs/DateFormat */ "./resources/js/minixs/DateFormat.js");
+/* harmony import */ var _mixins_DateFormat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../mixins/DateFormat */ "./resources/js/mixins/DateFormat.js");
 /* harmony import */ var _MovementForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./MovementForm.vue */ "./resources/js/modules/Households/Members/Tabs/MovementForm.vue");
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'MemberMovementsTab',
-  mixins: [_minixs_DateFormat__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_DateFormat__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
     'member_id': {
       type: [String, Number],
@@ -6631,9 +6629,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./resources/js/minixs/DateFormat.js":
+/***/ "./resources/js/mixins/DateFormat.js":
 /*!*******************************************!*\
-  !*** ./resources/js/minixs/DateFormat.js ***!
+  !*** ./resources/js/mixins/DateFormat.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -6651,9 +6649,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/minixs/FormValidator.js":
+/***/ "./resources/js/mixins/FormValidator.js":
 /*!**********************************************!*\
-  !*** ./resources/js/minixs/FormValidator.js ***!
+  !*** ./resources/js/mixins/FormValidator.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -6701,9 +6699,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/minixs/HouseholdYearsCUD.js":
+/***/ "./resources/js/mixins/HouseholdYearsCUD.js":
 /*!**************************************************!*\
-  !*** ./resources/js/minixs/HouseholdYearsCUD.js ***!
+  !*** ./resources/js/mixins/HouseholdYearsCUD.js ***!
   \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -6756,9 +6754,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/minixs/NumberFormat.js":
+/***/ "./resources/js/mixins/NumberFormat.js":
 /*!*********************************************!*\
-  !*** ./resources/js/minixs/NumberFormat.js ***!
+  !*** ./resources/js/mixins/NumberFormat.js ***!
   \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -6777,9 +6775,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/minixs/SubmitData.js":
+/***/ "./resources/js/mixins/SubmitData.js":
 /*!*******************************************!*\
-  !*** ./resources/js/minixs/SubmitData.js ***!
+  !*** ./resources/js/mixins/SubmitData.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 

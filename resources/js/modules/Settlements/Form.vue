@@ -118,10 +118,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters }   from 'vuex';
 
-import ModalForm from '../../components/ui/ModalForm.vue';
-import FormValidator from '../../minixs/FormValidator';
+import ModalForm        from '../../components/ui/ModalForm.vue';
+import FormValidator    from '../../mixins/FormValidator';
 
 export default {
     name: 'SettlementForm',

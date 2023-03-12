@@ -229,8 +229,8 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import DateFormat from '../../minixs/DateFormat';
+import { mapGetters }   from 'vuex';
+import DateFormat       from '../../mixins/DateFormat';
 
 export default {
     name: 'Reports',

@@ -145,8 +145,8 @@
 
 <script>
 import { mapGetters }   from 'vuex';
-import FormValidator    from '../../minixs/FormValidator';
-import SubmitData       from '../../minixs/SubmitData';
+import FormValidator    from '../../mixins/FormValidator';
+import SubmitData       from '../../mixins/SubmitData';
 
 import ModalForm        from '../../components/ui/ModalForm.vue';
 

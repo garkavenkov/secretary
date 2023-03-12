@@ -207,16 +207,16 @@
 
 <script>
 
-import { computed }         from 'vue'
-import { mapGetters }       from 'vuex';
-import { Modal }            from 'bootstrap';
+import { computed }             from 'vue'
+import { mapGetters }           from 'vuex';
+import { Modal }                from 'bootstrap';
 
 import HouseYearForm            from './HouseYearForm.vue';
 import HouseInfoForm            from './HouseInfoForm.vue';
 import HouseAdditionalDataForm  from './HouseAdditionalDataForm.vue';
 
-import TableRow             from '../../../components/ui/TableRow.vue';
-import HouseholdYearsCUD    from '../../../minixs/HouseholdYearsCUD';
+import TableRow                 from '../../../components/ui/TableRow.vue';
+import HouseholdYearsCUD        from '../../../mixins/HouseholdYearsCUD';
 
 export default {
     name: 'HouseholdHouseYears',

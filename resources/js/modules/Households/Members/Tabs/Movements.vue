@@ -62,7 +62,7 @@
 
 import { Modal }    from 'bootstrap';
 
-import DateFormat   from '../../../../minixs/DateFormat';
+import DateFormat   from '../../../../mixins/DateFormat';
 
 import MovementForm from './MovementForm.vue'
 

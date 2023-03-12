@@ -109,16 +109,16 @@
 
 <script>
 
-import { computed }         from 'vue';
-import { mapGetters }       from 'vuex';
-import { Modal }            from 'bootstrap';
+import { computed }             from 'vue';
+import { mapGetters }           from 'vuex';
+import { Modal }                from 'bootstrap';
 
 import TableRow                 from '../../../components/ui/TableRow.vue';
 import LandYearForm             from './LandYearForm.vue';
 import LandAdditionalDataForm   from './LandAdditionalDataForm.vue';
 
-import NumberFormat         from '../../../minixs/NumberFormat';
-import HouseholdYearsCUD    from '../../../minixs/HouseholdYearsCUD';
+import NumberFormat             from '../../../mixins/NumberFormat';
+import HouseholdYearsCUD        from '../../../mixins/HouseholdYearsCUD';
 
 export default {
     name: 'HouseholdLandYears',

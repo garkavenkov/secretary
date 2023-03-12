@@ -206,12 +206,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'SystemDictionaryForm',
-  mixins: [_minixs_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
     'formId': {
       type: String,
@@ -328,7 +328,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _minixs_SystemDictionary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../minixs/SystemDictionary */ "./resources/js/minixs/SystemDictionary.js");
+/* harmony import */ var _mixins_SystemDictionary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/SystemDictionary */ "./resources/js/mixins/SystemDictionary.js");
 /* harmony import */ var _components_ui_SystemDictionaryForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/ui/SystemDictionaryForm.vue */ "./resources/js/components/ui/SystemDictionaryForm.vue");
 /* harmony import */ var _components_ui_SystemDictionaryTable_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ui/SystemDictionaryTable.vue */ "./resources/js/components/ui/SystemDictionaryTable.vue");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -343,7 +343,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'SettlementTypesMain',
-  mixins: [_minixs_SystemDictionary__WEBPACK_IMPORTED_MODULE_0__["default"]],
+  mixins: [_mixins_SystemDictionary__WEBPACK_IMPORTED_MODULE_0__["default"]],
   components: {
     SystemDictionaryForm: _components_ui_SystemDictionaryForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     SystemDictionaryTable: _components_ui_SystemDictionaryTable_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -723,9 +723,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./resources/js/minixs/FormValidator.js":
+/***/ "./resources/js/mixins/FormValidator.js":
 /*!**********************************************!*\
-  !*** ./resources/js/minixs/FormValidator.js ***!
+  !*** ./resources/js/mixins/FormValidator.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -773,9 +773,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/minixs/SystemDictionary.js":
+/***/ "./resources/js/mixins/SystemDictionary.js":
 /*!*************************************************!*\
-  !*** ./resources/js/minixs/SystemDictionary.js ***!
+  !*** ./resources/js/mixins/SystemDictionary.js ***!
   \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 

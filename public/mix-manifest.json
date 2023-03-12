@@ -13,5 +13,8 @@
     "/js/analitycs.js": "/js/analitycs.js",
     "/js/additional-params.js": "/js/additional-params.js",
     "/js/reports-manager.js": "/js/reports-manager.js",
+    "/js/roles.js": "/js/roles.js",
+    "/js/permissions.js": "/js/permissions.js",
+    "/js/permission-rights.js": "/js/permission-rights.js",
     "/css/app.css": "/css/app.css"
 }

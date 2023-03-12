@@ -28,7 +28,7 @@
 <script>
 import { mapGetters }           from 'vuex';
 
-import SystemDictionary         from '../../minixs/SystemDictionary';
+import SystemDictionary         from '../../mixins/SystemDictionary';
 import Breadcrumbs              from '../../components/ui/Breadcrumbs.vue';
 import SystemDictionaryTable    from '../../components/ui/SystemDictionaryTable.vue';
 import SystemDictionaryForm     from '../../components/ui/SystemDictionaryForm.vue';

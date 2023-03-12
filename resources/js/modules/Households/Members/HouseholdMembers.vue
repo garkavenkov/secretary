@@ -255,11 +255,11 @@
 </template>
 
 <script>
-import { Modal }        from 'bootstrap';
-import { computed }     from 'vue';
-import { mapGetters }   from 'vuex';
+import { Modal }                    from 'bootstrap';
+import { computed }                 from 'vue';
+import { mapGetters }               from 'vuex';
 
-import DateFormat       from '../../../minixs/DateFormat';
+import DateFormat                   from '../../../mixins/DateFormat';
 
 import HouseholdMemberForm          from './HouseholdMemberForm.vue';
 import HouseholdMemberInfo          from './HouseholdMemberInfo.vue';

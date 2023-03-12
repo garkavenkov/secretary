@@ -63,7 +63,7 @@
 
 <script>
 
-import VueModal from '../../../components/ui/VueModal.vue';
+import VueModal         from '../../../components/ui/VueModal.vue';
 
 import MainInfo         from './Tabs/MainInfo.vue';
 import LandYears        from './Tabs/LandYears.vue';

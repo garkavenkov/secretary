@@ -89,14 +89,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../minixs/SubmitData */ "./resources/js/minixs/SubmitData.js");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
+/* harmony import */ var _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/SubmitData */ "./resources/js/mixins/SubmitData.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'AdditionalParamCategoryForm',
-  mixins: [_minixs_SubmitData__WEBPACK_IMPORTED_MODULE_1__["default"], _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_SubmitData__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -285,14 +285,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
-/* harmony import */ var _minixs_SubmitData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../minixs/SubmitData */ "./resources/js/minixs/SubmitData.js");
-/* harmony import */ var _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../minixs/FormValidator */ "./resources/js/minixs/FormValidator.js");
+/* harmony import */ var _mixins_SubmitData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/SubmitData */ "./resources/js/mixins/SubmitData.js");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'AdditionalParamForm',
-  mixins: [_minixs_SubmitData__WEBPACK_IMPORTED_MODULE_1__["default"], _minixs_FormValidator__WEBPACK_IMPORTED_MODULE_2__["default"]],
+  mixins: [_mixins_SubmitData__WEBPACK_IMPORTED_MODULE_1__["default"], _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_2__["default"]],
   props: {
     'formData': {
       type: Object,
@@ -834,9 +834,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
-/***/ "./resources/js/minixs/FormValidator.js":
+/***/ "./resources/js/mixins/FormValidator.js":
 /*!**********************************************!*\
-  !*** ./resources/js/minixs/FormValidator.js ***!
+  !*** ./resources/js/mixins/FormValidator.js ***!
   \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -884,9 +884,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/minixs/SubmitData.js":
+/***/ "./resources/js/mixins/SubmitData.js":
 /*!*******************************************!*\
-  !*** ./resources/js/minixs/SubmitData.js ***!
+  !*** ./resources/js/mixins/SubmitData.js ***!
   \*******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 

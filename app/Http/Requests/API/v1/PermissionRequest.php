@@ -44,7 +44,7 @@ class PermissionRequest extends FormRequest
             'code.unique'           =>  'Дозвіл с таким кодом вже існує',
             'name.required'         =>  'Ви не вказали назву дозволу',
             'name.min'              =>  'Назва дозволу повинна бути більш ніж :min символів',
-            'name.unique'           =>  'Досвіл с такою назвою вже існує',
+            'name.unique'           =>  'Дозвіл с такою назвою вже існує',
             'description.required'  =>  'Ви не вказали опис дозволу',
             'description.min'       =>  'Опис дозволу повинен бути більш ніж :min символів',
             'error.min'             =>  'Помилка дозволу повинна бути більш ніж :min символів',

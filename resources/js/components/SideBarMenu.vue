@@ -117,6 +117,42 @@
             <li class="has-submenu">
                 <a>
                     <span class="icon">
+                        <span class="mdi mdi-cog"></span>
+                    </span>
+                    <span class="nav-title">Налаштування</span>
+                    <span class="mdi mdi-chevron-down"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="sub-menu-title"><span>Налаштування</span></li>
+                    <li>
+                        <router-link to="/roles">
+                            <span class="icon">
+                                <span class="mdi mdi-shield-account-variant-outline"></span>
+                            </span>
+                            <span class="nav-title">Ролі</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/permissions">
+                            <span class="icon">
+                                <span class="mdi mdi-shield-key-outline"></span>
+                            </span>
+                            <span class="nav-title">Дозволи</span>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/permission-rights">
+                            <span class="icon">
+                                <span class="mdi mdi-account-key-outline"></span>
+                            </span>
+                            <span class="nav-title">Керування правами дозволу</span>
+                        </router-link>
+                    </li>
+                </ul>
+            </li>
+            <li class="has-submenu">
+                <a>
+                    <span class="icon">
                         <span class="mdi mdi-table-cog"></span>
                     </span>
                     <span class="nav-title">Системні довідники</span>

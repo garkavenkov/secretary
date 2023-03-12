@@ -34,7 +34,7 @@
 <script>
 
 import ModalForm        from '../../components/ui/ModalForm.vue';
-import FormValidator    from '../../minixs/FormValidator';
+import FormValidator    from '../../mixins/FormValidator';
 
 export default {
     name: 'RegionsForm',

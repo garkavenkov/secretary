@@ -32,6 +32,8 @@ use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
 use App\Http\Controllers\API\v1\AdditionalParamValueTypeController;
+use App\Http\Controllers\API\v1\PermissionRightController;
+use App\Models\PermissionRight;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +77,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('household-owners',             HouseholdOwnerController::class);
     Route::resource('roles',                        RoleController::class);
     Route::resource('permissions',                  PermissionController::class);
+    Route::resource('users',                        UserController::class);
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
@@ -88,4 +91,10 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
 
     Route::post('assign-user-role',                 [UserRoleController::class, 'assignRole']);
     Route::post('reject-user-role',                 [UserRoleController::class, 'rejectRole']);
+    Route::post('grant-user-permission',            [PermissionRightController::class, 'grantUserPermission']);
+    Route::post('grant-permissions',                [PermissionRightController::class, 'grantPermissions']);
+    Route::post('grant-role-permission',            [PermissionRightController::class, 'grantRolePermission']);
+    Route::get('granted-permissions',               [PermissionRightController::class, 'grantedPermissions']);
+
+
 });
