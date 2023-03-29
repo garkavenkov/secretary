@@ -3,16 +3,34 @@
     <breadcrumbs />
 
     <div class="row">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-6 mx-auto">
             <div class="card" v-if="role.code">
                 <div class="card-header">
-                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
-                        <span>Інформація</span>
-                        <button class="btn btn-sm btn-light btn-transparent"
-                                @click="openRoleForm"
-                                title="Редагувати дані">
-                            <span class="mdi mdi-pencil"></span>
+                    <h5>Інформація</h5>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <span class="mdi mdi-cogs"></span>
                         </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a  class="dropdown-item"
+                                    @click="openRoleForm">
+                                        <span class="mdi mdi-pencil text-warning me-1"></span>
+                                        Редагувати
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a  class="dropdown-item"
+                                    @click="deleteRole(role.id)">
+                                        <span class="mdi mdi-trash-can text-danger me-1"></span>
+                                        Видалити
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div class="card-body">
@@ -44,55 +62,24 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="card">
-                        <div class="card-header">
-                            <div class="dictionary-name__wrapper flex-grow-1 justify-content-between">
-                                <span>Районі в регіоні</span>
-                                <button class="btn btn-sm btn-light btn-transparent"
-                                        title="Додати район"
-                                        @click="openDistrictForm">
-                                    <span class="mdi mdi-plus"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <template v-if="region.districts.length > 0">
-                                <DataTable  :dataTable="region.districts"
-                                            tableHeaderClass="table-dark">
-                                    <template v-slot:header>
-                                        <tr>
-                                            <th>Назва</th>
-                                            <th>Центр</th>
-                                        </tr>
-                                    </template>
-                                    <template v-slot:default="slotProps">
-                                        <tr     v-for="record in slotProps.paginatedData"
-                                                :key="record.id">
-                                            <td>
-                                                <router-link :to="{name: 'districts.show', params: { id: record.id }}">
-                                                    <td>{{record.name}}</td>
-                                                </router-link>
-                                            </td>
-                                            <td>{{ record.center }}</td>
-                                        </tr>
-                                    </template>
-                                </DataTable>
-                            </template>
-                            <template v-else>
-                                <div class="text-center text-muted">
-                                    В данному регіоні райони не знайдені
-                                </div>
-                            </template>
-                        </div>
-                    </div> -->
+
                 </div>
             </div>
         </div>
     </div>
 
+    <RoleForm
+            :formData="form"
+            action="update"
+            @refreshData="fetchData"/>
+
 </template>
 
 <script>
+
+import { Modal }    from 'bootstrap';
+
+import RoleForm     from './Form.vue';
 
 export default {
     name: 'RolesShow',
@@ -102,19 +89,55 @@ export default {
             required: true
         }
     },
+    provide() {
+        return {
+            modalTitle: 'Редагування ролі',
+            modalSubmitCaption: 'Зберегти'
+        }
+    },
     data() {
         return {
-            role: {}
+            role: {},
+            form: {
+                id: null,
+                code: '',
+                name: '',
+                description: ''
+            },
+            apiUrl: '/api/v1/roles'
         }
     },
     methods: {
         fetchData() {
-            axios.get(`/api/v1/roles/${this.id}`)
+            axios.get(`${this.apiUrl}/${this.id}`)
                 .then(res => {
                     this.role = res.data.data
                 });
         },
-        openRoleForm() {}
+        openRoleForm() {
+            this.form = Object.assign({}, this.role);
+
+            var roleForm = new Modal(document.getElementById('RoleForm'))
+            roleForm.show();
+        },
+        deleteRole(id) {
+            this.$confirmDelete('Ви дійсно бажаєти видалити роль')
+                .then(res => {
+                    if(res.isConfirmed) {
+                        axios.delete(`${this.apiUrl}/${id}`)
+                            .then(res => {
+                                this.$toast(res.data.message);
+                                this.$router.push({name: 'roles'});
+                            })
+                            .catch(err => {
+                                this.$errorMessage('Неможливо видалити роль', err.response.data.message, 'Зрозуміло');
+                            });
+                    }
+                })
+        }
+    },
+    components: {
+        RoleForm
     },
     created() {
         this.fetchData()

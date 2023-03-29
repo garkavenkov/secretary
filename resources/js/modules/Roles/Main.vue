@@ -40,21 +40,38 @@
         </div>
     </div>
 
+    <RoleForm
+            :formData="form"
+            @refreshData="fetchData"/>
 
 </template>
 
 <script>
 
-import DataTable        from '../../components/ui/DataTable.vue';
+import { Modal }    from 'bootstrap';
+
+import DataTable    from '../../components/ui/DataTable.vue';
+import RoleForm     from './Form.vue';
 
 export default {
     name: 'RolesMain',
     components: {
-        DataTable
+        DataTable,
+        RoleForm
+    },
+    provide() {
+        return {
+            modalTitle: 'Новий користувач',
+        }
     },
     data() {
         return {
-            roles: []
+            roles: [],
+            form: {
+                code: '',
+                name: '',
+                description: ''
+            }
         }
     },
     methods: {
@@ -64,7 +81,10 @@ export default {
                     this.roles = res.data.data;
                 })
         },
-        openRoleForm() {}
+        openRoleForm() {
+            var roleForm = new Modal(document.getElementById('RoleForm'))
+            roleForm.show();
+        }
     },
     created() {
         this.fetchData();

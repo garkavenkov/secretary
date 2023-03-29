@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\RoleRequest;
 use App\Http\Resources\API\v1\Role\RoleResource;
+use App\Traits\Models\UserRights;
 
 class RoleController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\Role');
+
         $role = Role::findOrFail($id);
 
         if ($role->system) {

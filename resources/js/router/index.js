@@ -19,6 +19,8 @@ import reports              from './reports';
 import roles                from './roles';
 import permissions          from './permissions';
 import permission_rights    from './permission_rights';
+import users                from './users';
+import positions            from './positions';
 
 const routes = [
     ...dashboard,
@@ -37,7 +39,9 @@ const routes = [
     ...reports,
     ...roles,
     ...permissions,
-    ...permission_rights
+    ...permission_rights,
+    ...users,
+    // ...positions
 ]
 
 const router = createRouter({

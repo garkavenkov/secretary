@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\RegionRequest;
 use App\Http\Resources\API\v1\Region\RegionResource;
 use App\Http\Resources\API\v1\Region\RegionResourceCollection;
+use App\Traits\Models\UserRights;
 
 class RegionController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class RegionController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\Region');
+
         $region = Region::findOrFail($id);
 
         if ($region->delete()) {

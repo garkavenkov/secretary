@@ -18,6 +18,8 @@ class SettlementTypeTest extends TestCase
         parent::setUp();
 
         $this->url = "/api/v1/settlement-types";
+
+        $this->loginWithPermission('App\Models\SettlementType', 15);
     }
 
     public function test_api_should_return_settlement_types()

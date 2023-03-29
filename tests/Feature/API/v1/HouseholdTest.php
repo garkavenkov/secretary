@@ -21,6 +21,8 @@ class HouseholdTest extends TestCase
         parent::setUp();
 
         $this->url = '/api/v1/households';
+
+        $this->loginWithPermission('App\Models\Household', 15);
     }
 
 

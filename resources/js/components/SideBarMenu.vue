@@ -125,6 +125,14 @@
                 <ul class="sub-menu">
                     <li class="sub-menu-title"><span>Налаштування</span></li>
                     <li>
+                        <router-link to="/users">
+                            <span class="icon">
+                                <span class="mdi mdi-account-supervisor-outline"></span>
+                            </span>
+                            <span class="nav-title">Користувачі</span>
+                        </router-link>
+                    </li>
+                    <li>
                         <router-link to="/roles">
                             <span class="icon">
                                 <span class="mdi mdi-shield-account-variant-outline"></span>
@@ -192,6 +200,14 @@
                             <span class="nav-title">Типи родинних стосунків</span>
                         </router-link>
                     </li>
+                    <!-- <li>
+                        <router-link to="/positions">
+                            <span class="icon">
+                                <span class="mdi mdi-badge-account-outline"></span>
+                            </span>
+                            <span class="nav-title">Посади</span>
+                        </router-link>
+                    </li> -->
                     <li>
                         <router-link to="/additional-params">
                             <span class="icon">

@@ -19,7 +19,7 @@ class PermissionFactory extends Factory
         return [
             'code'          =>  $this->faker->unique()->sentence(1),
             'name'          =>  $this->faker->unique()->sentence(1),
-            // 'description'   =>  $this->faker->sentence(3),
+            'description'   =>  $this->faker->sentence(3),
             'error'         =>  $this->faker->sentence(3),
         ];
     }

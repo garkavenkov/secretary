@@ -69,6 +69,7 @@ export default {
                 code: '',
                 name: '',
                 description: '',
+                error: ''
             }
         }
     },

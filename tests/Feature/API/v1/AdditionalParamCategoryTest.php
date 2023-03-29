@@ -18,6 +18,8 @@ class AdditionalParamCategoryTest extends TestCase
         parent::setUp();
 
         $this->url = '/api/v1/additional-param-categories';
+
+        $this->loginWithPermission('App\Models\AdditionalParamCategory', 15);
     }
 
     public function test_api_should_return_additional_param_categories()

@@ -17,6 +17,8 @@ class RegionTest extends TestCase
     {
         parent::setUp();
         $this->url = "api/v1/regions";
+
+        $this->loginWithPermission('App\Models\Region', 15);
     }
 
     public function test_api_should_return_regions()

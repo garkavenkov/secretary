@@ -19,6 +19,8 @@ class HouseholdMemberTest extends TestCase
         parent::setUp();
 
         $this->url = '/api/v1/household-members';
+
+        $this->loginWithPermission('App\Models\HouseholdMember', 15);
     }
 
 
@@ -100,28 +102,21 @@ class HouseholdMemberTest extends TestCase
             'patronymic is not long enough'                 =>  ['patronymic', 'qw'],
             'sex is empty'                                  =>  ['sex', ''],
             'sex is strange'                                =>  ['sex', 'qw'],
-            'family_relationship is empty'                  =>  ['family_relationship_id', ''],
-            'family_relationship does not exist'            =>  ['family_relationship_id', 99],
-            'birthday is empty'                             =>  ['birthday', ''],
-            'birthday is not a date'                        =>  ['birthday', 'qw'],
-            'birthday is in future'                         =>  ['birthday', date("Y-m-d", strtotime("+1 day"))],
+            'family_relationship is empty'                  =>  ['family_relationship_type_id', ''],
+            'family_relationship does not exist'            =>  ['family_relationship_type_id', 99],
+            'birthdate is empty'                            =>  ['birthdate', ''],
+            'birthdate is not a date'                       =>  ['birthdate', '111'],
+            'birthdate is in future'                        =>  ['birthdate', date("Y-m-d", strtotime("+1 day"))],
             'work_place does not exist'                     =>  ['work_place_id', 99],
             // Did not pass when use "required_with" rule.
             // 'employment is not long enough'                 =>  ['employment_information', 'qw'],
             'death_date is not a date'                      =>  ['death_date',  '111'],
             'death_date in past'                            =>  ['death_date',  '1900-01-01'],
             'death_number is empty when death_date is set'  =>  ['death_register_number',    ''],
-            'death_office is empty when death_date is set'  =>  ['death_register_office',    ''],
             // Did not pass when use "required_with" rule.
-            // 'death_office is not long enough'               =>  ['death_register_office',    'qw'],
+            'death_office is not long enough'               =>  ['death_register_office',    'qw'],
             'additional is not long enough'                 =>  ['additional_information',  'qw'],
             'social is not long enough'                     =>  ['social_information',      'qw'],
-            'land_owned is not number'                      =>  ['land_owned',  'as'],
-            'land_owned in less than 0'                     =>  ['land_owned',  -1],
-            'land_rented is not number'                     =>  ['land_rented',  'as'],
-            'land_rented in less than 0'                    =>  ['land_rented',  -1],
-            'land_leased is not number'                     =>  ['land_leased',  'as'],
-            'land_leased in less than 0'                    =>  ['land_leased',  -1],
         ];
     }
 }

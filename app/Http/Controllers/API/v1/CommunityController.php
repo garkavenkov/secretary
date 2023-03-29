@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\CommunityRequest;
 use App\Http\Resources\API\v1\Community\CommunityResource;
 use App\Http\Resources\API\v1\Community\CommunityResourceCollection;
+use App\Traits\Models\UserRights;
 
 class CommunityController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class CommunityController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\Community');
+
         $community = Community::findOrFail($id);
 
         if ($community->delete()) {

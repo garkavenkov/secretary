@@ -18,6 +18,8 @@ class RoleTest extends TestCase
         parent::setUp();
 
         $this->url = '/api/v1/roles';
+
+        $this->loginWithPermission('App\Models\Role', 15);
     }
 
     public function test_api_should_return_roles()
@@ -26,12 +28,12 @@ class RoleTest extends TestCase
 
         $response = $this->get($this->url)->getData();
 
-        $this->assertCount(5, $response->data);
+        $this->assertCount(6, $response->data);
     }
 
     public function test_api_should_return_single_role()
     {
-        $role = Role::factory()->create(['code' => 'role']);
+        $role = Role::factory()->create(['code' => 'Role']);
 
         $response = $this->get("$this->url/$role->id")->getData();
 
@@ -40,11 +42,11 @@ class RoleTest extends TestCase
 
     public function test_api_should_create_role()
     {
-        $role = Role::factory()->make(['code' => 'role'])->toArray();
+        $role = Role::factory()->make(['code' => 'Role'])->toArray();
 
         $this->post($this->url, $role)->assertStatus(201);
 
-        $this->assertCount(1, Role::all());
+        $this->assertCount(2, Role::all());
     }
 
     public function test_api_should_update_role()
@@ -65,7 +67,7 @@ class RoleTest extends TestCase
 
         $this->delete("$this->url/$role->id")->assertStatus(200);
 
-        $this->assertCount(0, Role::all());
+        $this->assertCount(1, Role::all());
     }
 
     public function test_api_MUST_NOT_delete_system_role()
@@ -74,7 +76,7 @@ class RoleTest extends TestCase
 
         $this->delete("$this->url/$role->id")->assertStatus(500);
 
-        $this->assertCount(1, Role::all());
+        $this->assertCount(2, Role::all());
     }
 
     /**
@@ -87,7 +89,7 @@ class RoleTest extends TestCase
 
         $this->post($this->url, $role)->assertSessionHasErrors($field);
 
-        $this->assertCount(1, Role::all());
+        $this->assertCount(2, Role::all());
     }
 
     public function dataProvider(): array

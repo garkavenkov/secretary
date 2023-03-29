@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\SettlementRequest;
 use App\Http\Resources\API\v1\Settlement\SettlementResource;
 use App\Http\Resources\API\v1\Settlement\SettlementResourceCollection;
+use App\Traits\Models\UserRights;
 
 class SettlementController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class SettlementController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\Settlement');
+
         $settlement = Settlement::findOrFail($id);
 
         if ($settlement->delete()) {

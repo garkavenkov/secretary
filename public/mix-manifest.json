@@ -16,5 +16,7 @@
     "/js/roles.js": "/js/roles.js",
     "/js/permissions.js": "/js/permissions.js",
     "/js/permission-rights.js": "/js/permission-rights.js",
+    "/js/users.js": "/js/users.js",
+    "/js/positions.js": "/js/positions.js",
     "/css/app.css": "/css/app.css"
 }

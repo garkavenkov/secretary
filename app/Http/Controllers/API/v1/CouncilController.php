@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\CouncilRequest;
 use App\Http\Resources\API\v1\Council\CouncilResource;
 use App\Http\Resources\API\v1\Council\CouncilResourceCollection;
+use App\Traits\Models\UserRights;
 
 class CouncilController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class CouncilController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\Councile');
+
         $council = Council::findOrFail($id);
 
         if ($council->delete()) {

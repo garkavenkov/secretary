@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\API\v1;
 
+use App\Traits\Models\UserRights;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SettlementTypeRequest extends FormRequest
 {
+    use UserRights;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,6 +15,8 @@ class SettlementTypeRequest extends FormRequest
      */
     public function authorize()
     {
+        $this->checkIfUserHasRightsTo('App\Models\SettlementType');
+
         return true;
     }
 

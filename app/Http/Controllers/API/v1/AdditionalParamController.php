@@ -7,9 +7,11 @@ use App\Models\AdditionalParam;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\AdditionalParamRequest;
 use App\Http\Resources\API\v1\AdditionalParam\AdditionalParamResource;
+use App\Traits\Models\UserRights;
 
 class AdditionalParamController extends Controller
 {
+    use UserRights;
     /**
      * Display a listing of the resource.
      *
@@ -80,6 +82,8 @@ class AdditionalParamController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\AdditionalParam');
+
         $param = AdditionalParam::findOrFail($id);
 
         if ($param->delete()) {

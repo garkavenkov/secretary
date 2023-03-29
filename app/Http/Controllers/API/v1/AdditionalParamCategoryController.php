@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\AdditionalParamCategory;
 use App\Http\Requests\API\v1\AdditionalParamCategoryRequest;
 use App\Http\Resources\API\v1\AdditionalParamCategory\AdditionalParamCategoryResource;
+use App\Traits\Models\UserRights;
 
 class AdditionalParamCategoryController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class AdditionalParamCategoryController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\AdditionalParamCategory');
+
         $category = AdditionalParamCategory::findOrFail($id);
 
         if ($category->delete()) {

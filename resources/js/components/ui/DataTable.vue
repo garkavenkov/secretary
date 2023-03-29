@@ -16,13 +16,15 @@
                 </select>
             </div>
             <div class="search__wrapper">
-                <label  for="search">Поіск</label>
-                <input  type="search"
-                        name="search"
-                        id="search"
-                        class="search"
-                        autocomplete="off"
-                        @input="$emit('searchInput', $event.target.value)">
+                <form autocomplete="off">
+                    <label  for="search">Поіск</label>
+                    <input  type="search"
+                            id="search"
+                            class="search"
+                            readonly
+                            autocomplete="off"
+                            @input="$emit('searchInput', $event.target.value)">
+                </form>
             </div>
         </div>
         <div class="table__wrapper">

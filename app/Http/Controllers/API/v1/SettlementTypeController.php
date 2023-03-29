@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\SettlementTypeRequest;
 use App\Http\Resources\API\v1\SettlementType\SettlementTypeResource;
 use App\Http\Resources\API\v1\SettlementType\SettlementTypeResourceCollection;
+use App\Traits\Models\UserRights;
 
 class SettlementTypeController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class SettlementTypeController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\SettlementType');
+
         $type = SettlementType::findOrFail($id);
 
         if ($type->delete()) {

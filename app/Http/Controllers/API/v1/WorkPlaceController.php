@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\WorkPlaceRequest;
 use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResource;
 use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResourceCollection;
+use App\Traits\Models\UserRights;
 
 class WorkPlaceController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +35,7 @@ class WorkPlaceController extends Controller
     public function store(WorkPlaceRequest $request)
     {
         $place = WorkPlace::create($request->validated());
-        dd($place);
+
         if ($place) {
             return response()->json(['message' => 'Місце роботи успішно додано'], 201);
         }
@@ -77,6 +80,8 @@ class WorkPlaceController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\WorkPlace');
+
         $place = WorkPlace::findOrFail($id);
 
         if ($place->delete()) {

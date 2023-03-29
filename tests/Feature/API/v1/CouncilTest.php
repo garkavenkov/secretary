@@ -20,6 +20,8 @@ class CouncilTest extends TestCase
         parent::setUp();
 
         $this->url = "/api/v1/councils";
+
+        $this->loginWithPermission('App\Models\Councile', 15);
     }
 
     public function test_api_should_return_councils()

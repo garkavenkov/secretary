@@ -18,6 +18,8 @@ class WorkPlaceTest extends TestCase
         parent::setUp();
 
         $this->url = "/api/v1/work-places";
+
+        $this->loginWithPermission('App\Models\WorkPlace', 15);
     }
 
     public function test_api_should_return_places_of_work()
@@ -44,7 +46,7 @@ class WorkPlaceTest extends TestCase
 
         $this->post($this->url, $place->toArray())->assertStatus(201);
 
-        // $this->assertDatabaseHas('work_places', ['name' => $place->name]);
+        $this->assertCount(1, WorkPlace::all());
     }
 
     public function test_api_should_update_place_of_work()

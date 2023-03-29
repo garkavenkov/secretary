@@ -3,6 +3,7 @@
 use App\Models\Household;
 use Illuminate\Http\Request;
 use App\Models\HouseholdMember;
+use App\Models\PermissionRight;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\v1\RoleController;
 use App\Http\Controllers\API\v1\UserController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\API\v1\HouseholdController;
 use App\Http\Controllers\API\v1\WorkPlaceController;
 use App\Http\Controllers\API\v1\PermissionController;
 use App\Http\Controllers\API\v1\SettlementController;
+use App\Http\Controllers\API\v1\PositionController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
 use App\Http\Controllers\API\v1\LandPlotTypeController;
 use App\Http\Controllers\API\v1\MovementTypeController;
@@ -26,14 +28,13 @@ use App\Http\Controllers\API\v1\HouseholdOwnerController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamController;
 use App\Http\Controllers\API\v1\HouseholdMemberController;
+use App\Http\Controllers\API\v1\PermissionRightController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\HouseholdMemberLandController;
 use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
 use App\Http\Controllers\API\v1\AdditionalParamValueTypeController;
-use App\Http\Controllers\API\v1\PermissionRightController;
-use App\Models\PermissionRight;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +78,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('household-owners',             HouseholdOwnerController::class);
     Route::resource('roles',                        RoleController::class);
     Route::resource('permissions',                  PermissionController::class);
+    Route::resource('positions',                    PositionController::class);
     Route::resource('users',                        UserController::class);
 
     Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
@@ -89,12 +91,13 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::post('land-additional-information',      [HouseholdController::class, 'landInfo']);
     Route::post('member-additional-params',         [HouseholdMemberController::class, 'setAdditionalParams'] );
 
-    Route::post('assign-user-role',                 [UserRoleController::class, 'assignRole']);
-    Route::post('reject-user-role',                 [UserRoleController::class, 'rejectRole']);
+    // Route::post('assign-user-role',                 [UserRoleController::class, 'assignRole']);
+    // Route::post('reject-user-role',                 [UserRoleController::class, 'rejectRole']);
     Route::post('grant-user-permission',            [PermissionRightController::class, 'grantUserPermission']);
     Route::post('grant-permissions',                [PermissionRightController::class, 'grantPermissions']);
     Route::post('grant-role-permission',            [PermissionRightController::class, 'grantRolePermission']);
     Route::get('granted-permissions',               [PermissionRightController::class, 'grantedPermissions']);
 
-
+    Route::post('users/{user}/upload-photo',        [UserController::class, 'uploadPhoto']);
+    Route::post('users/{user}/roles',               [UserController::class, 'userRoles']);
 });

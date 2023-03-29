@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\API\v1;
 
+use App\Traits\Models\UserRights;
 use Illuminate\Foundation\Http\FormRequest;
 
 class WorkPlaceRequest extends FormRequest
 {
+    use UserRights;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,6 +16,8 @@ class WorkPlaceRequest extends FormRequest
      */
     public function authorize()
     {
+        $this->checkIfUserHasRightsTo('App\Models\WorkPlace');
+
         return true;
     }
 

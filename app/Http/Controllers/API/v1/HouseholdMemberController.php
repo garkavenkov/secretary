@@ -7,9 +7,12 @@ use App\Models\HouseholdMember;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\HouseholdMemberRequest;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
+use App\Traits\Models\UserRights;
 
 class HouseholdMemberController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -81,6 +84,8 @@ class HouseholdMemberController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdMember');
+
         $member = HouseholdMember::findOrFail($id);
 
         if ($member->delete()) {

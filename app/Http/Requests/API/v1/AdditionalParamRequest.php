@@ -3,10 +3,13 @@
 namespace App\Http\Requests\API\v1;
 
 use App\Rules\CompoundUniqueIndexValidation;
+use App\Traits\Models\UserRights;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdditionalParamRequest extends FormRequest
 {
+    use UserRights;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,6 +17,8 @@ class AdditionalParamRequest extends FormRequest
      */
     public function authorize()
     {
+        $this->checkIfUserHasRightsTo('App\Models\AdditionalParam');
+
         return true;
     }
 

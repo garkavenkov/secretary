@@ -7,6 +7,7 @@ use App\Models\FamilyRelationship;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\FamilyRelationshipRequest;
 use App\Http\Resources\API\v1\FamilyRelationship\FamilyRelationshipResource;
+use App\Traits\Models\UserRights;
 use Exception;
 
 class FamilyRelationshipController extends Controller

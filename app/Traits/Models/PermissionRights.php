@@ -12,12 +12,12 @@ trait PermissionRights
         return $this->morphToMany(Permission::class, 'owner', 'permission_rights')->withPivot(['right']);
     }
 
-    public function grantPermission(Permission $permission)
+    public function grantPermission(Permission $permission, $right = 0)
     {
-        $this->permissions()->attach($permission);
+        $this->permissions()->attach($permission, ['right' => $right]);
     }
 
-    public function hasPermission($permission): bool
+    public function hasPermission($model, $right)
     {
         $permissions = [];
 
@@ -29,10 +29,18 @@ trait PermissionRights
         // Role's permissions
         if (!is_null($this->roles)) {
             foreach($this->roles as $role) {
-                array_push($permissions, ...$role->permissions->map(function($p) { return $p->code;}) );
+                // dd($role->permissions()->first()->right);
+                array_push($permissions, ...$role->permissions->map(function($p) { return ['model' => $p->code, 'right' => $p->pivot->right];}) );
             }
+            // dd($permissions);
         }
-
-        return in_array($permission, $permissions) ? true : false;
+        // dd($model, $right);
+        // dd(15 & 9);
+        $result = array_filter($permissions, function($p) use($model, $right) {
+            // dd($p);
+            return ($p['model'] == $model) && (($p['right'] & $right) == $right);
+        });
+        return count($result) > 0 ? true : false;
+        // return in_array($permission, $permissions) ? true : false;
     }
 }

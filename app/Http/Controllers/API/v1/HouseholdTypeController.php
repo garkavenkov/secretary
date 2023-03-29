@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\HouseholdTypeRequest;
 use App\Http\Resources\API\v1\HouseholdType\HouseholdTypeResource;
 use App\Http\Resources\API\v1\HouseholdType\HouseholdTypeResourceCollection;
+use App\Traits\Models\UserRights;
 
 class HouseholdTypeController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -78,6 +81,8 @@ class HouseholdTypeController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdType');
+
         $type = HouseholdType::findOrFail($id);
 
         if ($type->delete()) {

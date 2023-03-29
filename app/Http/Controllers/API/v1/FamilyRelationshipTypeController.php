@@ -7,9 +7,11 @@ use App\Models\FamilyRelationshipType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\FamilyRelationshipTypeRequest;
 use App\Http\Resources\API\v1\FamilyRelationshipType\FamilyRelationshipTypeResource;
+use App\Traits\Models\UserRights;
 
 class FamilyRelationshipTypeController extends Controller
 {
+    use UserRights;
     /**
      * Display a listing of the resource.
      *
@@ -78,6 +80,8 @@ class FamilyRelationshipTypeController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\FamilyRelationshipType');
+
         $type = FamilyRelationshipType::findOrFail($id);
 
         if ($type->delete()) {

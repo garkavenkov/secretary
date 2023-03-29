@@ -10,9 +10,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\HouseholdRequest;
 use App\Http\Resources\API\v1\Household\HouseholdResource;
 use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
+use App\Traits\Models\UserRights;
 
 class HouseholdController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -175,6 +178,8 @@ class HouseholdController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\Household');
+
         $household = Household::findOrFail($id);
 
         $msg = '';

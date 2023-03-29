@@ -19,6 +19,8 @@ class DistrictTest extends TestCase
         parent::setUp();
 
         $this->url = '/api/v1/districts';
+
+        $this->loginWithPermission('App\Models\District', 15);
     }
 
     public function test_api_should_return_districts()

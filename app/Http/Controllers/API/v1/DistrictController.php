@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\DistrictRequest;
 use App\Http\Resources\API\v1\District\DistrictResource;
 use App\Http\Resources\API\v1\District\DistrictResourceCollection;
+use App\Traits\Models\UserRights;
 
 class DistrictController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class DistrictController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\District');
+
         $district = District::findOrFail($id);
 
         if ($district->delete()) {
