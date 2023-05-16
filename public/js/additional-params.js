@@ -377,6 +377,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "modal fade",
     id: $props.formId,
     tabindex: "-1",
+    "data-bs-backdrop": "static",
+    "data-bs-keyboard": "false",
     "aria-labelledby": "staticBackdropLabel",
     "aria-hidden": "true"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -385,7 +387,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["modal-content", $props.modalContentClass])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
     "class": "modal-title fs-5",
-    id: "staticBackdropLabel",
     innerHTML: $options.modalFormTitle
   }, null, 8 /* PROPS */, _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "modalHeader")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
