@@ -86,10 +86,11 @@ class PermissionRightSeeder extends Seeder
 
         $households->grantPermission(Permission::where('code', 'App\Models\Household')->firstOrFail(), 15);
         $households->grantPermission(Permission::where('code', 'App\Models\HouseholdHouse')->firstOrFail(), 15);
+        $households->grantPermission(Permission::where('code', 'App\Models\HouseholdLand')->firstOrFail(), 15);
         $households->grantPermission(Permission::where('code', 'App\Models\HouseholdMember')->firstOrFail(), 15);
         $households->grantPermission(Permission::where('code', 'App\Models\HouseholdMemberLand')->firstOrFail(), 15);
         $households->grantPermission(Permission::where('code', 'App\Models\HouseholdOwner')->firstOrFail(), 15);
-        $households->grantPermission(Permission::where('code', 'App\Models\HouseholdMemberMovement')->firstOrFail(), 15);
+        // $households->grantPermission(Permission::where('code', 'App\Models\HouseholdMemberMovement')->firstOrFail(), 15);
 
     }
 }

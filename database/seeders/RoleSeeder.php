@@ -25,15 +25,15 @@ class RoleSeeder extends Seeder
                 'system'        =>  true
             ],
             [
-                'code'          =>  'secretary',
-                'name'          =>  'Секретар',
-                'description'   =>  'Секретар',
+                'code'          =>  'dictionaries',
+                'name'          =>  'Довідники',
+                'description'   =>  'Операції з довідниками',
                 'system'        =>  false
             ],
             [
-                'code'          =>  'specialist',
-                'name'          =>  'Специаліст',
-                'description'   =>  'Специаліст',
+                'code'          =>  'system_dictionaries',
+                'name'          =>  'Системні довідники',
+                'description'   =>  'Операції з системними довідниками',
                 'system'        =>  false
             ],
             [
