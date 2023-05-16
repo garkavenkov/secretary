@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\HouseholdMemberMovement;
 use App\Http\Requests\API\v1\HouseholdMemberMovementRequest;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
+use App\Traits\Models\UserRights;
 
 class HouseholdMemberMovementController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -74,6 +77,8 @@ class HouseholdMemberMovementController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdMemberMovement');
+
         $movement = HouseholdMemberMovement::findOrFail($id);
 
         if ($movement->delete()) {

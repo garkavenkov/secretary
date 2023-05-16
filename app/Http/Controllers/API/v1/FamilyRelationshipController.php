@@ -81,7 +81,7 @@ class FamilyRelationshipController extends Controller
         $relationship = FamilyRelationship::findOrFail($id);
 
         if ($relationship->delete()) {
-            return response()->json(['message' => 'Родинний зв\'язок був успішно виделений']);
+            return response()->json(['message' => 'Родинний зв\'язок був успішно видалений']);
         }
     }
 

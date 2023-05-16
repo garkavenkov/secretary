@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\PermissionRequest;
 use App\Http\Resources\API\v1\Permission\PermissionResource;
+use App\Traits\Models\UserRights;
 
 class PermissionController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -76,6 +79,8 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\Permission');
+
         $permission = Permission::findOrFail($id);
 
         if ($permission->delete()) {

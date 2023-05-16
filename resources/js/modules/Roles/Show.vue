@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="row mb-2">
                                 <div class="col-md-3">
                                     Код

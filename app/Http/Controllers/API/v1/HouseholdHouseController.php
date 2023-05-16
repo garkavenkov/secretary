@@ -8,9 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\HouseholdHouseRequest;
 use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResource;
 use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResourceCollection;
+use App\Traits\Models\UserRights;
 
 class HouseholdHouseController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -76,6 +79,8 @@ class HouseholdHouseController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdHouse');
+
         $year = HouseholdHouse::findOrFail($id);
 
         if ($year->delete()) {

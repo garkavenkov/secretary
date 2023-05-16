@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\API\v1;
 
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Models\HouseholdMember;
+use App\Traits\Models\UserRights;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\HouseholdMemberRequest;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
-use App\Traits\Models\UserRights;
 
 class HouseholdMemberController extends Controller
 {
@@ -95,6 +97,12 @@ class HouseholdMemberController extends Controller
 
     public function setAdditionalParams(Request $request)
     {
+        $permission = Permission::where('code', 'App\Models\HouseholdMember')->first();
+        if (!Auth::user()->hasPermission($permission->code, 8)) {
+            $error_msg = 'У Вас відсутні права на редагування додаткової інформації члена домогосподарства';
+            return response()->json(['message' => $error_msg], 403);
+        }
+
         // dd($request->all());
         if (!isset($request->owner_id)) {
             throw new \Exception('Відсутній ID члена родини');

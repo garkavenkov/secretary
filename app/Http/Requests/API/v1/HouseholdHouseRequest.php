@@ -4,9 +4,12 @@ namespace App\Http\Requests\API\v1;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\CompoundUniqueIndexValidation;
+use App\Traits\Models\UserRights;
 
 class HouseholdHouseRequest extends FormRequest
 {
+    use UserRights;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -14,6 +17,8 @@ class HouseholdHouseRequest extends FormRequest
      */
     public function authorize()
     {
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdHouse');
+
         return true;
     }
 

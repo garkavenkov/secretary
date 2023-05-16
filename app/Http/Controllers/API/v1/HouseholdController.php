@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\API\v1;
 
 use App\Models\Household;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Models\HouseholdMember;
+use App\Traits\Models\UserRights;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\HouseholdRequest;
 use App\Http\Resources\API\v1\Household\HouseholdResource;
 use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
-use App\Traits\Models\UserRights;
 
 class HouseholdController extends Controller
 {
@@ -211,13 +213,14 @@ class HouseholdController extends Controller
         }
     }
 
-    public function addOwner(Request $request)
-    {
-        dd($request->all());
-    }
-
     public function houseInfo(Request $request)
     {
+        $permission = Permission::where('code', 'App\Models\Household')->first();
+        if (!Auth::user()->hasPermission($permission->code, 8)) {
+            $error_msg = 'У Вас відсутні права на редагування інформації по будинку';
+            return response()->json(['message' => $error_msg], 403);
+        }
+
         if (!isset($request->household_id)) {
             throw new \Exception('Відсутній ID домогосподарства');
         }
@@ -240,6 +243,12 @@ class HouseholdController extends Controller
 
     public function landInfo(Request $request)
     {
+        $permission = Permission::where('code', 'App\Models\Household')->first();
+        if (!Auth::user()->hasPermission($permission->code, 8)) {
+            $error_msg = 'У Вас відсутні права на редагування інформації по землі';
+            return response()->json(['message' => $error_msg], 403);
+        }
+
         if (!isset($request->household_id)) {
             throw new \Exception('Відсутній ID домогосподарства');
         }

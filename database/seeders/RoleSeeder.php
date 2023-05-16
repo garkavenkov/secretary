@@ -36,6 +36,12 @@ class RoleSeeder extends Seeder
                 'description'   =>  'Специаліст',
                 'system'        =>  false
             ],
+            [
+                'code'          =>  'households',
+                'name'          =>  'Облікові картки домогосподарств',
+                'description'   =>  'Операції з обліковими картками домогосподарств',
+                'system'        =>  false
+            ],
         ]);
     }
 }

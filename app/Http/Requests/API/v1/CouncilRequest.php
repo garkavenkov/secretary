@@ -17,7 +17,7 @@ class CouncilRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->checkIfUserHasRightsTo('App\Models\Councile');
+        $this->checkIfUserHasRightsTo('App\Models\Council');
 
         return true;
     }

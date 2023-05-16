@@ -20,6 +20,12 @@ class PermissionSeeder extends Seeder
 
         DB::table('permissions')->insert([
             [
+                'code'          =>  'App\Models\HouseholdType',
+                'name'          =>  'Тип об\'єкту погосподарського обліку',
+                'description'   =>  'Операції з типами об`єктів погосподарського обліку',
+                'error'         =>  'У Вас відсутні права на {{action}} типу об\`єкта погосопдарського обліку'
+            ],
+            [
                 'code'          =>  'App\Models\Household',
                 'name'          =>  'Облікова картка',
                 'description'   =>  'Операції з обліковою карткою домогосподарства',
@@ -30,6 +36,12 @@ class PermissionSeeder extends Seeder
                 'name'          =>  'Член домогосподарства',
                 'description'   =>  'Операції з членом домогосподарства',
                 'error'         =>  'У Вас відсутні права на {{action}} члена домогосподарства'
+            ],
+            [
+                'code'          =>  'App\Models\HouseholdMemberLand',
+                'name'          =>  'Земельная дылянка члена домогосподарства',
+                'description'   =>  'Операції із земельною ділянкою члена домогосподарства',
+                'error'         =>  'У Вас відсутні права на {{action}} земельної ділянки члена домогосподарства'
             ],
             [
                 'code'          =>  'App\Models\Region',
@@ -60,12 +72,6 @@ class PermissionSeeder extends Seeder
                 'name'          =>  'Населений пункт',
                 'description'   =>  'Операції з населеними пунктами',
                 'error'         =>  'У Вас відсутні права на {{action}} населеного пункта'
-            ],
-            [
-                'code'          =>  'App\Models\HouseholdType',
-                'name'          =>  'Тип об\'єкту погосподарського обліку',
-                'description'   =>  'Операції з типами об`єктів погосподарського обліку',
-                'error'         =>  'У Вас відсутні права на {{action}} типу об\`єкта погосопдарського обліку'
             ],
             [
                 'code'          =>  'App\Models\SettlementType',

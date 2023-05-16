@@ -47,9 +47,9 @@ use App\Http\Controllers\API\v1\AdditionalParamValueTypeController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
@@ -81,21 +81,18 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
     Route::resource('positions',                    PositionController::class);
     Route::resource('users',                        UserController::class);
 
-    Route::post('add-household-owner',              [HouseholdController::class, 'addOwner'])->name('add-household-owner');
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
     Route::post('upload-report-template/{id}',      [ReportController::class, 'uploadTemplate'])->name('upload-report-template');
-    Route::post('establish-family-relationships',   [FamilyRelationshipController::class, 'establishRelationships'])->name('establish-family-relationships');
     Route::post('family-composition-report',        [ReportController::class, 'familyComposition']);
+
+    Route::post('establish-family-relationships',   [FamilyRelationshipController::class, 'establishRelationships'])->name('establish-family-relationships');
 
     Route::post('house-additional-information',     [HouseholdController::class, 'houseInfo']);
     Route::post('land-additional-information',      [HouseholdController::class, 'landInfo']);
     Route::post('member-additional-params',         [HouseholdMemberController::class, 'setAdditionalParams'] );
 
-    // Route::post('assign-user-role',                 [UserRoleController::class, 'assignRole']);
-    // Route::post('reject-user-role',                 [UserRoleController::class, 'rejectRole']);
-    Route::post('grant-user-permission',            [PermissionRightController::class, 'grantUserPermission']);
+
     Route::post('grant-permissions',                [PermissionRightController::class, 'grantPermissions']);
-    Route::post('grant-role-permission',            [PermissionRightController::class, 'grantRolePermission']);
     Route::get('granted-permissions',               [PermissionRightController::class, 'grantedPermissions']);
 
     Route::post('users/{user}/upload-photo',        [UserController::class, 'uploadPhoto']);

@@ -7,10 +7,13 @@ use App\Http\Requests\API\v1\HouseholdMemberLandRequest;
 use App\Http\Resources\API\v1\HouseholdMemberLand\HouseholdMemberLandResource;
 use App\Models\HouseholdMember;
 use App\Models\HouseholdMemberLand;
+use App\Traits\Models\UserRights;
 use Illuminate\Http\Request;
 
 class HouseholdMemberLandController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -77,6 +80,8 @@ class HouseholdMemberLandController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdMemberLand');
+
         $year = HouseholdMemberLand::findOrFail($id);
 
         if ($year->delete()) {

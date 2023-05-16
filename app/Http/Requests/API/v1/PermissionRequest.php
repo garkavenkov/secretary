@@ -15,7 +15,7 @@ class PermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->checkIfUserHasRightsTo('App\Models\UserRole');
+        $this->checkIfUserHasRightsTo('App\Models\Permission');
 
         return true;
     }

@@ -7,9 +7,12 @@ use App\Models\HouseholdLand;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\HouseholdLandRequest;
 use App\Http\Resources\API\v1\HouseholdLand\HouseholdLandResource;
+use App\Traits\Models\UserRights;
 
 class HouseholdLandController extends Controller
 {
+    use UserRights;
+
     /**
      * Display a listing of the resource.
      *
@@ -76,6 +79,8 @@ class HouseholdLandController extends Controller
      */
     public function destroy($id)
     {
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdLand');
+
         $year = HouseholdLand::findOrFail($id);
 
         if ($year->delete()) {

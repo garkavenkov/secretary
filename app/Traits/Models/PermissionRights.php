@@ -13,11 +13,17 @@ trait PermissionRights
     }
 
     public function grantPermission(Permission $permission, $right = 0)
+    // public function grantPermission($permission, $right = 0)
     {
+        // if (gettype($permission) == 'string') {
+        //     $permission = Permission::where('code', $permission)->firstOrFail();
+        // } else if (get_class($permission) !== 'App\Models\Permission') {
+        //     return;
+        // }
         $this->permissions()->attach($permission, ['right' => $right]);
     }
 
-    public function hasPermission($model, $right)
+    public function hasPermission($permission, $right)
     {
         $permissions = [];
 
@@ -29,18 +35,14 @@ trait PermissionRights
         // Role's permissions
         if (!is_null($this->roles)) {
             foreach($this->roles as $role) {
-                // dd($role->permissions()->first()->right);
-                array_push($permissions, ...$role->permissions->map(function($p) { return ['model' => $p->code, 'right' => $p->pivot->right];}) );
+                array_push($permissions, ...$role->permissions->map(function($p) { return ['permission' => $p->code, 'right' => $p->pivot->right];}) );
             }
-            // dd($permissions);
         }
-        // dd($model, $right);
-        // dd(15 & 9);
-        $result = array_filter($permissions, function($p) use($model, $right) {
-            // dd($p);
-            return ($p['model'] == $model) && (($p['right'] & $right) == $right);
+
+        $result = array_filter($permissions, function($p) use($permission, $right) {
+            return ($p['permission'] == $permission) && (($p['right'] & $right) == $right);
         });
+
         return count($result) > 0 ? true : false;
-        // return in_array($permission, $permissions) ? true : false;
     }
 }

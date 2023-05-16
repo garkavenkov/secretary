@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Traits\Models\UserRights;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\API\v1\User\UserResource;
 
@@ -126,7 +128,11 @@ class UserController extends Controller
 
     public function userRoles(Request $request, User $user)
     {
-        $this->checkIfUserHasRightsTo('App\Models\User');
+        $permission = Permission::where('code', 'App\Models\User')->first();
+        if (!Auth::user()->hasPermission($permission->code, 8)) {
+            $error_msg = 'У Вас відсутні права на призначення/відхилення ролі користувача';
+            return response()->json(['message' => $error_msg], 403);
+        }
 
         // dd($user, $request->rolesIds);
         if (!isset($request->roles)) {
