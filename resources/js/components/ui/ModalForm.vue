@@ -1,11 +1,11 @@
 <template>
 
-    <div class="modal fade" :id="formId" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" :id="formId" tabindex="-1"  data-bs-backdrop="static"  data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog" :class="modalClass">
             <div class="modal-content" :class="modalContentClass">
                 <div class="modal-header">
                     <div class="d-flex align-items-center">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel" v-html="modalFormTitle"></h1>
+                        <h1 class="modal-title fs-5" v-html="modalFormTitle"></h1>
                         <slot name="modalHeader"></slot>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="$emit('closeForm')"></button>
