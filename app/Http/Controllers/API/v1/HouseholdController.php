@@ -268,4 +268,33 @@ class HouseholdController extends Controller
         }
         return response()->json(['message' => 'Інформация по землі була успішно додана']);
     }
+
+    public function setAdditionalParams(Request $request)
+    {
+        $permission = Permission::where('code', 'App\Models\Household')->first();
+        if (!Auth::user()->hasPermission($permission->code, 8)) {
+            $error_msg = 'У Вас відсутні права на редагування додаткової інформації домогосподарства';
+            return response()->json(['message' => $error_msg], 403);
+        }
+
+        // dd($request->all());
+        if (!isset($request->owner_id)) {
+            throw new \Exception('Відсутній ID домогосподарства');
+        }
+        $household = Household::findOrFail($request->owner_id);
+        $request->request->remove('owner_id');
+
+        foreach($request->all() as $param => $value) {
+            $param = $household->getAdditionalParam($param);
+
+            if ($param) {
+                if ($value) {
+                    $household->setAdditionalParamValue($param->id, $value);
+                } else {
+                    $household->clearAdditionalParam($param->id);
+                }
+            }
+        }
+        return response()->json(['message' => 'Додаткова параметри були успішно додані']);
+    }
 }

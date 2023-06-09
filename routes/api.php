@@ -11,13 +11,13 @@ use App\Http\Controllers\API\v1\RegionController;
 use App\Http\Controllers\API\v1\ReportController;
 use App\Http\Controllers\API\v1\CouncilController;
 use App\Http\Controllers\API\v1\DistrictController;
+use App\Http\Controllers\API\v1\PositionController;
 use App\Http\Controllers\API\v1\UserRoleController;
 use App\Http\Controllers\API\v1\CommunityController;
 use App\Http\Controllers\API\v1\HouseholdController;
 use App\Http\Controllers\API\v1\WorkPlaceController;
 use App\Http\Controllers\API\v1\PermissionController;
 use App\Http\Controllers\API\v1\SettlementController;
-use App\Http\Controllers\API\v1\PositionController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
 use App\Http\Controllers\API\v1\LandPlotTypeController;
 use App\Http\Controllers\API\v1\MovementTypeController;
@@ -31,6 +31,7 @@ use App\Http\Controllers\API\v1\HouseholdMemberController;
 use App\Http\Controllers\API\v1\PermissionRightController;
 use App\Http\Controllers\API\v1\FamilyRelationshipController;
 use App\Http\Controllers\API\v1\HouseholdMemberLandController;
+use App\Http\Controllers\API\v1\AdditionalParamValueController;
 use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
@@ -52,7 +53,7 @@ use App\Http\Controllers\API\v1\AdditionalParamValueTypeController;
 // });
 
 
-Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
+Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     Route::resource('regions',                      RegionController::class);
     Route::resource('districts',                    DistrictController::class);
     Route::resource('communities',                  CommunityController::class);
@@ -89,7 +90,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function() {
 
     Route::post('house-additional-information',     [HouseholdController::class, 'houseInfo']);
     Route::post('land-additional-information',      [HouseholdController::class, 'landInfo']);
-    Route::post('member-additional-params',         [HouseholdMemberController::class, 'setAdditionalParams'] );
+    Route::post('member-additional-params',         [HouseholdMemberController::class, 'setAdditionalParams']);
+    Route::post('set-additional-params',            [AdditionalParamValueController::class, 'setAdditionalParams']);
 
 
     Route::post('grant-permissions',                [PermissionRightController::class, 'grantPermissions']);

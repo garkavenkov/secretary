@@ -11,6 +11,7 @@ use App\Http\Resources\API\v1\HouseholdLand\HouseholdLandResource;
 use App\Http\Resources\API\v1\HouseholdType\HouseholdTypeResource;
 use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
+use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 
 class HouseholdResource extends JsonResource
@@ -71,6 +72,7 @@ class HouseholdResource extends JsonResource
             'houseInfo'             =>  $this->houseInfo(),
             'landYears'             =>  HouseholdLandResource::collection($this->whenLoaded('landYears')),
             'landInfo'              =>  $this->landInfo(),
+            'familyInfo'            =>  AdditionalParamValueResource::collection($this->familyInfo()),
         ];
     }
 }

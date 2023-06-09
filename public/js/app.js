@@ -23202,7 +23202,8 @@ var Households = {
       houseYears: [],
       houseInfo: [],
       landYears: [],
-      landInfo: []
+      landInfo: [],
+      familyInfo: []
     },
     filter: {
       settlement_id: 0,
@@ -23256,6 +23257,9 @@ var Households = {
     },
     landInfo: function landInfo(state) {
       return state.household.landInfo;
+    },
+    familyInfo: function familyInfo(state) {
+      return state.household.familyInfo;
     }
   },
   mutations: _objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), {}, {

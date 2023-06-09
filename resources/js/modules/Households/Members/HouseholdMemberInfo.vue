@@ -36,9 +36,9 @@
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button :class="['nav-link', currentTab == 'AdditionalParams' ? 'active' : '']"
+                        <button :class="['nav-link', currentTab == 'AdditionalParamsList' ? 'active' : '']"
                                 id="movement-tab"
-                                @click="currentTab = 'AdditionalParams'"
+                                @click="currentTab = 'AdditionalParamsList'"
                                 type="button">
                                 <span class="mdi mdi-tag-multiple me-1"></span>
                             Додаткова параметри
@@ -63,12 +63,12 @@
 
 <script>
 
-import VueModal         from '../../../components/ui/VueModal.vue';
+import VueModal             from '../../../components/ui/VueModal.vue';
 
-import MainInfo         from './Tabs/MainInfo.vue';
-import LandYears        from './Tabs/LandYears.vue';
-import Movements        from './Tabs/Movements.vue';
-import AdditionalParams from './Tabs/AdditionalParams.vue'
+import MainInfo             from './Tabs/MainInfo.vue';
+import LandYears            from './Tabs/LandYears.vue';
+import Movements            from './Tabs/Movements.vue';
+import AdditionalParamsList from '../../AdditionalParams/AdditionalParamsList.vue'
 
 export default {
     name: 'HouseholdMemberInfo',
@@ -116,9 +116,10 @@ export default {
                     movements: this.member.movements,
                 }
             }
-            if (this.currentTab == 'AdditionalParams') {
+            if (this.currentTab == 'AdditionalParamsList') {
                 return {
-                    member_id: this.member.id,
+                    ownerId: this.member.id,
+                    owner: 'App\\Models\\HouseholdMember',
                     additionalParams: this.member.additional_params,
                 }
             }
@@ -131,7 +132,7 @@ export default {
         MainInfo,
         LandYears,
         Movements,
-        AdditionalParams,
+        AdditionalParamsList,
         VueModal
     }
 }

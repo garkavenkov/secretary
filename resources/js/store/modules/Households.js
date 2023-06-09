@@ -12,6 +12,7 @@ export const Households = {
             houseInfo: [],
             landYears: [],
             landInfo: [],
+            familyInfo: []
         },
         filter: {
             settlement_id: 0,
@@ -36,6 +37,7 @@ export const Households = {
         landYears: state => state.household.landYears,
         availableLandYears: state => state.household.landYears.map(y => y.year).sort((a, b) => b - a),
         landInfo: state => state.household.landInfo,
+        familyInfo: state => state.household.familyInfo,
     },
     mutations: {
         ...crud.mutations,

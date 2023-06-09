@@ -7,22 +7,31 @@
                         @click="toggleFullScreen" title="Повний єкран">
                     <span class="mdi mdi-family-tree"></span>
                 </button> -->
-                <button type="button"
+                <!-- <button type="button"
                         id="newMember"
                         class="btn btn-sm btn-outline-secondary"
                         title="Додати нового члена домогосподарства"
                         @click="newMember($event)">
                     <span class="mdi mdi-account-plus-outline me-1"></span>
                     новий член
-                </button>
+                </button> -->
                 <button type="button"
                         id="membersComposition"
                         v-if="members.length > 0"
-                        class="btn btn-sm btn-outline-secondary ms-2"
+                        class="btn btn-sm btn-outline-secondary"
                         title="Встановити родинні відносини"
                         @click="openMembersCompositionForm">
                     <span class="mdi mdi-family-tree me-1"></span>
                     Родинні відносини
+                </button>
+                <button type="button"
+                        id="additionalParams"
+                        v-if="members.length > 0"
+                        class="btn btn-sm btn-outline-secondary ms-2"
+                        title="Додаткова інформація о родині"
+                        @click="openAdditionalParamsForm">
+                    <span class="mdi mdi-tag-multiple me-1"></span>
+                    Інформація о родині
                 </button>
                 <!-- <button type="button"
                         id="familyAdditionalParams"
@@ -41,52 +50,7 @@
                     <span class="mdi mdi-account-question-outline"></span>
                 </button>
             </div>
-            <div>
-                <!-- <button type="button"
-                        id="familyAdditionalParams"
-                        v-if="members.length > 0"
-                        class="btn btn-sm btn-outline-secondary me-5"
-                        title="Встановити додаткові параметри для родини">
-                    <span class="mdi mdi-tag-multiple me-1"></span>
-                    Інформація о родині
-                </button> -->
-                <!-- <div class="dropdown me-5">
-                    <button class="btn btn-outlinesecondary dropdown-toggle"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        <span class="mdi mdi-tag-multiple me-1"></span>
-                        Інформація о родині
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li class="d-flex">
-                            <div>
-                                <label for="switch1">
-                                    Неповна родина
-                                </label>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input  class="form-check-input"
-                                        type="checkbox"
-                                        role="switch"
-                                        id="switch1">
-                            </div>
-                        </li>
-                        <li class="d-flex">
-                            <div>
-                                <label for="switch2">
-                                    Багатодітна родина
-                                </label>
-                            </div>
-                            <div class="form-check form-switch">
-                                <input  class="form-check-input"
-                                        type="checkbox"
-                                        role="switch"
-                                        id="switch2">
-                            </div>
-                        </li>
-                    </ul>
-                </div> -->
+            <div v-if="members.length > 0">
                 <button type="button"
                         title="Режим карток"
                         class="btn btn-sm btn-outline-secondary me-2"
@@ -237,12 +201,6 @@
             :formData="formData"
             @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
 
-    <!-- <HouseholdMemberInfo
-            :formData="formData"
-            @refreshData="refreshMemberInfo"
-            v-if="formIsReady"
-            @closeMemberInfoForm="closeMemberInfoForm"/> -->
-
     <HouseholdMembersComposition
             :members="shownMembers"
             @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
@@ -252,19 +210,26 @@
             :selectedMember="selectedMember"
             @closeFamilyCompositionReportForm="closeFamilyCompositionReportForm"/>
 
+    <HouseholdMembersAdditionalParams
+            v-if="additionalParamsFormIsVisible"
+            @closeForm="closeAdditionalParamsForm"
+            @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+
+
 </template>
 
 <script>
-import { Modal }                    from 'bootstrap';
-import { computed }                 from 'vue';
-import { mapGetters }               from 'vuex';
+import { Modal }                        from 'bootstrap';
+import { computed, nextTick }                     from 'vue';
+import { mapGetters }                   from 'vuex';
 
-import DateFormat                   from '../../../mixins/DateFormat';
+import DateFormat                       from '../../../mixins/DateFormat';
 
-import HouseholdMemberForm          from './HouseholdMemberForm.vue';
-import HouseholdMemberInfo          from './HouseholdMemberInfo.vue';
-import HouseholdMembersComposition  from './HouseholdMembersComposition.vue';
-import FamilyCompositionReportForm  from './FamilyCompositionReportForm.vue';
+import HouseholdMemberForm              from './HouseholdMemberForm.vue';
+import HouseholdMemberInfo              from './HouseholdMemberInfo.vue';
+import HouseholdMembersComposition      from './HouseholdMembersComposition.vue';
+import FamilyCompositionReportForm      from './FamilyCompositionReportForm.vue';
+import HouseholdMembersAdditionalParams from './HouseholdMembersAdditionalParams.vue';
 
 export default {
     name: 'HouseholdMembers',
@@ -297,7 +262,9 @@ export default {
             showAllMembers: false,
             isFamilyCompositionFormShown: false,
             selectedMember: 0,
-            selectedLandYear: 0
+            selectedLandYear: 0,
+            familyAdditionalParams: [],
+            additionalParamsFormIsVisible: false
         }
     },
     provide() {
@@ -416,6 +383,25 @@ export default {
             let familyCompositionReportForm = new Modal(document.getElementById('FamilyCompositionReportForm'));
             familyCompositionReportForm.show();
         },
+        openAdditionalParamsForm() {
+            this.modalTitle = ' Додаткова інформація о родині';
+            this.modalSubmitCaption = 'Встановити';
+            this.additionalParamsFormIsVisible = true;
+            // this.additionalParamsFormIsVisible = true;
+            // this.familyAdditionalParams = Object.assign([], this.familyInfo);
+            nextTick(() => {
+                let familyAdditionalParamsForm = new Modal(document.getElementById('HouseholdFamilyAdditionalParams'));
+                familyAdditionalParamsForm.show();
+            })
+        },
+        closeAdditionalParamsForm() {
+            this.additionalParamsFormIsVisible = false;
+            console.log('Close family additional params form');
+            // this.closeParamsList = true;
+            // this.familyAdditionalParams = Object.assign([], this.familyInfo);
+            // let familyAdditionalParamsForm = Modal.getInstance('#HouseholdMembersAdditionalParams');
+            // familyAdditionalParamsForm.hide();
+        },
         closeFamilyCompositionReportForm() {
             let familyCompositionReportForm = Modal.getInstance('#FamilyCompositionReportForm');
             familyCompositionReportForm.hide();
@@ -455,13 +441,14 @@ export default {
                 return ['dead', 'gone'].indexOf(m.status) !== -1;
             })
         },
-        ...mapGetters('Households', ['members', 'household_id', 'availableLandYears'])
+        ...mapGetters('Households', ['members', 'household_id', 'availableLandYears', 'familyInfo'])
     },
     components: {
         HouseholdMemberForm,
         HouseholdMemberInfo,
         HouseholdMembersComposition,
         FamilyCompositionReportForm,
+        HouseholdMembersAdditionalParams
     }
 }
 </script>
