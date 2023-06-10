@@ -448,49 +448,34 @@ var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
     "class": "me-2"
   }, "Керування правами дозволу для", -1 /* HOISTED */);
 });
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-shield-account-variant-outline me-1"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mx-2"
-  }, " / ", -1 /* HOISTED */);
-});
-var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-account-supervisor-outline me-1"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_12 = {
+var _hoisted_9 = {
   "class": "ms-3"
 };
-var _hoisted_13 = {
+var _hoisted_10 = {
   value: "0",
   disabled: ""
 };
-var _hoisted_14 = ["value"];
-var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_11 = ["value"];
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-pencil-off-outline me-1"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-pencil-outline me-1"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_17 = ["disabled"];
-var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_14 = ["disabled"];
+var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-content-save-outline me-1"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_19 = {
+var _hoisted_16 = {
   "class": "border-top pt-3"
 };
-var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
     rowspan: "2",
     "class": "align-middle"
@@ -499,131 +484,117 @@ var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
     "class": "text-center"
   }, "Дозвіл")], -1 /* HOISTED */);
 });
-var _hoisted_21 = {
+var _hoisted_18 = {
   "class": "crud-title"
 };
-var _hoisted_22 = ["title"];
-var _hoisted_23 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_19 = ["title"];
+var _hoisted_20 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-check-all"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_24 = [_hoisted_23];
-var _hoisted_25 = {
+var _hoisted_21 = [_hoisted_20];
+var _hoisted_22 = {
   "class": "crud-title"
 };
-var _hoisted_26 = ["title"];
-var _hoisted_27 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_23 = ["title"];
+var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-check-all"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_28 = [_hoisted_27];
-var _hoisted_29 = {
+var _hoisted_25 = [_hoisted_24];
+var _hoisted_26 = {
   "class": "crud-title"
 };
-var _hoisted_30 = ["title"];
-var _hoisted_31 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_27 = ["title"];
+var _hoisted_28 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-check-all"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_32 = [_hoisted_31];
-var _hoisted_33 = {
+var _hoisted_29 = [_hoisted_28];
+var _hoisted_30 = {
   "class": "crud-title"
 };
-var _hoisted_34 = ["title"];
+var _hoisted_31 = ["title"];
+var _hoisted_32 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "mdi mdi-check-all"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_33 = [_hoisted_32];
+var _hoisted_34 = ["onClick", "title"];
 var _hoisted_35 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     "class": "mdi mdi-check-all"
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_36 = [_hoisted_35];
-var _hoisted_37 = ["onClick", "title"];
-var _hoisted_38 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-check-all"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_39 = [_hoisted_38];
-var _hoisted_40 = {
+var _hoisted_37 = {
   "class": "text-center"
 };
-var _hoisted_41 = ["onUpdate:modelValue", "disabled"];
-var _hoisted_42 = {
+var _hoisted_38 = ["onUpdate:modelValue", "disabled"];
+var _hoisted_39 = {
   "class": "text-center"
 };
-var _hoisted_43 = ["onUpdate:modelValue", "disabled"];
-var _hoisted_44 = {
+var _hoisted_40 = ["onUpdate:modelValue", "disabled"];
+var _hoisted_41 = {
   "class": "text-center"
 };
-var _hoisted_45 = ["onUpdate:modelValue", "disabled"];
-var _hoisted_46 = {
+var _hoisted_42 = ["onUpdate:modelValue", "disabled"];
+var _hoisted_43 = {
   "class": "text-center"
 };
-var _hoisted_47 = ["onUpdate:modelValue", "disabled"];
+var _hoisted_44 = ["onUpdate:modelValue", "disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_breadcrumbs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("breadcrumbs");
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"card\">\n        <div class=\"card-body\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-3\">\n                    <div class=\"card\">\n                        <div class=\"card-body\">\n                            <div class=\"row mb-2\">\n                                <div class=\"d-flex justify-content-between\">\n                                    <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                            :class=\"{'active': rightsFor == 'role'}\"\n                                            @click=\"rightsFor = 'role'\">\n                                        <span class=\"mdi mdi-shield-account-variant-outline me-1\"></span>\n                                        Ролі\n                                    </button>\n                                    <button class=\"btn btn-sm btn-outline-secondary  btn-transparent\"\n                                            :class=\"{'active': rightsFor == 'user'}\"\n                                            @click=\"rightsFor = 'user'\">\n                                        <span class=\"mdi mdi-account-supervisor-outline me-1\"></span>\n                                        Користувачі\n                                    </button>\n                                </div>\n                            </div>\n                            <div class=\"row mb-3\">\n                                <div>\n                                    <select class='form-control'\n                                            id=\"role\"\n                                            v-model=\"ownerId\">\n                                        <option value=\"0\" disabled>{{chooseOwner}}</option>\n                                        <option :value=\"owner.id\" v-for=\"owner in owners\" :key=\"owner.id\">\n                                            {{owner.name}}\n                                        </option>\n                                    </select>\n                                </div>\n                            </div>\n                            <div class=\"row\">\n                                <div class=\"d-flex justify-content-end\">\n                                    <button class=\"btn btn-sm btn-outline-secondary\"\n                                            :disabled=\"ownerId == 0\" title=\"Отримати перелік дозволів\"\n                                            @click=\"fetchOwnerPermissions\">\n                                        <span class=\"mdi mdi-account-key-outline\"></span>\n                                        Дозволи\n                                    </button>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-sm btn-outline-primary btn-transparent1", {
-      'active': $data.rightsFor == 'role'
-    }]),
-    onClick: _cache[0] || (_cache[0] = function ($event) {
-      return $data.rightsFor = 'role';
-    })
-  }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ролей ")], 2 /* CLASS */), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-sm btn-outline-primary btn-transparent1", {
-      'active': $data.rightsFor == 'user'
-    }]),
-    onClick: _cache[1] || (_cache[1] = function ($event) {
-      return $data.rightsFor = 'user';
-    })
-  }, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" користувачів ")], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"card\">\n        <div class=\"card-body\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-3\">\n                    <div class=\"card\">\n                        <div class=\"card-body\">\n                            <div class=\"row mb-2\">\n                                <div class=\"d-flex justify-content-between\">\n                                    <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                            :class=\"{'active': rightsFor == 'role'}\"\n                                            @click=\"rightsFor = 'role'\">\n                                        <span class=\"mdi mdi-shield-account-variant-outline me-1\"></span>\n                                        Ролі\n                                    </button>\n                                    <button class=\"btn btn-sm btn-outline-secondary  btn-transparent\"\n                                            :class=\"{'active': rightsFor == 'user'}\"\n                                            @click=\"rightsFor = 'user'\">\n                                        <span class=\"mdi mdi-account-supervisor-outline me-1\"></span>\n                                        Користувачі\n                                    </button>\n                                </div>\n                            </div>\n                            <div class=\"row mb-3\">\n                                <div>\n                                    <select class='form-control'\n                                            id=\"role\"\n                                            v-model=\"ownerId\">\n                                        <option value=\"0\" disabled>{{chooseOwner}}</option>\n                                        <option :value=\"owner.id\" v-for=\"owner in owners\" :key=\"owner.id\">\n                                            {{owner.name}}\n                                        </option>\n                                    </select>\n                                </div>\n                            </div>\n                            <div class=\"row\">\n                                <div class=\"d-flex justify-content-end\">\n                                    <button class=\"btn btn-sm btn-outline-secondary\"\n                                            :disabled=\"ownerId == 0\" title=\"Отримати перелік дозволів\"\n                                            @click=\"fetchOwnerPermissions\">\n                                        <span class=\"mdi mdi-account-key-outline\"></span>\n                                        Дозволи\n                                    </button>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-primary btn-transparent1\"\n                                                :class=\"{'active': rightsFor == 'role'}\"\n                                                @click=\"rightsFor = 'role'\">\n                                            <span class=\"mdi mdi-shield-account-variant-outline me-1\"></span>\n                                            ролей\n                                        </button>\n                                        <span class=\"mx-2\">\n                                            /\n                                        </span>\n                                        <button class=\"btn btn-sm btn-outline-primary btn-transparent1\"\n                                                :class=\"{'active': rightsFor == 'user'}\"\n                                                @click=\"rightsFor = 'user'\">\n                                            <span class=\"mdi mdi-account-supervisor-outline me-1\"></span>\n                                            користувачів\n                                        </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "class": "form-select",
     style: {
       "padding": "0.175rem 2.5rem 0.175rem 1rem",
       "width": "250px"
     },
     id: "role",
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.ownerId = $event;
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.chooseOwner), 1 /* TEXT */), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.owners, function (owner) {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.chooseOwner), 1 /* TEXT */), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.owners, function (owner) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: owner.id,
       key: owner.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(owner.name), 9 /* TEXT, PROPS */, _hoisted_14);
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(owner.name), 9 /* TEXT, PROPS */, _hoisted_11);
   }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.ownerId]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-primary ms-2\"\n                                                :disabled=\"ownerId == 0\" title=\"Отримати перелік дозволів\"\n                                                @click=\"fetchOwnerPermissions\">\n                                            <span class=\"mdi mdi-account-key-outline me-1\"></span>\n                                            Дозволи\n                                        </button> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.inEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     "class": "btn btn-sm btn-outline-danger",
     title: "Відмінити редагування прав",
-    onClick: _cache[3] || (_cache[3] = function () {
+    onClick: _cache[1] || (_cache[1] = function () {
       return $options.cancelEditingPermissionRights && $options.cancelEditingPermissionRights.apply($options, arguments);
     })
-  }, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Відмінити ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.inEditMode && $data.permissions.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Відмінити ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.inEditMode && $data.permissions.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 1,
     "class": "btn btn-sm btn-outline-primary btn-transparent",
     title: "Редагування прав дозволу",
-    onClick: _cache[4] || (_cache[4] = function () {
+    onClick: _cache[2] || (_cache[2] = function () {
       return $options.editPermissionRights && $options.editPermissionRights.apply($options, arguments);
     })
-  }, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Редагувати ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.inEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Редагувати ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.inEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 2,
     "class": "btn btn-sm btn-outline-success ms-2",
     title: "Встановити права дозволи",
     disabled: !$options.readyForGrantPermission,
-    onClick: _cache[5] || (_cache[5] = function () {
+    onClick: _cache[3] || (_cache[3] = function () {
       return $options.grantPermission && $options.grantPermission.apply($options, arguments);
     })
-  }, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Встановити ")], 8 /* PROPS */, _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [$data.permissions.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DataTable, {
+  }, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Встановити ")], 8 /* PROPS */, _hoisted_14)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [$data.permissions.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DataTable, {
     key: 0,
     dataTable: $data.permissions,
     tableClass: "table-sm table-bordered"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" читання "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                                        :class=\"{'active' : allReadGranted}\"\n                                                        :disabled=\"!inEditMode\"\n                                                        :title=\"allReadGranted ? 'Відмінити всі' : 'Обрати всі'\"\n                                                        @click=\"toggleAction('read')\">\n                                                    <span class=\"mdi mdi-check-all\"></span>\n                                                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-        onClick: _cache[6] || (_cache[6] = function ($event) {
+      return [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" читання "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                                        :class=\"{'active' : allReadGranted}\"\n                                                        :disabled=\"!inEditMode\"\n                                                        :title=\"allReadGranted ? 'Відмінити всі' : 'Обрати всі'\"\n                                                        @click=\"toggleAction('read')\">\n                                                    <span class=\"mdi mdi-check-all\"></span>\n                                                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+        onClick: _cache[4] || (_cache[4] = function ($event) {
           return $options.toggleAction('read');
         }),
         title: $options.allReadGranted ? 'Скаcувати дозвіл' : 'Надати дозвіл',
@@ -631,8 +602,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           'toggle-rights__disabled': !$data.inEditMode,
           'toggle-rights__all': $options.allReadGranted
         })
-      }, _hoisted_24, 10 /* CLASS, PROPS */, _hoisted_22)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" створення "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                                        :class=\"{'active' : allCreateGranted}\"\n                                                        :disabled=\"!inEditMode\"\n                                                        :title=\"allCreateGranted ? 'Відмінити всі' : 'Обрати всі'\"\n                                                        @click=\"toggleAction('create')\">\n                                                    <span class=\"mdi mdi-check-all\"></span>\n                                                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-        onClick: _cache[7] || (_cache[7] = function ($event) {
+      }, _hoisted_21, 10 /* CLASS, PROPS */, _hoisted_19)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" створення "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                                        :class=\"{'active' : allCreateGranted}\"\n                                                        :disabled=\"!inEditMode\"\n                                                        :title=\"allCreateGranted ? 'Відмінити всі' : 'Обрати всі'\"\n                                                        @click=\"toggleAction('create')\">\n                                                    <span class=\"mdi mdi-check-all\"></span>\n                                                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+        onClick: _cache[5] || (_cache[5] = function ($event) {
           return $options.toggleAction('create');
         }),
         title: $options.allCreateGranted ? 'Скаcувати дозвіл' : 'Надати дозвіл',
@@ -640,8 +611,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           'toggle-rights__disabled': !$data.inEditMode,
           'toggle-rights__all': $options.allCreateGranted
         })
-      }, _hoisted_28, 10 /* CLASS, PROPS */, _hoisted_26)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" редагування "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                                        :class=\"{'active' : allUpdateGranted}\"\n                                                        :disabled=\"!inEditMode\"\n                                                        :title=\"allUpdateGranted ? 'Відмінити всі' : 'Обрати всі'\"\n                                                        @click=\"toggleAction('update')\">\n                                                    <span class=\"mdi mdi-check-all\"></span>\n                                                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-        onClick: _cache[8] || (_cache[8] = function ($event) {
+      }, _hoisted_25, 10 /* CLASS, PROPS */, _hoisted_23)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" редагування "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                                        :class=\"{'active' : allUpdateGranted}\"\n                                                        :disabled=\"!inEditMode\"\n                                                        :title=\"allUpdateGranted ? 'Відмінити всі' : 'Обрати всі'\"\n                                                        @click=\"toggleAction('update')\">\n                                                    <span class=\"mdi mdi-check-all\"></span>\n                                                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+        onClick: _cache[6] || (_cache[6] = function ($event) {
           return $options.toggleAction('update');
         }),
         title: $options.allUpdateGranted ? 'Скаcувати дозвіл' : 'Надати дозвіл',
@@ -649,8 +620,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           'toggle-rights__disabled': !$data.inEditMode,
           'toggle-rights__all': $options.allUpdateGranted
         })
-      }, _hoisted_32, 10 /* CLASS, PROPS */, _hoisted_30)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" видалення "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                                        :class=\"{'active' : allDeleteGranted}\"\n                                                        :disabled=\"!inEditMode\"\n                                                        :title=\"allDeleteGranted ? 'Скаcувати дозвіл' : 'Надати дозвіл'\"\n                                                    >\n                                                    <span class=\"mdi mdi-check-all\"></span>\n                                                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-        onClick: _cache[9] || (_cache[9] = function ($event) {
+      }, _hoisted_29, 10 /* CLASS, PROPS */, _hoisted_27)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" видалення "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <button class=\"btn btn-sm btn-outline-secondary btn-transparent\"\n                                                        :class=\"{'active' : allDeleteGranted}\"\n                                                        :disabled=\"!inEditMode\"\n                                                        :title=\"allDeleteGranted ? 'Скаcувати дозвіл' : 'Надати дозвіл'\"\n                                                    >\n                                                    <span class=\"mdi mdi-check-all\"></span>\n                                                </button> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+        onClick: _cache[7] || (_cache[7] = function ($event) {
           return $options.toggleAction('delete');
         }),
         title: $options.allDeleteGranted ? 'Скаcувати дозвіл' : 'Надати дозвіл',
@@ -658,7 +629,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           'toggle-rights__disabled': !$data.inEditMode,
           'toggle-rights__all': $options.allDeleteGranted
         })
-      }, _hoisted_36, 10 /* CLASS, PROPS */, _hoisted_34)])])];
+      }, _hoisted_33, 10 /* CLASS, PROPS */, _hoisted_31)])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
@@ -673,7 +644,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             'toggle-rights__disabled': !$data.inEditMode,
             'toggle-rights__all': record.create && record.read && record.update && record["delete"]
           })
-        }, _hoisted_39, 10 /* CLASS, PROPS */, _hoisted_37)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, _hoisted_36, 10 /* CLASS, PROPS */, _hoisted_34)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
           type: "checkbox",
           name: "",
           id: "",
@@ -682,7 +653,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           },
           value: "4",
           disabled: !$data.inEditMode
-        }, null, 8 /* PROPS */, _hoisted_41), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.read]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, null, 8 /* PROPS */, _hoisted_38), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.read]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
           type: "checkbox",
           name: "",
           id: "",
@@ -691,7 +662,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           },
           value: "8",
           disabled: !$data.inEditMode
-        }, null, 8 /* PROPS */, _hoisted_43), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.create]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, null, 8 /* PROPS */, _hoisted_40), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.create]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
           type: "checkbox",
           name: "",
           id: "",
@@ -700,7 +671,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           },
           value: "2",
           disabled: !$data.inEditMode
-        }, null, 8 /* PROPS */, _hoisted_45), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.update]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, null, 8 /* PROPS */, _hoisted_42), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.update]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
           type: "checkbox",
           name: "",
           id: "",
@@ -709,7 +680,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           },
           value: "1",
           disabled: !$data.inEditMode
-        }, null, 8 /* PROPS */, _hoisted_47), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record["delete"]]])])]);
+        }, null, 8 /* PROPS */, _hoisted_44), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record["delete"]]])])]);
       }), 128 /* KEYED_FRAGMENT */))];
     }),
 

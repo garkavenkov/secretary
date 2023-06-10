@@ -6,6 +6,7 @@ use App\Models\Role;
 use App\Models\Permission;
 use App\Models\PermissionRight;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class PermissionRightSeeder extends Seeder
@@ -17,7 +18,7 @@ class PermissionRightSeeder extends Seeder
      */
     public function run()
     {
-        PermissionRight::truncate();
+        DB::table('permission_rights')->delete();
 
 
         // AdditionalParamvalueType -

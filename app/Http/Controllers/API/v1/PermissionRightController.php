@@ -106,26 +106,50 @@ class PermissionRightController extends Controller
         $owner = $type::findOrFail($request->owner);
 
 
-        $result = DB::table('permissions as p')
-            ->select([
-                'p.id',
-                'p.name',
-                'pr.right',
-                DB::raw("CASE (pr.right & 8)  WHEN 8 THEN true ELSE false END AS 'create'"),
-                DB::raw("CASE (pr.right & 4)  WHEN 4 THEN true ELSE false END AS 'read'"),
-                DB::raw("CASE (pr.right & 2)  WHEN 2 THEN true ELSE false END AS 'update'"),
-                DB::raw("CASE (pr.right & 1)  WHEN 1 THEN true ELSE false END AS 'delete'")
-            ])
-            ->leftJoin('permission_rights as pr', function ($leftJoin) use ($type, $owner) {
-                $leftJoin
-                    ->on('pr.permission_id', '=', 'p.id')
-                    ->on('pr.owner_id', $owner->id)
-                    ->on('pr.owner_type', $type);
-            })
-            // ->where('pr.owner_type', $type)
-            // ->where('pr.owner_id', $owner->id)
-            ->get();
-
+        // $result = DB::table('permissions as p')
+        //     ->select([
+        //         'p.id',
+        //         'p.name',
+        //         'pr.right',
+        //         DB::raw("CASE (pr.right & 8)  WHEN 8 THEN true ELSE false END AS 'create'"),
+        //         DB::raw("CASE (pr.right & 4)  WHEN 4 THEN true ELSE false END AS 'read'"),
+        //         DB::raw("CASE (pr.right & 2)  WHEN 2 THEN true ELSE false END AS 'update'"),
+        //         DB::raw("CASE (pr.right & 1)  WHEN 1 THEN true ELSE false END AS 'delete'")
+        //     ])
+        //     ->leftJoin('permission_rights as pr', function ($leftJoin) use ($type, $owner) {
+        //         $leftJoin
+        //             ->on('pr.permission_id', '=', 'p.id')
+        //             ->on('pr.owner_id', $owner->id)
+        //             ->on('pr.owner_type', $type);
+        //     })
+        //     // ->where('pr.owner_type', $type)
+        //     // ->where('pr.owner_id', $owner->id)
+        //     ->get();
+        $result = DB::select(
+            DB::raw(
+                "   SELECT  p.id,
+                            p.name,
+                            ifnull(pr.right, 0) as `right`,
+                            -- pr.owner_id,
+                            -- pr.owner_type,
+                            CASE(pr.right & 8) WHEN 8 THEN true ELSE false END AS 'create',
+                            CASE(pr.right & 4) WHEN 4 THEN true ELSE false END AS 'read',
+                            CASE(pr.right & 2) WHEN 2 THEN true ELSE false END AS 'update',
+                            CASE(pr.right & 1) WHEN 1 THEN true ELSE false END AS 'delete'
+                    FROM permissions as p
+                    LEFT JOIN permission_rights as pr
+                            on  pr.permission_id = p.id
+                            and pr.owner_id = :owner_id
+                            and pr.owner_type = :owner_type"
+                    // WHERE       pr.owner_id = :owner_id
+                    //        and pr.owner_type = :owner_type"
+            ),
+            array(
+                'owner_id' => $owner->id,
+                'owner_type' => $type
+            )
+        );
+        // dd($result);
         // $permissions = Permission::all();
 
         // return response()->json($result);

@@ -56,7 +56,7 @@
                                 <div class="d-flex justify-content-between">
                                     <div class="d-flex align-items-center">
                                         <span class="me-2">Керування правами дозволу для</span>
-                                        <button class="btn btn-sm btn-outline-primary btn-transparent1"
+                                        <!-- <button class="btn btn-sm btn-outline-primary btn-transparent1"
                                                 :class="{'active': rightsFor == 'role'}"
                                                 @click="rightsFor = 'role'">
                                             <span class="mdi mdi-shield-account-variant-outline me-1"></span>
@@ -70,7 +70,7 @@
                                                 @click="rightsFor = 'user'">
                                             <span class="mdi mdi-account-supervisor-outline me-1"></span>
                                             користувачів
-                                        </button>
+                                        </button> -->
                                         <div class="ms-3">
                                             <select class='form-select'
                                                     style="padding: 0.175rem 2.5rem 0.175rem 1rem; width: 250px;"
