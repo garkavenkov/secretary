@@ -157,5 +157,13 @@ class Household extends Model
     }
 
 
+    public function fullNumber()
+    {
+        return  str_pad($this->settlement->inner_code, 2, '0', STR_PAD_LEFT)
+                . '-'
+                . str_pad($this->number, 4, '0', STR_PAD_LEFT)
+                . '-'
+                . $this->household_type_id;
+    }
 
 }

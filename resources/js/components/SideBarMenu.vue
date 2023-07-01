@@ -26,6 +26,14 @@
                     <span class="nav-title">Облікові картки</span>
                 </router-link>
             </li>
+            <li title="Члени домогосподарств">
+                <router-link to="/household-members">
+                    <span class="icon">
+                        <span class="mdi mdi-human-male-female-child"></span>
+                    </span>
+                    <span class="nav-title">Члени домогосподарств</span>
+                </router-link>
+            </li>
             <li class="has-submenu">
                 <a>
                     <span class="icon">

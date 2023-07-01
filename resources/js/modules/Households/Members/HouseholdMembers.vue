@@ -194,7 +194,7 @@
             </template>
         </div>
     </div>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
 
 
     <HouseholdMemberForm
@@ -283,7 +283,8 @@ export default {
             myModal.show();
         },
         showHouseholdMemberInfo(member) {
-            this.$router.push({name: 'households.show.members.info', params: {memberId: member.id}})
+            // this.$router.push({name: 'households.show.members.info', params: {memberId: member.id}})
+            this.$router.push({name: 'household.members.show', params: {id: member.id}})
             // axios.get(`/api/v1/household-members/${member.id}`)
             //     .then(res => {
             //         this.formIsReady = true;

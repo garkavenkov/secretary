@@ -43,6 +43,8 @@ class HouseholdMemberResource extends JsonResource
             'death_register_number'         =>  $this->death_register_number,
             'death_register_office'         =>  $this->death_register_office,
             'land'                          =>  HouseholdMemberLandResource::collection($this->whenLoaded('land')),
+            'address'                       =>  $this->whenLoaded('household', $this->household->getFullAddress()),
+            'household_number'              =>  $this->whenLoaded('household', $this->household->fullNumber()),
             // 'land_owned'                    =>  (float) $this->land_owned,
             // 'land_rented'                   =>  (float) $this->land_rented,
             // 'land_leased'                   =>  (float) $this->land_leased,

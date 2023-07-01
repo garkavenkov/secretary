@@ -28,7 +28,11 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 // 'work_place'                =>  new WorkPlaceResource($member->whenLoaded('workPlace')),
                 'status'                    =>  $member->status,
                 'death_date'                =>  $member->death_date,
-                'relatives'                 =>  $member->relatives()
+                'relatives'                 =>  $member->relatives(),
+                'test'                      =>  'test',
+                'address'                   =>  $member->whenLoaded('household', $member->household->getFullAddress()),
+                'household_number'          =>  $member->whenLoaded('household', $member->household->fullNumber()),
+                // 'household'                 =>  $member->whenLoaded('household', $member->household),
                 // 'death_register_number'     =>  $member->death_register_number,
                 // 'death_register_office'     =>  $member->death_register_office,
             ];

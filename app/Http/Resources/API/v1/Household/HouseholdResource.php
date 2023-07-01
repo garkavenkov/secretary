@@ -47,11 +47,12 @@ class HouseholdResource extends JsonResource
 
         return [
             'id'                    =>  (int)   $this->id,
-            'number'                =>  str_pad($this->settlement->inner_code, 2, '0', STR_PAD_LEFT)
-                                        . '-'
-                                        . str_pad($this->number, 4, '0', STR_PAD_LEFT)
-                                        . '-'
-                                        . $this->household_type_id,
+            // 'number'                =>  str_pad($this->settlement->inner_code, 2, '0', STR_PAD_LEFT)
+            //                             . '-'
+            //                             . str_pad($this->number, 4, '0', STR_PAD_LEFT)
+            //                             . '-'
+            //                             . $this->household_type_id,
+            'number'                =>  $this->fullNumber(),
             'info'                  =>  [
                 'settlement_id'         =>  (int)   $this->settlement_id,
                 'settlement'            =>  new SettlementResource($this->whenLoaded('settlement')),

@@ -20,7 +20,8 @@ import roles                from './roles';
 import permissions          from './permissions';
 import permission_rights    from './permission_rights';
 import users                from './users';
-import positions            from './positions';
+// import positions            from './positions';
+import household_members    from './household_members';
 
 const routes = [
     ...dashboard,
@@ -41,6 +42,7 @@ const routes = [
     ...permissions,
     ...permission_rights,
     ...users,
+    ...household_members
     // ...positions
 ]
 

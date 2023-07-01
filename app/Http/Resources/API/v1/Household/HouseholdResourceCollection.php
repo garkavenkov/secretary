@@ -24,11 +24,12 @@ class HouseholdResourceCollection extends ResourceCollection
                                                 return $household->settlement->name;
                                             }),
                 'household_type_id'     =>  (int)   $household->household_type_id,
-                'number'                =>  str_pad($household->settlement->inner_code, 2, '0', STR_PAD_LEFT)
-                                            . '-'
-                                            . str_pad($household->number, 4, '0', STR_PAD_LEFT)
-                                            . '-'
-                                            . $household->household_type_id,
+                'number'                =>  $household->fullNumber(),
+                // 'number'                =>  str_pad($household->settlement->inner_code, 2, '0', STR_PAD_LEFT)
+                //                             . '-'
+                //                             . str_pad($household->number, 4, '0', STR_PAD_LEFT)
+                //                             . '-'
+                //                             . $household->household_type_id,
                 'raw_address'           =>  $household->address,
                 'address'               =>  $household->getAddress(),
                 // 'special_marks'         =>  $household->special_marks,

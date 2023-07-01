@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\HouseholdMemberRequest;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
+use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 
 class HouseholdMemberController extends Controller
 {
@@ -26,7 +27,10 @@ class HouseholdMemberController extends Controller
             $household_id = request()->query('household_id');
             $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')->where('household_id', $household_id)->get();
         } else {
-            $members = HouseholdMember::all();
+            $members = HouseholdMember::with('household')->get();
+            // $members = HouseholdMember::get();
+            // dd($members);
+            return new HouseholdMemberResourceCollection($members);
         }
 
         return HouseholdMemberResource::collection($members);
@@ -55,7 +59,7 @@ class HouseholdMemberController extends Controller
      */
     public function show($id)
     {
-        $member = HouseholdMember::with('workPlace', 'movements.type', 'land')->findOrFail($id);
+        $member = HouseholdMember::with('household', 'workPlace', 'movements.type', 'land')->findOrFail($id);
 
         return new HouseholdMemberResource($member);
     }

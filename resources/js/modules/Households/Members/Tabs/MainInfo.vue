@@ -125,6 +125,24 @@
     </div>
     <div class="col-md-7">
         <div class="row mb-3">
+            <div class="col-md-9">
+                <label  for="memberAddress" class="form-label">Адреса</label>
+                <input  type="text"
+                        class="form-control"
+                        id="memberAddress"
+                        v-model="formData.address"
+                        disabled>
+            </div>
+            <div class="col-md-3">
+                <label  for="memberHouseholdNumber" class="form-label">№ домогосподарства</label>
+                <input  type="text"
+                        class="form-control"
+                        id="memberHouseholdNumber"
+                        v-model="formData.household_number"
+                        disabled>
+            </div>
+        </div>
+        <div class="row mb-3">
             <div class="col">
                 <label for="workPlace" class="form-label">Місце роботи залежно від територіального розташування</label>
                 <select
@@ -298,11 +316,14 @@ export default {
         ...mapGetters('FamilyRelationshipTypes', {'relationshipTypes': 'types'}),
         ...mapGetters('WorkPlaces', ['places']),
         isEmploymentInformationDisabled() {
-            if (this.isInEditMode) {
-                if (this.formData.work_place_id > 0) {
-                    return false;
+            console.log('Something happened');
+            this.$nextTick(() => {
+                if (this.isInEditMode) {
+                    if (this.formData.work_place_id > 0) {
+                        return false;
+                    }
                 }
-            }
+            })
             return true;
         },
         readyForSave() {
@@ -331,6 +352,9 @@ export default {
                 if (this.errors['death_register_office'])
                     delete this.errors['death_register_office'];
             }
+        },
+        'formData.work_place_id' (newVal) {
+            if (newVal) console.log('WorkPlace  has been changed');
         }
     }
 }
