@@ -22328,7 +22328,47 @@ __webpack_require__.r(__webpack_exports__);
   props: true,
   meta: {
     name: 'Інформація'
-  }
+  },
+  redirect: {
+    name: 'household.members.show.info'
+  },
+  children: [{
+    path: '',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | household-members */ "household-members").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/HouseholdMembers/Tabs/MainInfo.vue */ "./resources/js/modules/HouseholdMembers/Tabs/MainInfo.vue"));
+    },
+    name: 'household.members.show.info',
+    meta: {
+      name: 'Головна інформація'
+    }
+  }, {
+    path: 'lands',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | household-members */ "household-members").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/HouseholdMembers/Tabs/LandYears.vue */ "./resources/js/modules/HouseholdMembers/Tabs/LandYears.vue"));
+    },
+    name: 'household.members.show.lands',
+    meta: {
+      name: 'Земля'
+    }
+  }, {
+    path: 'movements',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | household-members */ "household-members").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/HouseholdMembers/Tabs/Movements.vue */ "./resources/js/modules/HouseholdMembers/Tabs/Movements.vue"));
+    },
+    name: 'household.members.show.movements',
+    meta: {
+      name: 'Реєстрація / Переміщення'
+    }
+  }, {
+    path: 'additional-data',
+    component: function component() {
+      return __webpack_require__.e(/*! import() | household-members */ "household-members").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/HouseholdMembers/Tabs/AdditionalParams.vue */ "./resources/js/modules/HouseholdMembers/Tabs/AdditionalParams.vue"));
+    },
+    name: 'household.members.show.additional-data',
+    meta: {
+      name: 'Додаткові дані'
+    }
+  }]
 }]);
 
 /***/ }),
@@ -22518,17 +22558,8 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_20__.createRouter)({
   routes: routes
 });
 router.beforeEach(function (to, from, next) {
-  // if (to.matched[0].name === 'households.show') {
-  //     store.dispatch('Households/fetchRecord', to.params.id)
-  //         .then(res => {
-  //             next();
-  //         })
-  // } else {
-
   next();
-  // }
 });
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),
@@ -22889,7 +22920,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _modules_Regions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/Regions */ "./resources/js/store/modules/Regions.js");
 /* harmony import */ var _modules_Districts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/Districts */ "./resources/js/store/modules/Districts.js");
 /* harmony import */ var _modules_FamilyRelationshipTypes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/FamilyRelationshipTypes */ "./resources/js/store/modules/FamilyRelationshipTypes.js");
@@ -22901,6 +22932,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_Communities__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/Communities */ "./resources/js/store/modules/Communities.js");
 /* harmony import */ var _modules_Councils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/Councils */ "./resources/js/store/modules/Councils.js");
 /* harmony import */ var _modules_CouncilTypes__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/CouncilTypes */ "./resources/js/store/modules/CouncilTypes.js");
+/* harmony import */ var _modules_HouseholdMembers__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/HouseholdMembers */ "./resources/js/store/modules/HouseholdMembers.js");
 
 
 
@@ -22913,7 +22945,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_11__.createStore)({
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_12__.createStore)({
   modules: {
     Regions: _modules_Regions__WEBPACK_IMPORTED_MODULE_0__.Regions,
     Districts: _modules_Districts__WEBPACK_IMPORTED_MODULE_1__.Districts,
@@ -22925,7 +22958,8 @@ __webpack_require__.r(__webpack_exports__);
     Households: _modules_Households__WEBPACK_IMPORTED_MODULE_7__.Households,
     Communities: _modules_Communities__WEBPACK_IMPORTED_MODULE_8__.Communities,
     Councils: _modules_Councils__WEBPACK_IMPORTED_MODULE_9__.Councils,
-    CouncilTypes: _modules_CouncilTypes__WEBPACK_IMPORTED_MODULE_10__.CouncilTypes
+    CouncilTypes: _modules_CouncilTypes__WEBPACK_IMPORTED_MODULE_10__.CouncilTypes,
+    HouseholdMembers: _modules_HouseholdMembers__WEBPACK_IMPORTED_MODULE_11__.HouseholdMembers
   }
 }));
 
@@ -23139,6 +23173,131 @@ var FamilyRelationshipTypes = {
   },
   mutations: _objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations),
   actions: _objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].actions)
+};
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/HouseholdMembers.js":
+/*!********************************************************!*\
+  !*** ./resources/js/store/modules/HouseholdMembers.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "HouseholdMembers": () => (/* binding */ HouseholdMembers)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var _core_crud__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/crud */ "./resources/js/store/core/crud.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) { ; } } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+var HouseholdMembers = {
+  namespaced: true,
+  state: {
+    members: [],
+    member: {
+      // info: {},
+      // movemets: [],
+      // additionalParams: [],
+      // landYears: [],
+    },
+    filter: {
+      settlement_id: 0,
+      sex: 'all',
+      isFiltered: false
+    },
+    baseUrl: '/api/v1/household-members',
+    url: '',
+    entities: 'members',
+    entity: 'member'
+  },
+  getters: {
+    members: function members(state) {
+      return state.members;
+    },
+    member: function member(state) {
+      return state.member;
+    },
+    memberId: function memberId(state) {
+      return state.member.id;
+    },
+    filter: function filter(state) {
+      return state.filter;
+    }
+    // info: state => Object.assign({}, state.member.info),
+    // members: state => state.household.members,
+    // household_id: state => state.household.id,
+    // houseYears: state => state.household.houseYears,
+    // availableHouseYears: state => state.household.houseYears.map(y => y.year),
+    // houseInfo: state => state.household.houseInfo,
+    // landYears: state => state.member.landYears,
+    // availableLandYears: state => state.household.landYears.map(y => y.year).sort((a, b) => b - a),
+    // landInfo: state => state.household.landInfo,
+    // familyInfo: state => state.household.familyInfo,
+  },
+
+  mutations: _objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), {}, {
+    setFilter: function setFilter(state, payload) {
+      for (var _i = 0, _Object$entries = Object.entries(state.filter); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 1),
+          key = _Object$entries$_i[0];
+        state.filter[key] = payload[key];
+      }
+    },
+    makeQueryString: function makeQueryString(state) {
+      if (state.filter.isFiltered) {
+        var conditions = [];
+        if (state.filter.settlement_id > 0) {
+          conditions.push("settlement_id=".concat(state.filter.settlement_id));
+        }
+        if (state.filter.sex !== 'all') {
+          conditions.push("sex=".concat(state.filter.sex));
+          // if (state.filter.sex == 'men') {
+          //     conditions.push('sex="чоловіча"');
+          // } else if (state.filter.sex == 'women') {
+          //     conditions.push('sex="жіноча"');
+          // }
+        }
+
+        state.url = state.baseUrl + '?where=' + conditions.join(';');
+      } else {
+        state.url = state.baseUrl;
+      }
+    }
+  }),
+  actions: {
+    fetchRecords: _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].actions.fetchRecords,
+    applyFilter: function applyFilter(_ref, payload) {
+      var commit = _ref.commit,
+        dispatch = _ref.dispatch;
+      commit('setFilter', payload);
+      commit('makeQueryString');
+      dispatch('fetchRecords');
+    },
+    fetchRecord: function fetchRecord(_ref2, id) {
+      var commit = _ref2.commit,
+        state = _ref2.state;
+      axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("".concat(state.baseUrl, "/").concat(id)).then(function (res) {
+        commit('setData', {
+          ent: state.entity,
+          data: res.data.data
+        });
+      });
+    }
+  }
 };
 
 /***/ }),

@@ -115,17 +115,16 @@
             </div>
         </div>
 
-
     </ModalForm>
 
 </template>
 
 <script>
 
-import ModalForm        from '../../../../components/ui/ModalForm.vue';
+import ModalForm        from '../../../components/ui/ModalForm.vue';
 
-import FormValidator    from '../../../../mixins/FormValidator';
-import SubmitData       from '../../../../mixins/SubmitData';
+import FormValidator    from '../../../mixins/FormValidator';
+import SubmitData       from '../../../mixins/SubmitData';
 
 export default {
     name: 'LandYearForm',

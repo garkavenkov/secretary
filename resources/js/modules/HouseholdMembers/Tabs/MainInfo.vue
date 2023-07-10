@@ -14,6 +14,28 @@
                     {{ getError('surname') }}
                 </div>
             </div>
+            <!-- <div class="col">
+                <label  for="memberName" class="form-label">Ім'я</label>
+                <input  type="text"
+                        :class="['form-control', hasError('name') ? 'is-invalid' : '']"
+                        id="memberName"
+                        v-model="formData.name"
+                        :disabled="!isInEditMode">
+                <div id="memberNameValidation" class="invalid-feedback">
+                    {{ getError('name') }}
+                </div>
+            </div>
+            <div class="col">
+                <label  for="memberPatronymic" class="form-label">По батькові</label>
+                <input  type="text"
+                        :class="['form-control', hasError('patronymic') ? 'is-invalid' : '']"
+                        id="memberPatronymic"
+                        v-model="formData.patronymic"
+                        :disabled="!isInEditMode">
+                <div id="memberPatronymicValidation" class="invalid-feedback">
+                    {{ getError('patronymic') }}
+                </div>
+            </div> -->
         </div>
         <div class="row mb-3">
             <div class="col">
@@ -67,6 +89,21 @@
                     {{ getError('sex') }}
                 </div>
             </div>
+            <!-- <div class="col">
+                <label for="familyRelationshipType" class="form-label">Родинні стосунки</label>
+                <select :class="['form-control', hasError('family_relationship_type_id') ? 'is-invalid' : '']"
+                        aria-label="Default select example"
+                        v-model="formData.family_relationship_type_id"
+                        :disabled="!isInEditMode">
+                    <option disabled value="0">Оберить тип родинних стосунків</option>
+                    <option :value="relationship.id" v-for="relationship in relationshipTypes" :key="relationship.id">
+                        {{relationship.name}}
+                    </option>
+                </select>
+                <div id="familyRelationshipTypeValidation" class="invalid-feedback">
+                    {{ getError('family_relationship_type_id') }}
+                </div>
+            </div> -->
         </div>
         <div class="row mb-3">
             <div class="col">
@@ -124,7 +161,7 @@
         </div>
     </div>
     <div class="col-md-7">
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
             <div class="col-md-9">
                 <label  for="memberAddress" class="form-label">Адреса</label>
                 <input  type="text"
@@ -141,7 +178,7 @@
                         v-model="formData.household_number"
                         disabled>
             </div>
-        </div>
+        </div> -->
         <div class="row mb-3">
             <div class="col">
                 <label for="workPlace" class="form-label">Місце роботи залежно від територіального розташування</label>
@@ -249,22 +286,23 @@
 
 import { mapGetters }   from 'vuex';
 
-import FormValidator    from '../../../../mixins/FormValidator';
+import FormValidator    from '../../../mixins/FormValidator';
 
 export default {
     name: 'MemberMainInfoTab',
     mixins: [FormValidator],
-    props: {
-        'formData': {
-            type: Object,
-            required: true,
-        },
-    },
+    // props: {
+    //     'formData': {
+    //         type: Object,
+    //         required: true,
+    //     },
+    // },
     emits: ['refreshData'],
     data() {
         return {
             isInEditMode: false,
-            _formData: {}
+            _formData: {},
+            // formData:{} // JSON.parse(JSON.stringify(this.info)),
         }
     },
     methods: {
@@ -277,7 +315,9 @@ export default {
             this.isInEditMode = false;
             this.errors = [];
             this._formData = {};
-            this.$emit('refreshData');
+            // this.formData = Object.assign({}, this.info);
+            this.$store.dispatch('HouseholdMembers/fetchRecord', this.memberId);
+            // this.$emit('refreshData');
         },
         saveData() {
             let data = Object.assign({}, this.formData);
@@ -315,15 +355,17 @@ export default {
     computed: {
         ...mapGetters('FamilyRelationshipTypes', {'relationshipTypes': 'types'}),
         ...mapGetters('WorkPlaces', ['places']),
+        // ...mapGetters('HouseholdMembers', {formData: 'info', memberId: 'memberId'}),
+        ...mapGetters('HouseholdMembers', {formData: 'member', memberId: 'memberId'}),
         isEmploymentInformationDisabled() {
-            console.log('Something happened');
-            this.$nextTick(() => {
+            // console.log('Something happened');
+            // this.$nextTick(() => {
                 if (this.isInEditMode) {
                     if (this.formData.work_place_id > 0) {
                         return false;
                     }
                 }
-            })
+            // })
             return true;
         },
         readyForSave() {
@@ -339,6 +381,9 @@ export default {
         //     }
         //     return false;
         // }
+    },
+    created() {
+        // this.formData = Object.assign({}, this.info);
     },
     watch: {
         'formData.death_date' (newVal) {

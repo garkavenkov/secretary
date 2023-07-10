@@ -397,7 +397,7 @@ export default {
         },
         closeAdditionalParamsForm() {
             this.additionalParamsFormIsVisible = false;
-            console.log('Close family additional params form');
+            // console.log('Close family additional params form');
             // this.closeParamsList = true;
             // this.familyAdditionalParams = Object.assign([], this.familyInfo);
             // let familyAdditionalParamsForm = Modal.getInstance('#HouseholdMembersAdditionalParams');

@@ -65,10 +65,10 @@
 
 import VueModal             from '../../../components/ui/VueModal.vue';
 
-import MainInfo             from './Tabs/MainInfo.vue';
-import LandYears            from './Tabs/LandYears.vue';
-import Movements            from './Tabs/Movements.vue';
-import AdditionalParamsList from '../../AdditionalParams/AdditionalParamsList.vue'
+// import MainInfo             from './Tabs/MainInfo.vue';
+// import LandYears            from './Tabs/LandYears.vue';
+// import Movements            from './Tabs/Movements.vue';
+// import AdditionalParamsList from '../../AdditionalParams/AdditionalParamsList.vue'
 
 export default {
     name: 'HouseholdMemberInfo',
@@ -92,47 +92,47 @@ export default {
 
     },
     computed: {
-        componentProps() {
-            if (this.currentTab == 'MainInfo') {
-                return {
-                    formData: Object.assign({}, this.member),
-                }
-            }
-            if (this.currentTab == 'LandYears') {
-                let member = {
-                    id: this.member.id,
-                    surname: this.member.surname,
-                    name: this.member.name,
-                    patronymic: this.member.patronymic,
-                }
-                return {
-                    member: member,
-                    years: this.member.land,
-                }
-            }
-            if (this.currentTab == 'Movements') {
-                return {
-                    member_id: this.member.id,
-                    movements: this.member.movements,
-                }
-            }
-            if (this.currentTab == 'AdditionalParamsList') {
-                return {
-                    ownerId: this.member.id,
-                    owner: 'App\\Models\\HouseholdMember',
-                    additionalParams: this.member.additional_params,
-                }
-            }
-        },
+        // componentProps() {
+        //     if (this.currentTab == 'MainInfo') {
+        //         return {
+        //             formData: Object.assign({}, this.member),
+        //         }
+        //     }
+        //     if (this.currentTab == 'LandYears') {
+        //         let member = {
+        //             id: this.member.id,
+        //             surname: this.member.surname,
+        //             name: this.member.name,
+        //             patronymic: this.member.patronymic,
+        //         }
+        //         return {
+        //             member: member,
+        //             years: this.member.land,
+        //         }
+        //     }
+        //     if (this.currentTab == 'Movements') {
+        //         return {
+        //             member_id: this.member.id,
+        //             movements: this.member.movements,
+        //         }
+        //     }
+        //     if (this.currentTab == 'AdditionalParamsList') {
+        //         return {
+        //             ownerId: this.member.id,
+        //             owner: 'App\\Models\\HouseholdMember',
+        //             additionalParams: this.member.additional_params,
+        //         }
+        //     }
+        // },
     },
     created() {
         this.fetchMember();
     },
     components: {
-        MainInfo,
-        LandYears,
-        Movements,
-        AdditionalParamsList,
+        // MainInfo,
+        // LandYears,
+        // Movements,
+        // AdditionalParamsList,
         VueModal
     }
 }

@@ -91,6 +91,11 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     Route::post('house-additional-information',     [HouseholdController::class, 'houseInfo']);
     Route::post('land-additional-information',      [HouseholdController::class, 'landInfo']);
     Route::post('member-additional-params',         [HouseholdMemberController::class, 'setAdditionalParams']);
+
+    Route::get('household-members/{id}/land',               [HouseholdMemberController::class, 'landYears'])->name('member-land-years');
+    Route::get('household-members/{id}/additional-data',    [HouseholdMemberController::class, 'additionalParams'])->name('member-additional-data');
+    Route::get('household-members/{id}/movements',          [HouseholdMemberController::class, 'movements'])->name('member-additional-movements');
+
     Route::post('set-additional-params',            [AdditionalParamValueController::class, 'setAdditionalParams']);
 
 

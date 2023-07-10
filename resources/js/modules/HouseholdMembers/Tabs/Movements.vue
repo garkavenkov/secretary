@@ -21,8 +21,8 @@
             </thead>
             <tbody>
                 <tr v-for="(event, index) in movements" :key="index" class="align-middle">
-                    <td>{{ formatedDate(event.date)}}</td>
-                    <td>{{ event.movement_type.name }}</td>
+                    <td>{{ event.date_formatted }}</td>
+                    <td>{{ event.movement_type }}</td>
                     <td>{{ event.comment }}</td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-outline-warning btn-transparent me-3"
@@ -62,27 +62,13 @@
 
 import { Modal }    from 'bootstrap';
 
-import DateFormat   from '../../../../mixins/DateFormat';
-
 import MovementForm from './MovementForm.vue'
 
 export default {
     name: 'MemberMovementsTab',
-    mixins: [DateFormat],
-    props: {
-        'member_id': {
-            type: [String, Number],
-            required: true,
-        },
-        'movements': {
-            type: Array,
-            required: true
-       }
-    },
     components: {
         MovementForm
     },
-    emits:['refreshData'],
     data() {
         return {
             movementTypes: [],
@@ -94,7 +80,8 @@ export default {
             },
             title: '',
             movementAction: '',
-            submitCaption: ''
+            submitCaption: '',
+            movements: []
         }
     },
     methods: {
@@ -103,7 +90,7 @@ export default {
             this.submitCaption = 'Додати';
             this.movementAction = 'create';
 
-            this.eventForm.member_id = this.member_id;
+            this.eventForm.member_id = this.memberId;
 
             let movementForm = new Modal(document.getElementById('MovementForm'))
             movementForm.show();
@@ -135,12 +122,26 @@ export default {
                     }
                 })
         },
+        fetchMovementEvents() {
+            axios.get(`/api/v1/household-members/${this.$route.params.id}/movements`)
+                .then(res => {
+                    this.movements = res.data.data;
+                });
+        },
     },
     created() {
+        this.fetchMovementEvents();
         axios.get('/api/v1/movement-types')
             .then(res => {
                 this.movementTypes = res.data.data;
             })
+    },
+    watch: {
+        '$route' (to, from) {
+            if (to.params.id !== from.params.id) {
+                this.fetchMovementEvents();
+            }
+        },
     }
 }
 

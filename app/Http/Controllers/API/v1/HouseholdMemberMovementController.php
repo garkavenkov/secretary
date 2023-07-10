@@ -77,7 +77,8 @@ class HouseholdMemberMovementController extends Controller
      */
     public function destroy($id)
     {
-        $this->checkIfUserHasRightsTo('App\Models\HouseholdMemberMovement');
+        // $this->checkIfUserHasRightsTo('App\Models\HouseholdMemberMovement');
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdMember');
 
         $movement = HouseholdMemberMovement::findOrFail($id);
 

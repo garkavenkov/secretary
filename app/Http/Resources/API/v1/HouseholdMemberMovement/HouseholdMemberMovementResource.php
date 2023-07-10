@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources\API\v1\HouseholdMemberMovement;
 
-use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
-use App\Http\Resources\API\v1\MovementType\MovementTypeResource;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\API\v1\MovementType\MovementTypeResource;
+use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
 
 class HouseholdMemberMovementResource extends JsonResource
 {
@@ -21,8 +22,10 @@ class HouseholdMemberMovementResource extends JsonResource
             'member_id'         =>  (int)   $this->member_id,
             'member'            =>  new HouseholdMemberResource($this->whenLoaded('member')),
             'movement_type_id'  =>  (int)   $this->movement_type_id,
-            'movement_type'     =>  new MovementTypeResource($this->whenLoaded('type')),
+            // 'movement_type'     =>  new MovementTypeResource($this->whenLoaded('type')),
+            'movement_type'     =>  $this->type->name,
             'date'              =>  $this->date,
+            'date_formatted'    =>  Carbon::parse($this->date)->format('d.m.Y'),
             'comment'           =>  $this->comment
         ];
     }

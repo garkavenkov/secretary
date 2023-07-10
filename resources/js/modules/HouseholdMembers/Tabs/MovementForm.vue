@@ -8,7 +8,7 @@
                 modalContentClass="second-modal">
 
             <div class="row mb-3">
-                <div class="col">
+                <div class="col-md-8">
                     <label for="movementEventType" class="form-label">Подія</label>
                     <select :class="['form-control', hasError('movement_type_id') ? 'is-invalid' : '']"
                             v-model="formData.movement_type_id">
@@ -21,9 +21,7 @@
                         {{ getError('movement_type_id') }}
                     </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col">
+                <div class="col-md-4">
                     <label  for="movementEventDate" class="form-label">Дата</label>
                     <input  type="date"
                             :class="['form-control', hasError('date') ? 'is-invalid' : '']"
@@ -35,12 +33,16 @@
                 </div>
             </div>
             <div class="row mb-3">
+            </div>
+            <div class="row mb-3">
                 <div class="col">
                     <label  for="movementEventComment" class="form-label">Примітка</label>
-                    <input  type="text"
-                            :class="['form-control', hasError('comment') ? 'is-invalid' : '']"
-                            id="movementEventComment"
-                            v-model="formData.comment" />
+                    <textarea
+                        :class="['form-control', hasError('comment') ? 'is-invalid' : '']"
+                        id="movementEventComment"
+                        rows="2"
+                        v-model="formData.comment">
+                    </textarea>
                     <div id="movementEventCommentValidation" class="invalid-feedback">
                         {{ getError('comment') }}
                     </div>
@@ -53,9 +55,9 @@
 
 <script>
 
-import ModalForm        from '../../../../components/ui/ModalForm.vue';
+import ModalForm        from '../../../components/ui/ModalForm.vue';
 
-import FormValidator    from '../../../../mixins/FormValidator';
+import FormValidator    from '../../../mixins/FormValidator';
 
 export default {
     name: 'MovementForm',

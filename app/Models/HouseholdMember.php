@@ -35,6 +35,15 @@ class HouseholdMember extends Model
         'death_register_office',
     ];
 
+    protected static $filterable = [
+        'settlement_id',
+        'sex',
+    ];
+
+    public static function isFieldFilterable($field) {
+        return in_array($field, self::$filterable);
+    }
+
     protected $appends = array('status', 'fullAge');
 
     public function familyRelationshipType()
@@ -166,7 +175,7 @@ class HouseholdMember extends Model
 
     public function land($years = 5)
     {
-        return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc')->limit($years);
+        return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc');//->limit($years);
     }
 
     protected static function boot()

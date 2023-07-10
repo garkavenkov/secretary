@@ -31,7 +31,7 @@ export default {
         saveData() {},
         closeForm() {
             this.$emit('refreshData');
-        }
+        },
     },
     computed: {
         ...mapGetters('Households', ['household_id', 'familyInfo'])

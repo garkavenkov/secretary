@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\v1\HouseholdMember;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class HouseholdMemberResourceCollection extends ResourceCollection
@@ -21,15 +22,16 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'surname'                   =>  $member->surname,
                 'name'                      =>  $member->name,
                 'patronymic'                =>  $member->patronymic,
+                'full_name'                 =>  $member->full_name,
                 'sex'                       =>  $member->sex,
                 'birthdate'                 =>  $member->birthdate,
+                'birthdate_formatted'       =>  Carbon::parse($member->birthdate)->format('d.m.Y'),
                 'family_relationship_type'  =>  $member->whenLoaded('familyRelationshipType', $member->familyRelationshipType->name),
                 // 'employment_information'    =>  $member->employment_information,
                 // 'work_place'                =>  new WorkPlaceResource($member->whenLoaded('workPlace')),
                 'status'                    =>  $member->status,
                 'death_date'                =>  $member->death_date,
                 'relatives'                 =>  $member->relatives(),
-                'test'                      =>  'test',
                 'address'                   =>  $member->whenLoaded('household', $member->household->getFullAddress()),
                 'household_number'          =>  $member->whenLoaded('household', $member->household->fullNumber()),
                 // 'household'                 =>  $member->whenLoaded('household', $member->household),

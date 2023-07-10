@@ -77,6 +77,38 @@
                         rowTitleClass="ps-3"/>
         </tbody>
     </table>
+    <div class="d-flex justify-content-between align-items-center" v-if="years.length > 0">
+        <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center">
+                <span class="me-1">Відображати</span>
+                <select name="per_Page"
+                        id="per_page"
+                        class="form-select form-select-sm"
+                        :disabled="years.length == 0"
+                        v-model="perPage"
+                        @change="fetchYears">
+                    <option v-for="(value, index) in [1,2,3,5]"
+                            :selected="perPage == value"
+                            :key="index"
+                            :value="value">
+                        {{value}}
+                    </option>
+                </select>
+            </div>
+            <div class="text-muted ms-3">
+                Відображено з {{ meta.from }} по {{ meta.to }} із {{ meta.total }}
+            </div>
+        </div>
+        <ul class="pagination mb-0">
+           <li class="page-item" v-for="(link,index) in meta.links" :key="index">
+                <a  class='page-link'
+                    :class="[link.active ? 'active' : '', link.url  ? '' : 'disabled' ]"
+                    v-html="link.label"
+                    @click="goToPage(link.url)">
+                </a>
+            </li>
+        </ul>
+    </div>
 
     <teleport to="body">
         <LandYearForm
@@ -85,7 +117,7 @@
                 :submitCaption="submitCaption"
                 :action="yearDataAction"
                 @closeYearForm="closeYearForm"
-                @refreshData="$emit('refreshData')"/>
+                @refreshData="fetchYears"/>
     </teleport>
 
 
@@ -94,28 +126,18 @@
 <script>
 
 import { Modal }        from 'bootstrap';
+import { mapGetters }   from 'vuex';
 
-import TableRow     from '../../../../components/ui/TableRow.vue';
+import TableRow     from '../../../components/ui/TableRow.vue';
 import LandYearForm from './LandYearForm.vue';
 
 
 export default {
     name: 'MemberLandYearsTab',
-    props: {
-        'years': {
-            type: Array,
-            required: true
-        },
-        'member': {
-            type: Object,
-            required: true
-        }
-    },
     components: {
         TableRow,
         LandYearForm
     },
-    emits:['refreshData'],
     data() {
         return {
             yearData: {
@@ -132,7 +154,10 @@ export default {
             yearDataAction: '',
             title: '',
             submitCaption: '',
-            apiUrl: '/api/v1/household-member-lands'
+            apiUrl: '/api/v1/household-member-lands',
+            years: [],
+            meta: [],
+            perPage: 5
         }
     },
     methods: {
@@ -141,7 +166,7 @@ export default {
             this.submitCaption = 'Додати';
             this.yearDataAction = 'create';
 
-            this.yearData.member_id = this.member.id;
+            this.yearData.member_id = this.memberId;
 
             if (e.ctrlKey) {
                 if (this.years.length > 0) {
@@ -156,7 +181,7 @@ export default {
         },
         editYear(year) {
             Object.assign(this.yearData, year);
-            this.yearData.member_id = this.member.id;
+            this.yearData.member_id = this.memberId;
 
             this.title = `Редагувати дані за ${year.year} рік`;
             this.submitCaption = 'Зберегти';
@@ -172,7 +197,7 @@ export default {
                         axios.delete(`${this.apiUrl}/${year.id}`)
                             .then(res => {
                                 // this.$store.dispatch('Households/fetchRecord', this.household_id);
-                                this.$emit('refreshData')
+                                this.fetchYears();
                                 this.$toast(res.data.message);
                             })
                             .catch(err => {
@@ -196,7 +221,7 @@ export default {
             let data = {
                 report: 'landOwned',
                 year: year,
-                member_id: this.member.id
+                member_id: this.memberId
             }
 
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
@@ -213,10 +238,44 @@ export default {
                     link.click();
                 })
         },
+        fetchYears() {
+            axios.get(`/api/v1/household-members/${this.$route.params.id}/land?per_page=${this.perPage}`)
+                .then(res => {
+                    this.years = res.data.data;
+                    this.meta = res.data.meta;
+                    // this.links = res.data.meta.links;
+                });
+        },
+        goToPage(url) {
+            axios.get(url)
+                .then(res => {
+                    this.years = res.data.data;
+                    this.meta = res.data.meta;
+                    // this.links = res.data.meta.links;
+                });
+
+        }
         // refreshData() {
         //     this.$emit('refreshData');
         // }
+    },
+    computed: {
+        ...mapGetters('HouseholdMembers', ['member']),
+        // links() {
+        //     return this.meta.links.reverse();
+        // }
+    },
+    created() {
+        this.fetchYears();
+    },
+    watch: {
+        '$route' (to, from) {
+            if (to.params.id !== from.params.id) {
+                this.fetchYears();
+            }
+        },
     }
+
 }
 
 </script>

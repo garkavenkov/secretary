@@ -43,12 +43,12 @@
                             </div>
                             <div class="align-self-center">
                                 <button class="btn btn-sm btn-outline-warning btn-transparent"
-                                        title="Редагувати власника"
+                                        title="Редагувати інформацію про власника"
                                         @click="editOwner(owner)">
                                     <span class="mdi mdi-pencil"></span>
                                 </button>
                                 <button class="btn btn-sm btn-outline-danger btn-transparent ms-3"
-                                        title="Видалити власника"
+                                        title="Видалити інформацію про власника"
                                         @click="deleteOwner(owner.id)">
                                     <span class="mdi mdi-trash-can-outline"></span>
                                 </button>

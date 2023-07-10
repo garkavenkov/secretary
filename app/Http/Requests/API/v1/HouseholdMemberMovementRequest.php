@@ -16,7 +16,8 @@ class HouseholdMemberMovementRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->checkIfUserHasRightsTo('App\Models\HouseholdMemberMovement');
+        // $this->checkIfUserHasRightsTo('App\Models\HouseholdMemberMovement');
+        $this->checkIfUserHasRightsTo('App\Models\HouseholdMember');
 
         return true;
     }

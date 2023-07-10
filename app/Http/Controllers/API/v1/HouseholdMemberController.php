@@ -6,11 +6,18 @@ use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Models\HouseholdMember;
 use App\Traits\Models\UserRights;
+use App\Models\HouseholdMemberLand;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\HouseholdMemberRequest;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
+use App\Http\Resources\API\v1\HouseholdMemberLand\HouseholdMemberLandResource;
+use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
+use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
+
+use function PHPUnit\Framework\isNan;
+use function PHPUnit\Framework\isNull;
 
 class HouseholdMemberController extends Controller
 {
@@ -26,14 +33,32 @@ class HouseholdMemberController extends Controller
         if (request()->query('household_id')) {
             $household_id = request()->query('household_id');
             $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')->where('household_id', $household_id)->get();
+        } else if (request()->query('where')) {
+            $conditions = explode(';', request()->query('where'));
+            $members = HouseholdMember::with('household')->first();
+            foreach($conditions as $condition) {
+                $parts = explode('=', $condition);
+                if (count($parts) == 2) {
+                    if ($parts[0] == 'settlement_id') {
+                        if (HouseholdMember::isFieldFilterable($parts[0])) {
+                            $members = $members->whereHas('household', function($q) use($parts){
+                                return $q->where($parts[0], $parts[1]);
+                            });
+                        }
+                    } else {
+                        $members = $members->where($parts[0], $parts[1]);
+                    }
+                }
+            }
+            $members = $members->paginate(10);
+            // return new HouseholdMemberResourceCollection($members);
         } else {
-            $members = HouseholdMember::with('household')->get();
-            // $members = HouseholdMember::get();
-            // dd($members);
-            return new HouseholdMemberResourceCollection($members);
+            $members = HouseholdMember::with('household')->paginate(10);
+            // return new HouseholdMemberResourceCollection($members);
         }
 
-        return HouseholdMemberResource::collection($members);
+        // return HouseholdMemberResource::collection($members);
+        return new HouseholdMemberResourceCollection($members->withQueryString());
     }
 
     /**
@@ -126,5 +151,32 @@ class HouseholdMemberController extends Controller
             }
         }
         return response()->json(['message' => 'Додаткова параметри були успішно додані']);
+    }
+
+    public function landYears(Request $request, $id)
+    {
+        $per_page = $request->query('per_page');
+        // dd($per_page);
+        if (is_null($per_page)) {
+            $per_page = 5;
+        }
+        // dd($per_page);
+        $member = HouseholdMember::findOrFail($id);
+        return HouseholdMemberLandResource::collection($member->land()->paginate($per_page)->withQueryString());
+        // return new HouseholdMemberLandResource($member->land(5)->get());
+    }
+
+    public function additionalParams($id)
+    {
+        $member = HouseholdMember::findOrFail($id);
+
+        return AdditionalParamValueResource::collection($member->memberInfo());
+    }
+
+    public function movements($id)
+    {
+        $member = HouseholdMember::findOrFail($id);
+
+        return HouseholdMemberMovementResource::collection($member->movements);
     }
 }
