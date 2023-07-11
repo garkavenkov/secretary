@@ -1002,7 +1002,7 @@ __webpack_require__.r(__webpack_exports__);
       this.title = 'Додати подію';
       this.submitCaption = 'Додати';
       this.movementAction = 'create';
-      this.eventForm.member_id = this.memberId;
+      this.eventForm.member_id = this.$route.params.id;
       var movementForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('MovementForm'));
       movementForm.show();
     },
@@ -2671,10 +2671,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     submitCaption: $data.submitCaption,
     action: $data.movementAction,
     movementTypes: $data.movementTypes,
-    onRefreshData: _cache[1] || (_cache[1] = function ($event) {
-      return _ctx.$emit('refreshData');
-    })
-  }, null, 8 /* PROPS */, ["formData", "title", "submitCaption", "action", "movementTypes"])]))], 64 /* STABLE_FRAGMENT */);
+    onRefreshData: $options.fetchMovementEvents
+  }, null, 8 /* PROPS */, ["formData", "title", "submitCaption", "action", "movementTypes", "onRefreshData"])]))], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),

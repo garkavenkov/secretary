@@ -53,7 +53,7 @@
                 :submitCaption="submitCaption"
                 :action="movementAction"
                 :movementTypes="movementTypes"
-                @refreshData="$emit('refreshData')"/>
+                @refreshData="fetchMovementEvents"/>
     </teleport>
 
 </template>
@@ -90,7 +90,7 @@ export default {
             this.submitCaption = 'Додати';
             this.movementAction = 'create';
 
-            this.eventForm.member_id = this.memberId;
+            this.eventForm.member_id = this.$route.params.id;
 
             let movementForm = new Modal(document.getElementById('MovementForm'))
             movementForm.show();
