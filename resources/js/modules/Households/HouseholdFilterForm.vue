@@ -1,6 +1,6 @@
 <template>
 
-    <ModalForm formId="HouseholdFilterForm" @submitData="submitData" @closeForm="clearFormData" modalClass="modal-lg" :sumbitIsDisabled="filterIsNotReady">
+    <ModalForm formId="HouseholdFilterForm" @submitData="submitData" @closeForm="clearFormData" modalClass="modal-lg">
 
         <div class="row mb-3">
             <div class="col">
@@ -62,9 +62,9 @@ export default {
         ...mapGetters('Households', ['filter']),
         ...mapGetters('Settlements', ['settlements']),
         ...mapGetters('HouseholdTypes', ['householdTypes']),
-        filterIsNotReady() {
-            return (this.filter.settlement_id == 0) && (this.filter.household_type_id == 0);
-        }
+        // filterIsNotReady() {
+        //     return (this.filter.settlement_id == 0) && (this.filter.household_type_id == 0);
+        // }
     },
     components: {
         ModalForm,

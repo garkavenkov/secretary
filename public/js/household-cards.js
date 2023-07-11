@@ -735,11 +735,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     clearFormData: function clearFormData() {}
   },
-  computed: _objectSpread(_objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('Households', ['filter'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('Settlements', ['settlements'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('HouseholdTypes', ['householdTypes'])), {}, {
-    filterIsNotReady: function filterIsNotReady() {
-      return this.filter.settlement_id == 0 && this.filter.household_type_id == 0;
-    }
-  }),
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('Households', ['filter'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('Settlements', ['settlements'])), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)('HouseholdTypes', ['householdTypes'])),
   components: {
     ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -3314,8 +3310,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     formId: "HouseholdFilterForm",
     onSubmitData: $options.submitData,
     onCloseForm: $options.clearFormData,
-    modalClass: "modal-lg",
-    sumbitIsDisabled: $options.filterIsNotReady
+    modalClass: "modal-lg"
   }, {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -3353,7 +3348,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.filter.household_type_id]])])])];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm", "sumbitIsDisabled"]);
+  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
 }
 
 /***/ }),
