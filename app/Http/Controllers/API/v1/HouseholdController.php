@@ -12,7 +12,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\HouseholdRequest;
 use App\Http\Resources\API\v1\Household\HouseholdResource;
+use App\Http\Resources\API\v1\HouseholdLand\HouseholdLandResource;
 use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
+use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResource;
 
 class HouseholdController extends Controller
 {
@@ -153,7 +155,7 @@ class HouseholdController extends Controller
                             'members.workPlace',
                             'members.movements',
                             'houseYears',
-                            'landYears',
+                            // 'landYears',
                             'owners'
                         )
                         ->findOrFail($id);
@@ -246,6 +248,28 @@ class HouseholdController extends Controller
             }
         }
         return response()->json(['message' => 'Інформация по будинку була успішно додана']);
+    }
+
+    public function landYears(Request $request, $id)
+    {
+        $per_page = $request->query('per_page');
+        if (is_null($per_page)) {
+            $per_page = 5;
+        }
+        $household = Household::findOrFail($id);
+        return HouseholdLandResource::collection($household->landYears()->paginate($per_page)->withQueryString());
+
+    }
+
+    public function houseYears(Request $request, $id)
+    {
+        $per_page = $request->query('per_page');
+        if (is_null($per_page)) {
+            $per_page = 5;
+        }
+        $household = Household::findOrFail($id);
+        return HouseholdHouseResource::collection($household->houseYears()->paginate($per_page)->withQueryString());
+
     }
 
     public function landInfo(Request $request)

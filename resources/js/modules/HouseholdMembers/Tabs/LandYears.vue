@@ -11,7 +11,7 @@
                         Додати рік
                     </button>
                 </th>
-                <th v-for="year in years.sort((a, b) => a.year - b.year)"
+                <th v-for="year in years"
                     :key="year.year">
                     {{year.year}}
                     <div class="dropdown">
@@ -85,8 +85,7 @@
                         id="per_page"
                         class="form-select form-select-sm"
                         :disabled="years.length == 0"
-                        v-model="perPage"
-                        @change="fetchYears">
+                        v-model="perPage">
                     <option v-for="(value, index) in [1,2,3,5]"
                             :selected="perPage == value"
                             :key="index"
@@ -104,7 +103,7 @@
                 <a  class='page-link'
                     :class="[link.active ? 'active' : '', link.url  ? '' : 'disabled' ]"
                     v-html="link.label"
-                    @click="goToPage(link.url)">
+                    @click="fetchYears(link.url)">
                 </a>
             </li>
         </ul>
@@ -128,8 +127,8 @@
 import { Modal }        from 'bootstrap';
 import { mapGetters }   from 'vuex';
 
-import TableRow     from '../../../components/ui/TableRow.vue';
-import LandYearForm from './LandYearForm.vue';
+import TableRow         from '../../../components/ui/TableRow.vue';
+import LandYearForm     from './LandYearForm.vue';
 
 
 export default {
@@ -238,32 +237,19 @@ export default {
                     link.click();
                 })
         },
-        fetchYears() {
-            axios.get(`/api/v1/household-members/${this.$route.params.id}/land?per_page=${this.perPage}`)
-                .then(res => {
-                    this.years = res.data.data;
-                    this.meta = res.data.meta;
-                    // this.links = res.data.meta.links;
-                });
-        },
-        goToPage(url) {
+        fetchYears(url) {
+            if (url == undefined) {
+                url = `/api/v1/household-members/${this.$route.params.id}/land?per_page=${this.perPage}`;
+            }
             axios.get(url)
                 .then(res => {
-                    this.years = res.data.data;
+                    this.years = res.data.data.reverse();
                     this.meta = res.data.meta;
-                    // this.links = res.data.meta.links;
                 });
-
-        }
-        // refreshData() {
-        //     this.$emit('refreshData');
-        // }
+        },
     },
     computed: {
         ...mapGetters('HouseholdMembers', ['member']),
-        // links() {
-        //     return this.meta.links.reverse();
-        // }
     },
     created() {
         this.fetchYears();
@@ -274,6 +260,11 @@ export default {
                 this.fetchYears();
             }
         },
+        'perPage' (newVal, oldVal) {
+            if (newVal) {
+                this.fetchYears();
+            }
+        }
     }
 
 }

@@ -752,26 +752,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         link.click();
       });
     },
-    fetchYears: function fetchYears() {
+    fetchYears: function fetchYears(url) {
       var _this3 = this;
-      axios.get("/api/v1/household-members/".concat(this.$route.params.id, "/land?per_page=").concat(this.perPage)).then(function (res) {
-        _this3.years = res.data.data;
-        _this3.meta = res.data.meta;
-        // this.links = res.data.meta.links;
-      });
-    },
-    goToPage: function goToPage(url) {
-      var _this4 = this;
+      if (url == undefined) {
+        url = "/api/v1/household-members/".concat(this.$route.params.id, "/land?per_page=").concat(this.perPage);
+      }
       axios.get(url).then(function (res) {
-        _this4.years = res.data.data;
-        _this4.meta = res.data.meta;
-        // this.links = res.data.meta.links;
+        _this3.years = res.data.data.reverse();
+        _this3.meta = res.data.meta;
       });
-    } // refreshData() {
-    //     this.$emit('refreshData');
-    // }
+    }
   },
-
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('HouseholdMembers', ['member'])),
   created: function created() {
     this.fetchYears();
@@ -779,6 +770,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   watch: {
     '$route': function $route(to, from) {
       if (to.params.id !== from.params.id) {
+        this.fetchYears();
+      }
+    },
+    'perPage': function perPage(newVal, oldVal) {
+      if (newVal) {
         this.fetchYears();
       }
     }
@@ -2065,9 +2061,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return $options.newYearData($event);
     })
-  }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати рік ")])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.years.sort(function (a, b) {
-    return a.year - b.year;
-  }), function (year) {
+  }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати рік ")])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.years, function (year) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
       key: year.year
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
@@ -2127,9 +2121,6 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: $data.years.length == 0,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.perPage = $event;
-    }),
-    onChange: _cache[2] || (_cache[2] = function () {
-      return $options.fetchYears && $options.fetchYears.apply($options, arguments);
     })
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)([1, 2, 3, 5], function (value, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
@@ -2137,7 +2128,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: index,
       value: value
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(value), 9 /* TEXT, PROPS */, _hoisted_20);
-  }), 64 /* STABLE_FRAGMENT */))], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_19), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.perPage]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, " Відображено з " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meta.from) + " по " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meta.to) + " із " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meta.total), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_22, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.meta.links, function (link, index) {
+  }), 64 /* STABLE_FRAGMENT */))], 8 /* PROPS */, _hoisted_19), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.perPage]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, " Відображено з " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meta.from) + " по " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meta.to) + " із " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.meta.total), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_22, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.meta.links, function (link, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       "class": "page-item",
       key: index
@@ -2145,7 +2136,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["page-link", [link.active ? 'active' : '', link.url ? '' : 'disabled']]),
       innerHTML: link.label,
       onClick: function onClick($event) {
-        return $options.goToPage(link.url);
+        return $options.fetchYears(link.url);
       }
     }, null, 10 /* CLASS, PROPS */, _hoisted_23)]);
   }), 128 /* KEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Teleport, {

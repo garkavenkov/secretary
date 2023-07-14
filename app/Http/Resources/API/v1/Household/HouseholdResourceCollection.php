@@ -19,17 +19,11 @@ class HouseholdResourceCollection extends ResourceCollection
             return [
                 'id'                    =>  (int)   $household->id,
                 'settlement_id'         =>  (int)   $household->settlement_id,
-                // 'settlement'            =>  new SettlementResource($household->whenLoaded('settlement')),
                 'settlement'            =>  $household->whenLoaded('settlement', function() use($household) {
                                                 return $household->settlement->name;
                                             }),
                 'household_type_id'     =>  (int)   $household->household_type_id,
                 'number'                =>  $household->fullNumber(),
-                // 'number'                =>  str_pad($household->settlement->inner_code, 2, '0', STR_PAD_LEFT)
-                //                             . '-'
-                //                             . str_pad($household->number, 4, '0', STR_PAD_LEFT)
-                //                             . '-'
-                //                             . $household->household_type_id,
                 'raw_address'           =>  $household->address,
                 'address'               =>  $household->getAddress(),
                 // 'special_marks'         =>  $household->special_marks,

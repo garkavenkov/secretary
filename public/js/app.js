@@ -22451,6 +22451,7 @@ __webpack_require__.r(__webpack_exports__);
     // redirect: {
     //     name: 'households.show.members'
     // },
+    // Block for DELETE ?!?!?!?!
     children: [
     // {
     //     path: '',
@@ -22469,12 +22470,13 @@ __webpack_require__.r(__webpack_exports__);
       },
       props: true
     }]
+    // Block for DELETE ?!?!?!?!
   }, {
     path: 'houses',
     component: function component() {
       return __webpack_require__.e(/*! import() | household-cards */ "household-cards").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/Households/HouseYears/HouseYears.vue */ "./resources/js/modules/Households/HouseYears/HouseYears.vue"));
     },
-    name: 'households.show.house-years',
+    name: 'households.show.house.years',
     meta: {
       name: 'Будинок - Квартира'
     }
@@ -22483,7 +22485,7 @@ __webpack_require__.r(__webpack_exports__);
     component: function component() {
       return __webpack_require__.e(/*! import() | household-cards */ "household-cards").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/Households/LandYears/LandYears.vue */ "./resources/js/modules/Households/LandYears/LandYears.vue"));
     },
-    name: 'households.show.land-years',
+    name: 'households.show.land.years',
     meta: {
       name: 'Земля'
     }

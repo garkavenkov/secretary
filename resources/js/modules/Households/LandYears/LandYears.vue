@@ -73,6 +73,37 @@
                         <TableRow :years="years" field="hot_water_supply" rowTitle="горячого водопостачання" rowTitleClass="ps-5" :fieldValue="true"></TableRow> -->
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-between align-items-center" v-if="years.length > 0">
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">Відображати</span>
+                            <select name="per_Page"
+                                    id="per_page"
+                                    class="form-select form-select-sm"
+                                    :disabled="years.length == 0"
+                                    v-model="perPage">
+                                <option v-for="(value, index) in [1,2,3,5]"
+                                        :selected="perPage == value"
+                                        :key="index"
+                                        :value="value">
+                                    {{value}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="text-muted ms-3">
+                            Відображено з {{ meta.from }} по {{ meta.to }} із {{ meta.total }}
+                        </div>
+                    </div>
+                    <ul class="pagination mb-0">
+                       <li class="page-item" v-for="(link,index) in meta.links" :key="index">
+                            <a  class='page-link'
+                                :class="[link.active ? 'active' : '', link.url  ? '' : 'disabled' ]"
+                                v-html="link.label"
+                                @click="fetchYears(link.url)">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="col-md-3">
                 <div class="card rounded-0">
@@ -99,7 +130,7 @@
     <LandYearForm
             :formData="yearData"
             :action="action"
-            @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+            @refreshData="fetchYears" />
 
     <LandAdditionalDataForm
             :formData="additionalData"
@@ -118,11 +149,11 @@ import LandYearForm             from './LandYearForm.vue';
 import LandAdditionalDataForm   from './LandAdditionalDataForm.vue';
 
 import NumberFormat             from '../../../mixins/NumberFormat';
-import HouseholdYearsCUD        from '../../../mixins/HouseholdYearsCUD';
+import YearsCUD                 from '../../../mixins/YearsCUD';
 
 export default {
     name: 'HouseholdLandYears',
-    mixins: [NumberFormat, HouseholdYearsCUD],
+    mixins: [NumberFormat, YearsCUD],
     data() {
         return {
             yearData: {
@@ -139,8 +170,12 @@ export default {
             modalTitle: '',
             modalSubmitCaption: '',
             action: '',
+            owner: 'household_id',
             yearFormId: 'LandYearForm',
-            apiUrl: '/api/v1/household-lands'
+            apiUrl: '/api/v1/household-lands',
+            meta: {},
+            years: [],
+            perPage: 5
         }
     },
     provide() {
@@ -154,11 +189,21 @@ export default {
             this.modalTitle = 'Додаткова інформація';
             this.modalSubmitCaption = 'Зберегти'
 
-            this.additionalData.household_id = this.household_id;
+            this.additionalData.household_id = this.owner_id;
             this.additionalData.land_additional_data = this.landInfo('land_additional_data');
 
             var additionalDataForm = new Modal(document.getElementById('LandAdditionalDataForm'))
             additionalDataForm.show()
+        },
+        fetchYears(url) {
+            if (url == undefined) {
+                url = `/api/v1/households/${this.$route.params.id}/land-years?per_page=${this.perPage}`;
+            }
+            axios.get(url)
+                .then(res => {
+                    this.years = res.data.data.reverse();
+                    this.meta = res.data.meta;
+                });
         },
         landInfo(param) {
             let additionalParam = this.info.find(i => i.code == param)
@@ -166,7 +211,22 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('Households', {'years':'landYears', 'household_id': 'household_id', 'info': 'landInfo'})
+        ...mapGetters('Households', {'owner_id': 'household_id', 'info': 'landInfo'})
+    },
+    created() {
+        this.fetchYears();
+    },
+    watch: {
+        '$route' (to, from) {
+            if (to.params.id !== from.params.id) {
+                this.fetchYears();
+            }
+        },
+        'perPage' (newVal, oldVal) {
+            if (newVal) {
+                this.fetchYears();
+            }
+        }
     },
     components: {
         TableRow,

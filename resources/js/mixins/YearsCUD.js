@@ -6,7 +6,7 @@ export default {
             this.modalTitle = 'Додати дані';
             this.modalSubmitCaption = 'Додати';
             this.action = 'create';
-            this.yearData.household_id = this.household_id;
+            this.yearData[this.owner] = this.owner_id;
 
             let yearForm = new Modal(document.getElementById(this.yearFormId))
             if (e.ctrlKey) {
@@ -24,7 +24,7 @@ export default {
                     if(res.isConfirmed) {
                         axios.delete(`${this.apiUrl}/${year.id}`)
                             .then(res => {
-                                this.$store.dispatch('Households/fetchRecord', this.household_id);
+                                this.fetchYears();
                                 this.$toast(res.data.message);
                             })
                             .catch(err => {

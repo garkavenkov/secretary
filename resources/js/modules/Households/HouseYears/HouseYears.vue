@@ -124,6 +124,37 @@
                                     rowTitle="<b>Загальна площа нежитлових будівель, м<sup>2</sup></b>" />
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-between align-items-center" v-if="years.length > 0">
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center">
+                            <span class="me-1">Відображати</span>
+                            <select name="per_Page"
+                                    id="per_page"
+                                    class="form-select form-select-sm"
+                                    :disabled="years.length == 0"
+                                    v-model="perPage">
+                                <option v-for="(value, index) in [1,2,3,5]"
+                                        :selected="perPage == value"
+                                        :key="index"
+                                        :value="value">
+                                    {{value}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="text-muted ms-3">
+                            Відображено з {{ meta.from }} по {{ meta.to }} із {{ meta.total }}
+                        </div>
+                    </div>
+                    <ul class="pagination mb-0">
+                       <li class="page-item" v-for="(link,index) in meta.links" :key="index">
+                            <a  class='page-link'
+                                :class="[link.active ? 'active' : '', link.url  ? '' : 'disabled' ]"
+                                v-html="link.label"
+                                @click="fetchYears(link.url)">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="col-md-3">
                 <!-- <div>
@@ -194,7 +225,7 @@
 
     <HouseYearForm  :formData="yearData"
                     :action="action"
-                    @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+                    @refreshData="fetchYears" />
 
     <HouseInfoForm  :formData="infoData"
                     @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
@@ -216,11 +247,11 @@ import HouseInfoForm            from './HouseInfoForm.vue';
 import HouseAdditionalDataForm  from './HouseAdditionalDataForm.vue';
 
 import TableRow                 from '../../../components/ui/TableRow.vue';
-import HouseholdYearsCUD        from '../../../mixins/HouseholdYearsCUD';
+import YearsCUD                 from '../../../mixins/YearsCUD';
 
 export default {
     name: 'HouseholdHouseYears',
-    mixins: [HouseholdYearsCUD],
+    mixins: [YearsCUD],
     data() {
         return {
             yearData: {
@@ -254,9 +285,13 @@ export default {
             modalSubmitCaption: '',
             modalTitle: '',
             action: '',
+            owner: 'household_id',
             yearFormId: 'HouseInfoModalForm',
             apiUrl: '/api/v1/household-houses',
             houseInfoIsEditable: false,
+            meta: {},
+            years: [],
+            perPage: 5
         }
     },
     provide() {
@@ -276,7 +311,7 @@ export default {
             this.modalTitle = 'Інформація по будинку';
             this.modalSubmitCaption = 'Зберегти'
 
-            this.infoData.household_id                  = this.household_id;
+            this.infoData.household_id                  = this.owner_id;
             this.infoData.house_year_of_construction    = this.houseInfo('house_year_of_construction');
             this.infoData.house_material_walls          = this.houseInfo('house_material_walls');
             this.infoData.house_material_roof           = this.houseInfo('house_material_roof');
@@ -288,11 +323,21 @@ export default {
             this.modalTitle = 'Додаткова інформація';
             this.modalSubmitCaption = 'Зберегти'
 
-            this.additionalData.household_id = this.household_id;
+            this.additionalData.household_id = this.owner_id;
             this.additionalData.house_additional_data = this.houseInfo('house_additional_data');
 
             var additionalDataForm = new Modal(document.getElementById('HouseAdditionalDataForm'))
             additionalDataForm.show()
+        },
+        fetchYears(url) {
+            if (url == undefined) {
+                url = `/api/v1/households/${this.$route.params.id}/house-years?per_page=${this.perPage}`;
+            }
+            axios.get(url)
+                .then(res => {
+                    this.years = res.data.data.reverse();
+                    this.meta = res.data.meta;
+                });
         },
         houseInfo(param) {
             let additionalParam = this.info.find(i => i.code == param)
@@ -300,7 +345,22 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('Households', {'years':'houseYears', 'household_id': 'household_id', 'info': 'houseInfo'})
+        ...mapGetters('Households', {'owner_id': 'household_id', 'info': 'houseInfo'})
+    },
+    watch: {
+        '$route' (to, from) {
+            if (to.params.id !== from.params.id) {
+                this.fetchYears();
+            }
+        },
+        'perPage' (newVal, oldVal) {
+            if (newVal) {
+                this.fetchYears();
+            }
+        }
+    },
+    created() {
+        this.fetchYears();
     },
     components: {
         TableRow,

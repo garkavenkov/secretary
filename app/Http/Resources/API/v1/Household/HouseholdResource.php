@@ -47,11 +47,6 @@ class HouseholdResource extends JsonResource
 
         return [
             'id'                    =>  (int)   $this->id,
-            // 'number'                =>  str_pad($this->settlement->inner_code, 2, '0', STR_PAD_LEFT)
-            //                             . '-'
-            //                             . str_pad($this->number, 4, '0', STR_PAD_LEFT)
-            //                             . '-'
-            //                             . $this->household_type_id,
             'number'                =>  $this->fullNumber(),
             'info'                  =>  [
                 'settlement_id'         =>  (int)   $this->settlement_id,
@@ -67,11 +62,10 @@ class HouseholdResource extends JsonResource
                 'additional_data'       =>  $this->additional_data,
                 'owners'                =>  $this->owners,
             ],
-            // 'members'               =>  HouseholdMemberResource::collection($this->whenLoaded('members')),
             'members'               =>  $members,
-            'houseYears'            =>  HouseholdHouseResource::collection($this->whenLoaded('houseYears')),
+            // 'houseYears'            =>  HouseholdHouseResource::collection($this->whenLoaded('houseYears')),
             'houseInfo'             =>  $this->houseInfo(),
-            'landYears'             =>  HouseholdLandResource::collection($this->whenLoaded('landYears')),
+            // 'landYears'             =>  HouseholdLandResource::collection($this->whenLoaded('landYears')),
             'landInfo'              =>  $this->landInfo(),
             'familyInfo'            =>  AdditionalParamValueResource::collection($this->familyInfo()),
         ];

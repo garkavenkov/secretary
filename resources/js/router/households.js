@@ -29,6 +29,7 @@ export default [
                 // redirect: {
                 //     name: 'households.show.members'
                 // },
+                // Block for DELETE ?!?!?!?!
                 children: [
                     // {
                     //     path: '',
@@ -44,17 +45,18 @@ export default [
                         props: true
                     },
                 ]
+                // Block for DELETE ?!?!?!?!
             },
             {
                 path: 'houses',
                 component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/HouseYears/HouseYears.vue'),
-                name: 'households.show.house-years',
+                name: 'households.show.house.years',
                 meta: {name: 'Будинок - Квартира'},
             },
             {
                 path: 'lands',
                 component: () => import(/* webpackChunkName: "household-cards" */'../modules/Households/LandYears/LandYears.vue'),
-                name: 'households.show.land-years',
+                name: 'households.show.land.years',
                 meta: {name: 'Земля'},
             },
         ],

@@ -47,13 +47,13 @@
                         </router-link>
                     </li>
                     <li class="nav-item" >
-                        <router-link :to="{name: 'households.show.house-years'}" class="nav-link">
+                        <router-link :to="{name: 'households.show.house.years'}" class="nav-link">
                             <span class="mdi mdi-home-outline"></span>
                             Будинок / Квартира
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{name: 'households.show.land-years'}" class="nav-link">
+                        <router-link :to="{name: 'households.show.land.years'}" class="nav-link">
                             <span class="mdi mdi-land-fields"></span>
                             Земля
                         </router-link>
@@ -159,9 +159,10 @@ export default {
     },
     watch: {
         '$route' (to, from) {
-            this.$store.dispatch('Households/fetchRecord', to.params.id,);
+            if (to.params.id !== from.params.id) {
+                this.$store.dispatch('Households/fetchRecord', to.params.id,);
+            }
         },
-
     },
     created() {
         this.$store.dispatch('Households/fetchRecord', this.id);

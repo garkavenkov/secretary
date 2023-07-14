@@ -173,9 +173,9 @@ class HouseholdMember extends Model
         return $this->additionalParamValue();
     }
 
-    public function land($years = 5)
+    public function land()
     {
-        return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc');//->limit($years);
+        return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc');
     }
 
     protected static function boot()
