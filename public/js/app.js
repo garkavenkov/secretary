@@ -22892,17 +22892,142 @@ __webpack_require__.r(__webpack_exports__);
           ent: state.entities,
           data: res.data.data
         });
+        if (res.data.meta) {
+          commit('setData', {
+            ent: 'pagination',
+            data: res.data.meta
+          });
+        }
       });
     },
     fetchRecord: function fetchRecord(_ref2, id) {
       var commit = _ref2.commit,
         state = _ref2.state;
-      axios__WEBPACK_IMPORTED_MODULE_0__["default"].get("".concat(state.url, "/").concat(id)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0__["default"].get("".concat(state.baseUrl, "/").concat(id)).then(function (res) {
         commit('setData', {
           ent: state.entity,
           data: res.data.data
         });
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/core/filter.js":
+/*!*******************************************!*\
+  !*** ./resources/js/store/core/filter.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) { ; } } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mutations: {
+    setFilter: function setFilter(state, payload) {
+      for (var _i = 0, _Object$entries = Object.entries(state.filter); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 1),
+          key = _Object$entries$_i[0];
+        state.filter[key] = payload[key];
+      }
+    }
+  },
+  actions: {
+    applyFilter: function applyFilter(_ref, payload) {
+      var commit = _ref.commit,
+        dispatch = _ref.dispatch;
+      commit('setFilter', payload);
+      commit('makeQueryString');
+      dispatch('fetchRecords');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/core/pagination.js":
+/*!***********************************************!*\
+  !*** ./resources/js/store/core/pagination.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  actions: {
+    changePerPage: function changePerPage(_ref, value) {
+      var commit = _ref.commit,
+        dispatch = _ref.dispatch;
+      commit('setData', {
+        ent: 'perPage',
+        data: value
+      });
+      commit('makeQueryString');
+      dispatch('fetchRecords');
+    },
+    changePage: function changePage(_ref2, url) {
+      var commit = _ref2.commit,
+        dispatch = _ref2.dispatch;
+      commit('setData', {
+        ent: 'url',
+        data: url
+      });
+      dispatch('fetchRecords');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/core/queryString.js":
+/*!************************************************!*\
+  !*** ./resources/js/store/core/queryString.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mutations: {
+    makeQueryString: function makeQueryString(state, page) {
+      if (state.filter.isFiltered) {
+        var conditions = [];
+        if (state.filter.settlement_id > 0) {
+          conditions.push("settlement_id=".concat(state.filter.settlement_id));
+        }
+        if (state.filter.household_type_id > 0) {
+          conditions.push("household_type_id=".concat(state.filter.household_type_id));
+        }
+        if (state.filter.sex && state.filter.sex !== 'all') {
+          conditions.push("sex=".concat(state.filter.sex));
+        }
+        if (conditions.length > 0) {
+          state.url = state.baseUrl + "?per_page=".concat(state.perPage, "&where=") + conditions.join(';');
+        } else {
+          state.url = state.baseUrl + "?per_page=".concat(state.perPage);
+        }
+      } else {
+        state.url = state.baseUrl + "?per_page=".concat(state.perPage);
+      }
+      if (page) {
+        state.url = state.url + "&page=".concat(page);
+      }
     }
   }
 });
@@ -23188,20 +23313,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "HouseholdMembers": () => (/* binding */ HouseholdMembers)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var _core_crud__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/crud */ "./resources/js/store/core/crud.js");
+/* harmony import */ var _core_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/pagination */ "./resources/js/store/core/pagination.js");
+/* harmony import */ var _core_filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/filter */ "./resources/js/store/core/filter.js");
+/* harmony import */ var _core_queryString__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/queryString */ "./resources/js/store/core/queryString.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) { ; } } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
 
 
 var HouseholdMembers = {
@@ -23222,7 +23345,9 @@ var HouseholdMembers = {
     baseUrl: '/api/v1/household-members',
     url: '',
     entities: 'members',
-    entity: 'member'
+    entity: 'member',
+    pagination: {},
+    perPage: 10
   },
   getters: {
     members: function members(state) {
@@ -23236,6 +23361,9 @@ var HouseholdMembers = {
     },
     filter: function filter(state) {
       return state.filter;
+    },
+    pagination: function pagination(state) {
+      return state.pagination;
     }
     // info: state => Object.assign({}, state.member.info),
     // members: state => state.household.members,
@@ -23249,55 +23377,8 @@ var HouseholdMembers = {
     // familyInfo: state => state.household.familyInfo,
   },
 
-  mutations: _objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), {}, {
-    setFilter: function setFilter(state, payload) {
-      for (var _i = 0, _Object$entries = Object.entries(state.filter); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 1),
-          key = _Object$entries$_i[0];
-        state.filter[key] = payload[key];
-      }
-    },
-    makeQueryString: function makeQueryString(state) {
-      if (state.filter.isFiltered) {
-        var conditions = [];
-        if (state.filter.settlement_id > 0) {
-          conditions.push("settlement_id=".concat(state.filter.settlement_id));
-        }
-        if (state.filter.sex !== 'all') {
-          conditions.push("sex=".concat(state.filter.sex));
-          // if (state.filter.sex == 'men') {
-          //     conditions.push('sex="чоловіча"');
-          // } else if (state.filter.sex == 'women') {
-          //     conditions.push('sex="жіноча"');
-          // }
-        }
-
-        state.url = state.baseUrl + '?where=' + conditions.join(';');
-      } else {
-        state.url = state.baseUrl;
-      }
-    }
-  }),
-  actions: {
-    fetchRecords: _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].actions.fetchRecords,
-    applyFilter: function applyFilter(_ref, payload) {
-      var commit = _ref.commit,
-        dispatch = _ref.dispatch;
-      commit('setFilter', payload);
-      commit('makeQueryString');
-      dispatch('fetchRecords');
-    },
-    fetchRecord: function fetchRecord(_ref2, id) {
-      var commit = _ref2.commit,
-        state = _ref2.state;
-      axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("".concat(state.baseUrl, "/").concat(id)).then(function (res) {
-        commit('setData', {
-          ent: state.entity,
-          data: res.data.data
-        });
-      });
-    }
-  }
+  mutations: _objectSpread(_objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), _core_filter__WEBPACK_IMPORTED_MODULE_2__["default"].mutations), _core_queryString__WEBPACK_IMPORTED_MODULE_3__["default"].mutations),
+  actions: _objectSpread(_objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].actions), _core_pagination__WEBPACK_IMPORTED_MODULE_1__["default"].actions), _core_filter__WEBPACK_IMPORTED_MODULE_2__["default"].actions)
 };
 
 /***/ }),
@@ -23355,20 +23436,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Households": () => (/* binding */ Households)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var _core_crud__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/crud */ "./resources/js/store/core/crud.js");
+/* harmony import */ var _core_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/pagination */ "./resources/js/store/core/pagination.js");
+/* harmony import */ var _core_filter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/filter */ "./resources/js/store/core/filter.js");
+/* harmony import */ var _core_queryString__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/queryString */ "./resources/js/store/core/queryString.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) { ; } } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
 
 
 var Households = {
@@ -23392,7 +23471,9 @@ var Households = {
     baseUrl: '/api/v1/households',
     url: '',
     entities: 'households',
-    entity: 'household'
+    entity: 'household',
+    pagination: {},
+    perPage: 10
   },
   getters: {
     households: function households(state) {
@@ -23439,51 +23520,13 @@ var Households = {
     },
     familyInfo: function familyInfo(state) {
       return state.household.familyInfo;
+    },
+    pagination: function pagination(state) {
+      return state.pagination;
     }
   },
-  mutations: _objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), {}, {
-    setFilter: function setFilter(state, payload) {
-      for (var _i = 0, _Object$entries = Object.entries(state.filter); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 1),
-          key = _Object$entries$_i[0];
-        state.filter[key] = payload[key];
-      }
-    },
-    makeQueryString: function makeQueryString(state) {
-      if (state.filter.isFiltered) {
-        var conditions = [];
-        if (state.filter.settlement_id > 0) {
-          conditions.push("settlement_id=".concat(state.filter.settlement_id));
-        }
-        if (state.filter.household_type_id > 0) {
-          conditions.push("household_type_id=".concat(state.filter.household_type_id));
-        }
-        state.url = state.baseUrl + '?where=' + conditions.join(';');
-      } else {
-        state.url = state.baseUrl;
-      }
-    }
-  }),
-  actions: {
-    fetchRecords: _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].actions.fetchRecords,
-    applyFilter: function applyFilter(_ref, payload) {
-      var commit = _ref.commit,
-        dispatch = _ref.dispatch;
-      commit('setFilter', payload);
-      commit('makeQueryString');
-      dispatch('fetchRecords');
-    },
-    fetchRecord: function fetchRecord(_ref2, id) {
-      var commit = _ref2.commit,
-        state = _ref2.state;
-      axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("".concat(state.baseUrl, "/").concat(id)).then(function (res) {
-        commit('setData', {
-          ent: state.entity,
-          data: res.data.data
-        });
-      });
-    }
-  }
+  mutations: _objectSpread(_objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].mutations), _core_filter__WEBPACK_IMPORTED_MODULE_2__["default"].mutations), _core_queryString__WEBPACK_IMPORTED_MODULE_3__["default"].mutations),
+  actions: _objectSpread(_objectSpread(_objectSpread({}, _core_crud__WEBPACK_IMPORTED_MODULE_0__["default"].actions), _core_pagination__WEBPACK_IMPORTED_MODULE_1__["default"].actions), _core_filter__WEBPACK_IMPORTED_MODULE_2__["default"].actions)
 };
 
 /***/ }),

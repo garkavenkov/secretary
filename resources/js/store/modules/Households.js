@@ -1,5 +1,7 @@
-import axios from 'axios';
-import crud from '../core/crud';
+import crud         from '../core/crud';
+import pagination   from '../core/pagination';
+import filter       from '../core/filter';
+import queryString  from '../core/queryString';
 
 export const Households = {
     namespaced: true,
@@ -23,6 +25,8 @@ export const Households = {
         url: '',
         entities: 'households',
         entity: 'household',
+        pagination: {},
+        perPage: 10
     },
     getters: {
         households: state => state.households,
@@ -38,41 +42,16 @@ export const Households = {
         availableLandYears: state => state.household.landYears.map(y => y.year).sort((a, b) => b - a),
         landInfo: state => state.household.landInfo,
         familyInfo: state => state.household.familyInfo,
+        pagination: state => state.pagination
     },
     mutations: {
         ...crud.mutations,
-        setFilter(state, payload) {
-            for (const [key] of Object.entries(state.filter)) {
-                state.filter[key] = payload[key];
-            }
-        },
-        makeQueryString(state) {
-            if (state.filter.isFiltered) {
-                let conditions = [];
-                if (state.filter.settlement_id > 0) {
-                    conditions.push(`settlement_id=${state.filter.settlement_id}`);
-                }
-                if (state.filter.household_type_id > 0) {
-                    conditions.push(`household_type_id=${state.filter.household_type_id}`);
-                }
-                state.url = state.baseUrl + '?where=' + conditions.join(';');
-            } else {
-                state.url = state.baseUrl;
-            }
-        }
+        ...filter.mutations,
+        ...queryString.mutations
     },
     actions: {
-        fetchRecords: crud.actions.fetchRecords,
-        applyFilter: ({commit, dispatch}, payload) => {
-            commit('setFilter', payload );
-            commit('makeQueryString');
-            dispatch('fetchRecords' );
-        },
-        fetchRecord: ({commit, state}, id) =>  {
-            axios.get(`${state.baseUrl}/${id}`)
-                .then(res => {
-                    commit('setData', {ent:state.entity, data: res.data.data});
-                });
-        }
+        ...crud.actions,
+        ...pagination.actions,
+        ...filter.actions,
     }
 }

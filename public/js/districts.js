@@ -50,6 +50,11 @@ __webpack_require__.r(__webpack_exports__);
       "default": function _default() {
         return true;
       }
+    },
+    'externalPagination': {
+      type: Object,
+      required: false
+      // default: () => {}
     }
   },
   data: function data() {
@@ -59,17 +64,18 @@ __webpack_require__.r(__webpack_exports__);
       searchData: ''
     };
   },
+  emits: ['pageChanged', 'perPageChanged'],
   methods: {
     changePerPage: function changePerPage(value) {
-      // if (this.externalPagination) {
-      //     let url = `${this.pagination.path}/?per_page=${value}`;
-      //     this.$emit('fetchData', url);
-      // } else {
-      //     this.perPage = value === "all" ? value :  parseInt(value);
-      //     this.currentPage = 1;
-      // }
-      this.perPage = parseInt(value);
-      this.currentPage = 1;
+      var _this$externalPaginat;
+      if ((_this$externalPaginat = this.externalPagination) !== null && _this$externalPaginat !== void 0 && _this$externalPaginat.per_page) {
+        // let url = `${this.pagination.path}/?per_page=${value}`;
+        this.$emit('perPageChanged', value);
+      } else {
+        // this.perPage = value === "all" ? value :  parseInt(value);
+        this.perPage = parseInt(value);
+        this.currentPage = 1;
+      }
     },
     nextPage: function nextPage() {
       this.currentPage++;
@@ -78,34 +84,67 @@ __webpack_require__.r(__webpack_exports__);
       this.currentPage--;
     },
     changePage: function changePage(page) {
+      var _this$externalPaginat2;
+      if ((_this$externalPaginat2 = this.externalPagination) !== null && _this$externalPaginat2 !== void 0 && _this$externalPaginat2.current_page) {
+        this.$emit('pageChanged', page);
+      }
       this.currentPage = page;
     }
   },
   computed: {
     pagesCount: function pagesCount() {
-      return this.searchData == '' ? Math.ceil(this.dataTable.length / this.perPage) : Math.ceil(this.paginatedData.length / this.perPage);
+      var _this$externalPaginat3;
+      if ((_this$externalPaginat3 = this.externalPagination) !== null && _this$externalPaginat3 !== void 0 && _this$externalPaginat3.last_page) {
+        return this.externalPagination.last_page;
+      } else {
+        return this.searchData == '' ? Math.ceil(this.dataTable.length / this.perPage) : Math.ceil(this.paginatedData.length / this.perPage);
+      }
     },
     paginatedData: function paginatedData() {
-      var start = (this.currentPage - 1) * this.perPage,
-        end = start + this.perPage;
-      // if (this.searchData !== '') {
-      //     return this.dataTable
-      //             // .filter(r => {
-      //             //     return r.supplier.includes(this.searchData)
-      //             // })
-      //             .filter(r => this.$parent.searchData(r, this.searchData))
-      //             .slice(start, end);
-      // }
-      return this.dataTable.slice(start, end);
+      var _this$externalPaginat4,
+        _this = this;
+      if ((_this$externalPaginat4 = this.externalPagination) !== null && _this$externalPaginat4 !== void 0 && _this$externalPaginat4.total) {
+        if (this.searchData !== '') {
+          return this.dataTable.filter(function (r) {
+            return _this.$parent.searchData(r, _this.searchData);
+          });
+        }
+        return this.dataTable;
+      } else {
+        var start = (this.currentPage - 1) * this.perPage,
+          end = start + this.perPage;
+        if (this.searchData !== '') {
+          return this.dataTable.filter(function (r) {
+            return _this.$parent.searchData(r, _this.searchData);
+          }).slice(start, end);
+        }
+        return this.dataTable.slice(start, end);
+      }
     },
     shownFrom: function shownFrom() {
-      return (this.currentPage - 1) * this.perPage;
+      var _this$externalPaginat5;
+      if ((_this$externalPaginat5 = this.externalPagination) !== null && _this$externalPaginat5 !== void 0 && _this$externalPaginat5.from) {
+        return this.externalPagination.from;
+      } else {
+        return (this.currentPage - 1) * this.perPage + 1;
+      }
     },
     shownTo: function shownTo() {
-      var show = this.shownFrom + this.perPage;
-      // return this.shownFrom + this.perPage;
-      return show < this.dataTable.length ? show : this.dataTable.length;
-      // return show < this.paginatedData.length ? show : this.paginatedData.length;
+      var _this$externalPaginat6;
+      if ((_this$externalPaginat6 = this.externalPagination) !== null && _this$externalPaginat6 !== void 0 && _this$externalPaginat6.to) {
+        return this.externalPagination.to;
+      } else {
+        var show = this.shownFrom + this.perPage;
+        return show < this.dataTable.length ? show : this.dataTable.length;
+      }
+    },
+    shownTotal: function shownTotal() {
+      var _this$externalPaginat7;
+      if ((_this$externalPaginat7 = this.externalPagination) !== null && _this$externalPaginat7 !== void 0 && _this$externalPaginat7.total) {
+        return this.externalPagination.total;
+      } else {
+        return this.dataTable.length;
+      }
     },
     isLastPage: function isLastPage() {
       return this.currentPage == this.pagesCount;
@@ -577,13 +616,12 @@ var _hoisted_12 = {
   "class": "data-table__pagination--wrapper d-flex justify-content-between align-items-center py-2"
 };
 var _hoisted_13 = {
-  "aria-label": "Page navigation example"
-};
-var _hoisted_14 = {
   "class": "pagination mb-0"
 };
+var _hoisted_14 = ["innerHTML", "onClick"];
 var _hoisted_15 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _$props$externalPagin;
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [$props.showActionsPanel ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     name: "per_Page",
     id: "per_page",
@@ -597,22 +635,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: index,
       value: value
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(value), 9 /* TEXT, PROPS */, _hoisted_6);
-  }), 128 /* KEYED_FRAGMENT */))], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }), 128 /* KEYED_FRAGMENT */))], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <input  type=\"search\"\n                            id=\"search\"\n                            class=\"search\"\n                            readonly\n                            autocomplete=\"off\"\n                            @input=\"$emit('searchInput', $event.target.value)\"> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "search",
     id: "search",
     "class": "search",
-    readonly: "",
     autocomplete: "off",
-    onInput: _cache[1] || (_cache[1] = function ($event) {
-      return _ctx.$emit('searchInput', $event.target.value);
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.searchData = $event;
     })
-  }, null, 32 /* HYDRATE_EVENTS */)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchData]])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["table table-striped", $props.tableClass])
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($props.tableHeaderClass)
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "header", {}, undefined, true)], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {
     paginatedData: $options.paginatedData
-  }, undefined, true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tfoot", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "footer", {}, undefined, true)])], 2 /* CLASS */)])]), $options.paginatedData.length > 0 && $props.showPaginationPanel ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "Відображено з " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.shownFrom + 1) + " по " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.shownTo) + " із " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.dataTable.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div><span v-if=\"searchData == ''\">Отображено</span><span v-else>Найдено</span> c {{shownFrom + 1}} по {{shownTo}} из {{paginatedData.length}}</div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+  }, undefined, true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tfoot", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "footer", {}, undefined, true)])], 2 /* CLASS */)])]), $options.paginatedData.length > 0 && $props.showPaginationPanel ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "Відображено з " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.shownFrom) + " по " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.shownTo) + " із " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.shownTotal), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_13, [(_$props$externalPagin = $props.externalPagination) !== null && _$props$externalPagin !== void 0 && _$props$externalPagin.links ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 0
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.externalPagination.links, function (link, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
+      "class": "page-item",
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["page-link", [link.active ? 'active' : '', link.url ? '' : 'disabled']]),
+      innerHTML: link.label,
+      onClick: function onClick($event) {
+        return $options.changePage(link.url);
+      }
+    }, null, 10 /* CLASS, PROPS */, _hoisted_14)]);
+  }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+    key: 1
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["page-item", {
       'disabled': $options.isFirstPage
     }])
@@ -621,7 +673,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[2] || (_cache[2] = function () {
       return $options.prevPage && $options.prevPage.apply($options, arguments);
     })
-  }, "Previous")], 2 /* CLASS */), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.pagesCount, function (page) {
+  }, " Previous ")], 2 /* CLASS */), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.pagesCount, function (page) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["page-item", [$data.currentPage == page ? 'active' : '']]),
       key: page
@@ -640,7 +692,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[3] || (_cache[3] = function () {
       return $options.nextPage && $options.nextPage.apply($options, arguments);
     })
-  }, "Next")], 2 /* CLASS */)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  }, " Next ")], 2 /* CLASS */)], 64 /* STABLE_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),

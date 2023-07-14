@@ -30,6 +30,11 @@ class HouseholdMemberController extends Controller
      */
     public function index()
     {
+        if (request()->query('per_page')) {
+            $per_page = request()->query('per_page');
+        } else {
+            $per_page = 3;
+        }
         if (request()->query('household_id')) {
             $household_id = request()->query('household_id');
             $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')->where('household_id', $household_id)->get();
@@ -50,10 +55,10 @@ class HouseholdMemberController extends Controller
                     }
                 }
             }
-            $members = $members->paginate(10);
+            $members = $members->paginate($per_page);
             // return new HouseholdMemberResourceCollection($members);
         } else {
-            $members = HouseholdMember::with('household')->paginate(10);
+            $members = HouseholdMember::with('household')->paginate($per_page);
             // return new HouseholdMemberResourceCollection($members);
         }
 

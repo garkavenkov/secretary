@@ -18,12 +18,17 @@
             <div class="search__wrapper">
                 <form autocomplete="off">
                     <label  for="search">Поіск</label>
-                    <input  type="search"
+                    <!-- <input  type="search"
                             id="search"
                             class="search"
                             readonly
                             autocomplete="off"
-                            @input="$emit('searchInput', $event.target.value)">
+                            @input="$emit('searchInput', $event.target.value)"> -->
+                    <input  type="search"
+                            id="search"
+                            class="search"
+                            autocomplete="off"
+                            v-model="searchData">
                 </form>
             </div>
         </div>
@@ -43,19 +48,35 @@
             </div>
         </div>
         <div class="data-table__pagination--wrapper d-flex justify-content-between align-items-center py-2" v-if="(paginatedData.length > 0) && showPaginationPanel">
-            <div>Відображено з {{shownFrom + 1}} по {{shownTo}} із {{dataTable.length}}</div>
-            <!-- <div><span v-if="searchData == ''">Отображено</span><span v-else>Найдено</span> c {{shownFrom + 1}} по {{shownTo}} из {{paginatedData.length}}</div> -->
-            <nav aria-label="Page navigation example">
-                <ul class="pagination mb-0">
-                    <li class="page-item" :class="{'disabled': isFirstPage}"><a class="page-link" @click="prevPage" >Previous</a></li>
+            <div>Відображено з {{shownFrom}} по {{shownTo}} із {{shownTotal}}</div>
+            <ul class="pagination mb-0">
+                <template v-if="externalPagination?.links">
+                    <li class="page-item" v-for="(link,index) in externalPagination.links" :key="index">
+                        <a  class='page-link'
+                            :class="[link.active ? 'active' : '', link.url  ? '' : 'disabled' ]"
+                            v-html="link.label"
+                            @click="changePage(link.url)">
+                        </a>
+                    </li>
+                </template>
+                <template v-else>
+                    <li class="page-item" :class="{'disabled': isFirstPage}">
+                        <a class="page-link" @click="prevPage" >
+                            Previous
+                        </a>
+                    </li>
                     <li class="page-item"
                         v-bind:class="[(currentPage == page) ? 'active' : '']"
                         v-for="page in pagesCount" :key="page">
                             <a class="page-link" @click="changePage(page)">{{page}}</a>
                     </li>
-                  <li class="page-item" :class="{'disabled': isLastPage}"><a class="page-link" @click="nextPage">Next</a></li>
-                </ul>
-            </nav>
+                    <li class="page-item" :class="{'disabled': isLastPage}">
+                        <a class="page-link" @click="nextPage">
+                            Next
+                        </a>
+                    </li>
+                </template>
+            </ul>
         </div>
     </div>
 </template>
@@ -101,6 +122,11 @@ export default {
             required: false,
             default: () => true
         },
+        'externalPagination': {
+            type: Object,
+            required: false,
+            // default: () => {}
+        }
     },
     data() {
         return {
@@ -109,17 +135,17 @@ export default {
             searchData: ''
         }
     },
+    emits: ['pageChanged', 'perPageChanged'],
     methods: {
         changePerPage(value) {
-            // if (this.externalPagination) {
-            //     let url = `${this.pagination.path}/?per_page=${value}`;
-            //     this.$emit('fetchData', url);
-            // } else {
-            //     this.perPage = value === "all" ? value :  parseInt(value);
-            //     this.currentPage = 1;
-            // }
-            this.perPage = parseInt(value);
-            this.currentPage = 1;
+            if (this.externalPagination?.per_page) {
+                // let url = `${this.pagination.path}/?per_page=${value}`;
+                this.$emit('perPageChanged', value);
+            } else {
+                // this.perPage = value === "all" ? value :  parseInt(value);
+                this.perPage = parseInt(value);
+                this.currentPage = 1;
+            }
         },
         nextPage() {
             this.currentPage ++;
@@ -128,36 +154,63 @@ export default {
             this.currentPage --;
         },
         changePage(page) {
+            if (this.externalPagination?.current_page) {
+                this.$emit('pageChanged', page)
+            }
             this.currentPage = page;
         }
     },
     computed: {
         pagesCount() {
-            return this.searchData == ''
-                        ? Math.ceil(this.dataTable.length / this.perPage)
-                        : Math.ceil(this.paginatedData.length / this.perPage);
+            if (this.externalPagination?.last_page) {
+                return this.externalPagination.last_page;
+            } else {
+                return this.searchData == ''
+                            ? Math.ceil(this.dataTable.length / this.perPage)
+                            : Math.ceil(this.paginatedData.length / this.perPage);
+            }
         },
         paginatedData(){
-            let start = (this.currentPage - 1) * this.perPage,
-                end = start + this.perPage;
-            // if (this.searchData !== '') {
-            //     return this.dataTable
-            //             // .filter(r => {
-            //             //     return r.supplier.includes(this.searchData)
-            //             // })
-            //             .filter(r => this.$parent.searchData(r, this.searchData))
-            //             .slice(start, end);
-            // }
-            return this.dataTable.slice(start, end);
+            if (this.externalPagination?.total) {
+                if (this.searchData !== '') {
+                   return this.dataTable
+                            .filter(r => this.$parent.searchData(r, this.searchData))
+                }
+                return this.dataTable;
+            } else {
+                let start = (this.currentPage - 1) * this.perPage,
+                    end = start + this.perPage;
+
+                if (this.searchData !== '') {
+                    return this.dataTable
+                            .filter(r => this.$parent.searchData(r, this.searchData))
+                            .slice(start, end);
+                }
+                return this.dataTable.slice(start, end);
+            }
         },
         shownFrom() {
-            return (this.currentPage - 1) * this.perPage;
+            if (this.externalPagination?.from) {
+                return this.externalPagination.from;
+            } else {
+                return (this.currentPage - 1) * this.perPage + 1;
+            }
         },
         shownTo() {
-            let show = this.shownFrom + this.perPage;
-            // return this.shownFrom + this.perPage;
-            return show < this.dataTable.length ? show : this.dataTable.length;
-            // return show < this.paginatedData.length ? show : this.paginatedData.length;
+            if (this.externalPagination?.to) {
+                return this.externalPagination.to;
+            } else {
+                let show = this.shownFrom + this.perPage;
+                return show < this.dataTable.length ? show : this.dataTable.length;
+            }
+
+        },
+        shownTotal() {
+            if (this.externalPagination?.total) {
+                return this.externalPagination.total;
+            } else {
+                return this.dataTable.length
+            }
         },
         isLastPage() {
             return this.currentPage == this.pagesCount;

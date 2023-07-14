@@ -23,7 +23,11 @@
             <DataTable
                     v-if="members.length > 0"
                     :dataTable="members"
-                    tableHeaderClass="table-dark">
+                    :perPageItems="perPageItems"
+                    :externalPagination="pagination"
+                    tableHeaderClass="table-dark"
+                    @pageChanged="pageChanged"
+                    @perPageChanged="perPageChanged">
                 <template v-slot:header>
                     <tr>
                         <th></th>
@@ -81,6 +85,11 @@ export default {
     name: 'HouseholdMembersMain',
     data() {
         return {
+            perPageItems : [
+                10,
+                15,
+                20
+            ],
         }
     },
     provide() {
@@ -91,9 +100,6 @@ export default {
     },
     methods: {
         openFilterForm() {
-            // this.modalTitle = 'Фільтр членів домогосподарств';
-            // this.modalSubmitCaption = 'Застосувати';
-
             let filterForm = new Modal(document.getElementById('MembersFilterForm'));
             filterForm.show();
         },
@@ -102,9 +108,18 @@ export default {
             this.filter.isFiltered = false;
             this.$store.dispatch('HouseholdMembers/applyFilter', this.filter);
         },
+        perPageChanged(value) {
+            this.$store.dispatch('HouseholdMembers/changePerPage', value)
+        },
+        pageChanged(page) {
+            this.$store.dispatch('HouseholdMembers/changePage', page)
+        },
+        searchData(row, searchText) {
+            return row['full_name'].includes(searchText);
+        }
     },
     computed: {
-        ...mapGetters('HouseholdMembers', ['members', 'filter']),
+        ...mapGetters('HouseholdMembers', ['members', 'filter', 'pagination']),
     },
     components: {
         DataTable,

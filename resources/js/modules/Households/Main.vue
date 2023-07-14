@@ -25,7 +25,11 @@
             <DataTable
                     v-if="households.length > 0"
                     :dataTable="households"
-                    tableHeaderClass="table-dark">
+                    :perPageItems="perPageItems"
+                    :externalPagination="pagination"
+                    tableHeaderClass="table-dark"
+                    @pageChanged="pageChanged"
+                    @perPageChanged="perPageChanged">
                 <template v-slot:header>
                     <tr>
                         <th></th>
@@ -87,6 +91,11 @@ export default {
     },
     data() {
         return {
+            perPageItems : [
+                10,
+                15,
+                20
+            ],
             formData: {
                 settlement_id: 0,
                 household_type_id: 0,
@@ -150,12 +159,15 @@ export default {
             this.filter.isFiltered = false;
             this.$store.dispatch('Households/applyFilter', this.filter);
         },
-        openCustomModal() {
-
+        perPageChanged(value) {
+            this.$store.dispatch('Households/changePerPage', value)
+        },
+        pageChanged(page) {
+            this.$store.dispatch('Households/changePage', page)
         }
     },
     computed: {
-        ...mapGetters('Households', ['households', 'filter']),
+        ...mapGetters('Households', ['households', 'filter', 'pagination']),
     }
 }
 </script>

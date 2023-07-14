@@ -25,12 +25,15 @@ class HouseholdController extends Controller
      */
     public function index()
     {
+        if (request()->query('per_page')) {
+            $per_page = request()->query('per_page');
+        } else {
+            $per_page = 3;
+        }
+
         if (request()->query('search')) {
             $search = '%' . str_replace(' ', '%', request()->query('search')) . '%';
-            // $households = Household::with('settlement')
-            //                     ->where('address', 'like', $search)
-            //                     ->take(10);
-                                // ->get();
+
             $households = DB::table('households as h')
                                 ->select(
                                     'h.id',
@@ -47,12 +50,13 @@ class HouseholdController extends Controller
             $result = array_map(function($h) {
                                 $household['id'] = $h->id;
                                 $address_parts = explode(',', $h->address);
-                                $household['address'] = mb_substr(mb_strtolower($h->settlement_type), 0,1) . '. ' .
-                                                        $h->settlement . ', ' . // settlement
-                                                        $address_parts[0] . ' ' . $address_parts[1] . // street
-                                                        ', буд. ' . $address_parts[2] . // house
-                                                        ($address_parts[3] !== '' ? ", корп. $address_parts[3]" : '') . // corps
-                                                        ($address_parts[4] !== '' ? ", кв. $address_parts[4]" : ''); // apartment
+                                $household['address'] = mb_substr
+                                        (mb_strtolower($h->settlement_type), 0,1) . '. ' .
+                                        $h->settlement . ', ' .                                         // settlement
+                                        $address_parts[0] . ' ' . $address_parts[1] .                   // street
+                                        ', буд. ' . $address_parts[2] .                                 // house
+                                        ($address_parts[3] !== '' ? ", корп. $address_parts[3]" : '') . // corps
+                                        ($address_parts[4] !== '' ? ", кв. $address_parts[4]" : '');    // apartment
                                 return $household;
                             }, $households);
 
@@ -95,8 +99,11 @@ class HouseholdController extends Controller
 
                 // return response()->json(['data' => $members]);
             }
+
             return response()->json(['data' => $result]);
+
         }  else if (request()->query('where')) {
+
             $conditions = explode(';', request()->query('where'));
             $households = Household::with('settlement');
             foreach($conditions as $condition) {
@@ -111,9 +118,9 @@ class HouseholdController extends Controller
         } else {
             $households = Household::with('settlement');//->get();
         }
-        $households = $households->orderBy('number')->get();
+        $households = $households->orderBy('number')->paginate($per_page);
 
-        return new HouseholdResourceCollection($households);
+        return new HouseholdResourceCollection($households->withQueryString());
     }
 
     /**
