@@ -124,37 +124,12 @@
                                     rowTitle="<b>Загальна площа нежитлових будівель, м<sup>2</sup></b>" />
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-between align-items-center" v-if="years.length > 0">
-                    <div class="d-flex align-items-center">
-                        <div class="d-flex align-items-center">
-                            <span class="me-1">Відображати</span>
-                            <select name="per_Page"
-                                    id="per_page"
-                                    class="form-select form-select-sm"
-                                    :disabled="years.length == 0"
-                                    v-model="perPage">
-                                <option v-for="(value, index) in [1,2,3,5]"
-                                        :selected="perPage == value"
-                                        :key="index"
-                                        :value="value">
-                                    {{value}}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="text-muted ms-3">
-                            Відображено з {{ meta.from }} по {{ meta.to }} із {{ meta.total }}
-                        </div>
-                    </div>
-                    <ul class="pagination mb-0">
-                       <li class="page-item" v-for="(link,index) in meta.links" :key="index">
-                            <a  class='page-link'
-                                :class="[link.active ? 'active' : '', link.url  ? '' : 'disabled' ]"
-                                v-html="link.label"
-                                @click="fetchYears(link.url)">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <YearsPaginator
+                    v-if="years.length > 0"
+                    v-model="perPage"
+                    :meta="meta"
+                    @fetchYears="fetchYears" />
+
             </div>
             <div class="col-md-3">
                 <!-- <div>
@@ -245,8 +220,9 @@ import { Modal }                from 'bootstrap';
 import HouseYearForm            from './HouseYearForm.vue';
 import HouseInfoForm            from './HouseInfoForm.vue';
 import HouseAdditionalDataForm  from './HouseAdditionalDataForm.vue';
-
 import TableRow                 from '../../../components/ui/TableRow.vue';
+import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
+
 import YearsCUD                 from '../../../mixins/YearsCUD';
 
 export default {
@@ -366,7 +342,8 @@ export default {
         TableRow,
         HouseYearForm,
         HouseInfoForm,
-        HouseAdditionalDataForm
+        HouseAdditionalDataForm,
+        YearsPaginator
     }
 }
 </script>
