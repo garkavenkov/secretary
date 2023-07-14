@@ -5755,7 +5755,6 @@ __webpack_require__.r(__webpack_exports__);
       this.modalTitle = 'Додати дані';
       this.modalSubmitCaption = 'Додати';
       this.action = 'create';
-      // this.yearData.household_id = this.household_id;
       this.yearData[this.owner] = this.owner_id;
       var yearForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById(this.yearFormId));
       if (e.ctrlKey) {

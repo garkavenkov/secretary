@@ -643,9 +643,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
 /* harmony import */ var _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LandYearForm.vue */ "./resources/js/modules/HouseholdMembers/Tabs/LandYearForm.vue");
+/* harmony import */ var _mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/YearsCUD */ "./resources/js/mixins/YearsCUD.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -656,8 +657,10 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'MemberLandYearsTab',
+  mixins: [_mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_3__["default"]],
   components: {
     TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     LandYearForm: _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -675,9 +678,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         land_share: 0,
         property_share: 0
       },
-      yearDataAction: '',
+      action: '',
       title: '',
       submitCaption: '',
+      owner: 'member_id',
+      yearFormId: 'LandYearForm',
       apiUrl: '/api/v1/household-member-lands',
       years: [],
       meta: [],
@@ -685,44 +690,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     };
   },
   methods: {
-    newYearData: function newYearData(e) {
-      this.title = 'Додати дані';
-      this.submitCaption = 'Додати';
-      this.yearDataAction = 'create';
-      this.yearData.member_id = this.memberId;
-      if (e.ctrlKey) {
-        if (this.years.length > 0) {
-          this.yearData = Object.assign({}, this.years[this.years.length - 1]);
-          this.yearData.year = parseInt(this.yearData.year) + 1;
-        }
-        this.modalTitle = "\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u043D\u0430 <b>".concat(this.yearData.year, "</b> \u0440\u0456\u043A");
-      }
-      var landYearForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('LandYearForm'));
-      landYearForm.show();
-    },
-    editYear: function editYear(year) {
-      Object.assign(this.yearData, year);
-      this.yearData.member_id = this.memberId;
-      this.title = "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u0437\u0430 ".concat(year.year, " \u0440\u0456\u043A");
-      this.submitCaption = 'Зберегти';
-      this.yearDataAction = 'update';
-      var landYearForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('LandYearForm'));
-      landYearForm.show();
-    },
-    deleteYear: function deleteYear(year) {
-      var _this = this;
-      this.$confirmDelete("\u0412\u0438 \u0434\u0456\u0439\u0441\u043D\u043E \u0431\u0430\u0436\u0430\u0454\u0442\u0438 \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0434\u0430\u043D\u0456 \u0437\u0430 ".concat(year.year, " \u0440\u0456\u043A")).then(function (res) {
-        if (res.isConfirmed) {
-          axios["delete"]("".concat(_this.apiUrl, "/").concat(year.id)).then(function (res) {
-            // this.$store.dispatch('Households/fetchRecord', this.household_id);
-            _this.fetchYears();
-            _this.$toast(res.data.message);
-          })["catch"](function (err) {
-            _this.$errorMessage('Неможливо видалити дані', err.response.data.message, 'Зрозуміло');
-          });
-        }
-      });
-    },
     closeYearForm: function closeYearForm() {
       this.yearData.id = null;
       this.yearData.year = new Date().getFullYear();
@@ -734,11 +701,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.yearData.property_shar = 0;
     },
     landOwnedReport: function landOwnedReport(year) {
-      var _this2 = this;
+      var _this = this;
       var data = {
         report: 'landOwned',
         year: year,
-        member_id: this.memberId
+        member_id: this.ownerId
       };
       axios.post('/api/v1/generate-report', data, {
         responseType: 'arraybuffer'
@@ -746,24 +713,27 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         var url = window.URL.createObjectURL(new Blob([res.data]));
         var link = document.createElement('a');
         link.href = url;
-        var fileName = "".concat(_this2.member.surname, " ").concat(_this2.member.name, " ").concat(_this2.member.patronymic, ". \u0414\u043E\u0432\u0456\u0434\u043A\u0430 \u043F\u0440\u043E \u0441\u043A\u043B\u0430\u0434 \u0437\u0435\u043C\u0435\u043B\u044C\u043D\u043E\u0457 \u0434\u0456\u043B\u044F\u043D\u043A\u0438.docx");
+        var fileName = "".concat(_this.member.surname, " ").concat(_this.member.name, " ").concat(_this.member.patronymic, ". \u0414\u043E\u0432\u0456\u0434\u043A\u0430 \u043F\u0440\u043E \u0441\u043A\u043B\u0430\u0434 \u0437\u0435\u043C\u0435\u043B\u044C\u043D\u043E\u0457 \u0434\u0456\u043B\u044F\u043D\u043A\u0438.docx");
         link.setAttribute('download', fileName);
         document.body.appendChild(link);
         link.click();
       });
     },
     fetchYears: function fetchYears(url) {
-      var _this3 = this;
+      var _this2 = this;
       if (url == undefined) {
         url = "/api/v1/household-members/".concat(this.$route.params.id, "/land?per_page=").concat(this.perPage);
       }
       axios.get(url).then(function (res) {
-        _this3.years = res.data.data.reverse();
-        _this3.meta = res.data.meta;
+        _this2.years = res.data.data.reverse();
+        _this2.meta = res.data.meta;
       });
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('HouseholdMembers', ['member'])),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('HouseholdMembers', {
+    'ownerId': 'memberId',
+    'member': 'member'
+  })),
   created: function created() {
     this.fetchYears();
   },
@@ -2059,7 +2029,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "button",
     "class": "btn btn-sm btn-outline-secondary btn-transparent",
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return $options.newYearData($event);
+      return _ctx.newYearData($event);
     })
   }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати рік ")])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.years, function (year) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
@@ -2072,12 +2042,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Звіт про склад земельної ділянки ")], 8 /* PROPS */, _hoisted_7)]), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       "class": "dropdown-item",
       onClick: function onClick($event) {
-        return $options.editYear(year);
+        return _ctx.editYear(year);
       }
     }, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Редагувати дані ")], 8 /* PROPS */, _hoisted_10)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       "class": "dropdown-item",
       onClick: function onClick($event) {
-        return $options.deleteYear(year);
+        return _ctx.deleteYear(year);
       }
     }, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Видалити дані ")], 8 /* PROPS */, _hoisted_12)])])])]);
   }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
@@ -2145,7 +2115,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     formData: $data.yearData,
     title: $data.title,
     submitCaption: $data.submitCaption,
-    action: $data.yearDataAction,
+    action: $data.action,
     onCloseYearForm: $options.closeYearForm,
     onRefreshData: $options.fetchYears
   }, null, 8 /* PROPS */, ["formData", "title", "submitCaption", "action", "onCloseYearForm", "onRefreshData"])]))], 64 /* STABLE_FRAGMENT */);
@@ -2817,6 +2787,61 @@ __webpack_require__.r(__webpack_exports__);
           _this.errors = (_err$response2 = err.response) === null || _err$response2 === void 0 ? void 0 : _err$response2.data.errors;
         });
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/YearsCUD.js":
+/*!*****************************************!*\
+  !*** ./resources/js/mixins/YearsCUD.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    newYearData: function newYearData(e) {
+      this.modalTitle = 'Додати дані';
+      this.modalSubmitCaption = 'Додати';
+      this.action = 'create';
+      this.yearData[this.owner] = this.owner_id;
+      var yearForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById(this.yearFormId));
+      if (e.ctrlKey) {
+        if (this.years.length > 0) {
+          this.yearData = Object.assign({}, this.years[this.years.length - 1]);
+          this.yearData.year = parseInt(this.yearData.year) + 1;
+        }
+        this.modalTitle = "\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u043D\u0430 <b>".concat(this.yearData.year, "</b> \u0440\u0456\u043A");
+      }
+      yearForm.show();
+    },
+    deleteYear: function deleteYear(year) {
+      var _this = this;
+      this.$confirmDelete("\u0412\u0438 \u0434\u0456\u0439\u0441\u043D\u043E \u0431\u0430\u0436\u0430\u0454\u0442\u0438 \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0434\u0430\u043D\u0456 \u0437\u0430 ".concat(year.year, " \u0440\u0456\u043A")).then(function (res) {
+        if (res.isConfirmed) {
+          axios["delete"]("".concat(_this.apiUrl, "/").concat(year.id)).then(function (res) {
+            _this.fetchYears();
+            _this.$toast(res.data.message);
+          })["catch"](function (err) {
+            _this.$errorMessage('Неможливо видалити дані', err.response.data.message, 'Зрозуміло');
+          });
+        }
+      });
+    },
+    editYear: function editYear(year) {
+      Object.assign(this.yearData, year);
+      this.modalSubmitCaption = 'Зберегти';
+      this.modalTitle = "\u0420\u0435\u0434\u0430\u0433\u0443\u0432\u0430\u0442\u0438 \u0434\u0430\u043D\u0456 \u0437\u0430 ".concat(year.year, " \u0440\u0456\u043A");
+      this.action = 'update';
+      var yearForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById(this.yearFormId));
+      yearForm.show();
     }
   }
 });

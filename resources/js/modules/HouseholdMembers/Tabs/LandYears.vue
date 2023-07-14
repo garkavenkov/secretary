@@ -114,7 +114,7 @@
                 :formData="yearData"
                 :title="title"
                 :submitCaption="submitCaption"
-                :action="yearDataAction"
+                :action="action"
                 @closeYearForm="closeYearForm"
                 @refreshData="fetchYears"/>
     </teleport>
@@ -129,10 +129,12 @@ import { mapGetters }   from 'vuex';
 
 import TableRow         from '../../../components/ui/TableRow.vue';
 import LandYearForm     from './LandYearForm.vue';
+import YearsCUD         from '../../../mixins/YearsCUD';
 
 
 export default {
     name: 'MemberLandYearsTab',
+    mixins: [YearsCUD],
     components: {
         TableRow,
         LandYearForm
@@ -150,9 +152,11 @@ export default {
                 land_share: 0,
                 property_share: 0
             },
-            yearDataAction: '',
+            action: '',
             title: '',
             submitCaption: '',
+            owner: 'member_id',
+            yearFormId: 'LandYearForm',
             apiUrl: '/api/v1/household-member-lands',
             years: [],
             meta: [],
@@ -160,51 +164,6 @@ export default {
         }
     },
     methods: {
-        newYearData(e) {
-            this.title = 'Додати дані';
-            this.submitCaption = 'Додати';
-            this.yearDataAction = 'create';
-
-            this.yearData.member_id = this.memberId;
-
-            if (e.ctrlKey) {
-                if (this.years.length > 0) {
-                    this.yearData = Object.assign({}, this.years[this.years.length-1]);
-                    this.yearData.year = parseInt(this.yearData.year) + 1;
-                }
-                this.modalTitle = `Додати дані на <b>${this.yearData.year}</b> рік`;
-            }
-
-            let landYearForm = new Modal(document.getElementById('LandYearForm'))
-            landYearForm.show();
-        },
-        editYear(year) {
-            Object.assign(this.yearData, year);
-            this.yearData.member_id = this.memberId;
-
-            this.title = `Редагувати дані за ${year.year} рік`;
-            this.submitCaption = 'Зберегти';
-            this.yearDataAction = 'update';
-
-            var landYearForm = new Modal(document.getElementById('LandYearForm'))
-            landYearForm.show()
-        },
-        deleteYear(year) {
-            this.$confirmDelete(`Ви дійсно бажаєти видалити дані за ${year.year} рік`)
-                .then(res => {
-                    if(res.isConfirmed) {
-                        axios.delete(`${this.apiUrl}/${year.id}`)
-                            .then(res => {
-                                // this.$store.dispatch('Households/fetchRecord', this.household_id);
-                                this.fetchYears();
-                                this.$toast(res.data.message);
-                            })
-                            .catch(err => {
-                                this.$errorMessage('Неможливо видалити дані', err.response.data.message, 'Зрозуміло');
-                            });
-                    }
-                })
-        },
         closeYearForm() {
             this.yearData.id = null;
             this.yearData.year = new Date().getFullYear();
@@ -214,13 +173,12 @@ export default {
             this.yearData.pastures = 0;
             this.yearData.land_share = 0;
             this.yearData.property_shar = 0;
-
         },
         landOwnedReport(year) {
             let data = {
                 report: 'landOwned',
                 year: year,
-                member_id: this.memberId
+                member_id: this.ownerId
             }
 
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
@@ -249,7 +207,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters('HouseholdMembers', ['member']),
+        ...mapGetters('HouseholdMembers',  {'ownerId': 'memberId', 'member': 'member'}),
     },
     created() {
         this.fetchYears();
