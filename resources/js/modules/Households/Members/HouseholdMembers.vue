@@ -194,16 +194,16 @@
             </template>
         </div>
     </div>
-    <!-- <router-view></router-view> -->
+
 
 
     <HouseholdMemberForm
             :formData="formData"
-            @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
+            @refreshData="fetchMembers"/>
 
     <HouseholdMembersComposition
             :members="shownMembers"
-            @refreshData="$store.dispatch('Households/fetchRecord', household_id)"/>
+            @refreshData="fetchMembers"/>
 
     <FamilyCompositionReportForm
             :members="shownMembers"
@@ -220,7 +220,7 @@
 
 <script>
 import { Modal }                        from 'bootstrap';
-import { computed, nextTick }                     from 'vue';
+import { computed, nextTick }           from 'vue';
 import { mapGetters }                   from 'vuex';
 
 import DateFormat                       from '../../../mixins/DateFormat';
@@ -255,6 +255,7 @@ export default {
                 movements: [],
                 additional_params: []
             },
+            members: [],
             modalTitle: '',
             modalSubmitCaption: '',
             viewMode: 'card',
@@ -274,10 +275,16 @@ export default {
         }
     },
     methods: {
+        fetchMembers() {
+            axios.get(`/api/v1/household-members?household_id=${this.$route.params.id}`)
+                .then(res => {
+                    this.members = res.data.data
+                });
+        },
         newMember(e) {
             this.modalTitle = 'Новий член домогосподарства';
             this.modalSubmitCaption = 'Додати';
-            this.formData.household_id = this.household_id;
+            this.formData.household_id = this.$route.params.id;
 
             let myModal = new Modal(document.getElementById('HouseholdMemberForm'))
             myModal.show();
@@ -320,13 +327,13 @@ export default {
 
             this.formIsReady = false;
         },
-        refreshMemberInfo(id) {
-            axios.get(`/api/v1/household-members/${id}`)
-                .then(res => {
-                    Object.assign(this.formData, res.data.data);
-                    this.modalTitle = `${this.formData.surname} ${this.formData.name} ${this.formData.patronymic}`
-                })
-        },
+        // refreshMemberInfo(id) {
+        //     axios.get(`/api/v1/household-members/${id}`)
+        //         .then(res => {
+        //             Object.assign(this.formData, res.data.data);
+        //             this.modalTitle = `${this.formData.surname} ${this.formData.name} ${this.formData.patronymic}`
+        //         })
+        // },
         deleteMember(id) {
             axios.delete(`/api/v1/household-members/${id}`)
                 .then(res => {
@@ -397,40 +404,12 @@ export default {
         },
         closeAdditionalParamsForm() {
             this.additionalParamsFormIsVisible = false;
-            // console.log('Close family additional params form');
-            // this.closeParamsList = true;
-            // this.familyAdditionalParams = Object.assign([], this.familyInfo);
-            // let familyAdditionalParamsForm = Modal.getInstance('#HouseholdMembersAdditionalParams');
-            // familyAdditionalParamsForm.hide();
         },
         closeFamilyCompositionReportForm() {
             let familyCompositionReportForm = Modal.getInstance('#FamilyCompositionReportForm');
             familyCompositionReportForm.hide();
             this.selectedMember = 0;
         },
-        landOwnedReport(member) {
-            let data = {
-                report: 'landOwned',
-                year: this.selectedLandYear,
-                member_id: member.id
-            }
-
-            axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
-                .then(res => {
-
-                    const url = window.URL.createObjectURL(new Blob([res.data]));
-                    const link = document.createElement('a');
-
-                    link.href = url;
-                    // let member = this.members.find(m => m.id == this.memberId);
-                    let fileName = `${member.surname} ${member.name} ${member.patronymic}. Довідка про склад земельної ділянки.docx`;
-                    // link.setAttribute('download', "Довідка про стан родини.docx"); // set custom file name
-                    link.setAttribute('download', fileName);
-                    document.body.appendChild(link);
-
-                    link.click();
-                })
-        }
 
     },
     computed: {
@@ -442,7 +421,10 @@ export default {
                 return ['dead', 'gone'].indexOf(m.status) !== -1;
             })
         },
-        ...mapGetters('Households', ['members', 'household_id', 'availableLandYears', 'familyInfo'])
+        ...mapGetters('Households', ['household_id', 'familyInfo'])
+    },
+    created() {
+        this.fetchMembers();
     },
     components: {
         HouseholdMemberForm,

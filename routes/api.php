@@ -94,6 +94,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
 
     Route::get('households/{id}/land-years',        [HouseholdController::class, 'landYears'])->name('household-land-years');
     Route::get('households/{id}/house-years',       [HouseholdController::class, 'houseYears'])->name('household-house-years');
+    // Route::get('households/{id}/house-info',        [HouseholdController::class, 'houseInfo'])->name('household-house-info');
+    // Route::get('households/{id}/members',           [HouseholdController::class, 'members'])->name('household-members');
 
     Route::get('household-members/{id}/land',               [HouseholdMemberController::class, 'landYears'])->name('member-land-years');
     Route::get('household-members/{id}/additional-data',    [HouseholdMemberController::class, 'additionalParams'])->name('member-additional-data');

@@ -24,27 +24,6 @@ class HouseholdResource extends JsonResource
      */
     public function toArray($request)
     {
-        $members = new HouseholdMemberResourceCollection($this->whenLoaded('members'));
-
-        $household_head = "";
-
-        if ($members->count() > 0) {
-            $head = $members->first(function($m) {
-                // dd($m);
-                return $m->familyRelationshipType->name == 'голова домогосподарства';
-            });
-            if ($head) {
-                $household_head = $head->surname . ' ' . $head->name . ' ' . $head->patronymic;
-            }
-
-        }
-
-        // $houseInfo = [...$this->houseInfo()->map(function($i) {
-        //     return [
-        //         $i->param_code => $i->param_value
-        //     ];
-        // })];
-
         return [
             'id'                    =>  (int)   $this->id,
             'number'                =>  $this->fullNumber(),
@@ -54,7 +33,7 @@ class HouseholdResource extends JsonResource
                 'household_type_id'     =>  (int)   $this->household_type_id,
                 'household_type'        =>  new HouseholdTypeResource($this->whenLoaded('type')),
                 'number'                =>  (int)   $this->number,
-                'household_head'        =>  $household_head,
+                'household_head'        =>  $this->household_head(),
                 'raw_address'           =>  $this->address,
                 'address'               =>  $this->getAddress(),
                 'full_address'          =>  $this->getFullAddress(),
@@ -62,7 +41,7 @@ class HouseholdResource extends JsonResource
                 'additional_data'       =>  $this->additional_data,
                 'owners'                =>  $this->owners,
             ],
-            'members'               =>  $members,
+            // 'members'               =>  $members,
             // 'houseYears'            =>  HouseholdHouseResource::collection($this->whenLoaded('houseYears')),
             'houseInfo'             =>  $this->houseInfo(),
             // 'landYears'             =>  HouseholdLandResource::collection($this->whenLoaded('landYears')),

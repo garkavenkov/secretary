@@ -22,19 +22,15 @@
         <div class="row justify-content-around mb-xl-4 mb-md-4">
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="d-flex justify-content-between align-items-center border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">
-                    <span class="fw-bold">Власник<span v-if="info.owners && (info.owners.length > 1)">и</span></span>
+                    <span class="fw-bold">Власник<span v-show="info.owners && (info.owners.length > 1)">и</span></span>
                     <button class="btn btn-sm btn-light ms-3 text-muted" @click="newOwner" title="Додати нового власника">
                         <span class="mdi mdi-plus"></span>
                         Додати власника
                     </button>
                 </div>
-                <div    id="owners"
-                        class="owner-wrapper"
-                        @drop="dropHead($event)"
-                        @dragover.prevent
-                        @dragenter.prevent>
+                <div class="owners-wrapper">
                     <template v-if="info.owners && (info.owners.length > 0)">
-                        <div    class="d-flex justify-content-between"
+                        <div    class="owner d-flex justify-content-between"
                                 v-for="owner in info.owners"
                                 :key="owner.id">
                             <div class="d-flex flex-column">
@@ -58,6 +54,13 @@
                     <template v-else>
                         <div class="text-muted text-center fs-08 p-2">Інформація відсутня</div>
                     </template>
+                </div>
+                <div    id="owner-drop-zone"
+                        class="owner-drop-zone"
+                        @drop="dropHead($event)"
+                        @dragover.prevent
+                        @dragenter.prevent>
+                    Переместить голову домогосподарства сюди
                 </div>
             </div>
             <div class="col-xl-5 col-md-12 mb-md-4">
@@ -168,8 +171,8 @@ export default {
             })
 
             if (index == -1) {
-                let ownersId = document.getElementById('owners');
-                ownersId.classList.add('drop-zone');
+                let dropZone = document.getElementById('owner-drop-zone');
+                dropZone.classList.add('active');
 
                 e.dataTransfer.dropEffect = "move";
                 e.dataTransfer.effectAllowed = "move";
@@ -190,8 +193,8 @@ export default {
             }
         },
         pickupHeadEnded(e) {
-            let ownersId = document.getElementById('owners');
-            ownersId.classList.remove('drop-zone');
+            let dropZone = document.getElementById('owner-drop-zone');
+            dropZone.classList.remove('active');
         }
     },
     computed: {
@@ -227,21 +230,24 @@ export default {
     }
 
 }
-.owner-wrapper {
-    // padding: 0.5rem;
-    border-width: 1px;
-    border-style: dashed;
-    border-radius: 5px;
-    border-color: transparent;
-    transition: all 0.3s ease;
 
-    > div:not(:last-of-type) {
-        border-bottom: 1px dashed #e7e7e7;
-        padding-bottom: 0.5rem;
-        margin-bottom: 0.5rem;
+    .owner {
+        border-width: 1px;
+        border-style: dashed;
+        border-radius: 5px;
+        border-color: transparent;
+        transition: all 0.3s ease;
+
+        &:not(:last-of-type) {
+            border-bottom: 1px dashed #e7e7e7;
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
     }
 
-    &.drop-zone {
+    .owner-drop-zone {
+        // visibility: hidden;
+        display: none;
         background: repeating-linear-gradient(
             -45deg,
             transparent 0 4px,
@@ -249,8 +255,17 @@ export default {
         );
         border-color: #adb5bd;
         border-width: 1px;
+        text-align: center;
+        padding: 0.75rem;
+        color: darkgray;
+        border-radius: 0.2rem;
+        transition: all 0.3s ease;
+        &.active {
+            // visibility: visible
+            display: block;
+        }
     }
-}
+// }
 
 @media (min-width:1200px) {
     // height: 0;

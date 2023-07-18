@@ -72,23 +72,23 @@ class Household extends Model
         return $this->hasMany(HouseholdMember::class);
     }
 
-    // public function paramCategory()
-    // {
-    //     // dd(get_class($this));
-    //     $category = AdditionalParamCategory::where('code', 'household')->first();
-    //     return $category ?? null;
-    // }
-
+    public function household_head()
+    {
+        // dd($this->members);
+        $head = $this->members->first(function($m) {
+            return $m->familyRelationshipType->name == 'голова домогосподарства';
+        });
+        // dd($head);
+        if ($head) {
+            return $head->surname . ' ' . $head->name . ' ' . $head->patronymic;
+        }
+        return "";
+    }
 
     public function landYears()
     {
         return $this->hasMany(HouseholdLand::class)->orderBy('year', 'desc');
     }
-
-    // public function landYears()
-    // {
-    //     return $this->hasMany(HouseholdLand::class)->orderBy('year');
-    // }
 
     public function scopeLiving($q)
     {
