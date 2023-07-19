@@ -27,16 +27,10 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'birthdate'                 =>  $member->birthdate,
                 'birthdate_formatted'       =>  Carbon::parse($member->birthdate)->format('d.m.Y'),
                 'family_relationship_type'  =>  $member->whenLoaded('familyRelationshipType', $member->familyRelationshipType->name),
-                // 'employment_information'    =>  $member->employment_information,
-                // 'work_place'                =>  new WorkPlaceResource($member->whenLoaded('workPlace')),
                 'status'                    =>  $member->status,
                 'death_date'                =>  $member->death_date,
-                'relatives'                 =>  $member->relatives(),
                 'address'                   =>  $member->whenLoaded('household', $member->household->getFullAddress()),
                 'household_number'          =>  $member->whenLoaded('household', $member->household->fullNumber()),
-                // 'household'                 =>  $member->whenLoaded('household', $member->household),
-                // 'death_register_number'     =>  $member->death_register_number,
-                // 'death_register_office'     =>  $member->death_register_office,
             ];
         });
     }

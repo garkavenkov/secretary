@@ -13,6 +13,7 @@ use App\Http\Requests\API\v1\HouseholdMemberRequest;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
 use App\Http\Resources\API\v1\HouseholdMemberLand\HouseholdMemberLandResource;
 use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
+use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberRelativesResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 
@@ -183,10 +184,17 @@ class HouseholdMemberController extends Controller
         return AdditionalParamValueResource::collection($member->memberInfo());
     }
 
-    public function movements($id)
+    public function memberMovements($id)
     {
         $member = HouseholdMember::findOrFail($id);
 
         return HouseholdMemberMovementResource::collection($member->movements);
+    }
+
+    public function memberRelatives($id)
+    {
+        $member = HouseholdMember::findOrFail($id);
+
+        return new HouseholdMemberRelativesResource($member);
     }
 }

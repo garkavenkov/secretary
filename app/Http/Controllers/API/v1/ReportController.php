@@ -229,7 +229,6 @@ class ReportController extends Controller
             throw new Exception($msg,500);
 
         }
-        // dd($templateProcessor->getVariables());
 
         if(!isset($params['member_id'])) {
             throw new Exception('Member did not pass');
@@ -240,16 +239,15 @@ class ReportController extends Controller
 
         if (isset($params['relatives'])) {
             $ids = explode(',', $params['relatives']);
+
             $relatives = $member->relatives()->filter(function($r) use($ids) {
-                return in_array($r->relative_id, $ids);
+                return in_array($r->id, $ids);
             });
 
         } else {
             $relatives = [];
         }
-        // dd($relatives);
 
-        // dd($ids);
         $address =$member->household->getFullAddress();
 
         $person_address_registration = ($member->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') .
@@ -258,14 +256,13 @@ class ReportController extends Controller
         // $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));
         // $phpWord = new PhpWord();
 
-        $register = $member->sex == 'чоловіча' ?  'зареєстрований' : 'зареєстрована';
         $templateProcessor->setValue('person_name', $member_name);
         $templateProcessor->setValue('person_birthdate', $member_birthdate);
         $templateProcessor->setValue('person_address_registration', $person_address_registration);
 
 
         $rels = [];
-        // dd($relatives);
+
         foreach($relatives as $relative) {
             $rel['relative'] =  "$relative->relation - $relative->surname $relative->name $relative->patronymic, " .
                                 (new DateTimeImmutable($relative->birthdate))->format('d.m.Y') .

@@ -5,23 +5,17 @@
                 @closeForm="closeForm"
                 modalClass="modal-lg">
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
             <div class="col">
                 <label for="reportInitiator" class="form-label">Член родини</label>
-                <select class="form-control"
-                        v-model="memberId"
-                        :disabled="selectedMember != 0">
-                    <option disabled value="0">Оберить члена родини</option>
-                    <option :value="member.id" v-for="member in members" :key="member.id">
-                        {{member.surname}} {{ member.name }} {{ member.patronymic }}
-                    </option>
-                </select>
+                <label for="reportInitiator" class="form-label">{{info.fullName}}</label>
             </div>
-        </div>
+        </div> -->
         <!-- rest members of the family -->
         <div class="row">
-            <div class="relatives">
-                <table class="table table-sm table-bordered table-600" v-show="relatives.length > 0">
+            <div class="relatives" v-if="info.relatives && info.relatives.length > 0">
+                <h6>Перелік родичів</h6>
+                <table class="table table-sm table-bordered table-600">
                     <thead class="table-secondary">
                         <tr>
                             <th>
@@ -33,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="relative in relatives" :key="relative.id" :class="{'text-muted': !relative.selected}">
+                        <tr v-for="relative in info.relatives" :key="relative.id" :class="{'text-muted': !relative.selected}">
                             <td>
                                 <input type="checkbox" v-model="relative.selected" class="form-check-input">
                             </td>
@@ -43,9 +37,11 @@
                         </tr>
                     </tbody>
                 </table>
-                <!-- <div class="relative" v-for="relative in relatives" :key="relative.id">
-                    {{relative.relation}} - {{ relative.surname }} {{ relative.name }} {{ relative.patronymic }}, {{ relative.birthdate }} р.н.
-                </div> -->
+            </div>
+            <div v-else>
+                <div class="text-center text-muted p-5">
+                    Родичі відсутні, або не встановленні родинні зв'язки
+                </div>
             </div>
         </div>
     </ModalForm>
@@ -60,10 +56,6 @@ import DateFormate  from '../../../mixins/DateFormat';
 export default {
     name: 'FamilyCompositionReportForm',
     props: {
-        'members': {
-            type: Array,
-            required: true
-        },
         'selectedMember': {
             type: [String, Number],
             required: false,
@@ -74,11 +66,17 @@ export default {
     data() {
         return {
             memberId: this.selectedMember,
-            relatives: [],
+            info: {},
             allSelected: false
         }
     },
     methods: {
+        fetchRelatives() {
+            axios.get(`/api/v1/household-members/${this.memberId}/relatives`)
+                .then(res => {
+                    this.info = res.data.data
+                });
+        },
         submitData() {
             let data = {
                 report: 'familyComposition',
@@ -86,7 +84,7 @@ export default {
                 relatives: ''
             }
 
-            data.relatives = this.relatives.filter(r => r.selected).map(r => r.relative_id).join(',');
+            data.relatives = this.info.relatives.filter(r => r.selected).map(r => r.id).join(',');
 
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
                 .then(res => {
@@ -95,9 +93,7 @@ export default {
                     const link = document.createElement('a');
 
                     link.href = url;
-                    let member = this.members.find(m => m.id == this.memberId);
-                    let fileName = `${member.surname} ${member.name} ${member.patronymic}. Довідка про склад родини.docx`;
-                    // link.setAttribute('download', "Довідка про стан родини.docx"); // set custom file name
+                    let fileName = `${this.info.surname} ${this.info.name} ${this.info.patronymic}. Довідка про склад родини.docx`;
                     link.setAttribute('download', fileName);
                     document.body.appendChild(link);
 
@@ -107,51 +103,36 @@ export default {
         },
         closeForm() {
             this.memberId =  0;
-            this.relatives = [];
             this.allSelected = false;
             this.$emit('closeFamilyCompositionReportForm')
         }
     },
-    computed: {
-        // restMembers() {
-        //     return this.members.filter(m => m.id !== this.formData.member_id);
-        // },
-        // relatives() {
-        //     let member = this.members.find(m => m.id == this.formData.member_id);
-        //     if (member) {
-        //         return member.relatives
-        //     } else {
-        //         return []
-        //     }
-        //     // return this.members.find(m => m.id == this.formData.member_id).relatives;
-        // }
-    },
     watch: {
-        'memberId'(newVal) {
-            if (newVal != 0) {
-                let member = this.members.find(m => m.id == this.memberId);
-                if (member) {
-                    this.relatives = member.relatives;
-                    this.relatives.forEach(r => r.selected = true)
-                    this.allSelected = true;
-                } else {
-                    this.relatives = []
-                }
-            } else {
-                this.relatives = [];
-            }
-        },
+        // 'memberId'(newVal) {
+        //     if (newVal != 0) {
+        //         let member = this.members.find(m => m.id == this.memberId);
+        //         if (member) {
+        //             this.relatives = member.relatives;
+        //             this.relatives.forEach(r => r.selected = true)
+        //             this.allSelected = true;
+        //         } else {
+        //             this.relatives = []
+        //         }
+        //     } else {
+        //         this.relatives = [];
+        //     }
+        // },
         'allSelected'(newVal) {
             if (newVal) {
-                this.relatives.forEach(r => r.selected = true)
-            } else if (this.relatives.length > 0) {
-                this.relatives.forEach(r => r.selected = false)
+                this.info.relatives.forEach(r => r.selected = true)
+            } else if (this.info.relatives.length > 0) {
+                this.info.relatives.forEach(r => r.selected = false)
             }
         }
     },
-    // mounted() {
-    //     this.memberId = this.selectedMember;
-    // },
+    created() {
+        this.fetchRelatives();
+    },
     beforeUpdate() {
         this.memberId = this.selectedMember;
     },

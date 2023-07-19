@@ -144,22 +144,36 @@ class HouseholdMember extends Model
 
     public function relatives()
     {
-        return  DB::table('household_members as m')
+        // return  DB::table('household_members as m')
+        //         ->select(
+        //             'r.id as relative_id',
+        //             'r.surname',
+        //             'r.name',
+        //             'r.patronymic',
+        //             'r.birthdate',
+        //             'r.sex',
+        //             'fr.relationship_type_id',
+        //             'frt.name as relation'
+        //         )
+        //         ->join('family_relationships as fr', 'm.id', '=', 'fr.member_id')
+        //         ->leftJoin('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')
+        //         ->join('household_members as r', 'fr.relative_id', '=', 'r.id')
+        //         ->where('m.id', '=', $this->id)
+        //         ->orderBy('r.birthdate')
+        //         ->get();
+        return DB::table('family_relationships as fr')
                 ->select(
-                    'r.id as relative_id',
-                    'r.surname',
-                    'r.name',
-                    'r.patronymic',
-                    'r.birthdate',
-                    'r.sex',
-                    'fr.relationship_type_id',
+                    'hm.id',
+                    'hm.surname',
+                    'hm.name',
+                    'hm.patronymic',
+                    'hm.birthdate',
+                    'hm.sex',
                     'frt.name as relation'
                 )
-                ->join('family_relationships as fr', 'm.id', '=', 'fr.member_id')
-                ->leftJoin('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')
-                ->join('household_members as r', 'fr.relative_id', '=', 'r.id')
-                ->where('m.id', '=', $this->id)
-                ->orderBy('r.birthdate')
+                ->join('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')
+                ->join('household_members as hm', 'hm.id', '=', 'fr.relative_id')
+                ->where('fr.member_id', '=', $this->id)
                 ->get();
     }
 

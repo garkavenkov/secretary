@@ -118,9 +118,9 @@
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" @click="openFamilyCompositionReportForm(member.id)">
+                                        <a class="dropdown-item" @click="openFamilyCompositionReportForm(member)">
                                             <span class="mdi mdi-human-capacity-decrease me-2" style="color:blue;"></span>
-                                            Довідка про склад сім'ї
+                                            Довідка про склад родини
                                         </a>
                                     </li>
                                     <!-- <li class="d-flex align-items-center" v-if="availableLandYears.length > 0">
@@ -205,8 +205,13 @@
             :members="shownMembers"
             @refreshData="fetchMembers"/>
 
-    <FamilyCompositionReportForm
+    <!-- <FamilyCompositionReportForm
             :members="shownMembers"
+            :selectedMember="selectedMember"
+            @closeFamilyCompositionReportForm="closeFamilyCompositionReportForm"/> -->
+
+    <FamilyCompositionReportForm
+            v-if="compositionReportFromIsVisible"
             :selectedMember="selectedMember"
             @closeFamilyCompositionReportForm="closeFamilyCompositionReportForm"/>
 
@@ -265,7 +270,8 @@ export default {
             selectedMember: 0,
             selectedLandYear: 0,
             familyAdditionalParams: [],
-            additionalParamsFormIsVisible: false
+            additionalParamsFormIsVisible: false,
+            compositionReportFromIsVisible: false
         }
     },
     provide() {
@@ -383,13 +389,16 @@ export default {
             let membersCompositionForm = new Modal(document.getElementById('HouseholdMembersComposition'));
             membersCompositionForm.show();
         },
-        openFamilyCompositionReportForm(id) {
-            this.modalTitle = 'Довідка про стан родини';
+        openFamilyCompositionReportForm(member) {
+            this.modalTitle = `Довідка про склад родини: ${member.full_name}`;
             this.modalSubmitCaption = 'Друк';
-            this.selectedMember = id;
+            this.selectedMember = member.id;
+            this.compositionReportFromIsVisible = true
 
-            let familyCompositionReportForm = new Modal(document.getElementById('FamilyCompositionReportForm'));
-            familyCompositionReportForm.show();
+            nextTick(() => {
+                let familyCompositionReportForm = new Modal(document.getElementById('FamilyCompositionReportForm'));
+                familyCompositionReportForm.show();
+            })
         },
         openAdditionalParamsForm() {
             this.modalTitle = ' Додаткова інформація о родині';
@@ -409,6 +418,7 @@ export default {
             let familyCompositionReportForm = Modal.getInstance('#FamilyCompositionReportForm');
             familyCompositionReportForm.hide();
             this.selectedMember = 0;
+            this.compositionReportFromIsVisible = false;
         },
 
     },

@@ -1486,10 +1486,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'FamilyCompositionReportForm',
   props: {
-    'members': {
-      type: Array,
-      required: true
-    },
     'selectedMember': {
       type: [String, Number],
       required: false,
@@ -1500,22 +1496,28 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       memberId: this.selectedMember,
-      relatives: [],
+      info: {},
       allSelected: false
     };
   },
   methods: {
-    submitData: function submitData() {
+    fetchRelatives: function fetchRelatives() {
       var _this = this;
+      axios.get("/api/v1/household-members/".concat(this.memberId, "/relatives")).then(function (res) {
+        _this.info = res.data.data;
+      });
+    },
+    submitData: function submitData() {
+      var _this2 = this;
       var data = {
         report: 'familyComposition',
         member_id: this.memberId,
         relatives: ''
       };
-      data.relatives = this.relatives.filter(function (r) {
+      data.relatives = this.info.relatives.filter(function (r) {
         return r.selected;
       }).map(function (r) {
-        return r.relative_id;
+        return r.id;
       }).join(',');
       axios.post('/api/v1/generate-report', data, {
         responseType: 'arraybuffer'
@@ -1523,73 +1525,49 @@ __webpack_require__.r(__webpack_exports__);
         var url = window.URL.createObjectURL(new Blob([res.data]));
         var link = document.createElement('a');
         link.href = url;
-        var member = _this.members.find(function (m) {
-          return m.id == _this.memberId;
-        });
-        var fileName = "".concat(member.surname, " ").concat(member.name, " ").concat(member.patronymic, ". \u0414\u043E\u0432\u0456\u0434\u043A\u0430 \u043F\u0440\u043E \u0441\u043A\u043B\u0430\u0434 \u0440\u043E\u0434\u0438\u043D\u0438.docx");
-        // link.setAttribute('download', "Довідка про стан родини.docx"); // set custom file name
+        var fileName = "".concat(_this2.info.surname, " ").concat(_this2.info.name, " ").concat(_this2.info.patronymic, ". \u0414\u043E\u0432\u0456\u0434\u043A\u0430 \u043F\u0440\u043E \u0441\u043A\u043B\u0430\u0434 \u0440\u043E\u0434\u0438\u043D\u0438.docx");
         link.setAttribute('download', fileName);
         document.body.appendChild(link);
         link.click();
-        _this.closeForm();
+        _this2.closeForm();
       });
     },
     closeForm: function closeForm() {
       this.memberId = 0;
-      this.relatives = [];
       this.allSelected = false;
       this.$emit('closeFamilyCompositionReportForm');
     }
   },
-  computed: {
-    // restMembers() {
-    //     return this.members.filter(m => m.id !== this.formData.member_id);
-    // },
-    // relatives() {
-    //     let member = this.members.find(m => m.id == this.formData.member_id);
-    //     if (member) {
-    //         return member.relatives
-    //     } else {
-    //         return []
-    //     }
-    //     // return this.members.find(m => m.id == this.formData.member_id).relatives;
-    // }
-  },
   watch: {
-    'memberId': function memberId(newVal) {
-      var _this2 = this;
-      if (newVal != 0) {
-        var member = this.members.find(function (m) {
-          return m.id == _this2.memberId;
-        });
-        if (member) {
-          this.relatives = member.relatives;
-          this.relatives.forEach(function (r) {
-            return r.selected = true;
-          });
-          this.allSelected = true;
-        } else {
-          this.relatives = [];
-        }
-      } else {
-        this.relatives = [];
-      }
-    },
+    // 'memberId'(newVal) {
+    //     if (newVal != 0) {
+    //         let member = this.members.find(m => m.id == this.memberId);
+    //         if (member) {
+    //             this.relatives = member.relatives;
+    //             this.relatives.forEach(r => r.selected = true)
+    //             this.allSelected = true;
+    //         } else {
+    //             this.relatives = []
+    //         }
+    //     } else {
+    //         this.relatives = [];
+    //     }
+    // },
     'allSelected': function allSelected(newVal) {
       if (newVal) {
-        this.relatives.forEach(function (r) {
+        this.info.relatives.forEach(function (r) {
           return r.selected = true;
         });
-      } else if (this.relatives.length > 0) {
-        this.relatives.forEach(function (r) {
+      } else if (this.info.relatives.length > 0) {
+        this.info.relatives.forEach(function (r) {
           return r.selected = false;
         });
       }
     }
   },
-  // mounted() {
-  //     this.memberId = this.selectedMember;
-  // },
+  created: function created() {
+    this.fetchRelatives();
+  },
   beforeUpdate: function beforeUpdate() {
     this.memberId = this.selectedMember;
   },
@@ -1838,7 +1816,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       selectedMember: 0,
       selectedLandYear: 0,
       familyAdditionalParams: [],
-      additionalParamsFormIsVisible: false
+      additionalParamsFormIsVisible: false,
+      compositionReportFromIsVisible: false
     };
   },
   provide: function provide() {
@@ -1957,12 +1936,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var membersCompositionForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('HouseholdMembersComposition'));
       membersCompositionForm.show();
     },
-    openFamilyCompositionReportForm: function openFamilyCompositionReportForm(id) {
-      this.modalTitle = 'Довідка про стан родини';
+    openFamilyCompositionReportForm: function openFamilyCompositionReportForm(member) {
+      this.modalTitle = "\u0414\u043E\u0432\u0456\u0434\u043A\u0430 \u043F\u0440\u043E \u0441\u0442\u0430\u043D \u0440\u043E\u0434\u0438\u043D\u0438: ".concat(member.full_name);
       this.modalSubmitCaption = 'Друк';
-      this.selectedMember = id;
-      var familyCompositionReportForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('FamilyCompositionReportForm'));
-      familyCompositionReportForm.show();
+      this.selectedMember = member.id;
+      this.compositionReportFromIsVisible = true;
+      (0,vue__WEBPACK_IMPORTED_MODULE_1__.nextTick)(function () {
+        var familyCompositionReportForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('FamilyCompositionReportForm'));
+        familyCompositionReportForm.show();
+      });
     },
     openAdditionalParamsForm: function openAdditionalParamsForm() {
       this.modalTitle = ' Додаткова інформація о родині';
@@ -1982,6 +1964,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var familyCompositionReportForm = bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal.getInstance('#FamilyCompositionReportForm');
       familyCompositionReportForm.hide();
       this.selectedMember = 0;
+      this.compositionReportFromIsVisible = false;
     }
   },
   computed: _objectSpread({
@@ -4584,47 +4567,40 @@ var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-4fb03133"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
 var _hoisted_1 = {
-  "class": "row mb-3"
-};
-var _hoisted_2 = {
-  "class": "col"
-};
-var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-    "for": "reportInitiator",
-    "class": "form-label"
-  }, "Член родини", -1 /* HOISTED */);
-});
-var _hoisted_4 = ["disabled"];
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    disabled: "",
-    value: "0"
-  }, "Оберить члена родини", -1 /* HOISTED */);
-});
-var _hoisted_6 = ["value"];
-var _hoisted_7 = {
   "class": "row"
 };
-var _hoisted_8 = {
+var _hoisted_2 = {
+  key: 0,
   "class": "relatives"
 };
-var _hoisted_9 = {
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", null, "Перелік родичів", -1 /* HOISTED */);
+});
+var _hoisted_4 = {
   "class": "table table-sm table-bordered table-600"
 };
-var _hoisted_10 = {
+var _hoisted_5 = {
   "class": "table-secondary"
 };
-var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Відносини", -1 /* HOISTED */);
 });
-var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Прізвище І.Б.", -1 /* HOISTED */);
 });
-var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Рік народження", -1 /* HOISTED */);
 });
-var _hoisted_14 = ["onUpdate:modelValue"];
+var _hoisted_9 = ["onUpdate:modelValue"];
+var _hoisted_10 = {
+  key: 1
+};
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "text-center text-muted p-5"
+  }, " Родичі відсутні, або не встановленні родинні зв'язки ", -1 /* HOISTED */);
+});
+var _hoisted_12 = [_hoisted_11];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
@@ -4634,25 +4610,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     modalClass: "modal-lg"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-        "class": "form-control",
-        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-          return $data.memberId = $event;
-        }),
-        disabled: $props.selectedMember != 0
-      }, [_hoisted_5, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.members, function (member) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
-          value: member.id,
-          key: member.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 9 /* TEXT, PROPS */, _hoisted_6);
-      }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_4), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.memberId]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" rest members of the family "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mb-3\">\n            <div class=\"col\">\n                <label for=\"reportInitiator\" class=\"form-label\">Член родини</label>\n                <label for=\"reportInitiator\" class=\"form-label\">{{info.fullName}}</label>\n            </div>\n        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" rest members of the family "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$data.info.relatives && $data.info.relatives.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "checkbox",
         title: "Обрати усіх",
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.allSelected = $event;
         }),
         "class": "form-check-input"
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.allSelected]])]), _hoisted_11, _hoisted_12, _hoisted_13])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.relatives, function (relative) {
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.allSelected]])]), _hoisted_6, _hoisted_7, _hoisted_8])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.info.relatives, function (relative) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: relative.id,
           "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
@@ -4664,8 +4629,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             return relative.selected = $event;
           },
           "class": "form-check-input"
-        }, null, 8 /* PROPS */, _hoisted_14), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, relative.selected]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relative.relation), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relative.surname) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relative.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relative.patronymic), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(relative.birthdate)), 1 /* TEXT */)], 2 /* CLASS */);
-      }), 128 /* KEYED_FRAGMENT */))])], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.relatives.length > 0]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"relative\" v-for=\"relative in relatives\" :key=\"relative.id\">\n                    {{relative.relation}} - {{ relative.surname }} {{ relative.name }} {{ relative.patronymic }}, {{ relative.birthdate }} р.н.\n                </div> ")])])];
+        }, null, 8 /* PROPS */, _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, relative.selected]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relative.relation), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relative.surname) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relative.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relative.patronymic), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(relative.birthdate)), 1 /* TEXT */)], 2 /* CLASS */);
+      }), 128 /* KEYED_FRAGMENT */))])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, _hoisted_12))])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
@@ -5259,7 +5224,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.surname), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.patronymic), 1 /* TEXT */)]), member.family_relationship_type == 'голова домогосподарства' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h4", _hoisted_17, _hoisted_19)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(member.family_relationship_type), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.birthdate)), 1 /* TEXT */)]), member.death_date != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.formatedDate(member.death_date)), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"member-sex\">\n                                <span v-if=\"member.sex=='чоловіча'\" title=\"чоловік\">\n                                    &#9794;\n                                </span>\n                                <span v-else title=\"жінка\">\n                                    &#9792;\n                                </span>\n                            </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       "class": "dropdown-item",
       onClick: function onClick($event) {
-        return $options.openFamilyCompositionReportForm(member.id);
+        return $options.openFamilyCompositionReportForm(member);
       }
     }, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Довідка про склад сім'ї ")], 8 /* PROPS */, _hoisted_31)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"d-flex align-items-center\" v-if=\"availableLandYears.length > 0\">\n                                        <a class=\"dropdown-item pe-0\"  @click=\"landOwnedReport(member)\">\n                                            <span class=\"mdi mdi-land-fields me-2\" style=\"color:green;\"></span>\n                                            <span>Довідка про склад земельної ділянки на</span>\n                                        </a>\n                                        <select name=\"selectedLandYear\" id=\"selectedLandYear\" class=\"select-year\" v-model=\"selectedLandYear\">\n                                            <option v-for=\"year in availableLandYears\"\n                                                    :key=\"year\"\n                                                    :value=\"year\">\n                                                {{ year }}\n                                            </option>\n                                        </select>\n                                    </li> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       "class": "btn btn-sm btn-outline-secondary btn-transparent",
@@ -5292,12 +5257,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8 /* PROPS */, ["formData", "onRefreshData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseholdMembersComposition, {
     members: $options.shownMembers,
     onRefreshData: $options.fetchMembers
-  }, null, 8 /* PROPS */, ["members", "onRefreshData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_FamilyCompositionReportForm, {
-    members: $options.shownMembers,
+  }, null, 8 /* PROPS */, ["members", "onRefreshData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <FamilyCompositionReportForm\n            :members=\"shownMembers\"\n            :selectedMember=\"selectedMember\"\n            @closeFamilyCompositionReportForm=\"closeFamilyCompositionReportForm\"/> "), $data.compositionReportFromIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_FamilyCompositionReportForm, {
+    key: 0,
     selectedMember: $data.selectedMember,
     onCloseFamilyCompositionReportForm: $options.closeFamilyCompositionReportForm
-  }, null, 8 /* PROPS */, ["members", "selectedMember", "onCloseFamilyCompositionReportForm"]), $data.additionalParamsFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_HouseholdMembersAdditionalParams, {
-    key: 0,
+  }, null, 8 /* PROPS */, ["selectedMember", "onCloseFamilyCompositionReportForm"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.additionalParamsFormIsVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_HouseholdMembersAdditionalParams, {
+    key: 1,
     onCloseForm: $options.closeAdditionalParamsForm,
     onRefreshData: _cache[6] || (_cache[6] = function ($event) {
       return _ctx.$store.dispatch('Households/fetchRecord', _ctx.household_id);
