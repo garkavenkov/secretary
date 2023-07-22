@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\HouseholdRequest;
+use App\Http\Resources\API\v1\Household\HouseholdFamilyRelationsResource;
 use App\Http\Resources\API\v1\Household\HouseholdResource;
 use App\Http\Resources\API\v1\HouseholdLand\HouseholdLandResource;
 use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
@@ -327,5 +328,20 @@ class HouseholdController extends Controller
             }
         }
         return response()->json(['message' => 'Додаткова параметри були успішно додані']);
+    }
+
+    public function familyRelations($id)
+    {
+        $household = Household::findOrFail($id);
+
+        // $members = $household->members;
+        $members = HouseholdMember::where('household_id', $household->id)->get();
+        // dd($members);
+        foreach($members as $member) {
+                $member['relatives'] = $member->relatives();
+        }
+        // dd($members);
+        return HouseholdFamilyRelationsResource::collection($members);
+        // return response()->json($members);
     }
 }

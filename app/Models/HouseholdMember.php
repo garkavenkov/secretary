@@ -169,6 +169,7 @@ class HouseholdMember extends Model
                     'hm.patronymic',
                     'hm.birthdate',
                     'hm.sex',
+                    'frt.id as relation_id',
                     'frt.name as relation'
                 )
                 ->join('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')

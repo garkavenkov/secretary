@@ -6,6 +6,7 @@ use App\Models\Settlement;
 use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
 use DeclensionUkrainian\Toponym;
+use Illuminate\Support\Facades\DB;
 use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

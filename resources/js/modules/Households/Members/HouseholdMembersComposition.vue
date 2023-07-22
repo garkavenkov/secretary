@@ -81,13 +81,14 @@ import ModalForm        from '../../../components/ui/ModalForm.vue';
 export default {
     name: 'HouseholdMembersComposition',
     props: {
-        'members': {
-            type: Array,
-            required: true
-        }
+        // 'members': {
+        //     type: Array,
+        //     required: true
+        // }
     },
     data() {
         return {
+            members: [],
             availableLinks: {},
             establishedLinks: {},
             relativePairs: {},
@@ -108,31 +109,44 @@ export default {
         },
         makeMatrixFromMembers() {
             var pairs = [];
-            this.members.forEach(member => {
+            axios.get(`/api/v1/households/${this.$route.params.id}/family-relations`)
+                .then(res => {
+                    this.members = res.data.data
 
-                let rest = this.members
-                                .filter(m => m.id !== member.id)
-                                .map(m => {
-                                    // console.log(member.relatives);
-                                    var relationship_type_id  = 0
-                                    let relative = member.relatives.find(r => r.relative_id == m.id);
-                                    if (relative) {
-                                        relationship_type_id = relative.relationship_type_id;
-                                    }
-                                    return {
-                                        [`${member.id}.${m.id}`] : relationship_type_id
-                                    }
-                                });
+                    this.members.forEach(member => {
 
-                pairs.push(...rest);
-            });
+                        // let rest = this.members
+                        //             .filter(m => m.id !== member.id)
+                        //             .map(m => {
+                        //                 var relationship_type_id  = 0
+                        //                 let relative = member.relatives.find(r => r.relative_id == m.id);
+                        //                 if (relative) {
+                        //                     relationship_type_id = relative.relationship_type_id;
+                        //                 }
+                        //                 return {
+                        //                     [`${member.id}.${m.id}`] : relationship_type_id
+                        //                 }
+                        //             });
+                        // console.log(rest);
+                        // pairs.push(...rest);
+                        let links = member.relatives.map(r => {
+                                return {
+                                            [`${member.id}.${r.id}`] : r.relation_id
+                                }
+                        });
+                        console.log(links);
+                        pairs.push(...links);
+                    });
 
-            pairs.forEach(p => {
-                this.availableLinks[Object.keys(p)[0]] = Object.values(p)[0];
-            })
+                    pairs.forEach(p => {
+                        this.availableLinks[Object.keys(p)[0]] = Object.values(p)[0];
+                    })
+
+                    this.establishedLinks = {...this.availableLinks};
+                })
+
             // this.establishedLinks = Object.assign({}, this.availableLinks);
 
-            this.establishedLinks = {...this.availableLinks};
 
             this.relativePairs['чоловік.жіноча']    = "дружина";
             this.relativePairs['дружина.чоловіча']  = "чоловік";
@@ -219,6 +233,10 @@ export default {
     },
     created() {
         this.makeMatrixFromMembers()
+        // axios.get(`/api/v1/households/${this.$route.params.id}/family-relations`)
+        //     .then(res => {
+        //         this.members = res.data.data
+        //     })
     },
     components:{
         ModalForm

@@ -16,31 +16,32 @@
                     новий член
                 </button> -->
                 <button type="button"
-                        id="membersComposition"
-                        v-if="members.length > 0"
-                        class="btn btn-sm btn-outline-secondary"
-                        title="Встановити родинні відносини"
-                        @click="openMembersCompositionForm">
-                    <span class="mdi mdi-family-tree me-1"></span>
-                    Родинні відносини
-                </button>
-                <button type="button"
                         id="additionalParams"
                         v-if="members.length > 0"
-                        class="btn btn-sm btn-outline-secondary ms-2"
+                        class="btn btn-sm btn-outline-secondary me-2"
                         title="Додаткова інформація о родині"
                         @click="openAdditionalParamsForm">
                     <span class="mdi mdi-tag-multiple me-1"></span>
                     Інформація о родині
                 </button>
                 <!-- <button type="button"
-                        id="familyAdditionalParams"
-                        v-if="members.length > 0"
-                        class="btn btn-sm btn-outline-secondary ms-2"
-                        title="Встановити додаткові параметри для родини">
-                    <span class="mdi mdi-tag-multiple me-1"></span>
-                    Інформація о родині
+                        id="membersComposition"
+                        v-if="members.length > 1"
+                        class="btn btn-sm btn-outline-secondary"
+                        title="Встановити родинні відносини"
+                        @click="openMembersCompositionForm">
+                    <span class="mdi mdi-family-tree me-1"></span>
+                    Родинні відносини
                 </button> -->
+                <button type="button"
+                        id="membersComposition"
+                        :disabled="members.length <= 1"
+                        class="btn btn-sm btn-outline-secondary"
+                        title="Встановити родинні відносини"
+                        @click="openMembersCompositionForm">
+                    <span class="mdi mdi-family-tree me-1"></span>
+                    Родинні відносини
+                </button>
                 <button type="button"
                         class="ms-2 btn btn-sm btn-outline-secondary"
                         :class="{'active' : showAllMembers}"
@@ -201,8 +202,12 @@
             :formData="formData"
             @refreshData="fetchMembers"/>
 
-    <HouseholdMembersComposition
+    <!-- <HouseholdMembersComposition
+            v-if="compositionFromIsVisible"
             :members="shownMembers"
+            @refreshData="fetchMembers"/> -->
+    <HouseholdMembersComposition
+            v-if="compositionFromIsVisible"
             @refreshData="fetchMembers"/>
 
     <!-- <FamilyCompositionReportForm
@@ -271,7 +276,8 @@ export default {
             selectedLandYear: 0,
             familyAdditionalParams: [],
             additionalParamsFormIsVisible: false,
-            compositionReportFromIsVisible: false
+            compositionReportFromIsVisible: false,
+            compositionFromIsVisible: false
         }
     },
     provide() {
@@ -381,13 +387,20 @@ export default {
             }
         },
         openMembersCompositionForm() {
+            // axios.get(`/api/v1/households/${this.household_id}/family-relations`)
+            //     .then(res => {
+            //         console.log(res);
+                    // this.compositionFromIsVisible = true
+            //     })
             this.modalTitle = 'Родині відносини';
             this.modalSubmitCaption = 'Встановити';
 
-            this.isFamilyCompositionFormShown = true;
+            this.compositionFromIsVisible = true
 
-            let membersCompositionForm = new Modal(document.getElementById('HouseholdMembersComposition'));
-            membersCompositionForm.show();
+            nextTick(() => {
+                let membersCompositionForm = new Modal(document.getElementById('HouseholdMembersComposition'));
+                membersCompositionForm.show();
+            })
         },
         openFamilyCompositionReportForm(member) {
             this.modalTitle = `Довідка про склад родини: ${member.full_name}`;
