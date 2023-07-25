@@ -17,9 +17,6 @@ use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberRelativesResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 
-use function PHPUnit\Framework\isNan;
-use function PHPUnit\Framework\isNull;
-
 class HouseholdMemberController extends Controller
 {
     use UserRights;

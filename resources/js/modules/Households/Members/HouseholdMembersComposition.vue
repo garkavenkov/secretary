@@ -81,16 +81,21 @@ import ModalForm        from '../../../components/ui/ModalForm.vue';
 export default {
     name: 'HouseholdMembersComposition',
     props: {
-        // 'members': {
-        //     type: Array,
-        //     required: true
-        // }
+        members: {
+            type: Array,
+            required: true
+        },
+        availableLinks: {
+            type: Object,
+            required: true
+        },
+        establishedLinks: {
+            type: Object,
+            required: true
+        }
     },
     data() {
         return {
-            members: [],
-            availableLinks: {},
-            establishedLinks: {},
             relativePairs: {},
         }
     },
@@ -105,49 +110,9 @@ export default {
             }
         },
         closeForm() {
-            this.$emit('closeForm');
+            this.$emit('closeHouseholdFamilyComposition')
         },
-        makeMatrixFromMembers() {
-            var pairs = [];
-            axios.get(`/api/v1/households/${this.$route.params.id}/family-relations`)
-                .then(res => {
-                    this.members = res.data.data
-
-                    this.members.forEach(member => {
-
-                        // let rest = this.members
-                        //             .filter(m => m.id !== member.id)
-                        //             .map(m => {
-                        //                 var relationship_type_id  = 0
-                        //                 let relative = member.relatives.find(r => r.relative_id == m.id);
-                        //                 if (relative) {
-                        //                     relationship_type_id = relative.relationship_type_id;
-                        //                 }
-                        //                 return {
-                        //                     [`${member.id}.${m.id}`] : relationship_type_id
-                        //                 }
-                        //             });
-                        // console.log(rest);
-                        // pairs.push(...rest);
-                        let links = member.relatives.map(r => {
-                                return {
-                                            [`${member.id}.${r.id}`] : r.relation_id
-                                }
-                        });
-                        console.log(links);
-                        pairs.push(...links);
-                    });
-
-                    pairs.forEach(p => {
-                        this.availableLinks[Object.keys(p)[0]] = Object.values(p)[0];
-                    })
-
-                    this.establishedLinks = {...this.availableLinks};
-                })
-
-            // this.establishedLinks = Object.assign({}, this.availableLinks);
-
-
+        fillRelativePairs() {
             this.relativePairs['чоловік.жіноча']    = "дружина";
             this.relativePairs['дружина.чоловіча']  = "чоловік";
 
@@ -195,28 +160,21 @@ export default {
 
             this.relativePairs['прабаба.чоловіча']  = "правнук";
             this.relativePairs['прабаба.жіноча']    = "правнучка";
-
         },
         relationshipSelected(e) {
             let relation = e.target.selectedOptions[0].text;
-            // console.log(`Relation: ${relation}`);
             let corMemberId = e.target.id.split('.').reverse().join('.');
             let corMemberEl = document.getElementById(corMemberId);
             let corSex = corMemberEl.dataset.sex;
-            // console.log(`Correspondent sex: ${corSex}`);
-            // console.log(`Correspondent: ${relation}.${corSex}`);
             let corRelation = this.relativePairs[`${relation}.${corSex}`];
-            // console.log(`Correspondent Relation: ${corRelation}`);
 
+            let relationId = 0;
             if (corSex == 'чоловіча') {
-                // console.log('Чоловіча: ', this.maleRelationships.find(r => r.name == corRelation))
-                this.availableLinks[corMemberId] = this.maleRelationships.find(r => r.name == corRelation).id;
+                relationId = this.maleRelationships.find(r => r.name == corRelation).id;
             } else {
-                // console.log('Жіноча: ', this.femaleRelationships.find(r => r.name == corRelation))
-                this.availableLinks[corMemberId] = this.femaleRelationships.find(r => r.name == corRelation).id;
+                relationId = this.femaleRelationships.find(r => r.name == corRelation).id;
             }
-
-
+            this.$emit('relationshipSelected', {corMemberId, relationId});
         }
     },
     computed: {
@@ -232,11 +190,7 @@ export default {
         }
     },
     created() {
-        this.makeMatrixFromMembers()
-        // axios.get(`/api/v1/households/${this.$route.params.id}/family-relations`)
-        //     .then(res => {
-        //         this.members = res.data.data
-        //     })
+        this.fillRelativePairs()
     },
     components:{
         ModalForm

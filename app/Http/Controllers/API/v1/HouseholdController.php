@@ -309,7 +309,6 @@ class HouseholdController extends Controller
             return response()->json(['message' => $error_msg], 403);
         }
 
-        // dd($request->all());
         if (!isset($request->owner_id)) {
             throw new \Exception('Відсутній ID домогосподарства');
         }
@@ -334,14 +333,12 @@ class HouseholdController extends Controller
     {
         $household = Household::findOrFail($id);
 
-        // $members = $household->members;
         $members = HouseholdMember::where('household_id', $household->id)->get();
-        // dd($members);
+
         foreach($members as $member) {
                 $member['relatives'] = $member->relatives();
         }
-        // dd($members);
+
         return HouseholdFamilyRelationsResource::collection($members);
-        // return response()->json($members);
     }
 }

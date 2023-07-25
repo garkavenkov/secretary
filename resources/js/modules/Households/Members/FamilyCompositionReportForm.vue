@@ -108,20 +108,6 @@ export default {
         }
     },
     watch: {
-        // 'memberId'(newVal) {
-        //     if (newVal != 0) {
-        //         let member = this.members.find(m => m.id == this.memberId);
-        //         if (member) {
-        //             this.relatives = member.relatives;
-        //             this.relatives.forEach(r => r.selected = true)
-        //             this.allSelected = true;
-        //         } else {
-        //             this.relatives = []
-        //         }
-        //     } else {
-        //         this.relatives = [];
-        //     }
-        // },
         'allSelected'(newVal) {
             if (newVal) {
                 this.info.relatives.forEach(r => r.selected = true)
