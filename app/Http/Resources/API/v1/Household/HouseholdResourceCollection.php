@@ -17,15 +17,17 @@ class HouseholdResourceCollection extends ResourceCollection
     {
         return $this->collection->map(function($household) {
             return [
-                'id'                    =>  (int)   $household->id,
-                'settlement_id'         =>  (int)   $household->settlement_id,
-                'settlement'            =>  $household->whenLoaded('settlement', function() use($household) {
-                                                return $household->settlement->name;
-                                            }),
-                'household_type_id'     =>  (int)   $household->household_type_id,
-                'number'                =>  $household->fullNumber(),
-                'raw_address'           =>  $household->address,
-                'address'               =>  $household->getAddress(),
+                'id'                        =>  (int)   $household->id,
+                'settlement_id'             =>  (int)   $household->settlement_id,
+                'settlement'                =>  $household->whenLoaded('settlement', function() use($household) {
+                                                    return $household->settlement->name;
+                                                }),
+                'household_type_id'         =>  (int)   $household->household_type_id,
+                'number'                    =>  $household->fullNumber(),
+                'raw_address'               =>  $household->address,
+                'address'                   =>  $household->getAddress(),
+                'household_head'            =>  $household->household_head(),
+                'household_members_count'   =>  $household->members()->alive()->count()
                 // 'special_marks'         =>  $household->special_marks,
                 // 'additional_data'       =>  $household->additional_data
             ];

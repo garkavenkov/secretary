@@ -1,6 +1,6 @@
 <template>
     <div id="members">
-        <div class="p-3 d-flex justify-content-between">
+        <div class="p-3 d-flex justify-content-between" v-if="members.length > 0">
             <div>
                 <button type="button"
                         id="additionalParams"
@@ -13,6 +13,7 @@
                 </button>
                 <button type="button"
                         id="membersComposition"
+                        v-if="members.length > 1"
                         :disabled="members.length <= 1"
                         class="btn btn-sm btn-outline-secondary"
                         title="Встановити родинні відносини"
@@ -37,7 +38,7 @@
                     Новий член
                 </button>
             </div>
-            <div v-if="members.length > 0">
+            <div>
                 <button type="button"
                         title="Режим карток"
                         class="btn btn-sm btn-outline-secondary me-2"
@@ -54,7 +55,7 @@
                 </button>
             </div>
         </div>
-        <div class="px-3 d-flex gap-3 flex-wrap">
+        <div class="px-3 d-flex gap-3 flex-wrap" :class="{'pt-3': members.length == 0}">
             <template v-if="viewMode == 'card'">
                 <div    class="card member"
                         :class="[member.status == 'dead' ? 'dead' : '',  member.status == 'gone' ? 'gone' : '']"

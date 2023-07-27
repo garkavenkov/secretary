@@ -34,9 +34,11 @@
                     <tr>
                         <th></th>
                         <th>Населений пункт</th>
+                        <th>Місцезнаходження / адреса</th>
                         <th>Номер</th>
                         <!-- <th>Тип</th> -->
-                        <th>Місцезнаходження / адреса</th>
+                        <th>Голова домогосподарства</th>
+                        <th class="text-center">Мешкає</th>
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">
@@ -48,9 +50,11 @@
                             </router-link>
                         </td>
                         <td>{{record.settlement}}</td>
+                        <td>{{record.address}}</td>
                         <td>{{record.number}}</td>
                         <!-- <td>{{record.householdTypeId}}</td> -->
-                        <td>{{record.address}}</td>
+                        <td>{{record.household_head}}</td>
+                        <td class="text-center">{{record.household_members_count}}</td>
                     </tr>
                 </template>
             </DataTable>
@@ -164,6 +168,11 @@ export default {
         },
         pageChanged(page) {
             this.$store.dispatch('Households/changePage', page)
+        },
+        searchData(row, searchText) {
+            return  row['address'].includes(searchText) ||
+                    row['number'].includes(searchText) ||
+                    row['household_head'].includes(searchText);
         }
     },
     computed: {
