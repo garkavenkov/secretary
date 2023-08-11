@@ -35,3 +35,62 @@
 
     }
 }
+
+table thead {
+
+    th.sortable {
+
+        position: relative;
+        user-select: none;
+
+        &:before, &:after {
+            position: absolute;
+            color: white;
+            display: block;
+            bottom: 0.6rem;
+            font-size: 15px;
+            opacity: 0.5;
+        }
+
+        &:not(.ascending, .descending) {
+            &:before {
+                content: "\2191";
+            }
+            &:after {
+                content: "\2193";
+            }
+        }
+
+        &.ascending:before, &.descending:before {
+            content: attr(data-sort-position);
+            font-size: 10px;
+            background: white;
+            opacity: 1;
+            color: black;
+            border-radius: 999px;
+            width: 1rem;
+            text-align: center;
+            height: 1rem;
+            top: calc(50% - 8px);
+        }
+
+
+        &:before {
+            right: 1.2rem;
+        }
+
+        &:after {
+            right: 0.5rem;
+        }
+
+        &.ascending:after{
+            content: "\2193";
+            opacity: 1;
+        }
+        &.descending:after {
+            content: "\2191";
+            opacity: 1;
+        }
+    }
+}
+

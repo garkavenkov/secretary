@@ -36,7 +36,17 @@
             <div class="table-responsive">
                 <table class="table table-striped" :class="tableClass">
                     <thead :class="tableHeaderClass">
-                        <slot name="header"></slot>
+                        <slot name="header">
+                            <tr v-if="dataFields.length > 0">
+                                <th v-for="field in dataFields"
+                                    :key="field.name"
+                                    :class="field.class"
+                                    :data-sort-field="field.sortable ? field.name : ''"
+                                    v-on="field.sortable ? { click:(event) => sortDataByField(event) } : {}" >
+                                        {{ field.caption }}
+                                </th>
+                            </tr>
+                        </slot>
                     </thead>
                     <tbody>
                         <slot v-bind:paginatedData="paginatedData"></slot>
@@ -47,7 +57,8 @@
                 </table>
             </div>
         </div>
-        <div class="data-table__pagination--wrapper d-flex justify-content-between align-items-center py-2" v-if="(paginatedData.length > 0) && showPaginationPanel">
+        <div    class="data-table__pagination--wrapper d-flex justify-content-between align-items-center py-2"
+                v-if="(paginatedData.length > 0) && showPaginationPanel">
             <div>Відображено з {{shownFrom}} по {{shownTo}} із {{shownTotal}}</div>
             <ul class="pagination mb-0">
                 <template v-if="externalPagination?.links">
@@ -99,6 +110,10 @@ export default {
         'dataTable': {
             type: Array
         },
+        'dataFields': {
+            type: Array,
+            required: false,
+        },
         'tableHeaderClass': {
             type: String,
             required: false
@@ -126,13 +141,30 @@ export default {
             type: Object,
             required: false,
             // default: () => {}
+        },
+        'searchableFields': {
+            type: Array,
+            required: false,
+        },
+        'sortByDefaultField': {
+            type: String,
+            required: false,
+            default: ''
         }
+        // 'sortableFields': {
+        //     type: Object,
+        //     required: false,
+        // }
     },
     data() {
         return {
             currentPage: 1,
             perPage: this.perPageItems[0],
-            searchData: ''
+            searchData: '',
+            sortedBy: {},
+            fieldsType: {},
+            sortedByLength: 0,
+            dataShouldBeSorted: false
         }
     },
     emits: ['pageChanged', 'perPageChanged'],
@@ -158,7 +190,80 @@ export default {
                 this.$emit('pageChanged', page)
             }
             this.currentPage = page;
-        }
+        },
+        sortDataByField(e) {
+            let field = e.target.dataset.sortField;
+            let sort = e.target.dataset.sortOrder;
+
+            // Click on sortable field
+            if (!e.ctrlKey) {
+                this.sortedBy = {};
+                let fields = document.querySelectorAll('[data-sort-order]');
+                fields.forEach(f => {
+                    f.removeAttribute('data-sort-order');
+                    f.removeAttribute('data-sort-position');
+                    f.classList.remove('ascending', 'descending');
+                });
+            }
+
+            if (sort == 'descending') {
+                e.target.classList.remove('descending')
+                e.target.removeAttribute('data-sort-order');
+                e.target.removeAttribute('data-sort-position');
+
+                delete(this.sortedBy[field]);
+
+                let fields = document.querySelectorAll('[data-sort-position]');
+                fields.forEach(f => {
+                    let position = f.dataset.sortPosition;
+                    f.dataset.sortPosition = position > 1 ? position - 1 : 1;
+                })
+            } else {
+                if (sort == undefined) {
+                    sort = 'ascending'
+                } else {
+                    e.target.classList.remove('ascending')
+                    sort = 'descending'
+                }
+                e.target.dataset.sortOrder = sort;
+                e.target.classList.add(sort)
+                this.sortedBy[field] = sort;
+            }
+
+            if (Object.keys(this.sortedBy).indexOf(field) >= 0 ) {
+                e.target.dataset.sortPosition = Object.keys(this.sortedBy).indexOf(field) + 1;
+            }
+        },
+        sortDataHandler(sortedBy, sortableFields) {
+            return function(a, b) {
+                let compareResult = [];
+                Object.keys(sortedBy).forEach(function(field) {
+                    let sortOrder = sortedBy[field];
+                    let dataType = sortableFields[field];
+
+                    if (sortOrder.toLowerCase() == 'ascending') {
+                        if(dataType == 'string') {
+                            compareResult.push(a[field].localeCompare(b[field]));
+                        } else if (dataType == 'number') {
+                            compareResult.push(a[field] - b[field]);
+                        }
+                    } else if (sortOrder.toLowerCase() == 'descending') {
+                        if(dataType == 'string') {
+                            compareResult.push(b[field].localeCompare(a[field]));
+                        } else if (dataType == 'number') {
+                            compareResult.push(b[field] - a[field]);
+                        }
+                    } else {
+                        return;
+                    }
+                });
+                return compareResult.reduce((res, next) => res || next);
+            }
+        },
+        // sortOrderNumber(field) {
+        //     let index = Object.keys(this.sortedBy).indexOf(field);
+        //     return index < 0 ? '' : index+1;
+        // }
     },
     computed: {
         pagesCount() {
@@ -171,23 +276,39 @@ export default {
             }
         },
         paginatedData(){
+            let dataSet;
+
             if (this.externalPagination?.total) {
                 if (this.searchData !== '') {
-                   return this.dataTable
+                   dataSet = this.dataTable
                             .filter(r => this.$parent.searchData(r, this.searchData))
+                } else {
+                    dataSet = this.dataTable;
                 }
-                return this.dataTable;
             } else {
                 let start = (this.currentPage - 1) * this.perPage,
                     end = start + this.perPage;
 
                 if (this.searchData !== '') {
-                    return this.dataTable
+                    dataSet =  this.dataTable
                             .filter(r => this.$parent.searchData(r, this.searchData))
                             .slice(start, end);
+                } else {
+                    dataSet = this.dataTable.slice(start, end);
                 }
-                return this.dataTable.slice(start, end);
             }
+
+            if (this.sortedByLength > 0) {
+                dataSet.sort(this.sortDataHandler(this.sortedBy, this.fieldsType));
+            } else {
+                if (this.sortByDefaultField !== '' && this.dataShouldBeSorted == true) {
+                    // console.log(`Sort dataset by fallbackSortField`);
+                    dataSet.sort((a,b) => a[this.sortByDefaultField] - b[this.sortByDefaultField]);
+                    this.dataShouldBeSorted = false;
+                }
+            }
+
+            return dataSet;
         },
         shownFrom() {
             if (this.externalPagination?.from) {
@@ -217,6 +338,34 @@ export default {
         },
         isFirstPage() {
             return this.currentPage == 1;
+        }
+    },
+    mounted() {
+        let fields = document.querySelectorAll('[data-sort-field]');
+        if (fields) {
+            fields.forEach(field => {
+                field.addEventListener('click', this.sortDataByField)
+                if (field.dataset.fieldType) {
+                    this.fieldsType[field.dataset.sortField] = field.dataset.fieldType;
+                } else {
+                    this.fieldsType[field.dataset.sortField] = 'string'
+                }
+            });
+        }
+    },
+    watch: {
+        sortedBy: {
+            handler(newVal, oldVal) {
+                this.sortedByLength = Object.keys(this.sortedBy).length;
+            },
+            deep: true,
+            immidiate: true
+        },
+        sortedByLength(newVal, oldVal) {
+            // console.log(`newVal: ${newVal}, oldVal: ${oldVal}`);
+            if (oldVal == 1 && newVal == 0) {
+                this.dataShouldBeSorted = true;
+            }
         }
     }
 }
@@ -285,4 +434,20 @@ export default {
 tbody tr:last-of-type {
     border-bottom: 2px solid #343a40;
 }
+
+.sort-field-number {
+    font-size: 0.6rem;
+    display: inline-block;
+    position: absolute;
+    right: 1.5rem;
+    top: calc(50% - 0.5rem);
+    line-height: 1rem;
+    background: #f8f9fa;
+    color: black;
+    width: 1rem;
+    text-align: center;
+    border-radius: 999px;
+    border-color: black;
+}
+
 </style>

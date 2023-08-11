@@ -28,31 +28,31 @@
                     :perPageItems="perPageItems"
                     :externalPagination="pagination"
                     tableHeaderClass="table-dark"
+                    tableClass="table-bordered"
+                    sortByDefaultField="id"
                     @pageChanged="pageChanged"
                     @perPageChanged="perPageChanged">
                 <template v-slot:header>
                     <tr>
                         <th></th>
+                        <th data-sort-field="number" data-field-type="string" class="sortable">Номер</th>
                         <th>Населений пункт</th>
-                        <th>Місцезнаходження / адреса</th>
-                        <th>Номер</th>
-                        <!-- <th>Тип</th> -->
+                        <th data-sort-field="address" data-field-type="string" class="sortable">Місцезнаходження / адреса</th>
                         <th>Голова домогосподарства</th>
-                        <th class="text-center">Мешкає</th>
+                        <th data-sort-field="household_members_count" data-field-type="number" class="sortable">Мешкає</th>
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
-                        <td>
+                        <td class="text-center">
                             <router-link :to="{name: 'households.show', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
+                        <td class="text-center">{{record.number}}</td>
                         <td>{{record.settlement}}</td>
                         <td>{{record.address}}</td>
-                        <td>{{record.number}}</td>
-                        <!-- <td>{{record.householdTypeId}}</td> -->
                         <td>{{record.household_head}}</td>
                         <td class="text-center">{{record.household_members_count}}</td>
                     </tr>
@@ -173,6 +173,10 @@ export default {
             return  row['address'].includes(searchText) ||
                     row['number'].includes(searchText) ||
                     row['household_head'].includes(searchText);
+        },
+        sortData(a, b, criteria) {
+            // console.log('sortData from Main component');
+            console.log(a,b, criteria);
         }
     },
     computed: {
@@ -199,4 +203,5 @@ export default {
         color: var(--bs-gray-600);
     }
 }
+
 </style>

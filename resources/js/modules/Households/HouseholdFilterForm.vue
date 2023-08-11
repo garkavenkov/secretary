@@ -4,9 +4,9 @@
 
         <div class="row mb-3">
             <div class="col">
-                <label for="householdType" class="form-label">Населений пункт</label>
+                <label for="settlementFilter" class="form-label">Населений пункт</label>
                 <select class="form-control"
-                        id="householdType"
+                        id="settlementFilter"
                         v-model="filter.settlement_id">
                     <option value="0">Усі населені пункти</option>
                     <option :value="settlement.id" v-for="settlement in settlements" :key="settlement.id">
@@ -17,9 +17,9 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <label for="householdType" class="form-label">Тип об'єкта погосподарського обліку</label>
+                <label for="householdTypeFilter" class="form-label">Тип об'єкта погосподарського обліку</label>
                 <select class="form-control"
-                        id="householdType"
+                        id="householdTypeFilter"
                         v-model="filter.household_type_id">
                     <option value="0">Усі типи об'єкта</option>
                     <option :value="householdType.id" v-for="householdType in householdTypes" :key="householdType.id">

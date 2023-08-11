@@ -17,7 +17,7 @@
                         {{settlement.name}}
                     </option>
                 </select>
-                <div id="householdTypeValidation" class="invalid-feedback">
+                <div id="householdSettlementValidation" class="invalid-feedback">
                     {{ getError('settlement_id') }}
                 </div>
             </div>
@@ -53,10 +53,9 @@
             </div>
         </div>
         <div class="row">
-            <label  for="householdAddress"
-                    class="form-label">
+            <p>
                 Місцезнаходження / адреса
-            </label>
+            </p>
         </div>
         <div class="row mb-3">
             <div class="col-md-2">
@@ -93,7 +92,7 @@
                 <label  for="corpsNumber" class="form-label address-label">корпус</label>
                 <input  type="text"
                         :class="['form-control', (hasError('address') && (formData.address_corps !==''))? 'is-invalid' : '']"
-                        id="corps"
+                        id="corpsNumber"
                         v-model="formData.address_corps">
             </div>
             <div class="col-md-2">
