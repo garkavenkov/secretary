@@ -381,11 +381,72 @@ class ReportController extends Controller
             $year->pastures > 0 ? (number_format($year->pastures, 4) . ' га') : 'немає'
         );
 
+        // for($tv in $report_variables) {
+        //
+        //      $report_value = $report_entities[$tv]['value']              --- maintenance
+        //      $report_value_format = $report_entities[$tv]['format']      --- number:4
+        //      $report_value_prefix = $report_entities[$tv]['prefix']      --- 'га'
+        //      $report_value_default = $report_entities[$tv]['default']    --- 'немає'
+        //
+        //
+        //      $templateProcessor->setValue($tv, generate_report_value($report_variable[$tv]));
+        // }
+
         header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8');
         header("Content-Disposition: attachment; filename='landOwned.docx");
 
 
         $templateProcessor->saveAs('php://output');
 
+    }
+
+    public function generateReport(Request $request)
+    {
+        // Income parameters:
+        // $report_name = $request->report_name
+
+        // $parameters  = explode(';',$request->params);
+        /*
+            report: family_composition
+            params: member_id=1;relatives_ids=2,3,4,5
+
+            report: member_land
+            params: member_id=1;year=2020
+        */
+
+        // Check whether report exists in DB;
+        /*
+            $report = Report::where('code', $report_name)->first();
+            if (!$report) {
+                $msg = 'Звіту $report->name відсутній в системі. Зверниться до довідника звітів.';
+                throw new Exception($msg,500);
+            }
+        */
+
+        // Check id report's template exists
+        /*
+            try {
+                $templateProcessor = new TemplateProcessor(storage_path('app/documents/$report->template'));
+            } catch (Exception $e) {
+                $msg = 'Шаблон звіту $report->template не знайден. Завантажіть шаблон';
+                throw new Exception($msg,500);
+            }
+        */
+
+        // Check report input parameters based on report
+        /*
+            $report_params = $report->input_params;
+            foreach($report_params as $param) {
+                if (!array_key_exists($param, $parameters)) {
+                    $msg = "Відсутній вхідний параметр '$param' для звіту '$report->name'";
+                    throw new Exception($msg,500);
+                }
+            }
+        */
+
+        // Fetch report_snippets
+        /*
+            $snippets = ReportVariable::where('report_id', $report->id)->get();
+        */
     }
 }

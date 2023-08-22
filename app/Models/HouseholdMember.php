@@ -6,10 +6,11 @@ use DateTime;
 use App\Models\WorkPlace;
 use App\Models\FamilyRelationship;
 use Illuminate\Support\Facades\DB;
+use DeclensionUkrainian\Anthroponym;
+use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
-use App\Traits\Models\AdditionalParams;
 
 class HouseholdMember extends Model
 {
@@ -219,5 +220,15 @@ class HouseholdMember extends Model
                 ->orWhere('fr.relative_id', $member->id)
                 ->delete();
         });
+    }
+
+    public function declensionFullName(string $case): String
+    {
+        return  Anthroponym::$case([
+            'gender'    =>  $this->sex,
+            'surname'   =>  $this->surname,
+            'name'      =>  $this->name,
+            'patronymic'=>  $this->patronymic,
+        ]);
     }
 }

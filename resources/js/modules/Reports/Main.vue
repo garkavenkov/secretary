@@ -66,7 +66,7 @@ export default {
                     name            :  "Довідка про стан сім\'ї",
                     description     :  "Довідка про стан сім\'ї",
                     file_name       :  "family_composition.docx",
-                    model           :  "App\Models\HouseholdMember"
+                    model           :  "App\\Models\\HouseholdMember"
                 },
                 {
                     id              :   2,
@@ -74,7 +74,7 @@ export default {
                     name            :  "Земельна ділянка",
                     description     :  "Довідка про наявність земельної ділянки",
                     file_name       :  "member_land.docx",
-                    model           :  "App\Models\HouseholdMember"
+                    model           :  "App\\Models\\HouseholdMember"
                 }
             ],
             models: [

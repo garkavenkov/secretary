@@ -99,7 +99,36 @@ export default {
         }
     },
     methods: {
-        submitData() {},
+        submitData(event) {
+            let data = new FormData();
+            data.append('name', 'reporm');
+            data.append('file', event.target.files[0]);
+            console.log(data);
+            let config = {
+              headers : {
+                'Content-Type' : 'multipart/form-data'
+              }
+            }
+
+            axios.post(
+              URL,
+              data,
+              config
+            ).then(res => {
+                if (res.status == 200) {
+                    this.fetchData()
+                    this.$swal({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            html:res.data.message,
+                            icon:'success',
+                        });
+                }
+              }
+            )
+        },
         closeForm() {}
     },
     components: {

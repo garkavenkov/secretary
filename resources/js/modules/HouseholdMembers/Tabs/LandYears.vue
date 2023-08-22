@@ -23,6 +23,16 @@
                             <span class="mdi mdi-cog"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
+                            <!--
+                                ---- place widget for available reports ??????
+
+                                <li v-for="report in reports" :key=`year+report.id`>
+                                    <a class="dropdown-item" @click="report.code">  // arguments in report ????
+                                        <span :class="['me-2', report.icon]" style="color:green;"></span>
+                                        {{report.name}}
+                                    </a>
+                                </li>
+                             -->
                             <li>
                                 <a class="dropdown-item" @click="landOwnedReport(year.year)">
                                     <span class="mdi mdi-land-fields me-2" style="color:green;"></span>
@@ -183,7 +193,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters('HouseholdMembers',  {'ownerId': 'memberId', 'member': 'member'}),
+        ...mapGetters('HouseholdMembers',  {'owner_id': 'memberId', 'member': 'member'}),
     },
     created() {
         this.fetchYears();
