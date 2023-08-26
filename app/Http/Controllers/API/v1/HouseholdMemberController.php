@@ -31,14 +31,15 @@ class HouseholdMemberController extends Controller
         if (request()->query('per_page')) {
             $per_page = request()->query('per_page');
         } else {
-            $per_page = 3;
+            $per_page = 10;
         }
 
         if (request()->query('household_id')) {
 
             $household_id = request()->query('household_id');
             $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')->where('household_id', $household_id)->get();
-            return new HouseholdMemberResourceCollection($members);
+            // return new HouseholdMemberResourceCollection($members);
+            return HouseholdMemberResource::collection($members);
 
         } else if (request()->query('where')) {
 

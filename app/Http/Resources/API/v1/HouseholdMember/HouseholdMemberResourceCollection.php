@@ -31,7 +31,7 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'death_date'                =>  $member->death_date,
                 'address'                   =>  $member->whenLoaded('household', $member->household->getFullAddress()),
                 'household_number'          =>  $member->whenLoaded('household', $member->household->fullNumber()),
-                'relatives'                 =>  $member->relatives()
+                // 'relatives'                 =>  $member->relatives()
             ];
         });
     }
