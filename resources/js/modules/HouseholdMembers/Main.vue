@@ -25,12 +25,13 @@
                     :dataTable="members"
                     :perPageItems="perPageItems"
                     :externalPagination="pagination"
+                    :dataFields="dataFields"
                     tableHeaderClass="table-dark"
                     tableClass="table-bordered"
                     sortByDefaultField="id"
                     @pageChanged="pageChanged"
                     @perPageChanged="perPageChanged">
-                <template v-slot:header>
+                <!-- <template v-slot:header>
                     <tr>
                         <th></th>
                         <th data-sort-field="full_name"
@@ -46,7 +47,7 @@
                             Домогосподарство
                         </th>
                     </tr>
-                </template>
+                </template> -->
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
@@ -55,11 +56,7 @@
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
-                        <td>
-                            <!-- <router-link :to="{name: 'household.members.show', params: { id: record.id }}"> -->
-                            {{record.full_name}}
-                            <!-- </router-link> -->
-                        </td>
+                        <td>{{record.full_name}}</td>
                         <td class="text-center">{{record.birthdate_formatted}}</td>
                         <td>{{record.address}}</td>
                         <td class="text-center">
@@ -96,33 +93,33 @@ export default {
                 15,
                 20
             ],
-            // dataFields: [
-            //     {
-            //         name: 'link',
-            //         caption: ''
-            //     },
-            //     {
-            //         name: 'full_name',
-            //         caption: 'Призвіще ім\'я по батькові',
-            //         class: 'sortable',
-            //         sortable: true,
-            //     },
-            //     {
-            //         name: 'birthdate_formatted',
-            //         caption: 'Дата народження',
-            //         class: 'text-center',
-            //     },
-            //     {
-            //         name: 'address',
-            //         caption: 'Адреса',
-            //     },
-            //     {
-            //         name: 'household_number',
-            //         caption: 'Домогосподарство',
-            //         class: 'sortable',
-            //         sortable: true,
-            //     },
-            // ],
+            dataFields: [
+                {
+                    name: 'link',
+                    caption: ''
+                },
+                {
+                    name: 'full_name',
+                    caption: 'Призвіще ім\'я по батькові',
+                    class: 'sortable',
+                    sortable: true,
+                },
+                {
+                    name: 'birthdate_formatted',
+                    caption: 'Дата народження',
+                    class: 'text-center',
+                },
+                {
+                    name: 'address',
+                    caption: 'Адреса',
+                },
+                {
+                    name: 'household_number',
+                    caption: 'Домогосподарство',
+                    class: 'sortable',
+                    sortable: true,
+                },
+            ],
         }
     },
     provide() {

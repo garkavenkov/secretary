@@ -42,7 +42,7 @@
                                     :key="field.name"
                                     :class="field.class"
                                     :data-sort-field="field.sortable ? field.name : ''"
-                                    v-on="field.sortable ? { click:(event) => sortDataByField(event) } : {}" >
+                                    :data-field-type="field.dataType">
                                         {{ field.caption }}
                                 </th>
                             </tr>
@@ -341,17 +341,19 @@ export default {
         }
     },
     mounted() {
-        let fields = document.querySelectorAll('[data-sort-field]');
-        if (fields) {
-            fields.forEach(field => {
-                field.addEventListener('click', this.sortDataByField)
-                if (field.dataset.fieldType) {
-                    this.fieldsType[field.dataset.sortField] = field.dataset.fieldType;
-                } else {
-                    this.fieldsType[field.dataset.sortField] = 'string'
-                }
-            });
-        }
+        // if (this.dataFields.length > 0) {
+            let fields = document.querySelectorAll('[data-sort-field]');
+            if (fields) {
+                fields.forEach(field => {
+                    field.addEventListener('click', this.sortDataByField)
+                    if (field.dataset.fieldType) {
+                        this.fieldsType[field.dataset.sortField] = field.dataset.fieldType;
+                    } else {
+                        this.fieldsType[field.dataset.sortField] = 'string'
+                    }
+                });
+            }
+        // }
     },
     watch: {
         sortedBy: {
