@@ -55,10 +55,10 @@
             // &:has(.router-link-exact-active) a {
             //     color: red;
             // }
-            &:has(.router-link-exact-active) > a  {
+            &:has(.router-link-exact-active, .router-link-active) > a  {
                 /* background: white; */
                 color: var(--bs-white) !important;
-                font-weight: 500;
+                font-weight: bold;
             }
 
             position: relative;

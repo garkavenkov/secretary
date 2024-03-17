@@ -108,7 +108,7 @@
 
     <LandAdditionalDataForm
             :formData="additionalData"
-            @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+            @refreshData="$store.dispatch('Households/fetchRecord', owner_id)" />
 
 </template>
 

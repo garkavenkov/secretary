@@ -18,8 +18,8 @@
                     <span class="nav-title">Робочий стіл</span>
                 </router-link>
             </li>
-            <li title="Облікові картки">
-                <router-link to="/households">
+            <li title="Облікові картки" >
+                <router-link to="/households" :class="[{'router-link-active': $route.path.indexOf('households') > -1 }]">
                     <span class="icon">
                         <span class="mdi mdi-folder-home"></span>
                     </span>
@@ -27,7 +27,7 @@
                 </router-link>
             </li>
             <li title="Члени домогосподарств">
-                <router-link to="/household-members">
+                <router-link to="/household-members" :class="[{'router-link-active': $route.path.indexOf('household-members') > -1 }]">
                     <span class="icon">
                         <span class="mdi mdi-human-male-female-child"></span>
                     </span>
