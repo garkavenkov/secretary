@@ -164,7 +164,8 @@ export default {
             let data = {
                 report: 'landOwned',
                 year: year,
-                member_id: this.ownerId
+                // member_id: this.ownerId
+                member_id: this.$route.params.id
             }
 
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )

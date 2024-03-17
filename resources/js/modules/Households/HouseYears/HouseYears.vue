@@ -203,11 +203,11 @@
                     @refreshData="fetchYears" />
 
     <HouseInfoForm  :formData="infoData"
-                    @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+                    @refreshData="$store.dispatch('Households/fetchRecord', owner_id)" />
 
     <HouseAdditionalDataForm
                     :formData="additionalData"
-                    @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
+                    @refreshData="$store.dispatch('Households/fetchRecord', owner_id)" />
 
 </template>
 

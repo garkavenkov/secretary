@@ -48,7 +48,7 @@
                         <td class="text-center">
                             <router-link :to="{name: 'households.show', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
-                            </router-link>
+                            </router-link>                            
                         </td>
                         <td class="text-center">{{record.number}}</td>
                         <td>{{record.settlement}}</td>
