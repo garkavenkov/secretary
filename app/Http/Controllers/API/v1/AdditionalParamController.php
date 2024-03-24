@@ -7,6 +7,8 @@ use App\Models\AdditionalParam;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\v1\AdditionalParamRequest;
 use App\Http\Resources\API\v1\AdditionalParam\AdditionalParamResource;
+use App\Models\AdditionalParamCategory;
+use App\Models\AdditionalParamValueType;
 use App\Traits\Models\UserRights;
 
 class AdditionalParamController extends Controller
@@ -19,12 +21,42 @@ class AdditionalParamController extends Controller
      */
     public function index()
     {
-        if (request()->input('category_id')) {
-            $params = AdditionalParam::with('valueType')->where('category_id', request()->input('category_id'))->orderBy('code')->get();
-        } else {
-            $params = AdditionalParam::with('valueType')->get();
+        $category_id = request()->input('category_id');
+        $category_code = request()->input('category_code');
+        $value_type_id = request()->input('value_type_id');
+        $value_type_code = request()->input('value_type_code');
+        
+        if (!is_null($category_code)) {
+            $category = AdditionalParamCategory::where('code', $category_code)->first();
+            if ($category) {
+                $category_id = $category->id;
+            }
         }
 
+        if (!is_null($category_id)) {
+            $params = AdditionalParam::with('valueType')
+                        ->where('category_id', $category_id);                        
+        } else {
+            $params = AdditionalParam::with('valueType');
+        }
+        
+        if (!is_null($value_type_code)) {
+            $value_type = AdditionalParamValueType::where('code', $value_type_code)->first();
+
+            if ($value_type) {
+                $value_type_id = $value_type->id;
+            }
+        }
+
+        if (!is_null($value_type_id)) {
+            $params = $params->where(function ($query) use($value_type_id) {
+                                $query->where('value_type_id', '=', $value_type_id)
+                                      ->orWhere(0, 0);
+                            });                            
+        } 
+
+        $params = $params->orderBy('code')->get();
+        
         return AdditionalParamResource::collection($params);
     }
 

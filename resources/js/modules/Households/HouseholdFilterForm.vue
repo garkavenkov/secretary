@@ -4,7 +4,7 @@
 
         <div class="row mb-3">
             <div class="col">
-                <label for="settlementFilter" class="form-label">Населений пункт</label>
+                <label for="settlementFilter" class="form-label" :class="{'filtered' : filter.settlement_id !== 0}">Населений пункт</label>
                 <select class="form-control"
                         id="settlementFilter"
                         v-model="filter.settlement_id">
@@ -17,7 +17,7 @@
         </div>
         <div class="row mb-3">
             <div class="col">
-                <label for="householdTypeFilter" class="form-label">Тип об'єкта погосподарського обліку</label>
+                <label for="householdTypeFilter" class="form-label" :class="{'filtered' : filter.household_type_id !== 0}">Тип об'єкта погосподарського обліку</label>
                 <select class="form-control"
                         id="householdTypeFilter"
                         v-model="filter.household_type_id">
@@ -28,6 +28,8 @@
                 </select>
             </div>
         </div>
+        
+        <AdditionalParamsFormFilter :params="params" :filter="filter" />
 
         <template v-slot:footer>
             <button class="btn btn-outline-secondary"
@@ -43,20 +45,26 @@
 </template>
 
 <script>
-import { mapGetters }   from 'vuex';
-import ModalForm        from '../../components/ui/ModalForm.vue';
+import { mapGetters }           from 'vuex';
+
+import AdditionalParamsFilter       from '../../mixins/AdditionalParamsFilter';
+import ModalForm                    from '../../components/ui/ModalForm.vue';
+import AdditionalParamsFormFilter   from '../../components/ui/AdditionalParamFormFilter.vue';
 
 export default {
     name: 'HouseholdFilterForm',
+    mixins: [AdditionalParamsFilter],
     data() {
-        return {}
+        return {
+            // params: []
+        }
     },
     methods: {
         submitData() {
             this.filter.isFiltered = true;
             this.$store.dispatch('Households/applyFilter', this.filter);
         },
-        clearFormData() {}
+        clearFormData() {},        
     },
     computed: {
         ...mapGetters('Households', ['filter']),
@@ -66,8 +74,20 @@ export default {
         //     return (this.filter.settlement_id == 0) && (this.filter.household_type_id == 0);
         // }
     },
+    created() {
+        this.fetchAdditionalParamsForFilter('App\\Models\\Household', 'boolean');
+    },
     components: {
         ModalForm,
+        AdditionalParamsFormFilter
     }
 }
 </script>
+
+<style>
+
+label.form-label.filtered {
+    font-weight: 600;
+}
+
+</style>

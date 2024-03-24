@@ -16,8 +16,10 @@ export const HouseholdMembers = {
         filter: {
             settlement_id: 0,
             sex: 'all',
+            additionalParams: {},
             isFiltered: false,
         },
+        // additionalParams: {},
         baseUrl: '/api/v1/household-members',
         url: '',
         entities: 'members',
@@ -30,6 +32,7 @@ export const HouseholdMembers = {
         member: state => state.member,
         memberId: state => state.member.id,
         filter: state => state.filter,
+        additionalParams: state => state.additionalParams,
         pagination: state => state.pagination
         // info: state => Object.assign({}, state.member.info),
         // members: state => state.household.members,

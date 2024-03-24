@@ -3,6 +3,7 @@ export default {
         makeQueryString(state, page) {
             if (state.filter.isFiltered) {
                 let conditions = [];
+                // let params = [];
                 if (state.filter.settlement_id > 0) {
                     conditions.push(`settlement_id=${state.filter.settlement_id}`);
                 }
@@ -11,6 +12,12 @@ export default {
                 }
                 if (state.filter.sex && ( state.filter.sex !== 'all')) {
                     conditions.push(`sex=${state.filter.sex}`);
+                }
+                if (state.filter.hasOwnProperty('additionalParams') && (Object.keys(state.filter.additionalParams).length > 0)) {                
+                    let params = Object.keys(state.filter.additionalParams).filter(p => state.filter.additionalParams[p]);
+                    if (params.length > 0) {
+                        conditions.push(`additional_params=${params.join(',')}`);
+                    }                    
                 }
                 if (conditions.length > 0) {
                     state.url = state.baseUrl + `?per_page=${state.perPage}&where=` + conditions.join(';');

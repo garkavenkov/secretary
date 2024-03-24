@@ -11,7 +11,8 @@
                 <div class="col-md-8">
                     <label for="movementEventType" class="form-label">Подія</label>
                     <select :class="['form-control', hasError('movement_type_id') ? 'is-invalid' : '']"
-                            v-model="formData.movement_type_id">
+                            v-model="formData.movement_type_id"
+                            id="movementEventType">
                         <option disabled value="0">Оберить подію</option>
                         <option :value="movementType.id" v-for="movementType in movementTypes" :key="movementType.id">
                             {{movementType.name}}
@@ -25,7 +26,7 @@
                     <label  for="movementEventDate" class="form-label">Дата</label>
                     <input  type="date"
                             :class="['form-control', hasError('date') ? 'is-invalid' : '']"
-                            id="movementEvent"
+                            id="movementEventDate"
                             v-model="formData.date">
                     <div id="movementEventValidation" class="invalid-feedback">
                         {{ getError('date') }}

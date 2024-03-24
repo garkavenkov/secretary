@@ -15,6 +15,22 @@ trait AdditionalParams
         return $category->params($params);
     }
 
+    public function additionalParamsFilled()
+    {
+        
+        $params = DB::table('additional_params as ap')
+                    ->select('ap.id')
+                    ->join('additional_param_categories as apc', 'ap.category_id', '=', 'apc.id')
+                    ->where('apc.code', '=', get_class($this))        
+                    ->pluck('id')
+                    ->toArray();
+        
+        return $this->hasMany(AdditionalParamValue::class, 'owner_id')
+                    ->where(function ($q) use($params) {
+                        $q->whereIn('param_id', $params);
+                    });
+    }
+
     public function additionalParamValue($params = null)
     {
         $q = DB::table('additional_params as ap')
