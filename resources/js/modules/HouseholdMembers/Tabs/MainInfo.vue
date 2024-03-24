@@ -111,6 +111,7 @@
                 <select :class="['form-control', hasError('family_relationship_type_id') ? 'is-invalid' : '']"
                         aria-label="Default select example"
                         v-model="formData.family_relationship_type_id"
+                        id="familyRelationshipType"
                         :disabled="!isInEditMode">
                     <option disabled value="0">Оберить тип родинних стосунків</option>
                     <option :value="relationship.id" v-for="relationship in relationshipTypes" :key="relationship.id">
@@ -185,7 +186,8 @@
                 <select
                         :class="['form-select', hasError('work_place_id') ? 'is-invalid' : '']"
                         v-model="formData.work_place_id"
-                        :disabled="!isInEditMode">
+                        :disabled="!isInEditMode"
+                        id="workPlace">
                     <option disabled value="0">Оберить місце роботи</option>
                     <option :value="place.id" v-for="place in places" :key="place.id">
                         {{place.name}}

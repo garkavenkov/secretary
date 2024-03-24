@@ -63,6 +63,7 @@
             <div class="col-md-6">
                 <label for="familyRelationshipType" class="form-label">Родинні стосунки</label>
                 <select :class="['form-control', hasError('family_relationship_type_id') ? 'is-invalid' : '']"
+                        id="familyRelationshipType"
                         v-model="formData.family_relationship_type_id">
                     <option disabled value="0">Оберить тип родинних стосунків</option>
                     <option :value="relationship.id" v-for="relationship in relationshipTypes" :key="relationship.id">

@@ -160,6 +160,7 @@ export default {
         resetFilter() {
             this.filter.settlement_id = 0;
             this.filter.household_type_id = 0;
+            this.filter.additionalParams = {};
             this.filter.isFiltered = false;
             this.$store.dispatch('Households/applyFilter', this.filter);
         },

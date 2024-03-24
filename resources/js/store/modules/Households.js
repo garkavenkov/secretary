@@ -19,6 +19,7 @@ export const Households = {
         filter: {
             settlement_id: 0,
             household_type_id: 0,
+            additionalParams: {},
             isFiltered: false,
         },
         baseUrl: '/api/v1/households',

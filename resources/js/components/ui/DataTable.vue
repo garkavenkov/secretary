@@ -345,12 +345,15 @@ export default {
             let fields = document.querySelectorAll('[data-sort-field]');
             if (fields) {
                 fields.forEach(field => {
-                    field.addEventListener('click', this.sortDataByField)
-                    if (field.dataset.fieldType) {
-                        this.fieldsType[field.dataset.sortField] = field.dataset.fieldType;
-                    } else {
-                        this.fieldsType[field.dataset.sortField] = 'string'
+                    if (field.dataset.sortField !== '') {
+                        field.addEventListener('click', this.sortDataByField)
+                        if (field.dataset.fieldType) {
+                            this.fieldsType[field.dataset.sortField] = field.dataset.fieldType;
+                        } else {
+                            this.fieldsType[field.dataset.sortField] = 'string'
+                        }
                     }
+                    // console.log(field.dataset.sortField);
                 });
             }
         // }

@@ -136,6 +136,7 @@ export default {
         resetFilter() {
             this.filter.settlement_id = 0;
             this.filter.isFiltered = false;
+            this.filter.additionalParams = {};
             this.$store.dispatch('HouseholdMembers/applyFilter', this.filter);
         },
         perPageChanged(value) {

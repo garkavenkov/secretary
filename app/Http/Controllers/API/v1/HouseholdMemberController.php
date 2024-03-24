@@ -4,18 +4,22 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Models\AdditionalParam;
 use App\Models\HouseholdMember;
 use App\Traits\Models\UserRights;
+use Illuminate\Support\Facades\DB;
 use App\Models\HouseholdMemberLand;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AdditionalParamCategory;
 use App\Http\Requests\API\v1\HouseholdMemberRequest;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
 use App\Http\Resources\API\v1\HouseholdMemberLand\HouseholdMemberLandResource;
-use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberRelativesResource;
+use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
+use App\Models\AdditionalParamValueType;
 
 class HouseholdMemberController extends Controller
 {
@@ -37,23 +41,35 @@ class HouseholdMemberController extends Controller
         if (request()->query('household_id')) {
 
             $household_id = request()->query('household_id');
-            $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')->where('household_id', $household_id)->get();
+            $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')
+                        ->where('household_id', $household_id)
+                        ->get();
             // return new HouseholdMemberResourceCollection($members);
             return HouseholdMemberResource::collection($members);
 
-        } else if (request()->query('where')) {
-
+        } else if (request()->query('where')) {            
             $conditions = explode(';', request()->query('where'));
-            $members = HouseholdMember::with('household')->first();
+            // dd($conditions);
+            $members = HouseholdMember::with('household');//->first();
+            
             foreach($conditions as $condition) {
                 $parts = explode('=', $condition);
                 if (count($parts) == 2) {
                     if ($parts[0] == 'settlement_id') {
                         if (HouseholdMember::isFieldFilterable($parts[0])) {
+                            // $members = HouseholdMember::with('household')->whereHas('household', function($q) use($parts){
+                            //     return $q->where($parts[0], $parts[1]);
+                            // });
                             $members = $members->whereHas('household', function($q) use($parts){
                                 return $q->where($parts[0], $parts[1]);
                             });
                         }
+                    } else if ($parts[0] == 'additional_params') {
+                        $params = explode(',', $parts[1]);                        
+                        $members = $members->whereHas('additionalParamsFilled.param', function($q) use($params) {
+                            return $q->whereIn('code', $params);
+                        });
+                    
                     } else {
                         $members = $members->where($parts[0], $parts[1]);
                     }

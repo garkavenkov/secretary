@@ -158,7 +158,7 @@ export default {
         ...mapGetters('Households', ['household'])
     },
     watch: {
-        '$route' (to, from) {
+        '$route' (to, from) {            
             if (to.params.id !== from.params.id) {
                 this.$store.dispatch('Households/fetchRecord', to.params.id,);
             }

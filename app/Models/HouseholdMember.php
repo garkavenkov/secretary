@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use DeclensionUkrainian\Anthroponym;
 use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 
@@ -231,4 +232,7 @@ class HouseholdMember extends Model
             'patronymic'=>  $this->patronymic,
         ]);
     }
+
+
+   
 }

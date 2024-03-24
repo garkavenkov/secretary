@@ -17,4 +17,9 @@ class AdditionalParamValue extends Model
         // validation rule  (validate value before creating|saving)
     ];
 
+
+    public function param()
+    {
+        return $this->belongsTo(AdditionalParam::class, 'param_id');
+    }
 }
