@@ -236,6 +236,12 @@ class ReportController extends Controller
         $member = HouseholdMember::findOrFail($params['member_id']);
         $member_name = $member->surname . ' ' . $member->name . ' ' . $member->patronymic;
         $member_birthdate =  (new DateTimeImmutable($member->birthdate))->format('d.m.Y');
+        
+        $person_pronoun = 'ним';
+
+        if ($member->sex == 'жіноча')  {        
+            $person_pronoun = 'нею';
+        }
 
         if (isset($params['relatives'])) {
             $ids = explode(',', $params['relatives']);
@@ -255,7 +261,7 @@ class ReportController extends Controller
 
         // $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));
         // $phpWord = new PhpWord();
-
+        $templateProcessor->setValue('person_pronoun', $person_pronoun);
         $templateProcessor->setValue('person_name', $member_name);
         $templateProcessor->setValue('person_birthdate', $member_birthdate);
         $templateProcessor->setValue('person_address_registration', $person_address_registration);
