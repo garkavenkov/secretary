@@ -15,7 +15,7 @@
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="fw-bold border-bottom mb-xl-2 pb-xl-2">Тип</div>
                 <div v-if="info.household_type">
-                    {{ info.household_type.name}}
+                    {{ info.household_type}}
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="owners-wrapper">
                     <template v-if="info.owners && (info.owners.length > 0)">
-                        <div    class="owner d-flex justify-content-between"
+                        <div    class="owner"
                                 v-for="owner in info.owners"
                                 :key="owner.id">
                             <div class="d-flex flex-column">
@@ -52,11 +52,11 @@
                         </div>
                     </template>
                     <template v-else>
-                        <div class="text-muted text-center fs-08 p-2">Інформація відсутня</div>
+                        <div class="text-muted text-center fs-08" id="no-owner-information">Інформація відсутня</div>
                     </template>
                 </div>
                 <div    id="owner-drop-zone"
-                        class="owner-drop-zone"
+                        class="owner-drop-zone fs-08"
                         @drop="dropHead($event)"
                         @dragover.prevent
                         @dragenter.prevent>
@@ -169,9 +169,15 @@ export default {
             let index = this.info.owners.findIndex(o => {
                 return ((o.name == head) && (o.address == this.info.address));
             })
-
+            
             if (index == -1) {
+                let noInfo = document.getElementById('no-owner-information');
                 let dropZone = document.getElementById('owner-drop-zone');
+                
+                if (noInfo) {
+                    noInfo.classList.add('hide')
+                }
+
                 dropZone.classList.add('active');
 
                 e.dataTransfer.dropEffect = "move";
@@ -180,6 +186,7 @@ export default {
             }
         },
         dropHead(e) {
+            e.stopPropagation();
             let data = e.dataTransfer.getData('head');
             if (data) {
                 data = JSON.parse(data);
@@ -193,7 +200,14 @@ export default {
             }
         },
         pickupHeadEnded(e) {
+            e.stopPropagation();
             let dropZone = document.getElementById('owner-drop-zone');
+            let noInfo = document.getElementById('no-owner-information');
+            
+            if (noInfo) {                
+                noInfo.classList.remove('hide')
+            }
+                
             dropZone.classList.remove('active');
         }
     },
@@ -219,6 +233,7 @@ export default {
 
 <style lang="scss" scoped>
 
+
 .household-address {
 
     span:last-of-type {
@@ -231,20 +246,36 @@ export default {
 
 }
 
+.owners-wrapper {
+
     .owner {
+        display: flex;
+        justify-content: space-between;
         border-width: 1px;
         border-style: dashed;
         border-radius: 5px;
         border-color: transparent;
         transition: all 0.3s ease;
 
-        &:not(:last-of-type) {
+        &:not(:last-child) {        
             border-bottom: 1px dashed #e7e7e7;
+            // border-bottom: none;
             padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.5rem;        
         }
     }
+    
+    #no-owner-information {        
+        
+        border: 1px solid transparent;
+        padding: 0.75rem;
 
+        &.hide {
+            display: none;
+        }
+    }
+    
+}
     .owner-drop-zone {
         // visibility: hidden;
         display: none;
@@ -252,9 +283,8 @@ export default {
             -45deg,
             transparent 0 4px,
             #e7e7e7 4px 6px
-        );
-        border-color: #adb5bd;
-        border-width: 1px;
+        );        
+        border: 1px dotted #adb5bd;
         text-align: center;
         padding: 0.75rem;
         color: darkgray;
@@ -265,7 +295,7 @@ export default {
             display: block;
         }
     }
-// }
+// } 
 
 @media (min-width:1200px) {
     // height: 0;

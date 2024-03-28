@@ -105,7 +105,7 @@ class HouseholdController extends Controller
 
             return response()->json(['data' => $result]);
 
-        }  else if (request()->query('where')) {
+        } else if (request()->query('where')) {
 
             $conditions = explode(';', request()->query('where'));
             $households = Household::with('settlement');
@@ -157,10 +157,10 @@ class HouseholdController extends Controller
     {
         $household = Household::with('settlement',
                             'type',
-                            'members.familyRelationshipType',
-                            'members.workPlace',
-                            'members.movements',
-                            'houseYears',
+                            // 'members.familyRelationshipType',
+                            // 'members.workPlace',
+                            // 'members.movements',
+                            // 'houseYears',
                             // 'landYears',
                             'owners'
                         )

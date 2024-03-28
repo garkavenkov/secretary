@@ -79,7 +79,9 @@
         <div class="row mb-3">
             <div class="col">
                 <label for="workPlace" class="form-label">Місце роботи залежно від територіального розташування</label>
-                <select class="form-select" id="workPlace" aria-label="Default select example" v-model="formData.work_place_id">
+                <select class="form-select" 
+                        id="workPlace"                         
+                        v-model="formData.work_place_id">
                     <option disabled value="0">Оберить місце роботи</option>
                     <option :value="place.id" v-for="place in places" :key="place.id">
                         {{place.name}}

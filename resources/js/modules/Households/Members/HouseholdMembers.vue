@@ -67,9 +67,13 @@
                             <div class="member-surname">{{member.surname}}</div>
                             <div class="member-name">{{member.name}} {{member.patronymic}}</div>
                         </div>
-                        <h4 class="mt-2" v-if="member.family_relationship_type == 'голова домогосподарства'">
-                            <span class="mdi mdi-head-alert-outline" title="Голова домогосподарства"></span>
-                        </h4>
+                        <span   class="mdi mdi-head-alert-outline" 
+                                id="householdHead"
+                                title="Голова домогосподарства" 
+                                v-if="member.family_relationship_type == 'голова домогосподарства'">
+                        </span>
+                        <!-- <h4 class="mt-2" >
+                        </h4> -->
                     </div>
                     <div class="card-body">
                         <div class="d-flex mb-2 align-items-center family-relationship">
@@ -173,7 +177,7 @@
 
     <HouseholdMemberForm
             :formData="formData"
-            @refreshData="fetchMembers"/>
+            @refreshData="refreshData"/>
 
     <HouseholdMembersComposition
             v-if="householdMembersComposition"
@@ -261,6 +265,11 @@ export default {
                 .then(res => {
                     this.members = res.data.data
                 });
+        },
+        refreshData() {
+            this.fetchMembers();
+            this.$store.dispatch('Households/fetchRecord', this.household_id);
+            this.$store.dispatch('Households/fetchRecords',);
         },
         newMember() {
             this.modalTitle = 'Новий член домогосподарства';
@@ -424,7 +433,14 @@ export default {
     .family-relationship {
         height: 2rem;
     }
-
+    #householdHead {
+        position: absolute;
+        right: 4px;
+        top: 0px;
+        font-size: 18px;
+        color: var(--bs-primary);
+    }
+    
     &.dead {
         background: lightgray;
     }
