@@ -52,7 +52,7 @@
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
                         <td class="text-center">
-                            <router-link :to="{name: 'household.members.show', params: { id: record.id }}">
+                            <router-link :to="{name: 'HouseholdMember', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>

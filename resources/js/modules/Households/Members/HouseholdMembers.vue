@@ -153,7 +153,7 @@
                                         @click="showHouseholdMemberInfo(member)">
                                     <span class="mdi mdi-eye-outline"></span>
                                 </button> -->
-                                <router-link :to="{name: 'household.members.show', params: { id: member.id }}">
+                                <router-link :to="{name: 'HouseholdMember', params: { id: member.id }}">
                                     <span class="mdi mdi-eye-outline"></span>
                                 </router-link>
                             </td>
@@ -279,8 +279,8 @@ export default {
             let myModal = new Modal(document.getElementById('HouseholdMemberForm'))
             myModal.show();
         },
-        showHouseholdMemberInfo(member) {
-            this.$router.push({name: 'household.members.show', params: {id: member.id}})
+        showHouseholdMemberInfo(member) {            
+            this.$router.push({name: 'HouseholdMember', params: {id: member.id}});            
         },
         closeMemberInfoForm() {
             this.formData.surname                       = '';

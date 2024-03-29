@@ -8,7 +8,11 @@
                 <h5>{{ member.full_name }} </h5>
                 <h6>
                     {{ member.address }} |
-                    <router-link :to="{ name: 'households.show.info', params: { id: member.household_id }}" v-if="member.household_id">
+                    <router-link 
+                            v-if="member.household_id"
+                            :to="{ name: 'households.show.info', params: { id: member.household_id }}" 
+                            @click.ctrl.prevent="$router.push({name: 'households.show.members', params: { id: member.household_id }})"
+                            >
                         {{ member.household_number }}
                     </router-link>
                 </h6>
@@ -18,25 +22,25 @@
             <div class="px-3 pt-3">
                 <ul class="nav nav-tabs px-3">
                     <li class="nav-item">
-                        <router-link :to="{name: 'household.members.show.info'}" class="nav-link">
+                        <router-link :to="{name: 'HouseholdMember.info'}" class="nav-link">
                             <span class="mdi mdi-account-details-outline me-1"></span>
                             Головна інформація
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{name: 'household.members.show.lands'}" class="nav-link">
+                        <router-link :to="{name: 'HouseholdMember.lands'}" class="nav-link">
                             <span class="mdi mdi-land-fields me-1"></span>
                             Земля
                         </router-link>
                     </li>
                     <li class="nav-item" >
-                        <router-link :to="{name: 'household.members.show.movements'}" class="nav-link">
+                        <router-link :to="{name: 'HouseholdMember.movements'}" class="nav-link">
                             <span class="mdi mdi-transit-transfer me-1"></span>
                             Реєстрація / Переміщення
                         </router-link>
-                    </li>
+                    </li>                   
                     <li class="nav-item">
-                        <router-link :to="{name: 'household.members.show.additional-data'}" class="nav-link">
+                        <router-link :to="{name: 'HouseholdMember.additional-data'}" class="nav-link">
                             <span class="mdi mdi-tag-multiple me-1"></span>
                             Додаткові дані
                         </router-link>
@@ -84,13 +88,11 @@ export default {
 
     },
     watch: {
-
-        '$route' (to, from) {
-            if (to.params.id !== from.params.id) {
+        '$route' (to, from) {                     
+            if ((to.params.id !== from.params.id) && (to.name == from.name)) {                
                 this.$store.dispatch('HouseholdMembers/fetchRecord', to.params.id,);
             }
         },
-
     }
 }
 

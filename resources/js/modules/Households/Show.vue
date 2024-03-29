@@ -159,7 +159,7 @@ export default {
     },
     watch: {
         '$route' (to, from) {            
-            if (to.params.id !== from.params.id) {
+            if ((to.params.id !== from.params.id) && (to.name == from.name)) {
                 this.$store.dispatch('Households/fetchRecord', to.params.id,);
             }
         },
