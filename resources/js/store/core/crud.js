@@ -8,7 +8,11 @@ export default {
     },
     actions: {
         fetchRecords: ({commit, state}) =>  {
-            axios.get(state.url)
+            let url = state.url;
+            if (state.queryString !== undefined) {
+                url = `${state.url}${state.queryString}`;                
+            } 
+            axios.get(url)
                 .then(res => {
                     commit('setData', {ent:state.entities, data: res.data.data});
                     if (res.data.meta) {
@@ -17,7 +21,7 @@ export default {
                 });
         },
         fetchRecord: ({commit, state}, id) =>  {
-            axios.get(`${state.baseUrl}/${id}`)
+            axios.get(`${state.url}/${id}`)
                 .then(res => {
                     commit('setData', {ent:state.entity, data: res.data.data});
                 });

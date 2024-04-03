@@ -4,7 +4,7 @@ export const Regions = {
     namespaced: true,
     state: {
         regions: [],
-        region: {},
+        region: {},        
         url: '/api/v1/regions',
         entities: 'regions',
         entity: 'region',

@@ -11,7 +11,7 @@
                     <span class="mdi mdi-plus"></span>
                 </button>
                 <button class="btn btn-sm btn-outline-primary ms-2"
-                        @click="$store.dispatch('Regions/fetchRegions')"
+                        @click="$store.dispatch('Regions/fetchRecords')"
                         title="Оновити дані">
                     <span class="mdi mdi-refresh"></span>
                 </button>

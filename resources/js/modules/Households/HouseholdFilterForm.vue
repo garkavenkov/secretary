@@ -29,7 +29,7 @@
             </div>
         </div>
         
-        <AdditionalParamsFormFilter :params="params" :filter="filter" />
+        <AdditionalParamsFormFilter :params="params" :filter="filter" v-if="params.length > 0"/>
 
         <template v-slot:footer>
             <button class="btn btn-outline-secondary"
