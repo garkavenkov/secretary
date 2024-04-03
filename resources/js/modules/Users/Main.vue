@@ -73,7 +73,7 @@ export default {
                 email: '',
                 position: '',
                 password: '',
-                password_confirm: ''
+                password_confirmation: ''
             }
         }
     },
@@ -91,7 +91,7 @@ export default {
             this.form.email = '';
             this.form.position = '';
             this.form.password = '';
-            this.form.password_confirm = '';
+            this.form.password_confirmation = '';
 
             var userForm = new Modal(document.getElementById('UserForm'))
             userForm.show();

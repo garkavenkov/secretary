@@ -1,1 +1,1320 @@
-"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[357],{5771:(t,r,o)=>{o.d(r,{Z:()=>M});var i=o(8222),e={class:"row mb-3"},n={class:"col"},a=(0,i._)("label",{for:"region",class:"form-label"},"Регіон",-1),c=["disabled"],l=(0,i._)("option",{disabled:"",value:"0"},"Оберить регіон",-1),s=["value"],u={class:"col"},d=(0,i._)("label",{for:"district",class:"form-label"},"Район",-1),m=["disabled"],f=(0,i._)("option",{disabled:"",value:"0"},"Оберить район",-1),p=["value"],b={class:"row mb-3"},y={class:"col"},_=(0,i._)("label",{for:"communityName",class:"form-label"},"Назва",-1),v={id:"communityNameValidation",class:"invalid-feedback"},w={class:"row mb-3"},h={class:"col"},D=(0,i._)("label",{for:"communityCenter",class:"form-label"},"Адміністративний центр",-1),g={id:"communityCenterValidation",class:"invalid-feedback"},O={class:"row mb-3"},F={class:"col"},j=(0,i._)("label",{for:"communityAddress",class:"form-label"},"Адреса",-1),C={id:"communityAddressValidation",class:"invalid-feedback"},S={class:"row mb-3"},k={class:"col"},P=(0,i._)("label",{for:"communityEdrpou",class:"form-label"},"ЄДРПОУ",-1),E={id:"communityEdrpouValidation",class:"invalid-feedback"},z={class:"col"},V=(0,i._)("label",{for:"communityKoatuu",class:"form-label"},"КОАТУУ",-1),T={id:"communityKoatuuValidation",class:"invalid-feedback"};var x=o(3907),U=o(6036);function Z(t){return Z="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},Z(t)}function K(t,r){var o=Object.keys(t);if(Object.getOwnPropertySymbols){var i=Object.getOwnPropertySymbols(t);r&&(i=i.filter((function(r){return Object.getOwnPropertyDescriptor(t,r).enumerable}))),o.push.apply(o,i)}return o}function H(t,r,o){return(r=function(t){var r=function(t,r){if("object"!==Z(t)||null===t)return t;var o=t[Symbol.toPrimitive];if(void 0!==o){var i=o.call(t,r||"default");if("object"!==Z(i))return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===r?String:Number)(t)}(t,"string");return"symbol"===Z(r)?r:String(r)}(r))in t?Object.defineProperty(t,r,{value:o,enumerable:!0,configurable:!0,writable:!0}):t[r]=o,t}const W={name:"CommunityForm",mixins:[o(2965).Z],props:{formData:{type:Object,required:!0},action:{type:String,required:!1,default:"create"},disabledFields:{type:Array,required:!1,default:function(){return[]}}},data:function(){return{districts:[]}},methods:{submitData:function(){var t=this;"create"==this.action?axios.post("/api/v1/communities",this.formData).then((function(r){t.clearFormData(),t.$emit("refreshData")})).catch((function(r){t.errors=r.response.data.errors})):"update"==this.action&&axios.patch("/api/v1/communities/".concat(this.formData.id),this.formData).then((function(r){t.errors=[],t.$emit("refreshData")})).catch((function(r){t.errors=r.response.data.errors}))},clearFormData:function(){this.formData.name="",this.formData.center="",this.formData.address="",this.formData.edrpou="",this.formData.koatuu="",this.errors=[]}},computed:function(t){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{};r%2?K(Object(o),!0).forEach((function(r){H(t,r,o[r])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(o)):K(Object(o)).forEach((function(r){Object.defineProperty(t,r,Object.getOwnPropertyDescriptor(o,r))}))}return t}({},(0,x.Se)("Regions",["regions"])),watch:{"formData.region_id":function(t,r){0!==t&&(this.districts=this.$store.getters["Districts/districts"].filter((function(r){return r.region_id==t})))}},components:{ModalForm:U.Z}};const M=(0,o(3744).Z)(W,[["render",function(t,r,o,x,U,Z){var K=(0,i.up)("ModalForm");return(0,i.wg)(),(0,i.j4)(K,{formId:"CommunityForm",onSubmitData:Z.submitData,onCloseForm:Z.clearFormData},{default:(0,i.w5)((function(){return[(0,i._)("div",e,[(0,i._)("div",n,[a,(0,i.wy)((0,i._)("select",{class:"form-control",id:"region","onUpdate:modelValue":r[0]||(r[0]=function(t){return o.formData.region_id=t}),disabled:o.disabledFields.includes("region_id")},[l,((0,i.wg)(!0),(0,i.iD)(i.HY,null,(0,i.Ko)(t.regions,(function(t){return(0,i.wg)(),(0,i.iD)("option",{value:t.id,key:t.id},(0,i.zw)(t.name),9,s)})),128))],8,c),[[i.bM,o.formData.region_id]])]),(0,i._)("div",u,[d,(0,i.wy)((0,i._)("select",{class:"form-control",id:"distric","onUpdate:modelValue":r[1]||(r[1]=function(t){return o.formData.district_id=t}),disabled:o.disabledFields.includes("district_id")},[f,((0,i.wg)(!0),(0,i.iD)(i.HY,null,(0,i.Ko)(U.districts,(function(t){return(0,i.wg)(),(0,i.iD)("option",{value:t.id,key:t.id},(0,i.zw)(t.name),9,p)})),128))],8,m),[[i.bM,o.formData.district_id]])])]),(0,i._)("div",b,[(0,i._)("div",y,[_,(0,i.wy)((0,i._)("input",{type:"text",class:(0,i.C_)(["form-control",t.hasError("name")?"is-invalid":""]),id:"communityName","onUpdate:modelValue":r[2]||(r[2]=function(t){return o.formData.name=t})},null,2),[[i.nr,o.formData.name]]),(0,i._)("div",v,(0,i.zw)(t.getError("name")),1)])]),(0,i._)("div",w,[(0,i._)("div",h,[D,(0,i.wy)((0,i._)("input",{type:"text",class:(0,i.C_)(["form-control",t.hasError("center")?"is-invalid":""]),id:"communityCenter","onUpdate:modelValue":r[3]||(r[3]=function(t){return o.formData.center=t})},null,2),[[i.nr,o.formData.center]]),(0,i._)("div",g,(0,i.zw)(t.getError("center")),1)])]),(0,i._)("div",O,[(0,i._)("div",F,[j,(0,i.wy)((0,i._)("textarea",{class:(0,i.C_)(["form-control",t.hasError("address")?"is-invalid":""]),id:"communityAddress",col:"2","onUpdate:modelValue":r[4]||(r[4]=function(t){return o.formData.address=t})},"\n                ",2),[[i.nr,o.formData.address]]),(0,i._)("div",C,(0,i.zw)(t.getError("address")),1)])]),(0,i._)("div",S,[(0,i._)("div",k,[P,(0,i.wy)((0,i._)("input",{type:"text",class:(0,i.C_)(["form-control",t.hasError("edrpou")?"is-invalid":""]),id:"communityEdrpou","onUpdate:modelValue":r[5]||(r[5]=function(t){return o.formData.edrpou=t})},null,2),[[i.nr,o.formData.edrpou]]),(0,i._)("div",E,(0,i.zw)(t.getError("edrpou")),1)]),(0,i._)("div",z,[V,(0,i.wy)((0,i._)("input",{type:"text",class:(0,i.C_)(["form-control",t.hasError("koatuu")?"is-invalid":""]),id:"communityKoatuu","onUpdate:modelValue":r[6]||(r[6]=function(t){return o.formData.koatuu=t})},null,2),[[i.nr,o.formData.koatuu]]),(0,i._)("div",T,(0,i.zw)(t.getError("koatuu")),1)])])]})),_:1},8,["onSubmitData","onCloseForm"])}]])},5845:(t,r,o)=>{o.r(r),o.d(r,{default:()=>D});var i=o(8222),e={class:"card"},n={class:"card-header"},a={class:"dictionary-name__wrapper"},c=(0,i._)("span",null,"Довідник 'Громади'",-1),l=[(0,i._)("span",{class:"mdi mdi-plus"},null,-1)],s=(0,i._)("div",null,[(0,i._)("button",{class:"btn btn-sm btn-outline-secondary"},[(0,i._)("span",{class:"mdi mdi-filter-outline"})])],-1),u={class:"card-body"},d=(0,i._)("tr",null,[(0,i._)("th"),(0,i._)("th",null,"Район"),(0,i._)("th",null,"Назва громади"),(0,i._)("th",null,"Адреса"),(0,i._)("th",null,"ЕДРПОУ"),(0,i._)("th",null,"КОАТУУ")],-1),m=(0,i._)("span",{class:"mdi mdi-eye-outline"},null,-1);var f=o(3907),p=o(8877),b=o(366),y=o(5771);function _(t){return _="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},_(t)}function v(t,r){var o=Object.keys(t);if(Object.getOwnPropertySymbols){var i=Object.getOwnPropertySymbols(t);r&&(i=i.filter((function(r){return Object.getOwnPropertyDescriptor(t,r).enumerable}))),o.push.apply(o,i)}return o}function w(t,r,o){return(r=function(t){var r=function(t,r){if("object"!==_(t)||null===t)return t;var o=t[Symbol.toPrimitive];if(void 0!==o){var i=o.call(t,r||"default");if("object"!==_(i))return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===r?String:Number)(t)}(t,"string");return"symbol"===_(r)?r:String(r)}(r))in t?Object.defineProperty(t,r,{value:o,enumerable:!0,configurable:!0,writable:!0}):t[r]=o,t}const h={name:"DistrictsMain",components:{DataTable:b.Z,CommunityForm:y.Z},data:function(){return{communityFormData:{region_id:0,district_id:0,name:"",center:"",address:"",edrpou:"",koatuu:""}}},provide:function(){return{modalTitle:"Нова громада"}},methods:{openCommunityForm:function(){new p.u_(document.getElementById("CommunityForm")).show()}},computed:function(t){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{};r%2?v(Object(o),!0).forEach((function(r){w(t,r,o[r])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(o)):v(Object(o)).forEach((function(r){Object.defineProperty(t,r,Object.getOwnPropertyDescriptor(o,r))}))}return t}({},(0,f.Se)("Communities",["communities"]))};const D=(0,o(3744).Z)(h,[["render",function(t,r,o,f,p,b){var y=(0,i.up)("breadcrumbs"),_=(0,i.up)("router-link"),v=(0,i.up)("DataTable"),w=(0,i.up)("CommunityForm");return(0,i.wg)(),(0,i.iD)(i.HY,null,[(0,i.Wm)(y),(0,i._)("div",e,[(0,i._)("div",n,[(0,i._)("div",a,[c,(0,i._)("button",{class:"btn btn-sm btn-primary",title:"Додати громаду",onClick:r[0]||(r[0]=function(){return b.openCommunityForm&&b.openCommunityForm.apply(b,arguments)})},l)]),s]),(0,i._)("div",u,[(0,i.Wm)(v,{dataTable:t.communities,tableHeaderClass:"table-dark"},{header:(0,i.w5)((function(){return[d]})),default:(0,i.w5)((function(t){return[((0,i.wg)(!0),(0,i.iD)(i.HY,null,(0,i.Ko)(t.paginatedData,(function(t){return(0,i.wg)(),(0,i.iD)("tr",{key:t.id},[(0,i._)("td",null,[(0,i.Wm)(_,{to:{name:"communities.show",params:{id:t.id}}},{default:(0,i.w5)((function(){return[m]})),_:2},1032,["to"])]),(0,i._)("td",null,(0,i.zw)(t.district.name),1),(0,i._)("td",null,[(0,i.Wm)(_,{to:{name:"communities.show",params:{id:t.id}}},{default:(0,i.w5)((function(){return[(0,i.Uk)((0,i.zw)(t.name),1)]})),_:2},1032,["to"])]),(0,i._)("td",null,(0,i.zw)(t.address),1),(0,i._)("td",null,(0,i.zw)(t.edrpou),1),(0,i._)("td",null,(0,i.zw)(t.koatuu),1)])})),128))]})),_:1},8,["dataTable"])])]),(0,i.Wm)(w,{formData:p.communityFormData,onRefreshData:r[1]||(r[1]=function(r){return t.$store.dispatch("Communities/fetchRecords")})},null,8,["formData"])],64)}]])},2581:(t,r,o)=>{o.r(r),o.d(r,{default:()=>J});var i=o(8222),e={class:"row"},n={class:"col-md-8 mx-auto"},a={key:0,class:"card"},c={class:"card-header"},l={class:"dictionary-name__wrapper d-flex justify-content-between flex-grow-1"},s=(0,i._)("span",null,"Інформація о громаді",-1),u=[(0,i._)("span",{class:"mdi mdi-pencil"},null,-1)],d={class:"card-body"},m={class:"row mb-3"},f={class:"row mb-2"},p=(0,i._)("div",{class:"col-md-3"}," Назва ",-1),b={class:"col-md-9"},y={class:"row mb-2"},_=(0,i._)("div",{class:"col-md-3"}," Адміністративний центр ",-1),v={class:"col-md-9"},w={class:"row mb-2"},h=(0,i._)("div",{class:"col-md-3"}," Адреса ",-1),D={class:"col-md-9"},g={class:"row mb-2"},O=(0,i._)("div",{class:"col-md-3"}," ЕДРПОУ ",-1),F={class:"col-md-9"},j={class:"row mb-2"},C=(0,i._)("div",{class:"col-md-3"}," КОАТУУ ",-1),S={class:"col-md-9"},k={class:"row mb-2"},P=(0,i._)("div",{class:"col-md-3"}," Район ",-1),E={class:"col-md-9"},z={class:"row mb-2"},V=(0,i._)("div",{class:"col-md-3"}," Регіон ",-1),T={class:"col-md-9"},x={class:"card"},U={class:"card-header"},Z={class:"dictionary-name__wrapper d-flex justify-content-between flex-grow-1"},K=(0,i._)("span",null,"Міські / сільські ради в громаді",-1),H=[(0,i._)("span",{class:"mdi mdi-plus"},null,-1)],W={class:"card-body"},M=(0,i._)("tr",null,[(0,i._)("th",null,"Назва"),(0,i._)("th",null,"Адреса")],-1);var N=o(3907),$=o(8877),Y=o(366),R=o(5771),q=o(2181);function A(t){return A="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},A(t)}function I(t,r){var o=Object.keys(t);if(Object.getOwnPropertySymbols){var i=Object.getOwnPropertySymbols(t);r&&(i=i.filter((function(r){return Object.getOwnPropertyDescriptor(t,r).enumerable}))),o.push.apply(o,i)}return o}function B(t,r,o){return(r=function(t){var r=function(t,r){if("object"!==A(t)||null===t)return t;var o=t[Symbol.toPrimitive];if(void 0!==o){var i=o.call(t,r||"default");if("object"!==A(i))return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===r?String:Number)(t)}(t,"string");return"symbol"===A(r)?r:String(r)}(r))in t?Object.defineProperty(t,r,{value:o,enumerable:!0,configurable:!0,writable:!0}):t[r]=o,t}const G={name:"CommunitiesShow",props:{id:{type:[String,Number],required:!0}},data:function(){return{communityFormData:{id:null,region_id:0,district_id:0,name:"",center:"",address:"",edrpou:"",koatuu:""},councilFormData:{region_id:0,district_id:0,community_id:0,council_type_id:0,name:"",address:"",edrpou:"",koatuu:""},modalTitle:"",modalSubmitCaption:""}},provide:function(){var t=this;return{modalTitle:(0,i.Fl)((function(){return t.modalTitle})),modalSubmitCaption:(0,i.Fl)((function(){return t.modalSubmitCaption}))}},methods:{openCommunityForm:function(){var t=new $.u_(document.getElementById("CommunityForm"));this.modalTitle="Редагувати громаду",this.modalSubmitCaption="Зберегти",this.communityFormData.id=this.community.id,this.communityFormData.region_id=this.community.district.region_id,this.communityFormData.district_id=this.community.district_id,this.communityFormData.name=this.community.name,this.communityFormData.center=this.community.center,this.communityFormData.address=this.community.address,this.communityFormData.edrpou=this.community.edrpou,this.communityFormData.koatuu=this.community.koatuu,t.show()},openCouncilForm:function(){var t=new $.u_(document.getElementById("CouncilForm"));this.modalTitle="Нава рада",this.modalSubmitCaption="Додати",this.councilFormData.region_id=this.community.district.region_id,this.councilFormData.district_id=this.community.district_id,this.councilFormData.community_id=this.community.id,t.show()}},computed:function(t){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{};r%2?I(Object(o),!0).forEach((function(r){B(t,r,o[r])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(o)):I(Object(o)).forEach((function(r){Object.defineProperty(t,r,Object.getOwnPropertyDescriptor(o,r))}))}return t}({},(0,N.Se)("Communities",["community"])),created:function(){this.$store.dispatch("Communities/fetchRecord",this.id)},components:{DataTable:Y.Z,CommunityForm:R.Z,CouncilForm:q.Z}};const J=(0,o(3744).Z)(G,[["render",function(t,r,o,N,$,Y){var R=(0,i.up)("breadcrumbs"),q=(0,i.up)("router-link"),A=(0,i.up)("DataTable"),I=(0,i.up)("CommunityForm"),B=(0,i.up)("CouncilForm");return(0,i.wg)(),(0,i.iD)(i.HY,null,[(0,i.Wm)(R),(0,i._)("div",e,[(0,i._)("div",n,[t.community.name?((0,i.wg)(),(0,i.iD)("div",a,[(0,i._)("div",c,[(0,i._)("div",l,[s,(0,i._)("button",{class:"btn btn-sm btn-light",onClick:r[0]||(r[0]=function(){return Y.openCommunityForm&&Y.openCommunityForm.apply(Y,arguments)}),title:"Редагувати дані"},u)])]),(0,i._)("div",d,[(0,i._)("div",m,[(0,i._)("div",f,[p,(0,i._)("div",b,(0,i.zw)(t.community.name),1)]),(0,i._)("div",y,[_,(0,i._)("div",v,(0,i.zw)(t.community.center),1)]),(0,i._)("div",w,[h,(0,i._)("div",D,(0,i.zw)(t.community.address),1)]),(0,i._)("div",g,[O,(0,i._)("div",F,(0,i.zw)(t.community.edrpou),1)]),(0,i._)("div",j,[C,(0,i._)("div",S,(0,i.zw)(t.community.koatuu),1)]),(0,i._)("div",k,[P,(0,i._)("div",E,[(0,i.Wm)(q,{to:{name:"districts.show",params:{id:t.community.district.id}}},{default:(0,i.w5)((function(){return[(0,i.Uk)((0,i.zw)(t.community.district.name),1)]})),_:1},8,["to"])])]),(0,i._)("div",z,[V,(0,i._)("div",T,[(0,i.Wm)(q,{to:{name:"regions.show",params:{id:t.community.district.region.id}}},{default:(0,i.w5)((function(){return[(0,i.Uk)((0,i.zw)(t.community.district.region.name),1)]})),_:1},8,["to"])])])]),(0,i._)("div",x,[(0,i._)("div",U,[(0,i._)("div",Z,[K,(0,i._)("button",{class:"btn btn-sm btn-light btn-transparent",title:"Додати раду",onClick:r[1]||(r[1]=function(){return Y.openCouncilForm&&Y.openCouncilForm.apply(Y,arguments)})},H)])]),(0,i._)("div",W,[(0,i.Wm)(A,{dataTable:t.community.councils,tableHeaderClass:"table-dark"},{header:(0,i.w5)((function(){return[M]})),default:(0,i.w5)((function(t){return[((0,i.wg)(!0),(0,i.iD)(i.HY,null,(0,i.Ko)(t.paginatedData,(function(t){return(0,i.wg)(),(0,i.iD)("tr",{key:t.id},[(0,i._)("td",null,[(0,i.Wm)(q,{to:{name:"councils.show",params:{id:t.id}}},{default:(0,i.w5)((function(){return[(0,i._)("td",null,(0,i.zw)(t.name),1)]})),_:2},1032,["to"])]),(0,i._)("td",null,(0,i.zw)(t.address),1)])})),128))]})),_:1},8,["dataTable"])])])])])):(0,i.kq)("",!0)])]),(0,i.Wm)(I,{formData:$.communityFormData,action:"update",onRefreshData:r[2]||(r[2]=function(r){return t.$store.dispatch("Communities/fetchRecord",o.id)})},null,8,["formData"]),(0,i.Wm)(B,{formData:$.councilFormData,onRefreshData:r[3]||(r[3]=function(r){return t.$store.dispatch("Communities/fetchRecord",o.id)}),disabledFields:["region_id","district_id","community_id"]},null,8,["formData"])],64)}]])},2181:(t,r,o)=>{o.d(r,{Z:()=>G});var i=o(8222),e={class:"row mb-3"},n={class:"col"},a=(0,i._)("label",{for:"region",class:"form-label"},"Регіон",-1),c=["disabled"],l=(0,i._)("option",{disabled:"",value:"0"},"Оберіть регіон",-1),s=["value"],u={class:"col"},d=(0,i._)("label",{for:"district",class:"form-label"},"Район",-1),m=["disabled"],f=(0,i._)("option",{disabled:"",value:"0"},"Оберіть район",-1),p=["value"],b={class:"row mb-3"},y={class:"col"},_=(0,i._)("label",{for:"community",class:"form-label"},"Громада",-1),v=["disabled"],w=(0,i._)("option",{disabled:"",value:"0"},"Оберіть громаду",-1),h=["value"],D={id:"communityValidation",class:"invalid-feedback"},g={class:"col"},O=(0,i._)("label",{for:"councilType",class:"form-label"},"Тип ради",-1),F=(0,i._)("option",{disabled:"",value:"0"},"Оберіть тип ради",-1),j=["value"],C={id:"householdTypeValidation",class:"invalid-feedback"},S={class:"row mb-3"},k={class:"col"},P=(0,i._)("label",{for:"councildName",class:"form-label"},"Назва",-1),E={id:"councilNameValidation",class:"invalid-feedback"},z={class:"row mb-3"},V={class:"col"},T=(0,i._)("label",{for:"councildAddress",class:"form-label"},"Місцезнаходження / адреса",-1),x={id:"councilAddressValidation",class:"invalid-feedback"},U={class:"row mb-3"},Z={class:"col"},K=(0,i._)("label",{for:"councilEdrpou",class:"form-label"},"ЕДРПОУ",-1),H={id:"councilEdrpouValidation",class:"invalid-feedback"},W={class:"col"},M=(0,i._)("label",{for:"councilKoatuu",class:"form-label"},"КОАТУУ",-1),N={id:"councilKoatuuValidation",class:"invalid-feedback"};var $=o(3907),Y=o(6036);function R(t){return R="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},R(t)}function q(t,r){var o=Object.keys(t);if(Object.getOwnPropertySymbols){var i=Object.getOwnPropertySymbols(t);r&&(i=i.filter((function(r){return Object.getOwnPropertyDescriptor(t,r).enumerable}))),o.push.apply(o,i)}return o}function A(t){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{};r%2?q(Object(o),!0).forEach((function(r){I(t,r,o[r])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(o)):q(Object(o)).forEach((function(r){Object.defineProperty(t,r,Object.getOwnPropertyDescriptor(o,r))}))}return t}function I(t,r,o){return(r=function(t){var r=function(t,r){if("object"!==R(t)||null===t)return t;var o=t[Symbol.toPrimitive];if(void 0!==o){var i=o.call(t,r||"default");if("object"!==R(i))return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===r?String:Number)(t)}(t,"string");return"symbol"===R(r)?r:String(r)}(r))in t?Object.defineProperty(t,r,{value:o,enumerable:!0,configurable:!0,writable:!0}):t[r]=o,t}const B={name:"CouncilForm",mixins:[o(2965).Z],props:{formData:{type:Object,required:!0},action:{type:String,required:!1,default:"create"},disabledFields:{type:Array,required:!1,default:function(){return[]}}},data:function(){return{districts:[],communities:[]}},methods:{submitData:function(){var t=this;"create"==this.action?axios.post("/api/v1/councils",this.formData).then((function(r){t.clearFormData(),t.$emit("refreshData")})).catch((function(r){t.errors=r.response.data.errors})):"update"==this.action&&axios.patch("/api/v1/councils/".concat(this.formData.id),this.formData).then((function(r){t.errors=[],t.$emit("refreshData")})).catch((function(r){t.errors=r.response.data.errors}))},clearFormData:function(){this.formData.region_id=0,this.formData.district_id=0,this.formData.community_id=0,this.formData.council_type_id=0,this.formData.name="",this.formData.address="",this.formData.edrpou="",this.formData.koatuu="",this.errors=[]}},computed:A(A(A({},(0,$.Se)("Regions",["regions"])),(0,$.Se)("CouncilTypes",["councilTypes"])),(0,$.Se)("Councils",["councils"])),watch:{"formData.region_id":function(t,r){0!==t&&(this.districts=this.$store.getters["Districts/districts"].filter((function(r){return r.region_id==t})))},"formData.district_id":function(t,r){0!==t&&(this.communities=this.$store.getters["Communities/communities"].filter((function(r){return r.district_id==t})))}},components:{ModalForm:Y.Z}};const G=(0,o(3744).Z)(B,[["render",function(t,r,o,$,Y,R){var q=(0,i.up)("ModalForm");return(0,i.wg)(),(0,i.j4)(q,{formId:"CouncilForm",onSubmitData:R.submitData,onCloseForm:R.clearFormData},{default:(0,i.w5)((function(){return[(0,i._)("div",e,[(0,i._)("div",n,[a,(0,i.wy)((0,i._)("select",{class:"form-control",id:"region","onUpdate:modelValue":r[0]||(r[0]=function(t){return o.formData.region_id=t}),disabled:o.disabledFields.includes("region_id")},[l,((0,i.wg)(!0),(0,i.iD)(i.HY,null,(0,i.Ko)(t.regions,(function(t){return(0,i.wg)(),(0,i.iD)("option",{value:t.id,key:t.id},(0,i.zw)(t.name),9,s)})),128))],8,c),[[i.bM,o.formData.region_id]])]),(0,i._)("div",u,[d,(0,i.wy)((0,i._)("select",{class:"form-control",id:"district","onUpdate:modelValue":r[1]||(r[1]=function(t){return o.formData.district_id=t}),disabled:o.disabledFields.includes("district_id")},[f,((0,i.wg)(!0),(0,i.iD)(i.HY,null,(0,i.Ko)(Y.districts,(function(t){return(0,i.wg)(),(0,i.iD)("option",{value:t.id,key:t.id},(0,i.zw)(t.name),9,p)})),128))],8,m),[[i.bM,o.formData.district_id]])])]),(0,i._)("div",b,[(0,i._)("div",y,[_,(0,i.wy)((0,i._)("select",{class:(0,i.C_)(["form-control",t.hasError("community_id")?"is-invalid":""]),id:"community","onUpdate:modelValue":r[2]||(r[2]=function(t){return o.formData.community_id=t}),disabled:o.disabledFields.includes("community_id")},[w,((0,i.wg)(!0),(0,i.iD)(i.HY,null,(0,i.Ko)(Y.communities,(function(t){return(0,i.wg)(),(0,i.iD)("option",{value:t.id,key:t.id},(0,i.zw)(t.name),9,h)})),128))],10,v),[[i.bM,o.formData.community_id]]),(0,i._)("div",D,(0,i.zw)(t.getError("community_id")),1)]),(0,i._)("div",g,[O,(0,i.wy)((0,i._)("select",{class:(0,i.C_)(["form-control",t.hasError("council_type_id")?"is-invalid":""]),id:"councilType","onUpdate:modelValue":r[3]||(r[3]=function(t){return o.formData.council_type_id=t})},[F,((0,i.wg)(!0),(0,i.iD)(i.HY,null,(0,i.Ko)(t.councilTypes,(function(t){return(0,i.wg)(),(0,i.iD)("option",{value:t.id,key:t.id},(0,i.zw)(t.name),9,j)})),128))],2),[[i.bM,o.formData.council_type_id]]),(0,i._)("div",C,(0,i.zw)(t.getError("council_type_id")),1)])]),(0,i._)("div",S,[(0,i._)("div",k,[P,(0,i.wy)((0,i._)("input",{type:"text",class:(0,i.C_)(["form-control",t.hasError("name")?"is-invalid":""]),id:"councilName","onUpdate:modelValue":r[4]||(r[4]=function(t){return o.formData.name=t})},null,2),[[i.nr,o.formData.name]]),(0,i._)("div",E,(0,i.zw)(t.getError("name")),1)])]),(0,i._)("div",z,[(0,i._)("div",V,[T,(0,i.wy)((0,i._)("textarea",{class:(0,i.C_)(["form-control",t.hasError("address")?"is-invalid":""]),id:"councilAddress",rows:"2","onUpdate:modelValue":r[5]||(r[5]=function(t){return o.formData.address=t})},"\n                ",2),[[i.nr,o.formData.address]]),(0,i._)("div",x,(0,i.zw)(t.getError("address")),1)])]),(0,i._)("div",U,[(0,i._)("div",Z,[K,(0,i.wy)((0,i._)("input",{type:"text",class:(0,i.C_)(["form-control",t.hasError("edrpou")?"is-invalid":""]),id:"councilEdrpou","onUpdate:modelValue":r[6]||(r[6]=function(t){return o.formData.edrpou=t})},null,2),[[i.nr,o.formData.edrpou]]),(0,i._)("div",H,(0,i.zw)(t.getError("edrpou")),1)]),(0,i._)("div",W,[M,(0,i.wy)((0,i._)("input",{type:"text",class:(0,i.C_)(["form-control",t.hasError("koatuu")?"is-invalid":""]),id:"councilKoatuu","onUpdate:modelValue":r[7]||(r[7]=function(t){return o.formData.koatuu=t})},null,2),[[i.nr,o.formData.koatuu]]),(0,i._)("div",N,(0,i.zw)(t.getError("koatuu")),1)])])]})),_:1},8,["onSubmitData","onCloseForm"])}]])}}]);
+"use strict";
+(self["webpackChunk"] = self["webpackChunk"] || []).push([["communitites"],{
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Form.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Form.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'CommunityForm',
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  props: {
+    'formData': {
+      type: Object,
+      required: true
+    },
+    'action': {
+      type: String,
+      required: false,
+      "default": 'create'
+    },
+    'disabledFields': {
+      type: Array,
+      required: false,
+      "default": function _default() {
+        return [];
+      }
+    }
+  },
+  data: function data() {
+    return {
+      districts: []
+    };
+  },
+  methods: {
+    submitData: function submitData() {
+      var _this = this;
+      if (this.action == 'create') {
+        axios.post('/api/v1/communities', this.formData).then(function (res) {
+          _this.clearFormData();
+          _this.$emit('refreshData');
+        })["catch"](function (err) {
+          _this.errors = err.response.data.errors;
+        });
+      } else if (this.action == 'update') {
+        axios.patch("/api/v1/communities/".concat(this.formData.id), this.formData).then(function (res) {
+          _this.errors = [];
+          _this.$emit('refreshData');
+        })["catch"](function (err) {
+          _this.errors = err.response.data.errors;
+        });
+      }
+    },
+    clearFormData: function clearFormData() {
+      this.formData.name = '';
+      this.formData.center = '';
+      this.formData.address = '';
+      this.formData.edrpou = '';
+      this.formData.koatuu = '';
+      this.errors = [];
+    }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('Regions', ['regions'])),
+  watch: {
+    'formData.region_id': function formDataRegion_id(newValue, oldValue) {
+      if (newValue !== 0) {
+        // this.formData.district_id = 0;
+        this.districts = this.$store.getters['Districts/districts'].filter(function (d) {
+          return d.region_id == newValue;
+        });
+      }
+    }
+  },
+  components: {
+    ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Main.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Main.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var _components_ui_DataTable_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/ui/DataTable.vue */ "./resources/js/components/ui/DataTable.vue");
+/* harmony import */ var _Form_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Form.vue */ "./resources/js/modules/Communities/Form.vue");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'DistrictsMain',
+  components: {
+    DataTable: _components_ui_DataTable_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    CommunityForm: _Form_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  data: function data() {
+    return {
+      communityFormData: {
+        region_id: 0,
+        district_id: 0,
+        name: '',
+        center: '',
+        address: '',
+        edrpou: '',
+        koatuu: ''
+      }
+    };
+  },
+  provide: function provide() {
+    return {
+      modalTitle: 'Нова громада'
+    };
+  },
+  methods: {
+    openCommunityForm: function openCommunityForm() {
+      var communitForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('CommunityForm'));
+      communitForm.show();
+    }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('Communities', ['communities']))
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Show.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Show.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
+/* harmony import */ var _components_ui_DataTable_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ui/DataTable.vue */ "./resources/js/components/ui/DataTable.vue");
+/* harmony import */ var _Form_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Form.vue */ "./resources/js/modules/Communities/Form.vue");
+/* harmony import */ var _Councils_Form_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Councils/Form.vue */ "./resources/js/modules/Councils/Form.vue");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'CommunitiesShow',
+  props: {
+    'id': {
+      type: [String, Number],
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      communityFormData: {
+        id: null,
+        region_id: 0,
+        district_id: 0,
+        name: '',
+        center: '',
+        address: '',
+        edrpou: '',
+        koatuu: ''
+      },
+      councilFormData: {
+        region_id: 0,
+        district_id: 0,
+        community_id: 0,
+        council_type_id: 0,
+        name: '',
+        address: '',
+        edrpou: '',
+        koatuu: ''
+      },
+      modalTitle: '',
+      modalSubmitCaption: ''
+    };
+  },
+  provide: function provide() {
+    var _this = this;
+    return {
+      modalTitle: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return _this.modalTitle;
+      }),
+      modalSubmitCaption: (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+        return _this.modalSubmitCaption;
+      })
+    };
+  },
+  methods: {
+    openCommunityForm: function openCommunityForm() {
+      var communityForm = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('CommunityForm'));
+      this.modalTitle = 'Редагувати громаду';
+      this.modalSubmitCaption = 'Зберегти';
+      this.communityFormData.id = this.community.id;
+      this.communityFormData.region_id = this.community.district.region_id;
+      this.communityFormData.district_id = this.community.district_id;
+      this.communityFormData.name = this.community.name;
+      this.communityFormData.center = this.community.center;
+      this.communityFormData.address = this.community.address;
+      this.communityFormData.edrpou = this.community.edrpou;
+      this.communityFormData.koatuu = this.community.koatuu;
+      communityForm.show();
+    },
+    openCouncilForm: function openCouncilForm() {
+      var councilForm = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('CouncilForm'));
+      this.modalTitle = 'Нава рада';
+      this.modalSubmitCaption = 'Додати';
+      this.councilFormData.region_id = this.community.district.region_id;
+      this.councilFormData.district_id = this.community.district_id;
+      this.councilFormData.community_id = this.community.id;
+      councilForm.show();
+    }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)('Communities', ['community'])),
+  created: function created() {
+    this.$store.dispatch('Communities/fetchRecord', this.id);
+  },
+  components: {
+    DataTable: _components_ui_DataTable_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    CommunityForm: _Form_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    CouncilForm: _Councils_Form_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Councils/Form.vue?vue&type=script&lang=js":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Councils/Form.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+/* harmony import */ var _mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/FormValidator */ "./resources/js/mixins/FormValidator.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'CouncilForm',
+  mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  props: {
+    'formData': {
+      type: Object,
+      required: true
+    },
+    'action': {
+      type: String,
+      required: false,
+      "default": 'create'
+    },
+    'disabledFields': {
+      type: Array,
+      required: false,
+      "default": function _default() {
+        return [];
+      }
+    }
+  },
+  data: function data() {
+    return {
+      districts: [],
+      communities: []
+    };
+  },
+  methods: {
+    submitData: function submitData() {
+      var _this = this;
+      if (this.action == 'create') {
+        axios.post('/api/v1/councils', this.formData).then(function (res) {
+          _this.clearFormData();
+          _this.$emit('refreshData');
+        })["catch"](function (err) {
+          _this.errors = err.response.data.errors;
+        });
+      } else if (this.action == 'update') {
+        axios.patch("/api/v1/councils/".concat(this.formData.id), this.formData).then(function (res) {
+          _this.errors = [];
+          _this.$emit('refreshData');
+        })["catch"](function (err) {
+          _this.errors = err.response.data.errors;
+        });
+      }
+    },
+    clearFormData: function clearFormData() {
+      this.formData.region_id = 0;
+      this.formData.district_id = 0;
+      this.formData.community_id = 0;
+      this.formData.council_type_id = 0;
+      this.formData.name = '';
+      this.formData.address = '';
+      this.formData.edrpou = '';
+      this.formData.koatuu = '';
+      this.errors = [];
+    }
+  },
+  computed: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('Regions', ['regions'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('CouncilTypes', ['councilTypes'])), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('Councils', ['councils'])),
+  watch: {
+    'formData.region_id': function formDataRegion_id(newValue, oldValue) {
+      if (newValue !== 0) {
+        // this.formData.district_id = 0;
+        this.districts = this.$store.getters['Districts/districts'].filter(function (d) {
+          return d.region_id == newValue;
+        });
+      }
+    },
+    'formData.district_id': function formDataDistrict_id(newValue, oldValue) {
+      if (newValue !== 0) {
+        // this.formData.community_id = 0;
+        this.communities = this.$store.getters['Communities/communities'].filter(function (c) {
+          return c.district_id == newValue;
+        });
+      }
+    }
+  },
+  components: {
+    ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Form.vue?vue&type=template&id=724fddd2":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Form.vue?vue&type=template&id=724fddd2 ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "row mb-3"
+};
+var _hoisted_2 = {
+  "class": "col"
+};
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "region",
+  "class": "form-label"
+}, "Регіон", -1 /* HOISTED */);
+var _hoisted_4 = ["disabled"];
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: "0"
+}, "Оберить регіон", -1 /* HOISTED */);
+var _hoisted_6 = ["value"];
+var _hoisted_7 = {
+  "class": "col"
+};
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "district",
+  "class": "form-label"
+}, "Район", -1 /* HOISTED */);
+var _hoisted_9 = ["disabled"];
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: "0"
+}, "Оберить район", -1 /* HOISTED */);
+var _hoisted_11 = ["value"];
+var _hoisted_12 = {
+  "class": "row mb-3"
+};
+var _hoisted_13 = {
+  "class": "col"
+};
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "communityName",
+  "class": "form-label"
+}, "Назва", -1 /* HOISTED */);
+var _hoisted_15 = {
+  id: "communityNameValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_16 = {
+  "class": "row mb-3"
+};
+var _hoisted_17 = {
+  "class": "col"
+};
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "communityCenter",
+  "class": "form-label"
+}, "Адміністративний центр", -1 /* HOISTED */);
+var _hoisted_19 = {
+  id: "communityCenterValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_20 = {
+  "class": "row mb-3"
+};
+var _hoisted_21 = {
+  "class": "col"
+};
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "communityAddress",
+  "class": "form-label"
+}, "Адреса", -1 /* HOISTED */);
+var _hoisted_23 = {
+  id: "communityAddressValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_24 = {
+  "class": "row mb-3"
+};
+var _hoisted_25 = {
+  "class": "col"
+};
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "communityEdrpou",
+  "class": "form-label"
+}, "ЄДРПОУ", -1 /* HOISTED */);
+var _hoisted_27 = {
+  id: "communityEdrpouValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_28 = {
+  "class": "col"
+};
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "communityKoatuu",
+  "class": "form-label"
+}, "КОАТУУ", -1 /* HOISTED */);
+var _hoisted_30 = {
+  id: "communityKoatuuValidation",
+  "class": "invalid-feedback"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
+    formId: "CommunityForm",
+    onSubmitData: $options.submitData,
+    onCloseForm: $options.clearFormData
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": "form-control",
+        id: "region",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $props.formData.region_id = $event;
+        }),
+        disabled: $props.disabledFields.includes('region_id')
+      }, [_hoisted_5, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.regions, function (region) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          value: region.id,
+          key: region.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(region.name), 9 /* TEXT, PROPS */, _hoisted_6);
+      }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_4), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.region_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div id=\"regionValidation\" class=\"invalid-feedback\">\n                    {{ getError('region_id') }}\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": "form-control",
+        id: "distric",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $props.formData.district_id = $event;
+        }),
+        disabled: $props.disabledFields.includes('district_id')
+      }, [_hoisted_10, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.districts, function (district) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          value: district.id,
+          key: district.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(district.name), 9 /* TEXT, PROPS */, _hoisted_11);
+      }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.district_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div id=\"regionValidation\" class=\"invalid-feedback\">\n                    {{ getError('region_id') }}\n                </div> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('name') ? 'is-invalid' : '']),
+        id: "communityName",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $props.formData.name = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('name')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('center') ? 'is-invalid' : '']),
+        id: "communityCenter",
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+          return $props.formData.center = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.center]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('center')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('address') ? 'is-invalid' : '']),
+        id: "communityAddress",
+        col: "2",
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $props.formData.address = $event;
+        })
+      }, "\n                ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.address]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('address')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('edrpou') ? 'is-invalid' : '']),
+        id: "communityEdrpou",
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return $props.formData.edrpou = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.edrpou]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('edrpou')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('koatuu') ? 'is-invalid' : '']),
+        id: "communityKoatuu",
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+          return $props.formData.koatuu = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.koatuu]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('koatuu')), 1 /* TEXT */)])])];
+    }),
+
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Main.vue?vue&type=template&id=55935447":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Main.vue?vue&type=template&id=55935447 ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "card"
+};
+var _hoisted_2 = {
+  "class": "card-header"
+};
+var _hoisted_3 = {
+  "class": "dictionary-name__wrapper"
+};
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Довідник 'Громади'", -1 /* HOISTED */);
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
+}, null, -1 /* HOISTED */);
+var _hoisted_6 = [_hoisted_5];
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "btn btn-sm btn-outline-secondary"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-filter-outline"
+})])], -1 /* HOISTED */);
+var _hoisted_8 = {
+  "class": "card-body"
+};
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Район"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва громади"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Адреса"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "ЕДРПОУ"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "КОАТУУ")], -1 /* HOISTED */);
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-eye-outline"
+}, null, -1 /* HOISTED */);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_breadcrumbs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("breadcrumbs");
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+  var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
+  var _component_CommunityForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CommunityForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-sm btn-primary",
+    title: "Додати громаду",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.openCommunityForm && $options.openCommunityForm.apply($options, arguments);
+    })
+  }, _hoisted_6)]), _hoisted_7]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+    dataTable: _ctx.communities,
+    tableHeaderClass: "table-dark"
+  }, {
+    header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_9];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+          key: record.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+          to: {
+            name: 'communities.show',
+            params: {
+              id: record.id
+            }
+          }
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [_hoisted_10];
+          }),
+          _: 2 /* DYNAMIC */
+        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.district.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+          to: {
+            name: 'communities.show',
+            params: {
+              id: record.id
+            }
+          }
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.name), 1 /* TEXT */)];
+          }),
+
+          _: 2 /* DYNAMIC */
+        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.address), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.edrpou), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.koatuu), 1 /* TEXT */)]);
+      }), 128 /* KEYED_FRAGMENT */))];
+    }),
+
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["dataTable"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CommunityForm, {
+    formData: $data.communityFormData,
+    onRefreshData: _cache[1] || (_cache[1] = function ($event) {
+      return _ctx.$store.dispatch('Communities/fetchRecords');
+    })
+  }, null, 8 /* PROPS */, ["formData"])], 64 /* STABLE_FRAGMENT */);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Show.vue?vue&type=template&id=41e1e78b":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Show.vue?vue&type=template&id=41e1e78b ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "row"
+};
+var _hoisted_2 = {
+  "class": "col-md-8 mx-auto"
+};
+var _hoisted_3 = {
+  key: 0,
+  "class": "card"
+};
+var _hoisted_4 = {
+  "class": "card-header"
+};
+var _hoisted_5 = {
+  "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
+};
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Інформація о громаді", -1 /* HOISTED */);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-pencil"
+}, null, -1 /* HOISTED */);
+var _hoisted_8 = [_hoisted_7];
+var _hoisted_9 = {
+  "class": "card-body"
+};
+var _hoisted_10 = {
+  "class": "row mb-3"
+};
+var _hoisted_11 = {
+  "class": "row mb-2"
+};
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, " Назва ", -1 /* HOISTED */);
+var _hoisted_13 = {
+  "class": "col-md-9"
+};
+var _hoisted_14 = {
+  "class": "row mb-2"
+};
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, " Адміністративний центр ", -1 /* HOISTED */);
+var _hoisted_16 = {
+  "class": "col-md-9"
+};
+var _hoisted_17 = {
+  "class": "row mb-2"
+};
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, " Адреса ", -1 /* HOISTED */);
+var _hoisted_19 = {
+  "class": "col-md-9"
+};
+var _hoisted_20 = {
+  "class": "row mb-2"
+};
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, " ЕДРПОУ ", -1 /* HOISTED */);
+var _hoisted_22 = {
+  "class": "col-md-9"
+};
+var _hoisted_23 = {
+  "class": "row mb-2"
+};
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, " КОАТУУ ", -1 /* HOISTED */);
+var _hoisted_25 = {
+  "class": "col-md-9"
+};
+var _hoisted_26 = {
+  "class": "row mb-2"
+};
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, " Район ", -1 /* HOISTED */);
+var _hoisted_28 = {
+  "class": "col-md-9"
+};
+var _hoisted_29 = {
+  "class": "row mb-2"
+};
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-md-3"
+}, " Регіон ", -1 /* HOISTED */);
+var _hoisted_31 = {
+  "class": "col-md-9"
+};
+var _hoisted_32 = {
+  "class": "card"
+};
+var _hoisted_33 = {
+  "class": "card-header"
+};
+var _hoisted_34 = {
+  "class": "dictionary-name__wrapper d-flex justify-content-between flex-grow-1"
+};
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Міські / сільські ради в громаді", -1 /* HOISTED */);
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "mdi mdi-plus"
+}, null, -1 /* HOISTED */);
+var _hoisted_37 = [_hoisted_36];
+var _hoisted_38 = {
+  "class": "card-body"
+};
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Назва"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Адреса")], -1 /* HOISTED */);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_breadcrumbs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("breadcrumbs");
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+  var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
+  var _component_CommunityForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CommunityForm");
+  var _component_CouncilForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CouncilForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_ctx.community.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-sm btn-light",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.openCommunityForm && $options.openCommunityForm.apply($options, arguments);
+    }),
+    title: "Редагувати дані"
+  }, _hoisted_8)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.community.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.community.center), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.community.address), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.community.edrpou), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.community.koatuu), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: {
+      name: 'districts.show',
+      params: {
+        id: _ctx.community.district.id
+      }
+    }
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.community.district.name), 1 /* TEXT */)];
+    }),
+
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["to"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: {
+      name: 'regions.show',
+      params: {
+        id: _ctx.community.district.region.id
+      }
+    }
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.community.district.region.name), 1 /* TEXT */)];
+    }),
+
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["to"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-sm btn-light btn-transparent",
+    title: "Додати раду",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.openCouncilForm && $options.openCouncilForm.apply($options, arguments);
+    })
+  }, _hoisted_37)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+    dataTable: _ctx.community.councils,
+    tableHeaderClass: "table-dark"
+  }, {
+    header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_39];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
+      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
+          key: record.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+          to: {
+            name: 'councils.show',
+            params: {
+              id: record.id
+            }
+          }
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.name), 1 /* TEXT */)];
+          }),
+
+          _: 2 /* DYNAMIC */
+        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.address), 1 /* TEXT */)]);
+      }), 128 /* KEYED_FRAGMENT */))];
+    }),
+
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["dataTable"])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CommunityForm, {
+    formData: $data.communityFormData,
+    action: "update",
+    onRefreshData: _cache[2] || (_cache[2] = function ($event) {
+      return _ctx.$store.dispatch('Communities/fetchRecord', $props.id);
+    })
+  }, null, 8 /* PROPS */, ["formData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CouncilForm, {
+    formData: $data.councilFormData,
+    onRefreshData: _cache[3] || (_cache[3] = function ($event) {
+      return _ctx.$store.dispatch('Communities/fetchRecord', $props.id);
+    }),
+    disabledFields: ['region_id', 'district_id', 'community_id']
+  }, null, 8 /* PROPS */, ["formData"])], 64 /* STABLE_FRAGMENT */);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Councils/Form.vue?vue&type=template&id=7e348a2b":
+/*!********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Councils/Form.vue?vue&type=template&id=7e348a2b ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "row mb-3"
+};
+var _hoisted_2 = {
+  "class": "col"
+};
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "region",
+  "class": "form-label"
+}, "Регіон", -1 /* HOISTED */);
+var _hoisted_4 = ["disabled"];
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: "0"
+}, "Оберіть регіон", -1 /* HOISTED */);
+var _hoisted_6 = ["value"];
+var _hoisted_7 = {
+  "class": "col"
+};
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "district",
+  "class": "form-label"
+}, "Район", -1 /* HOISTED */);
+var _hoisted_9 = ["disabled"];
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: "0"
+}, "Оберіть район", -1 /* HOISTED */);
+var _hoisted_11 = ["value"];
+var _hoisted_12 = {
+  "class": "row mb-3"
+};
+var _hoisted_13 = {
+  "class": "col"
+};
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "community",
+  "class": "form-label"
+}, "Громада", -1 /* HOISTED */);
+var _hoisted_15 = ["disabled"];
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: "0"
+}, "Оберіть громаду", -1 /* HOISTED */);
+var _hoisted_17 = ["value"];
+var _hoisted_18 = {
+  id: "communityValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_19 = {
+  "class": "col"
+};
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "councilType",
+  "class": "form-label"
+}, "Тип ради", -1 /* HOISTED */);
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: "0"
+}, "Оберіть тип ради", -1 /* HOISTED */);
+var _hoisted_22 = ["value"];
+var _hoisted_23 = {
+  id: "householdTypeValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_24 = {
+  "class": "row mb-3"
+};
+var _hoisted_25 = {
+  "class": "col"
+};
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "councildName",
+  "class": "form-label"
+}, "Назва", -1 /* HOISTED */);
+var _hoisted_27 = {
+  id: "councilNameValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_28 = {
+  "class": "row mb-3"
+};
+var _hoisted_29 = {
+  "class": "col"
+};
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "councildAddress",
+  "class": "form-label"
+}, "Місцезнаходження / адреса", -1 /* HOISTED */);
+var _hoisted_31 = {
+  id: "councilAddressValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_32 = {
+  "class": "row mb-3"
+};
+var _hoisted_33 = {
+  "class": "col"
+};
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "councilEdrpou",
+  "class": "form-label"
+}, "ЕДРПОУ", -1 /* HOISTED */);
+var _hoisted_35 = {
+  id: "councilEdrpouValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_36 = {
+  "class": "col"
+};
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "councilKoatuu",
+  "class": "form-label"
+}, "КОАТУУ", -1 /* HOISTED */);
+var _hoisted_38 = {
+  id: "councilKoatuuValidation",
+  "class": "invalid-feedback"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
+    formId: "CouncilForm",
+    onSubmitData: $options.submitData,
+    onCloseForm: $options.clearFormData
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": "form-control",
+        id: "region",
+        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+          return $props.formData.region_id = $event;
+        }),
+        disabled: $props.disabledFields.includes('region_id')
+      }, [_hoisted_5, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.regions, function (region) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          value: region.id,
+          key: region.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(region.name), 9 /* TEXT, PROPS */, _hoisted_6);
+      }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_4), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.region_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": "form-control",
+        id: "district",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $props.formData.district_id = $event;
+        }),
+        disabled: $props.disabledFields.includes('district_id')
+      }, [_hoisted_10, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.districts, function (district) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          value: district.id,
+          key: district.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(district.name), 9 /* TEXT, PROPS */, _hoisted_11);
+      }), 128 /* KEYED_FRAGMENT */))], 8 /* PROPS */, _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.district_id]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('community_id') ? 'is-invalid' : '']),
+        id: "community",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $props.formData.community_id = $event;
+        }),
+        disabled: $props.disabledFields.includes('community_id')
+      }, [_hoisted_16, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.communities, function (community) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          value: community.id,
+          key: community.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(community.name), 9 /* TEXT, PROPS */, _hoisted_17);
+      }), 128 /* KEYED_FRAGMENT */))], 10 /* CLASS, PROPS */, _hoisted_15), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.community_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('community_id')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('council_type_id') ? 'is-invalid' : '']),
+        id: "councilType",
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+          return $props.formData.council_type_id = $event;
+        })
+      }, [_hoisted_21, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.councilTypes, function (councilType) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          value: councilType.id,
+          key: councilType.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(councilType.name), 9 /* TEXT, PROPS */, _hoisted_22);
+      }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.council_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('council_type_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('name') ? 'is-invalid' : '']),
+        id: "councilName",
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $props.formData.name = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('name')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('address') ? 'is-invalid' : '']),
+        id: "councilAddress",
+        rows: "2",
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+          return $props.formData.address = $event;
+        })
+      }, "\n                ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.address]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('address')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('edrpou') ? 'is-invalid' : '']),
+        id: "councilEdrpou",
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+          return $props.formData.edrpou = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.edrpou]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('edrpou')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('koatuu') ? 'is-invalid' : '']),
+        id: "councilKoatuu",
+        "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+          return $props.formData.koatuu = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.koatuu]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('koatuu')), 1 /* TEXT */)])])];
+    }),
+
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
+}
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Form.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/modules/Communities/Form.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Form_vue_vue_type_template_id_724fddd2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form.vue?vue&type=template&id=724fddd2 */ "./resources/js/modules/Communities/Form.vue?vue&type=template&id=724fddd2");
+/* harmony import */ var _Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form.vue?vue&type=script&lang=js */ "./resources/js/modules/Communities/Form.vue?vue&type=script&lang=js");
+/* harmony import */ var _mnt_Projects_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_mnt_Projects_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Form_vue_vue_type_template_id_724fddd2__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Communities/Form.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Main.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/modules/Communities/Main.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Main_vue_vue_type_template_id_55935447__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Main.vue?vue&type=template&id=55935447 */ "./resources/js/modules/Communities/Main.vue?vue&type=template&id=55935447");
+/* harmony import */ var _Main_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Main.vue?vue&type=script&lang=js */ "./resources/js/modules/Communities/Main.vue?vue&type=script&lang=js");
+/* harmony import */ var _mnt_Projects_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_mnt_Projects_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Main_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Main_vue_vue_type_template_id_55935447__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Communities/Main.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Show.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/modules/Communities/Show.vue ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Show_vue_vue_type_template_id_41e1e78b__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Show.vue?vue&type=template&id=41e1e78b */ "./resources/js/modules/Communities/Show.vue?vue&type=template&id=41e1e78b");
+/* harmony import */ var _Show_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Show.vue?vue&type=script&lang=js */ "./resources/js/modules/Communities/Show.vue?vue&type=script&lang=js");
+/* harmony import */ var _mnt_Projects_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_mnt_Projects_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Show_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Show_vue_vue_type_template_id_41e1e78b__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Communities/Show.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/modules/Councils/Form.vue":
+/*!************************************************!*\
+  !*** ./resources/js/modules/Councils/Form.vue ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Form_vue_vue_type_template_id_7e348a2b__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form.vue?vue&type=template&id=7e348a2b */ "./resources/js/modules/Councils/Form.vue?vue&type=template&id=7e348a2b");
+/* harmony import */ var _Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form.vue?vue&type=script&lang=js */ "./resources/js/modules/Councils/Form.vue?vue&type=script&lang=js");
+/* harmony import */ var _mnt_Projects_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,_mnt_Projects_Projects_Laravel_secretary_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Form_vue_vue_type_template_id_7e348a2b__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/modules/Councils/Form.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Form.vue?vue&type=script&lang=js":
+/*!***************************************************************************!*\
+  !*** ./resources/js/modules/Communities/Form.vue?vue&type=script&lang=js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Form.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Form.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Main.vue?vue&type=script&lang=js":
+/*!***************************************************************************!*\
+  !*** ./resources/js/modules/Communities/Main.vue?vue&type=script&lang=js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Main_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Main_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Main.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Main.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Show.vue?vue&type=script&lang=js":
+/*!***************************************************************************!*\
+  !*** ./resources/js/modules/Communities/Show.vue?vue&type=script&lang=js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Show.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Show.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Councils/Form.vue?vue&type=script&lang=js":
+/*!************************************************************************!*\
+  !*** ./resources/js/modules/Councils/Form.vue?vue&type=script&lang=js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Form.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Councils/Form.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Form.vue?vue&type=template&id=724fddd2":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/modules/Communities/Form.vue?vue&type=template&id=724fddd2 ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_template_id_724fddd2__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_template_id_724fddd2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Form.vue?vue&type=template&id=724fddd2 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Form.vue?vue&type=template&id=724fddd2");
+
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Main.vue?vue&type=template&id=55935447":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/modules/Communities/Main.vue?vue&type=template&id=55935447 ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Main_vue_vue_type_template_id_55935447__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Main_vue_vue_type_template_id_55935447__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Main.vue?vue&type=template&id=55935447 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Main.vue?vue&type=template&id=55935447");
+
+
+/***/ }),
+
+/***/ "./resources/js/modules/Communities/Show.vue?vue&type=template&id=41e1e78b":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/modules/Communities/Show.vue?vue&type=template&id=41e1e78b ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_template_id_41e1e78b__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Show_vue_vue_type_template_id_41e1e78b__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Show.vue?vue&type=template&id=41e1e78b */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Communities/Show.vue?vue&type=template&id=41e1e78b");
+
+
+/***/ }),
+
+/***/ "./resources/js/modules/Councils/Form.vue?vue&type=template&id=7e348a2b":
+/*!******************************************************************************!*\
+  !*** ./resources/js/modules/Councils/Form.vue?vue&type=template&id=7e348a2b ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_template_id_7e348a2b__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Form_vue_vue_type_template_id_7e348a2b__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Form.vue?vue&type=template&id=7e348a2b */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/modules/Councils/Form.vue?vue&type=template&id=7e348a2b");
+
+
+/***/ })
+
+}]);

@@ -94,12 +94,12 @@
                 </div>
             </div>
             <div class="col">
-                <label  for="password-confirm" class="form-label">Підтвердіть пароль</label>
+                <label  for="password_confirmation" class="form-label">Підтвердіть пароль</label>
                 <input  type="password"
-                        :class="['form-control', hasError('password_confirm') ? 'is-invalid' : '']"
-                        id="password-confirm"
+                        :class="['form-control', hasError('password_confirmation') ? 'is-invalid' : '']"
+                        id="password_confirmation"
                         autocomplete="off"
-                        v-model="formData.password_confirm" />
+                        v-model="formData.password_confirmation" />
                 <div id="passwordConfirmeValidation" class="invalid-feedback">
                     {{ getError('password_confirm') }}
                 </div>
