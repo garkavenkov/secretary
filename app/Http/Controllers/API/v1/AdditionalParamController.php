@@ -49,10 +49,11 @@ class AdditionalParamController extends Controller
         }
 
         if (!is_null($value_type_id)) {
-            $params = $params->where(function ($query) use($value_type_id) {
-                                $query->where('value_type_id', '=', $value_type_id)
-                                      ->orWhere(0, 0);
-                            });                            
+            $params = $params->where('value_type_id', '=', $value_type_id);
+            // $params = $params->where(function ($query) use($value_type_id) {
+            //                     $query->where('value_type_id', '=', $value_type_id)
+            //                           ->orWhere(0, 0);
+            //                 });                            
         } 
 
         $params = $params->orderBy('code')->get();
