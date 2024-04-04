@@ -20,30 +20,29 @@ export default {
                 }
 
                 if (state.filter.hasOwnProperty('additionalParams') && (Object.keys(state.filter.additionalParams).length > 0)) {                
-                    let params = Object.keys(state.filter.additionalParams).filter(p => state.filter.additionalParams[p]);
+                    let params = Object.keys(state.filter.additionalParams).filter(p => {                 
+                        return state.filter.additionalParams[p];
+                    });
+                 
                     if (params.length > 0) {
                         conditions.push(`additional_params=${params.join(',')}`);
                     }                    
                 }
-
+             
                 if (conditions.length > 0) {
-                    state.queryString = `?per_page=${state.perPage}&where=` + conditions.join(';');
-                    // state.url = state.baseUrl + `?per_page=${state.perPage}&where=` + conditions.join(';');
-                } 
-                // else {
-                //     state.queryString = `?per_page=${state.perPage}`;
-                //     // state.url = state.baseUrl + `?per_page=${state.perPage}`;
-                // }
+                    state.queryString = `?per_page=${state.perPage}&where=` + conditions.join(';');                 
+                }  else {
+                    state.filter.isFiltered = false;
+                    state.queryString = `?per_page=${state.perPage}`;
+                }            
 
-            } else {
-                // state.url = state.baseUrl + `?per_page=${state.perPage}`; // ????? repeat!!!!
+            } else {                
                 state.queryString = `?per_page=${state.perPage}`;
             }
 
-            if (page) {
-                // state.url = state.url + `&page=${page}`;
+            if (page) {                
                 state.queryString = `&page=${page}`;
-            }
+            }            
         }
     }
 }

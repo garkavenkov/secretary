@@ -1,7 +1,7 @@
 export default {
     mutations: {
         setFilter(state, payload) {
-            // console.log();
+            console.log(payload);
             // let params = payload.additionalParams;
             // delete payload.additionalParams;
             // console.log(params, payload) ;
