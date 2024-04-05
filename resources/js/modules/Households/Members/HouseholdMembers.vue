@@ -24,17 +24,18 @@
                 <button type="button"
                         class="ms-2 btn btn-sm btn-outline-secondary"
                         :class="{'active' : showAllMembers}"
-                        title="Відобразити всіх"
+                        title="Відобразити померлих і відсутніх"
                         v-if="hiddenMemebersExist"
                         @click="showAllMembers = !showAllMembers">
-                    <span class="mdi mdi-account-question-outline"></span>
+                    <span class="mdi mdi-account-question-outline me-1"></span>
+                    Відобразити всіх
                 </button>
                 <button type="button"
                         class="ms-2 btn btn-sm btn-outline-secondary"
                         title="Додати нового члена домогосподарства"
                         v-if="viewMode == 'table'"
                         @click="newMember">
-                    <span class="mdi mdi-account-plus-outline"></span>
+                    <span class="mdi mdi-account-plus-outline me-1"></span>
                     Новий член
                 </button>
             </div>

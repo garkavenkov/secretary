@@ -10,8 +10,8 @@
 
             <thead>
                 <tr>
-                    <th></th>
-                    <th v-for="member in members" :key="`header-${member.id}`">
+                    <th class="brick"></th>
+                    <th v-for="member in members" :key="`header-${member.id}`" :class="{'member__dead': member.status=='dead'}">
                         <div class="member-name__horizontal">
                             <span>{{ member.surname }}</span>
                             <span>{{ member.name }} {{ member.patronymic }}</span>
@@ -24,7 +24,7 @@
             <tbody>
                 <template v-for="member in members" :key="`row-${member.id}`">
                     <tr>
-                        <td>
+                        <td :class="{'member__dead': member.status=='dead'}">
                             <div class="member-name__horizontal">
                                 <span>{{ member.surname }}</span>
                                 <span>{{ member.name }} {{ member.patronymic }}</span>
@@ -34,7 +34,7 @@
                         <template v-for="cell in members" :key="`cell-${cell.id}`">
                             <td v-if="cell.id == member.id" class="brick">
                             </td>
-                            <td v-else class="align-middle">
+                            <td v-else class="align-middle" :class="{'member__dead' : cell.status == 'dead'}">
 
                                 <select name="familyRelationship"
                                         :id="`${member.id}.${cell.id}`"
@@ -204,13 +204,38 @@ export default {
 .member-name__horizontal {
     display: flex;
     flex-direction: column;
+    font-weight: bold;
 
     span:not(:first-of-type) {
         font-size: 0.8rem;
     }
 }
 
+th.member__dead, 
+td.member__dead,
+tr:has(td:first-of-type.member__dead) {
+    background: #e9ecef;
+}
+
+thead th.member__dead,
+tr td:first-of-type.member__dead {
+    position: relative;
+    &::after {        
+        content: "\F0B7F";
+        font-family: 'Material Design Icons';
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        font-size: 16px;
+    }
+}
+
 .brick {
-    background: #e7e7e7;
+    // background: #e7e7e7;
+    background: repeating-linear-gradient(
+            -45deg,
+            transparent 0 4px,
+            #e7e7e7 4px 6px
+        );  
 }
 </style>
