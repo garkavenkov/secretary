@@ -98,7 +98,7 @@ class ReportController extends Controller
         if (!method_exists($this, $report)) {
             return response()->json(['message' => 'Report does not exist'], 500);
         }
-
+        
         $res = call_user_func(array($this, $report), $request->all());
 
         return response()->json($res);
@@ -108,12 +108,13 @@ class ReportController extends Controller
     {
         $sex = null;
         $date = date('Y-m-d');
-
-        if (isset($params['settlement'])) {
-            $settlment_id = $params['settlement'];
-        } else {
-            $settlments = Settlement::find([1,2]);
-        }
+        $settlement_id = isset($params['settlementId']) ? (int) $params['settlementId'] : 0;
+        
+        if ($settlement_id !== 0) {
+            $settlements = Settlement::where('id', $settlement_id)->get();
+        } else {            
+            $settlements = Settlement::whereIn('id',[1,2])->get();
+        }        
 
         if (isset($params['date'])) {
             $date = $params['date'];
@@ -124,8 +125,9 @@ class ReportController extends Controller
         }
 
         $result = [];
+        
+        $settlements->each(function($s) use($sex, $date , &$result) {        
 
-        $settlments->each(function($s) use($sex, $date , &$result) {
             $members = $s->membersByAge(sex: $sex, date: $date);
 
             $settlement_total = 0;
@@ -146,7 +148,7 @@ class ReportController extends Controller
             $result[] = $data;
 
         });
-
+        
         return $result;
 
     }
@@ -154,20 +156,21 @@ class ReportController extends Controller
     protected function adultsAndChildren($params)
     {
         $date = date('Y-m-d');
-
-        if (isset($params['settlement'])) {
-            $settlment_id = $params['settlement'];
-        } else {
-            $settlments = Settlement::find([1,2]);
-        }
-
+        $settlement_id = isset($params['settlementId']) ? (int) $params['settlementId'] : 0;
+        
+        if ($settlement_id !== 0) {
+            $settlements = Settlement::where('id', $settlement_id)->get();
+        } else {            
+            $settlements = Settlement::whereIn('id',[1,2])->get();
+        }        
+        
         if (isset($params['date'])) {
             $date = $params['date'];
         }
 
         $result = [];
 
-        $settlments->each(function($s) use($date, &$result) {
+        $settlements->each(function($s) use($date, &$result) {
             $res = [];
             $res['settlement'] = $s->name;
             $res['households_total']   = $s->households->count();
