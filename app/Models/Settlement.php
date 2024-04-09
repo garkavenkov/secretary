@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Council;
 use DateTime;
+use App\Models\Council;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Settlement extends Model
 {
@@ -55,8 +56,9 @@ class Settlement extends Model
         return $this->hasManyThrough(HouseholdMember::class, Household::class);
     }
 
-    public function membersByAge($sex = null, $date = null)
+    public function membersByAge($ages, $sex = null, $date = null)
     {
+        
         $members = $this->members();
 
         if ($sex == 'чоловіча') {
@@ -64,6 +66,7 @@ class Settlement extends Model
         } else if ($sex == 'жіноча') {
             $members = $members->female();
         }
+        
 
         $members = $members
                         ->alive($date)
@@ -71,55 +74,58 @@ class Settlement extends Model
                         ->transform(function($member) {
                             $age = (new DateTime($member->birthdate))->diff(new DateTime())->y;
                             return ['age' => $age, 'sex' => $member->sex];
-                        })
-                        ->groupBy(['sex', function($item) {
-                                if ($item['age'] < 18) {
-                                    return '0 - 17';
-                                } else if ($item['age'] >= 18 and $item['age'] <= 35) {
-                                    return '18 - 35';
-                                } else if ($item['age'] > 35 and $item['age'] <= 59) {
-                                    return '36 - 59';
-                                } else if ($item['age'] > 59 and $item['age'] <=69 ) {
-                                    return '60 - 69';
-                                } else if ($item['age'] > 69 and $item['age'] <=79 ) {
-                                    return '70 - 79';
-                                } else if ($item['age'] > 79 and $item['age'] <=89 ) {
-                                    return '80 - 89';
-                                } else {
-                                    return '> 90';
-                                }
+                        })                        
+                        ->groupBy(['sex', function($item) use ($ages) {
+                                foreach($ages as $name => $range) {
+                                    if ($item['age'] >= $range[0] and $item['age'] <= $range[1]) {
+                                        return $name;
+                                    }
+                                }                      
                         }])
                         ->transform(function($sex) {
                             return $sex->map->count();
                         })
-                        ->transform(function($item) {
-                            return [
-                                '0 - 17'  => $item['0 - 17'] ?? 0,
-                                '18 - 35' => $item['18 - 35'] ?? 0,
-                                '36 - 59' => $item['36 - 59'] ?? 0,
-                                '60 - 69' => $item['60 - 69'] ?? 0,
-                                '70 - 79' => $item['70 - 79'] ?? 0,
-                                '80 - 89' => $item['80 - 89'] ?? 0,
-                                '> 90'    => $item['> 90'] ?? 0,
-                                'total'   => $item->sum()
-                            ];
+                        ->transform(function($item) use ($ages) {                                                        
+                            $result = [];                            
+                            foreach(array_keys($ages) as $range) {                                
+                                $result[$range]  = $item[$range] ?? 0;                                
+                            }                            
+                            $result['total'] = $item->sum();                            
+                            return $result;                        
                         })
                         ->all();
-
+                        
         return $members;
+    }    
 
-    }
-
-    public function activeMembers($date = null)
-    {
-        return $this->members()
-                        ->alive($date)
-                        ->get()
-                        ->filter(function($m) use($date) {
-                            if ($m->movement($date)) {
-                                return $m->movement($date)->type->code != 'leave';
-                            }
-                            return true;
-                        });
-    }
+    // public function activeMembers($date = null)
+    // {
+        
+    //     return DB::table('household_members as hm')
+    //                 ->select('hm.*')
+    //                 ->addSelect('mt.code as movement')        
+    //                 ->join('households as h', 'h.id', '=', 'hm.household_id')
+    //                 ->join('settlements as s', 's.id', '=', 'h.settlement_id')                                        
+    //                 ->leftJoin('household_member_movements as hmm', 'hmm.id', '=', DB::raw(
+    //                     "(  SELECT 	hmm2.id
+    //                         FROM 	household_member_movements hmm2 
+    //                         WHERE 	    hmm2.member_id = hm.id
+    //                                 and hmm2.date <  '$date'
+    //                         ORDER BY hmm2.date DESC
+    //                         LIMIT 1  )")                        
+    //                 )
+    //                 ->leftJoin('movement_types as mt', 'mt.id', '=', 'hmm.movement_type_id' )
+    //                 ->where(function($q) use($date) {
+    //                     $q = $q->whereNull('death_date');
+    //                     if ($date) {
+    //                         $q = $q->orWhere('death_date', '>', $date);
+    //                     }
+    //                     return $q;
+    //                 })                    
+    //                 ->where('s.id', $this->id)
+    //                 ->get()
+    //                 ->filter(function($m) {
+    //                     return $m->movement != 'leave' || is_null($m->movement);
+    //                 });        
+    // }
 }

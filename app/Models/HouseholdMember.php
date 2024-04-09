@@ -131,6 +131,33 @@ class HouseholdMember extends Model
         return $q;
     }
 
+    public function scopeActive($query, $date = null)
+    {
+        if (!$date) {
+            $date = date('Y-m-d');
+        }
+        $q = $query
+                ->leftJoin('household_member_movements as hmm', 'hmm.id', '=', DB::raw(
+                    "(  SELECT 	hmm2.id
+                        FROM 	household_member_movements hmm2 
+                        WHERE 	    hmm2.member_id = household_members.id
+                                and hmm2.date <  '$date'
+                        ORDER BY hmm2.date DESC
+                        LIMIT 1  )")                        
+                )
+                ->leftJoin('movement_types as mt', 'mt.id', '=', 'hmm.movement_type_id' )
+                ->where(function($q) use($date) {
+                    return $q->whereNull('household_members.death_date')
+                                ->orWhere('household_members.death_date', '>', $date);
+                })
+                ->where(function($q) {
+                    return  $q->whereNull('mt.code')
+                                ->orWhere('mt.code', '<>', "leave");
+                }
+            );
+        return $q;
+    }
+
     public function scopeBorn($query, $month = null, $day = null)
     {
         if (!$month) {
@@ -138,31 +165,12 @@ class HouseholdMember extends Model
         }
         if (!$day) {
             $day = date('d');
-        }
-        // dd("month - $month, day - $day");
-
+        }       
         return $query->whereDay('birthdate', $day)->whereMonth('birthdate', $month);
     }
 
     public function relatives()
-    {
-        // return  DB::table('household_members as m')
-        //         ->select(
-        //             'r.id as relative_id',
-        //             'r.surname',
-        //             'r.name',
-        //             'r.patronymic',
-        //             'r.birthdate',
-        //             'r.sex',
-        //             'fr.relationship_type_id',
-        //             'frt.name as relation'
-        //         )
-        //         ->join('family_relationships as fr', 'm.id', '=', 'fr.member_id')
-        //         ->leftJoin('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')
-        //         ->join('household_members as r', 'fr.relative_id', '=', 'r.id')
-        //         ->where('m.id', '=', $this->id)
-        //         ->orderBy('r.birthdate')
-        //         ->get();
+    {        
         return DB::table('family_relationships as fr')
                 ->select(
                     'hm.id',

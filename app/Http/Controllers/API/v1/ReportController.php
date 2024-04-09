@@ -126,9 +126,19 @@ class ReportController extends Controller
 
         $result = [];
         
-        $settlements->each(function($s) use($sex, $date , &$result) {        
+        $age_ranges = [
+            '0 - 17'    =>  [0,17],
+            '18 - 35'   =>  [18, 35],
+            '36 - 59'   =>  [36, 59],
+            '60 - 69'   =>  [60, 69],
+            '70 - 79'   =>  [70, 79],
+            '80 - 89'   =>  [80, 89],
+            '> 90'      =>  [90, 200]
+        ];
 
-            $members = $s->membersByAge(sex: $sex, date: $date);
+        $settlements->each(function($s) use($sex, $date , $age_ranges, &$result) {        
+
+            $members = $s->membersByAge(sex: $sex, date: $date, ages: $age_ranges);
 
             $settlement_total = 0;
             if (isset($members['чоловіча']['total'])) {
@@ -170,13 +180,26 @@ class ReportController extends Controller
 
         $result = [];
 
+        $age_ranges = [            
+            'children' => [
+                '0 - 5'     =>  [0,5],
+                '6 - 13'    =>  [6, 13],
+                '14 - 17'   =>  [14, 17],
+            ],
+            'adults' => [
+                '18 - 60'   =>  [18, 60],            
+                '> 60'      =>  [61, 200]            
+            ]
+        ];
+
         $settlements->each(function($s) use($date, &$result) {
             $res = [];
             $res['settlement'] = $s->name;
             $res['households_total']   = $s->households->count();
             $res['households_living']  = $s->households([1,2])->count();
 
-            $members_active     = $s->activeMembers($date);
+            $members_active = $s->members()->active($date)->get();            
+            
             $members            = $members_active
                                     ->transform(function($member) use($date) {
                                         $age = (new \DateTime($member->birthdate))->diff(new \DateTime($date))->y;
@@ -214,6 +237,8 @@ class ReportController extends Controller
                 $total += $item;
                 return $total;
             });
+            // Use $members_active for further calculation.
+            // Add items (disabled, child_disabled etc.) into $members_active collection
 
             $result[] = $res;
         });
