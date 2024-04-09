@@ -117,9 +117,14 @@ class HouseholdMember extends Model
         return $query->where('sex', self::FEMALE);
     }
 
-    public function scopeDead($query)
+    public function scopeDead($query, $date = null)
     {
-        return $query->whereNotNull('death_date');
+        if (!$date) {
+            $date = date('Y-m-d');
+        }
+        return $query->where(function($q) use($date) {
+            return $q->where('death_date', '<=', $date);
+        });
     }
 
     public function scopeAlive($query, $date = null)
