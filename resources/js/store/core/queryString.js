@@ -2,8 +2,8 @@ export default {
     state: {
         queryString: ''
     },
-    mutations: {
-        makeQueryString(state, page) {
+    mutations: {       
+        makeQueryString(state, page) {            
             if (state.filter.isFiltered) {
                 let conditions = [];
                 
@@ -30,14 +30,18 @@ export default {
                 }
              
                 if (conditions.length > 0) {
-                    state.queryString = `?per_page=${state.perPage}&where=` + conditions.join(';');                 
+                    // state.queryString = `?per_page=${state.perPage}&where=` + conditions.join(';');                 
+                    state.url = `${state.baseUrl}?per_page=${state.perPage}&where=` + conditions.join(';');                 
                 }  else {
+                    // Fiter was reseted;
                     state.filter.isFiltered = false;
-                    state.queryString = `?per_page=${state.perPage}`;
+                    // state.queryString = `?per_page=${state.perPage}`;
+                    state.url =  `${state.baseUrl}?per_page=${state.perPage}`;
                 }            
 
             } else {                
-                state.queryString = `?per_page=${state.perPage}`;
+                // state.queryString = `?per_page=${state.perPage}`;
+                state.url =  `${state.baseUrl}?per_page=${state.perPage}`;
             }
 
             if (page) {                

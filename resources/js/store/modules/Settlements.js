@@ -6,6 +6,7 @@ export const Settlements = {
         settlements: [],
         settlement: {},
         url: '/api/v1/settlements',
+        // url: '',
         entities: 'settlements',
         entity: 'settlement',
 

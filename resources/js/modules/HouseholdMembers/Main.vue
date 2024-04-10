@@ -143,6 +143,7 @@ export default {
             this.$store.dispatch('HouseholdMembers/changePerPage', value)
         },
         pageChanged(page) {
+            console.log(`HouseholdMemberMain pageChanged: page: ${page}`);
             this.$store.dispatch('HouseholdMembers/changePage', page)
         },
         searchData(row, searchText) {

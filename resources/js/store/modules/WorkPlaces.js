@@ -7,6 +7,7 @@ export const WorkPlaces = {
         places: [],
         place: {},
         url: '/api/v1/work-places',
+        // url: '',
         entities: 'places',
         entity: 'place'
 

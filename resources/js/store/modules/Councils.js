@@ -6,6 +6,7 @@ export const Councils = {
         councils: [],
         council: {},
         url: '/api/v1/councils',
+        // url: '',
         entities: 'councils',
         entity: 'council',
 
