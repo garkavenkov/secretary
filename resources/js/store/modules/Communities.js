@@ -6,6 +6,7 @@ export const Communities = {
         communities: [],
         community: {},
         url: '/api/v1/communities',
+        // url: '',
         entities: 'communities',
         entity: 'community',
     },

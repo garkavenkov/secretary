@@ -6,6 +6,7 @@ export const HouseholdTypes = {
         householdTypes: [],
         householdType: {},
         url: '/api/v1/household-types',
+        // url: '',
         entities: 'householdTypes',
         entity: 'householdType'
 

@@ -6,6 +6,7 @@ export const Districts = {
         districts: [],
         district: {},
         url: '/api/v1/districts',
+        // url: '',
         entities: 'districts',
         entity: 'district',
     },

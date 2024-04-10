@@ -5,7 +5,7 @@ export default {
             commit('makeQueryString');
             dispatch('fetchRecords' );
         },
-        changePage: ({commit, dispatch}, url) => {
+        changePage: ({commit, dispatch}, url) => {            
             commit('setData', {ent: 'url', data: url});
             dispatch('fetchRecords');
         },

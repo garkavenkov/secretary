@@ -6,6 +6,7 @@ export const Regions = {
         regions: [],
         region: {},        
         url: '/api/v1/regions',
+        // url: '',
         entities: 'regions',
         entity: 'region',
 

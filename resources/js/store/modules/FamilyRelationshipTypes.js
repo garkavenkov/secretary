@@ -6,6 +6,7 @@ export const FamilyRelationshipTypes = {
         relationships: [],
         relationship: {},
         url: '/api/v1/family-relationship-types',
+        // url: '',
         entities: 'types',
         entity: 'type'
 
