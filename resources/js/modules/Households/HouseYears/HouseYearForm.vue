@@ -77,19 +77,19 @@
         </div>
         <div class="p-2">
             <div class="d-flex justify-content-between mb-3">
-                <Checkbox v-model="formData.water_supply" id="waterSupply" image="/img/water-supply.png" title="Наявність водопроводу" />
-                <Checkbox v-model="formData.hot_water_supply" id="hotWaterSupply" image="/img/hot-water.png" title="Наявність гарячого водопостачання" />
-                <Checkbox v-model="formData.sewage" id="hotWaterSupply" image="/img/sewage.png" title="Наявність каналізації" />
+                <Checkbox v-model="formData.water_supply" id="waterSupply" image="/img/icons/water-supply.png" title="Наявність водопроводу" />
+                <Checkbox v-model="formData.hot_water_supply" id="hotWaterSupply" image="/img/icons/hot-water.png" title="Наявність гарячого водопостачання" />
+                <Checkbox v-model="formData.sewage" id="hotWaterSupply" image="/img/icons/sewage.png" title="Наявність каналізації" />
             </div>
             <div class="d-flex justify-content-between mb-3">
-                <Checkbox v-model="formData.central_heating" id="centralHeating" image="/img/central-heating.png" title="Наявність центрального опалення" />
-                <Checkbox v-model="formData.individual_heating" id="individualHeating" image="/img/individual-heating.png" title="Наявність опалення від індивідуальних установок" />
-                <Checkbox v-model="formData.furnace_heating" id="furnaceHeating" image="/img/furnace-heating.png" title="Наявність пічного опалення" />
+                <Checkbox v-model="formData.central_heating" id="centralHeating" image="/img/icons/central-heating.png" title="Наявність центрального опалення" />
+                <Checkbox v-model="formData.individual_heating" id="individualHeating" image="/img/icons/individual-heating.png" title="Наявність опалення від індивідуальних установок" />
+                <Checkbox v-model="formData.furnace_heating" id="furnaceHeating" image="/img/icons/furnace-heating.png" title="Наявність пічного опалення" />
             </div>
             <div class="d-flex justify-content-between">
-                <Checkbox v-model="formData.natural_gas" id="naturalGas" image="/img/natural-gas.png" title="Наявність природного газу" />
-                <Checkbox v-model="formData.liquefied_gas" id="liquefiedGas" image="/img/liquefied-gas.png" title="Наявність скрапленого газу" />
-                <Checkbox v-model="formData.electric_stove" id="electricStove" image="/img/electric-stove.png" title="Наявність підлоговоії електричної плити" />
+                <Checkbox v-model="formData.natural_gas" id="naturalGas" image="/img/icons/natural-gas.png" title="Наявність природного газу" />
+                <Checkbox v-model="formData.liquefied_gas" id="liquefiedGas" image="/img/icons/liquefied-gas.png" title="Наявність скрапленого газу" />
+                <Checkbox v-model="formData.electric_stove" id="electricStove" image="/img/icons/electric-stove.png" title="Наявність підлоговоії електричної плити" />
             </div>
         </div>
 

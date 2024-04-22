@@ -1,9 +1,9 @@
 <template>
-    <breadcrumbs />
+    <breadcrumbs  v-if="council.name"/>
 
-    <div class="row">
+    <div class="row" v-if="council.name">
         <div class="col-md-8 mx-auto">
-            <div class="card" v-if="council.name">
+            <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація о раді</span>
@@ -81,6 +81,11 @@
             </div>
         </div>
     </div>
+    <Page404 v-else
+        :message="`Міська/сільська рада з id:${id} відсутня`" 
+        resource="img/404/dictionary.png"  
+        fallbackUrl="councils" 
+        fallbackUrlMessage="Повернутись до переліку рад" />
 
     <CouncilForm
             :formData="councilFormData"
@@ -103,6 +108,7 @@ import { mapGetters }   from 'vuex';
 import DataTable        from '../../components/ui/DataTable.vue';
 import CouncilForm      from './Form.vue';
 import SettlementForm   from '../Settlements/Form.vue';
+import Page404          from '../../components/Page404.vue';
 
 export default {
     name: 'CouncilsShow',
@@ -190,6 +196,7 @@ export default {
         DataTable,
         CouncilForm,
         SettlementForm,
+        Page404
     }
 }
 </script>

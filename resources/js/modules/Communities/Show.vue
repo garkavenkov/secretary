@@ -1,9 +1,9 @@
 <template>
-    <breadcrumbs />
+    <breadcrumbs v-if="community.name" />
 
-    <div class="row">
+    <div class="row" v-if="community.name">
         <div class="col-md-8 mx-auto">
-            <div class="card" v-if="community.name">
+            <div class="card" >
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація о громаді</span>
@@ -113,6 +113,11 @@
             </div>
         </div>
     </div>
+    <Page404 v-else
+        :message="`Громада з id:${id} відсутня`" 
+        resource="img/404/dictionary.png"  
+        fallbackUrl="communities" 
+        fallbackUrlMessage="Повернутись до переліку громад" />
 
     <CommunityForm
             :formData="communityFormData"
@@ -134,6 +139,7 @@ import { Modal }        from 'bootstrap';
 import DataTable        from '../../components/ui/DataTable.vue';
 import CommunityForm    from './Form.vue';
 import CouncilForm      from '../Councils/Form.vue';
+import Page404          from '../../components/Page404.vue';
 
 export default {
     name: 'CommunitiesShow',
@@ -215,7 +221,8 @@ export default {
     components: {
         DataTable,
         CommunityForm,
-        CouncilForm
+        CouncilForm,
+        Page404
     }
 }
 </script>

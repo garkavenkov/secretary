@@ -1,8 +1,8 @@
 <template>
 
-    <breadcrumbs />
+    <breadcrumbs  v-if="member?.id" />
 
-    <div class="card">
+    <div class="card" v-if="member?.id">
         <div class="card-header">
             <div>
                 <h5>{{ member.full_name }} </h5>
@@ -22,25 +22,25 @@
             <div class="px-3 pt-3">
                 <ul class="nav nav-tabs px-3">
                     <li class="nav-item">
-                        <router-link :to="{name: 'HouseholdMember.info'}" class="nav-link">
+                        <router-link :to="{name: 'household-member.info'}" class="nav-link">
                             <span class="mdi mdi-account-details-outline me-1"></span>
                             Головна інформація
                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link :to="{name: 'HouseholdMember.lands'}" class="nav-link">
+                        <router-link :to="{name: 'household-member.lands'}" class="nav-link">
                             <span class="mdi mdi-land-fields me-1"></span>
                             Земля
                         </router-link>
                     </li>
                     <li class="nav-item" >
-                        <router-link :to="{name: 'HouseholdMember.movements'}" class="nav-link">
+                        <router-link :to="{name: 'household-member.movements'}" class="nav-link">
                             <span class="mdi mdi-transit-transfer me-1"></span>
                             Реєстрація / Переміщення
                         </router-link>
                     </li>                   
                     <li class="nav-item">
-                        <router-link :to="{name: 'HouseholdMember.additional-data'}" class="nav-link">
+                        <router-link :to="{name: 'household-member.additional-data'}" class="nav-link">
                             <span class="mdi mdi-tag-multiple me-1"></span>
                             Додаткові дані
                         </router-link>
@@ -52,39 +52,57 @@
             </div>
         </div>
     </div>
+    
+    <Page404 v-else
+        :message="`Член домогосподарства з id:${id} відсутній`" 
+        resource="img/404/member.png" 
+        fallbackUrl="household-members" 
+        fallbackUrlMessage="Повернутись до переліку членів домогосподарств"/>
+    
 
 </template>
 
 <script>
 
 import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex/dist/vuex.cjs.js';
+
+import Page404 from '../../components/Page404.vue';
 
 export default {
-    name: 'HouseholdMemebrsShow',
+    name: 'HouseholdMembersShow',
     props: {
         'id': {
             type: [String, Number],
             required: true
         }
     },
+    components: {
+        Page404
+    },
     data() {
         return {
+            notFoundMessage: ''
         }
     },
     methods: {
-        fetchMember() {
-            let memberId = this.$route.params.memberId;
-            axios.get(`/api/v1/household-members/${this.id}`)
-                .then(res => {
-                    this.member = res.data.data;
-                })
-        },
+        ...mapActions('HouseholdMembers', ['fetchRecord']),
+        // fetchMember() {
+        //     let memberId = this.$route.params.memberId;
+        //     axios.get(`/api/v1/household-members/${this.id}`)
+        //         .then(res => {
+        //             this.member = res.data.data;
+        //         })
+        // },
     },
     computed: {
         ...mapGetters('HouseholdMembers', ['member'])
-    },
+    },  
     created() {
-        this.$store.dispatch('HouseholdMembers/fetchRecord', this.id);
+        // this.$store.dispatch('HouseholdMembers/fetchRecord', this.id);
+                
+        this.fetchRecord(this.id)
+            // .catch(err => console.log(err));
 
     },
     watch: {

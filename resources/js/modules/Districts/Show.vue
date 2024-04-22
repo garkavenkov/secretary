@@ -1,9 +1,9 @@
 <template>
-    <breadcrumbs />
+    <breadcrumbs v-if="district.name" />
 
-    <div class="row">
+    <div class="row" v-if="district.name">
         <div class="col-md-8 mx-auto">
-            <div class="card" v-if="district.name">
+            <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
@@ -81,7 +81,12 @@
             </div>
         </div>
     </div>
-
+    <Page404 v-else
+        :message="`Район з id:${id} відсутній`" 
+        resource="img/404/dictionary.png"  
+        fallbackUrl="districts" 
+        fallbackUrlMessage="Повернутись до переліку районів" />
+        
     <DistrictForm
             :formData="districtFormData"
             action="update"
@@ -102,6 +107,7 @@ import { Modal }        from 'bootstrap';
 import DataTable        from '../../components/ui/DataTable.vue'
 import DistrictForm     from './Form.vue';
 import CommunityForm    from '../Communities/Form.vue';
+import Page404          from '../../components/Page404.vue';
 
 export default {
     name: 'DistrictsShow',
@@ -172,7 +178,8 @@ export default {
     components: {
         DataTable,
         DistrictForm,
-        CommunityForm
+        CommunityForm,
+        Page404
     }
 }
 </script>

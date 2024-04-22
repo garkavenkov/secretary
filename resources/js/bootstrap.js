@@ -20,6 +20,8 @@ window.axios = axios;
 window.axios.defaults.withCredentials = true;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+// import router from './router';
+
 import Swal from 'sweetalert2';
 window.axios.interceptors.response.use(
     function (response) {
@@ -46,6 +48,16 @@ window.axios.interceptors.response.use(
                 icon:'error',
             });
         }
+        // if (error.response.status == 404) {
+        //     Swal.fire({
+        //         html:error.response.data.message,
+        //         icon:'error',
+        //     });
+        // }
+        // if (error.response.status == 404) {
+        //     router.push({name: 'Page404'});
+        //     return;
+        // }
         if (error.response.status == 500) {
             // console.log(error);
             let errorMsg = ''

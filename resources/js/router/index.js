@@ -1,6 +1,6 @@
 import {createRouter, createWebHashHistory } from 'vue-router';
+import Page404 from '../components/Page404.vue';
 
-import store from '../store';
 
 import dashboard            from './dashboard';
 import settlement_types     from './settlement_types';
@@ -20,7 +20,6 @@ import roles                from './roles';
 import permissions          from './permissions';
 import permission_rights    from './permission_rights';
 import users                from './users';
-// import positions            from './positions';
 import household_members    from './household_members';
 
 const routes = [
@@ -42,8 +41,12 @@ const routes = [
     ...permissions,
     ...permission_rights,
     ...users,
-    ...household_members
-    // ...positions
+    ...household_members,    
+    {
+        path: "/:pathMatch(.*)*", 
+        component: Page404, 
+        name: 'Page404'
+    }
 ]
 
 const router = createRouter({
@@ -51,9 +54,5 @@ const router = createRouter({
     routes,
 });
 
-// router.beforeEach((to, from, next) => {    
-//     next();
-
-// });
 
 export default router;

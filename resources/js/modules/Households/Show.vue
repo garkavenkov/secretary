@@ -1,7 +1,7 @@
 <template>
-    <breadcrumbs />
+    <breadcrumbs v-if="household?.id"/>
 
-    <div class="card">
+    <div class="card" v-if="household?.id">
         <div class="card-header">
             <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card--number">{{ household.number }}</span></h5>
             <div class="dropdown" v-show="$route.name == 'households.show.info'">
@@ -62,7 +62,13 @@
                 <router-view></router-view>
             </div>
         </div>
-    </div>
+    </div>    
+    <Page404 v-else
+        :message="`Домогосподарство з id:${id} відсутне`" 
+        resource="img/404/house.png"  
+        fallbackUrl="households" 
+        fallbackUrlMessage="Повернутись до переліку домогосподарств" />
+        
 
     <HouseholdForm
             :formData="formData"
@@ -77,12 +83,14 @@ import { mapGetters }   from 'vuex';
 import { Modal }        from 'bootstrap';
 
 import HouseholdForm    from './HouseholdForm.vue';
+import Page404          from '../../components/Page404.vue';
 
 export default {
     name: 'ShowCard',
     inheritAttrs:false,
     components: {
-        HouseholdForm
+        HouseholdForm,
+        Page404
     },
     props: {
         'id': {

@@ -19,10 +19,12 @@ const app = createApp({});
 import SideBarMenu  from './components/SideBarMenu.vue';
 import Breadcrumbs  from './components/ui/Breadcrumbs.vue';
 import SearchForm   from './components/ui/SearchForm.vue'
+// import Page404      from './components/404.vue';
 
 app.component('sidebar-menu', SideBarMenu);
 app.component('breadcrumbs', Breadcrumbs);
 app.component('search-form', SearchForm);
+// app.component('Page404', Page404);
 
 app.config.unwrapInjectedRef = true;
 
@@ -45,6 +47,13 @@ app.config.unwrapInjectedRef = true;
  * an "id" attribute of "app". This element is included with the "auth"
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
+
+
+import router from './router';
+import store from './store';
+
+
+
 
 app.config.globalProperties.$axios = axios;
 
@@ -91,14 +100,6 @@ app.config.globalProperties.$errorMessage = function(title,error,button = 'ОК'
                 }
             });
 }
-
-
-
-
-import router from './router';
-
-import store from './store';
-
 
 
 

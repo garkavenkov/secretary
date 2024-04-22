@@ -1,9 +1,9 @@
 <template>
-    <breadcrumbs />
+    <breadcrumbs v-if="region.name"/>
 
-    <div class="row">
+    <div class="row" v-if="region.name">
         <div class="col-md-8 mx-auto">
-            <div class="card" v-if="region.name">
+            <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
@@ -78,6 +78,12 @@
             </div>
         </div>
     </div>
+    <Page404 v-else
+        :message="`Регіон з id:${id} відсутній`" 
+        resource="img/404/dictionary.png"  
+        fallbackUrl="regions" 
+        fallbackUrlMessage="Повернутись до переліку регіонів" />
+        
 
     <RegionForm
             :formData="regionFormData"
@@ -98,6 +104,7 @@ import { mapGetters }   from 'vuex';
 import DataTable        from '../../components/ui/DataTable.vue';
 import RegionForm       from './Form.vue';
 import DistrictForm     from '../Districts/Form.vue';
+import Page404          from '../../components/Page404.vue';
 
 export default {
     name: 'RegionsShow',
@@ -160,7 +167,8 @@ export default {
     components:{
         DataTable,
         RegionForm,
-        DistrictForm
+        DistrictForm,
+        Page404
     }
 }
 </script>
