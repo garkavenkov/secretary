@@ -4,6 +4,7 @@ export default [
     {
         path: '/',
         component: Dashboard,
-        meta: {icon: '<span class="mdi mdi-monitor-dashboard"></span>'}
+        name: 'Dashboard',
+        meta: {icon: '<span class="mdi mdi-monitor-dashboard"></span>'}        
     },
 ]

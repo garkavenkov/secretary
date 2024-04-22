@@ -281,7 +281,7 @@ export default {
             myModal.show();
         },
         showHouseholdMemberInfo(member) {            
-            this.$router.push({name: 'HouseholdMember', params: {id: member.id}});            
+            this.$router.push({name: 'household-member', params: {id: member.id}});            
         },
         closeMemberInfoForm() {
             this.formData.surname                       = '';

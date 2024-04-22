@@ -1,9 +1,9 @@
 <template>
-    <breadcrumbs />
+    <breadcrumbs  v-if="settlement.name"/>
 
-    <div class="row">
+    <div class="row"  v-if="settlement.name">
         <div class="col-md-8 mx-auto">
-            <div class="card" v-if="settlement.name">
+            <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація о поселенні</span>
@@ -101,7 +101,12 @@
             </div>
         </div>
     </div>
-
+    <Page404 v-else
+        :message="`Населенний пункт з id:${id} відсутній`" 
+        resource="img/404/dictionary.png"  
+        fallbackUrl="settlements" 
+        fallbackUrlMessage="Повернутись до переліку населенних пунктів" />
+    
     <SettlementForm
             :formData="settlementFormData"
             @refreshData="$store.dispatch('Settlements/fetchRecord', id)"
@@ -115,6 +120,7 @@ import { mapGetters }   from 'vuex'
 import { Modal }        from 'bootstrap';
 
 import SettlementForm   from './Form.vue';
+import Page404          from '../../components/Page404.vue';
 
 export default {
     name: 'SettlementsShow',
@@ -172,7 +178,8 @@ export default {
         this.$store.dispatch('Settlements/fetchRecord', this.id)
     },
     components: {
-        SettlementForm
+        SettlementForm,
+        Page404
     }
 }
 </script>

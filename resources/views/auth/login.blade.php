@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col text-center">
                             <!-- <img src="/img/community.png" alt="" class="login-logo"> -->
-                            <img src="/img/household.png" alt="" class="login-logo">
+                            <img src="/img/icons/household.png" alt="" class="login-logo">
                         </div>
                         <div class="col">
                             <form method="POST" action="{{ route('login') }}">

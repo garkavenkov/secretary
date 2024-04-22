@@ -23,10 +23,18 @@ export default {
                 });
         },
         fetchRecord: ({commit, state}, id) =>  {
-            axios.get(`${state.baseUrl}/${id}`)
+            // return new Promise((resolve, reject) => {
+            let url = state.baseUrl ? state.baseUrl : state.url;
+            axios.get(`${url}/${id}`)
                 .then(res => {
                     commit('setData', {ent:state.entity, data: res.data.data});
+                })
+                .catch(err => {
+                    if (err.response.status == 404) {
+                        commit('setData', {ent:state.entity, data: {}})
+                    }
                 });
+            // });
         }
     }
 }
