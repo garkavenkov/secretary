@@ -1,6 +1,6 @@
 <template>
 
-    <ModalForm formId="MembersFilterForm" @submitData="submitData" @closeForm="clearFormData" modalClass="">
+    <ModalForm formId="HouseholdMembersMainFilterForm" @submitData="submitData" @closeForm="clearFormData" modalClass="">
         <div class="row mb-3">
             <div class="col">
                 <label for="memberSettlement" class="form-label" :class="{'filtered' : filter.settlement_id !== 0}">Населений пункт</label>

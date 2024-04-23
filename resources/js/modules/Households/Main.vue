@@ -1,5 +1,5 @@
 <template>
-    <breadcrumbs />
+    <!-- <breadcrumbs /> -->
 
     <div class="card">
         <div class="card-header">
@@ -10,6 +10,26 @@
                 </button>
                 <button class="btn btn-sm btn-outline-primary ms-2" @click="$store.dispatch('Households/fetchRecords')" title="Оновити дані">
                     <span class="mdi mdi-refresh"></span>
+                </button>
+                <ButtonSelectRecords 
+                        v-if="households.length > 0" 
+                        title="Множиний відбір" 
+                        :btnClass="[inSelectMode ? 'btn-primary' : 'btn-outline-primary' ]"
+                        :selectedRecordsCount="selectedRecordsCount"
+                        @toggleSelectMode="toggleSelectMode" />     
+                <button type="button"
+                        class="btn btn-sm btn-outline-info ms-3"
+                        title="Додаткові параметри"
+                        @click="() => {}"
+                        v-if="selectedRecordsCount  > 0">
+                    <span class="mdi mdi-tag-multiple"></span>
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-outline-info ms-2"
+                        title="Формування звіту"
+                        @click="() => {}"
+                        v-if="selectedRecordsCount  > 0">                    
+                    <span class="mdi mdi-file-document-arrow-right-outline"></span>
                 </button>
             </div>
             <div>
@@ -34,7 +54,16 @@
                     @perPageChanged="perPageChanged">
                 <template v-slot:header>
                     <tr>
-                        <th></th>
+                        <th v-if="inSelectMode" 
+                            class="align-middle text-center">
+                            <input  type="checkbox"
+                                    class="form-check-input cursor-pointer"
+                                    name="selectAll"
+                                    id="selectAll"
+                                    :checked="isAllSelected"
+                                    @change="toggleSelectAll($event)"/>
+                        </th>
+                        <th v-else></th>                        
                         <th data-sort-field="number" data-field-type="string" class="sortable">Номер</th>
                         <th>Населений пункт</th>
                         <th data-sort-field="address" data-field-type="string" class="sortable">Місцезнаходження / адреса</th>
@@ -44,12 +73,19 @@
                 </template>
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id">
-                        <td class="text-center">
+                            :key="record.id"
+                            :class="{ 'table-primary': record.selected }">
+                        <td class="text-center" v-if="!inSelectMode" style="line-height: 24px;">
                             <router-link :to="{name: 'households.show', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>                            
                         </td>
+                        <td v-else class="text-center" style="line-height: 24px;">                            
+                            <input  class="form-check-input cursor-pointer"
+                                    type="checkbox"
+                                    v-model="record.selected"/>
+                        
+                        </td>       
                         <td class="text-center">{{record.number}}</td>
                         <td>{{record.settlement}}</td>
                         <td>{{record.address}}</td>
@@ -82,17 +118,22 @@ import { mapGetters }       from 'vuex';
 import { Modal }            from 'bootstrap'
 import { computed }         from 'vue';
 
+import SelectRecords        from '../../mixins/SelectRecords';
+
 import DataTable            from '../../components/ui/DataTable.vue';
 import HouseholdForm        from './HouseholdForm.vue';
 import HouseholdFilterForm  from './HouseholdFilterForm.vue';
+import ButtonSelectRecords  from '../../components/ui/ButtonSelectRecords.vue';
 
 export default {
-    name: 'HouseholdCardsMain',
+    name: 'HouseholdsMain',
     components: {
         DataTable,
         HouseholdForm,
         HouseholdFilterForm,
+        ButtonSelectRecords
     },
+    mixins: [SelectRecords],
     data() {
         return {
             perPageItems : [
@@ -115,7 +156,7 @@ export default {
             disabledFields: [],
             modalTitle: '',
             modalSubmitCaption: '',
-            fancyModalIsVisible: false
+            fancyModalIsVisible: false,            
         }
     },
     provide() {
@@ -168,7 +209,6 @@ export default {
             this.$store.dispatch('Households/changePerPage', value)
         },
         pageChanged(page) {
-            console.log(`HouseholdMain pageChanged: page: ${page}`);
             this.$store.dispatch('Households/changePage', page)
         },
         searchData(row, searchText) {
@@ -179,10 +219,11 @@ export default {
         sortData(a, b, criteria) {
             // console.log('sortData from Main component');
             console.log(a,b, criteria);
-        }
+        },
+       
     },
     computed: {
-        ...mapGetters('Households', ['households', 'filter', 'pagination']),
+        ...mapGetters('Households', ['households', 'filter', 'pagination', 'entities']),        
     }
 }
 </script>

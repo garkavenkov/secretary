@@ -1,6 +1,6 @@
 <template>
 
-    <breadcrumbs />
+    <!-- <breadcrumbs /> -->
 
     <div class="card">
         <div class="card-header">
@@ -8,6 +8,26 @@
                 <span>Члени домогосподарств</span>
                 <button class="btn btn-sm btn-outline-primary ms-2" @click="$store.dispatch('HouseholdMembers/fetchRecords')" title="Оновити дані">
                     <span class="mdi mdi-refresh"></span>
+                </button>
+                <ButtonSelectRecords 
+                        v-if="members.length > 0" 
+                        title="Множиний відбір" 
+                        :btnClass="[inSelectMode ? 'btn-primary' : 'btn-outline-primary' ]"
+                        :selectedRecordsCount="selectedRecordsCount"
+                        @toggleSelectMode="toggleSelectMode" />     
+                <button type="button"
+                        class="btn btn-sm btn-outline-info ms-3"
+                        title="Додаткові параметри"
+                        @click="() => {}"
+                        v-if="selectedRecordsCount  > 0">
+                    <span class="mdi mdi-tag-multiple"></span>
+                </button>
+                <button type="button"
+                        class="btn btn-sm btn-outline-info ms-2"
+                        title="Формування звіту"
+                        @click="() => {}"
+                        v-if="selectedRecordsCount  > 0">                    
+                    <span class="mdi mdi-file-document-arrow-right-outline"></span>
                 </button>
             </div>
             <div>
@@ -24,16 +44,24 @@
                     v-if="members.length > 0"
                     :dataTable="members"
                     :perPageItems="perPageItems"
-                    :externalPagination="pagination"
-                    :dataFields="dataFields"
+                    :externalPagination="pagination"                    
                     tableHeaderClass="table-dark"
                     tableClass="table-bordered"
                     sortByDefaultField="id"
                     @pageChanged="pageChanged"
                     @perPageChanged="perPageChanged">
-                <!-- <template v-slot:header>
+                <template v-slot:header>
                     <tr>
-                        <th></th>
+                        <th v-if="inSelectMode" 
+                            class="align-middle text-center">
+                            <input  type="checkbox"
+                                    class="form-check-input cursor-pointer"
+                                    name="selectAll"
+                                    id="selectAll"
+                                    :checked="isAllSelected"
+                                    @change="toggleSelectAll($event)"/>
+                        </th>
+                        <th v-else></th>
                         <th data-sort-field="full_name"
                             data-field-type="string"
                             class="sortable">
@@ -47,15 +75,23 @@
                             Домогосподарство
                         </th>
                     </tr>
-                </template> -->
+                </template>
+
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id">
-                        <td class="text-center">
+                            :key="record.id"
+                            :class="{ 'table-primary': record.selected }"
+                            @click.ctrl="showDocument(record.id)">
+                        <td class="text-center" v-if="!inSelectMode" style="line-height: 24px;">
                             <router-link :to="{name: 'household-member', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
                             </router-link>
                         </td>
+                        <td v-else class="text-center" style="line-height: 24px;">                            
+                                <input  class="form-check-input cursor-pointer"
+                                        type="checkbox"
+                                        v-model="record.selected"/>                            
+                        </td>                        
                         <td>{{record.full_name}}</td>
                         <td class="text-center">{{record.birthdate_formatted}}</td>
                         <td>{{record.address}}</td>
@@ -81,45 +117,22 @@
 import { mapGetters }       from 'vuex';
 import { Modal }            from 'bootstrap'
 
+import SelectRecords        from '../../mixins/SelectRecords';
+
 import DataTable            from '../../components/ui/DataTable.vue';
 import MembersFilterForm    from './MembersFilterForm.vue';
+import ButtonSelectRecords  from '../../components/ui/ButtonSelectRecords.vue';
 
 export default {
     name: 'HouseholdMembersMain',
+    mixins: [SelectRecords],
     data() {
         return {
             perPageItems : [
                 10,
                 15,
                 20
-            ],
-            dataFields: [
-                {
-                    name: 'link',
-                    caption: ''
-                },
-                {
-                    name: 'full_name',
-                    caption: 'Призвіще ім\'я по батькові',
-                    class: 'sortable',
-                    sortable: true,
-                },
-                {
-                    name: 'birthdate_formatted',
-                    caption: 'Дата народження',
-                    class: 'text-center',
-                },
-                {
-                    name: 'address',
-                    caption: 'Адреса',
-                },
-                {
-                    name: 'household_number',
-                    caption: 'Домогосподарство',
-                    class: 'sortable',
-                    sortable: true,
-                },
-            ],
+            ],         
         }
     },
     provide() {
@@ -130,7 +143,8 @@ export default {
     },
     methods: {
         openFilterForm() {
-            let filterForm = new Modal(document.getElementById('MembersFilterForm'));
+            // let filterForm = new Modal(document.getElementById('MembersFilterForm'));
+            let filterForm = new Modal(document.getElementById(`${this.$options.name}FilterForm`));
             filterForm.show();
         },
         resetFilter() {
@@ -142,20 +156,23 @@ export default {
         perPageChanged(value) {
             this.$store.dispatch('HouseholdMembers/changePerPage', value)
         },
-        pageChanged(page) {
-            console.log(`HouseholdMemberMain pageChanged: page: ${page}`);
+        pageChanged(page) {            
             this.$store.dispatch('HouseholdMembers/changePage', page)
         },
         searchData(row, searchText) {
             return row['full_name'].includes(searchText) || row['household_number'].includes(searchText);
-        }
+        },
+        showDocument(id) {
+            this.$router.push({name: 'household-member', params: { id: id }});
+        },       
     },
     computed: {
-        ...mapGetters('HouseholdMembers', ['members', 'filter', 'pagination']),
+        ...mapGetters('HouseholdMembers', ['members', 'filter', 'pagination', 'entities']),        
     },
     components: {
         DataTable,
-        MembersFilterForm
+        MembersFilterForm,
+        ButtonSelectRecords
     }
 
 }

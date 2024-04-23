@@ -43,7 +43,8 @@ export const Households = {
         availableLandYears: state => state.household.landYears.map(y => y.year).sort((a, b) => b - a),
         landInfo: state => state.household.landInfo,
         familyInfo: state => state.household.familyInfo,
-        pagination: state => state.pagination
+        pagination: state => state.pagination,
+        entities: state => state.entities,
     },
     mutations: {
         ...crud.mutations,
