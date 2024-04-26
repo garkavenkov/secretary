@@ -51,15 +51,14 @@ class HouseholdMemberController extends Controller
             $conditions = explode(';', request()->query('where'));
             // dd($conditions);
             $members = HouseholdMember::with('household');//->first();
-            
-            foreach($conditions as $condition) {
+            // dd($members->fullAge);
+            foreach($conditions as $condition) {                
+                
                 $parts = explode('=', $condition);
+
                 if (count($parts) == 2) {
                     if ($parts[0] == 'settlement_id') {
-                        if (HouseholdMember::isFieldFilterable($parts[0])) {
-                            // $members = HouseholdMember::with('household')->whereHas('household', function($q) use($parts){
-                            //     return $q->where($parts[0], $parts[1]);
-                            // });
+                        if (HouseholdMember::isFieldFilterable($parts[0])) {                            
                             $members = $members->whereHas('household', function($q) use($parts){
                                 return $q->where($parts[0], $parts[1]);
                             });
@@ -70,12 +69,34 @@ class HouseholdMemberController extends Controller
                             return $q->whereIn('code', $params);
                         });
                     
-                    } else {
+                    }  else if ($parts[0] == 'age') {                      
+                        $ageRange =  array_map('intval', explode(',', $parts[1], 2));
+                        // dd($ageRange);
+                        $members = $members->where(function($q) use($ageRange) {
+                            $q->whereNull('death_date')
+                                ->whereRaw(
+                                    "strftime('%Y', DATE('now')) - strftime('%Y', birthdate) + 			
+			                        case 
+			                            when(strftime('%m', DATE('now')) - strftime('%m', birthdate) ) < 0  then -1
+			                            when (strftime('%m', DATE('now')) - strftime('%m', birthdate) ) = 0 then 
+                                            case 
+						                        when (strftime('%d', DATE('now')) - strftime('%d', birthdate) ) < 0 then -1
+						                        else 0
+					                        end
+			                            else 0
+			                        end  between ? and  ?", $ageRange);
+                        }); 
+                        
+                        // dd($members->paginate(10));
+
+                    }  else {
                         $members = $members->where($parts[0], $parts[1]);
                     }
                 }
             }
+
             $members = $members->paginate($per_page);
+            
 
         } else {
 
@@ -210,5 +231,16 @@ class HouseholdMemberController extends Controller
         $member = HouseholdMember::findOrFail($id);
 
         return new HouseholdMemberRelativesResource($member);
+    }
+
+    public function getAgeOfOldestPerson(Request $request)
+    {
+        // $per_page = $request->query('per_page');
+        $member = HouseholdMember::alive()->get()->sortBy([['fullAge', 'desc']])->first();
+
+        if ($member) {
+            return $member->fullAge;
+        }
+        return null;
     }
 }

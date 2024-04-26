@@ -60,6 +60,10 @@
                                     class="form-check-input cursor-pointer"
                                     name="selectAll"
                                     id="selectAll"
+<<<<<<< HEAD
+=======
+                                    :indeterminate="isIndeterminate"
+>>>>>>> members-filter-by-age
                                     :checked="isAllSelected"
                                     @change="toggleSelectAll($event)"/>
                         </th>

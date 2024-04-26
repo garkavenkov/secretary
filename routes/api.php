@@ -102,6 +102,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     Route::get('household-members/{id}/additional-data',    [HouseholdMemberController::class, 'additionalParams'])->name('member-additional-data');
     Route::get('household-members/{id}/movements',          [HouseholdMemberController::class, 'memberMovements'])->name('member-additional-movements');
     Route::get('household-members/{id}/relatives',          [HouseholdMemberController::class, 'memberRelatives'])->name('member-relatives');
+    Route::get('get-age-of-oldest-person',                  [HouseholdMemberController::class, 'getAgeOfOldestPerson'])->name('get-age-of-oldest-person');
 
     Route::post('set-additional-params',            [AdditionalParamValueController::class, 'setAdditionalParams']);
 
