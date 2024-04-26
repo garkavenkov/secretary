@@ -45,13 +45,6 @@ class HouseholdMember extends Model
     
     protected $appends = array('status', 'fullAge');
 
-    // public function availability()
-    // {
-    //     return new Attribute(
-    //         get: fn () => $this->fullAge()
-    //     );  
-    // }
-
     public static function isFieldFilterable($field) {
         return in_array($field, self::$filterable);
     }
@@ -112,21 +105,14 @@ class HouseholdMember extends Model
     public function getFullAgeAttribute()
     {
         $birthdate = new DateTime($this->birthdate);
-        $interval = $birthdate->diff(new DateTime());
-        return $interval->y;
+        
+        if ($this->status == 'dead') {  
+            return $birthdate->diff(new DateTime($this->death_date))->y;
+        } 
+
+        return $birthdate->diff(new DateTime())->y;
+  
     }
-
-    // public function fullAge(): Attribute
-    // {
-    //     return Attribute::make(
-    //         get: function($value) {
-    //             $birthdate = new DateTime($this->birthdate);
-    //             $interval = $birthdate->diff(new DateTime());
-    //             return $interval->y;
-    //         }
-    //     );
-    // }
-
 
     public function scopeMale($query)
     {
