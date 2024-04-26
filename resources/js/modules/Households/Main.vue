@@ -60,6 +60,7 @@
                                     class="form-check-input cursor-pointer"
                                     name="selectAll"
                                     id="selectAll"
+                                    :indeterminate="isIndeterminate"
                                     :checked="isAllSelected"
                                     @change="toggleSelectAll($event)"/>
                         </th>

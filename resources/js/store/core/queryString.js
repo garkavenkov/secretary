@@ -29,6 +29,10 @@ export default {
                     }                    
                 }
              
+                if (state.filter.hasOwnProperty('age') && state.filter.age.selected) {                    
+                    conditions.push('age=' + state.filter.age.values.join(','));                    
+                }
+
                 if (conditions.length > 0) {
                     // state.queryString = `?per_page=${state.perPage}&where=` + conditions.join(';');                 
                     state.url = `${state.baseUrl}?per_page=${state.perPage}&where=` + conditions.join(';');                 

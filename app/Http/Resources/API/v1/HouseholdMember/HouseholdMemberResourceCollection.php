@@ -26,6 +26,7 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'sex'                       =>  $member->sex,
                 'birthdate'                 =>  $member->birthdate,
                 'birthdate_formatted'       =>  Carbon::parse($member->birthdate)->format('d.m.Y'),
+                'full_age'                  =>  $member->fullAge,
                 'family_relationship_type'  =>  $member->whenLoaded('familyRelationshipType', $member->familyRelationshipType->name),
                 'status'                    =>  $member->status,
                 'death_date'                =>  $member->death_date,

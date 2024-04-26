@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use DeclensionUkrainian\Anthroponym;
 use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
@@ -41,12 +42,20 @@ class HouseholdMember extends Model
         'settlement_id',
         'sex',
     ];
+    
+    protected $appends = array('status', 'fullAge');
+
+    // public function availability()
+    // {
+    //     return new Attribute(
+    //         get: fn () => $this->fullAge()
+    //     );  
+    // }
 
     public static function isFieldFilterable($field) {
         return in_array($field, self::$filterable);
     }
 
-    protected $appends = array('status', 'fullAge');
 
     public function familyRelationshipType()
     {
@@ -106,6 +115,18 @@ class HouseholdMember extends Model
         $interval = $birthdate->diff(new DateTime());
         return $interval->y;
     }
+
+    // public function fullAge(): Attribute
+    // {
+    //     return Attribute::make(
+    //         get: function($value) {
+    //             $birthdate = new DateTime($this->birthdate);
+    //             $interval = $birthdate->diff(new DateTime());
+    //             return $interval->y;
+    //         }
+    //     );
+    // }
+
 
     public function scopeMale($query)
     {

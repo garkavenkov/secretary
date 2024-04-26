@@ -38,6 +38,9 @@ export default {
         },
         isAllSelected() {
             return this.selectedRecords.length == this[this.entities].length
+        },
+        isIndeterminate() {
+            return (this.selectedRecords.length > 0 && !this.isAllSelected)
         }
     }
 }

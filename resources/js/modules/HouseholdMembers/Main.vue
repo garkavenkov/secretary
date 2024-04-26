@@ -58,6 +58,7 @@
                                     class="form-check-input cursor-pointer"
                                     name="selectAll"
                                     id="selectAll"
+                                    :indeterminate="isIndeterminate"
                                     :checked="isAllSelected"
                                     @change="toggleSelectAll($event)"/>
                         </th>
@@ -68,6 +69,12 @@
                             Призвіще ім'я по батькові
                         </th>
                         <th class="text-center">Дата народження</th>
+                        <th data-sort-field="full_age"
+                            data-field-type="number"
+                            class="sortable"
+                            style="min-width: 70px;">
+                            Вік
+                        </th>
                         <th>Адреса</th>
                         <th data-sort-field="household_number"
                             data-field-type="string"
@@ -94,6 +101,7 @@
                         </td>                        
                         <td>{{record.full_name}}</td>
                         <td class="text-center">{{record.birthdate_formatted}}</td>
+                        <td class="text-center">{{record.full_age}}</td>
                         <td>{{record.address}}</td>
                         <td class="text-center">
                             <router-link :to="{name: 'households.show.info', params: { id: record.household_id }}" style="text-decoration: none;">
@@ -150,6 +158,8 @@ export default {
         resetFilter() {
             this.filter.settlement_id = 0;
             this.filter.isFiltered = false;
+            this.filter.age.selected = false;
+            this.filter.age.value = [0,100];
             this.filter.additionalParams = {};
             this.$store.dispatch('HouseholdMembers/applyFilter', this.filter);
         },
