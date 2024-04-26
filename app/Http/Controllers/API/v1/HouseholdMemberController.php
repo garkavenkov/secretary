@@ -50,7 +50,7 @@ class HouseholdMemberController extends Controller
         } else if (request()->query('where')) {            
             $conditions = explode(';', request()->query('where'));
             // dd($conditions);
-            $members = HouseholdMember::with('household');//->first();
+            $members = HouseholdMember::with('household')->alive();//->first();
             // dd($members->fullAge);
             foreach($conditions as $condition) {                
                 
@@ -100,7 +100,7 @@ class HouseholdMemberController extends Controller
 
         } else {
 
-            $members = HouseholdMember::with('household')->paginate($per_page);
+            $members = HouseholdMember::with('household')->alive()->paginate($per_page);
 
         }
 
