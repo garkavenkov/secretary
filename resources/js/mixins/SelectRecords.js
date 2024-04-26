@@ -38,12 +38,9 @@ export default {
         },
         isAllSelected() {
             return this.selectedRecords.length == this[this.entities].length
-<<<<<<< HEAD
-=======
         },
         isIndeterminate() {
             return (this.selectedRecords.length > 0 && !this.isAllSelected)
->>>>>>> members-filter-by-age
         }
     }
 }
