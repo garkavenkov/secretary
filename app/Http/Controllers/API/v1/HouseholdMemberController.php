@@ -71,21 +71,40 @@ class HouseholdMemberController extends Controller
                     
                     }  else if ($parts[0] == 'age') {                      
                         $ageRange =  array_map('intval', explode(',', $parts[1], 2));
-                        // dd($ageRange);
-                        $members = $members->where(function($q) use($ageRange) {
-                            $q->whereNull('death_date')
-                                ->whereRaw(
-                                    "strftime('%Y', DATE('now')) - strftime('%Y', birthdate) + 			
-			                        case 
-			                            when(strftime('%m', DATE('now')) - strftime('%m', birthdate) ) < 0  then -1
-			                            when (strftime('%m', DATE('now')) - strftime('%m', birthdate) ) = 0 then 
+                        
+                        $db_conn = config('database.default');
+                        if ($db_conn == 'sqlite') {
+
+                            $sql = "strftime('%Y', DATE('now')) - strftime('%Y', birthdate) + 			
+                                    case 
+                                        when(strftime('%m', DATE('now')) - strftime('%m', birthdate) ) < 0  then -1
+                                        when (strftime('%m', DATE('now')) - strftime('%m', birthdate) ) = 0 then 
                                             case 
-						                        when (strftime('%d', DATE('now')) - strftime('%d', birthdate) ) < 0 then -1
-						                        else 0
-					                        end
-			                            else 0
-			                        end  between ? and  ?", $ageRange);
-                        }); 
+                                                when (strftime('%d', DATE('now')) - strftime('%d', birthdate) ) < 0 then -1
+                                                else 0
+                                            end
+                                        else 0
+                                    end  between ? and  ?";
+
+                        } else if ($db_conn == 'mysql') {
+
+                            $sql = "YEAR(CURDATE()) - YEAR (birthdate) +
+                                    case 
+                                        when ( MONTH(CURDATE()) - MONTH(birthdate) ) < 0 then -1
+                                        when ( MONTH(CURDATE()) - MONTH(birthdate) ) = 0 then
+                                            case
+                                                when ( DAY(CURDATE()) - DAY(birthdate) ) < 0 then -1
+                                                else 0
+                                            end
+                                        else 0			
+                                    end	between ? and ?";
+                        }
+
+                        $members = $members->whereRaw($sql, $ageRange);
+                        // $members = $members->where(function($q) use($ageRange, $sql) {
+                        //     $q->whereNull('death_date')
+                        //         ->whereRaw($sql, $ageRange);                            
+                        // }); 
                         
                         // dd($members->paginate(10));
 
