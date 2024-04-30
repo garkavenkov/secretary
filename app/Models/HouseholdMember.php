@@ -45,11 +45,43 @@ class HouseholdMember extends Model
     
     protected $appends = array('status', 'fullAge');
 
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function($member)
+        {
+            // Delete land years information
+            $member->land()->delete();
+
+            // Delete additional params values
+            DB::table('additional_param_values as apv')
+                ->join('additional_params as ap', 'ap.id', '=', 'apv.param_id')
+                ->join('additional_param_categories as apc', 'apc.id', '=', 'ap.category_id')
+                ->where('apc.code', get_class($member))
+                ->where('apv.owner_id', $member->id)
+                ->delete();
+
+            // Movements
+            $member->movements()->delete();
+
+            // Family relationships
+            DB::table('family_relationships as fr')
+                ->where('fr.member_id',$member->id)
+                ->orWhere('fr.relative_id', $member->id)
+                ->delete();
+        });
+    }
+
+
     public static function isFieldFilterable($field) {
         return in_array($field, self::$filterable);
     }
 
 
+    // ***************************************  Relationships ****************************************************
+    
     public function familyRelationshipType()
     {
         return $this->belongsTo(FamilyRelationshipType::class, 'family_relationship_type_id');
@@ -73,6 +105,17 @@ class HouseholdMember extends Model
         return $this->movements()->where('date', '<', $date)->first();
     }
 
+    public function household()
+    {
+        return $this->belongsTo(Household::class);
+    }
+
+    public function land()
+    {
+        return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc');
+    }
+
+    //********************************** Attributes *********************************************************
     public function getStatusAttribute()
     {
         $status = 'active';
@@ -99,7 +142,14 @@ class HouseholdMember extends Model
 
     public function getShortNameAttribute()
     {
-        return  $this->surname . ' ' . mb_substr($this->name, 0, 1) . '.' . mb_substr($this->patronymic, 0, 1) . '.';
+        return  $this->surname . ' ' 
+                    . mb_substr($this->name, 0, 1) . '.' 
+                    . mb_substr($this->patronymic, 0, 1) . '.';
+    }
+
+    public function getFormattedBirthdateAttribute()
+    {
+        return (new DateTime($this->birthdate))->format('d.m.Y');
     }
 
     public function getFullAgeAttribute()
@@ -113,6 +163,70 @@ class HouseholdMember extends Model
         return $birthdate->diff(new DateTime())->y;
   
     }
+
+    public function getRegistrationAddressAttribute() {
+
+        $address =$this->household->getFullAddress();
+
+        return ($this->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') . 
+                " за адресою: $address";
+
+    }
+
+    // ******************************** Methods *****************************************************
+
+    public function relatives($only_alive = true)
+    {        
+        $db_conn = config('database.default');
+        
+        if ($db_conn == 'sqlite') {
+            $full_name = "hm.surname || ' ' || hm.name || ' ' || hm.patronymic as full_name";
+            $formatted_birthdate = "STRFTIME('%d.%m.%Y', hm.birthdate) as formatted_birthdate";
+        } else if ($db_conn == 'mysql') {
+            $full_name = "CONCAT(hm.surname, ' ', hm.name, ' ',hm.patronymic) as full_name";
+            $formatted_birthdate = "DATE_FORMAT(hm.birthdate, '%d.%m.%Y') as formatted_birthdate";
+        }
+
+        return DB::table('family_relationships as fr')
+                ->selectRaw(
+                    "hm.id, 
+                    hm.surname,
+                    hm.name,
+                    hm.patronymic,
+                    $full_name,
+                    -- hm.birthdate,
+                    $formatted_birthdate,
+                    hm.sex,
+                    frt.id as relation_id,
+                    frt.name as relation"
+                )
+                ->join('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')
+                ->join('household_members as hm', 'hm.id', '=', 'fr.relative_id')
+                ->where('fr.member_id', '=', $this->id)
+                ->when($only_alive, function($q) {
+                    $q->whereNull('hm.death_date');
+                })
+                ->get();
+    }
+
+    
+    public function memberInfo()
+    {
+        return $this->additionalParamValue();
+    }
+
+    public function declensionFullName(string $case): String
+    {
+        return  Anthroponym::$case([
+            'gender'    =>  $this->sex,
+            'surname'   =>  $this->surname,
+            'name'      =>  $this->name,
+            'patronymic'=>  $this->patronymic,
+        ]);
+    }
+
+
+    // *********************************************** Scopes ************************************************
 
     public function scopeMale($query)
     {
@@ -180,79 +294,6 @@ class HouseholdMember extends Model
         }       
         return $query->whereDay('birthdate', $day)->whereMonth('birthdate', $month);
     }
-
-    public function relatives()
-    {        
-        return DB::table('family_relationships as fr')
-                ->select(
-                    'hm.id',
-                    'hm.surname',
-                    'hm.name',
-                    'hm.patronymic',
-                    'hm.birthdate',
-                    'hm.sex',
-                    'frt.id as relation_id',
-                    'frt.name as relation'
-                )
-                ->join('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')
-                ->join('household_members as hm', 'hm.id', '=', 'fr.relative_id')
-                ->where('fr.member_id', '=', $this->id)
-                ->get();
-    }
-
-    public function household()
-    {
-        return $this->belongsTo(Household::class);
-    }
-
-    public function memberInfo()
-    {
-        return $this->additionalParamValue();
-    }
-
-    public function land()
-    {
-        return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        self::deleting(function($member)
-        {
-            // Delete land years information
-            $member->land()->delete();
-
-            // Delete additional params values
-            DB::table('additional_param_values as apv')
-                ->join('additional_params as ap', 'ap.id', '=', 'apv.param_id')
-                ->join('additional_param_categories as apc', 'apc.id', '=', 'ap.category_id')
-                ->where('apc.code', get_class($member))
-                ->where('apv.owner_id', $member->id)
-                ->delete();
-
-            // Movements
-            $member->movements()->delete();
-
-            // Family relationships
-            DB::table('family_relationships as fr')
-                ->where('fr.member_id',$member->id)
-                ->orWhere('fr.relative_id', $member->id)
-                ->delete();
-        });
-    }
-
-    public function declensionFullName(string $case): String
-    {
-        return  Anthroponym::$case([
-            'gender'    =>  $this->sex,
-            'surname'   =>  $this->surname,
-            'name'      =>  $this->name,
-            'patronymic'=>  $this->patronymic,
-        ]);
-    }
-
 
    
 }

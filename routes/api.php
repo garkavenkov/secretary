@@ -112,4 +112,5 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
 
     Route::post('users/{user}/upload-photo',        [UserController::class, 'uploadPhoto']);
     Route::post('users/{user}/roles',               [UserController::class, 'userRoles']);
+
 });

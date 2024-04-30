@@ -11,24 +11,31 @@
                 </button>
                 <ButtonSelectRecords 
                         v-if="members.length > 0" 
-                        title="Множиний відбір" 
+                        :title="inSelectMode ? 'Викмнути режим відбору записів' : 'Увімкнути режим відбору записів'" 
                         :btnClass="[inSelectMode ? 'btn-primary' : 'btn-outline-primary' ]"
+                        :inSelectMode="inSelectMode"
                         :selectedRecordsCount="selectedRecordsCount"
                         @toggleSelectMode="toggleSelectMode" />     
-                <button type="button"
-                        class="btn btn-sm btn-outline-info ms-3"
-                        title="Додаткові параметри"
-                        @click="() => {}"
-                        v-if="selectedRecordsCount  > 0">
-                    <span class="mdi mdi-tag-multiple"></span>
-                </button>
-                <button type="button"
-                        class="btn btn-sm btn-outline-info ms-2"
-                        title="Формування звіту"
-                        @click="() => {}"
-                        v-if="selectedRecordsCount  > 0">                    
-                    <span class="mdi mdi-file-document-arrow-right-outline"></span>
-                </button>
+                <div class="d-flext flex-gap-1 ms-3" v-if="selectedRecordsCount  > 0">
+                    <!-- <button type="button"
+                            class="btn btn-sm btn-outline-info"
+                            title="Додаткові параметри"
+                            @click="() => {}">
+                        <span class="mdi mdi-tag-multiple"></span>
+                    </button> -->
+                    <!-- <button type="button"
+                            class="btn btn-sm btn-outline-info ms-2"
+                            title="Формування звіту"
+                            @click="() => {}">                            
+                        <span class="mdi mdi-file-document-arrow-right-outline"></span>
+                    </button> -->
+                    <button type="button"
+                            class="btn btn-sm btn-outline-info ms-2"
+                            title="Друк документів"
+                            @click="openDocumentsForm">
+                        <span class="mdi mdi-printer"></span>
+                    </button>
+                </div>
             </div>
             <div>
                 <button :class="['btn btn-sm btn-outline-secondary', filter.isFiltered ? 'active' : '' ]"
@@ -50,6 +57,7 @@
                     sortByDefaultField="id"
                     @pageChanged="pageChanged"
                     @perPageChanged="perPageChanged">
+                    <!-- @searchInput="searchData" -->
                 <template v-slot:header>
                     <tr>
                         <th v-if="inSelectMode" 
@@ -60,6 +68,7 @@
                                     id="selectAll"
                                     :indeterminate="isIndeterminate"
                                     :checked="isAllSelected"
+                                    :title="toggleSelectAllTitle"
                                     @change="toggleSelectAll($event)"/>
                         </th>
                         <th v-else></th>
@@ -87,8 +96,8 @@
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id"
-                            :class="{ 'table-primary': record.selected }"
-                            @click.ctrl="showDocument(record.id)">
+                            :class="{ 'table-primary': record.selected }">
+                            <!-- @click.ctrl="showDocument(record.id)"> -->
                         <td class="text-center" v-if="!inSelectMode" style="line-height: 24px;">
                             <router-link :to="{name: 'household-member', params: { id: record.id }}">
                                 <span class="mdi mdi-eye-outline"></span>
@@ -97,7 +106,8 @@
                         <td v-else class="text-center" style="line-height: 24px;">                            
                                 <input  class="form-check-input cursor-pointer"
                                         type="checkbox"
-                                        v-model="record.selected"/>                            
+                                        v-model="record.selected"
+                                        @click.shift="selectMultipleRecords({e: $event, id: record.id})"/>
                         </td>                        
                         <td>{{record.full_name}}</td>
                         <td class="text-center">{{record.birthdate_formatted}}</td>
@@ -118,39 +128,44 @@
     </div>
 
     <MembersFilterForm  @resetFilter="resetFilter"/>
+    <DocumentGenerationForm :records="selectedRecords"/>
 
 </template>
 
 <script>
-import { mapGetters }       from 'vuex';
-import { Modal }            from 'bootstrap'
+import { mapGetters, mapActions }   from 'vuex';
+import { Modal }                    from 'bootstrap';
+import { computed }                 from 'vue';
 
-import SelectRecords        from '../../mixins/SelectRecords';
-
-import DataTable            from '../../components/ui/DataTable.vue';
-import MembersFilterForm    from './MembersFilterForm.vue';
-import ButtonSelectRecords  from '../../components/ui/ButtonSelectRecords.vue';
+import DataTable                    from '../../components/ui/DataTable.vue';
+import ButtonSelectRecords          from '../../components/ui/ButtonSelectRecords.vue';
+import MembersFilterForm            from './MembersFilterForm.vue';
+import DocumentGenerationForm       from './DocumentGenerationForm.vue';
 
 export default {
-    name: 'HouseholdMembersMain',
-    mixins: [SelectRecords],
+    name: 'HouseholdMembersMain',    
     data() {
         return {
             perPageItems : [
                 10,
                 15,
                 20
-            ],         
+            ],
+            modalTitle: '',
+            modalSubmitCaption: '',            
         }
     },
     provide() {
         return {
-            modalTitle: 'Фільтр членів домогосподарств',
-            modalSubmitCaption: 'Застосувати',
+            modalTitle: computed(() => this.modalTitle),
+            modalSubmitCaption: computed(() => this.modalSubmitCaption)
         }
     },
     methods: {
+        ...mapActions('HouseholdMembers', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords']),
         openFilterForm() {
+            this.modalTitle = 'Фільтр членів домогосподарств';
+            this.modalSubmitCaption = 'Застосувати';
             // let filterForm = new Modal(document.getElementById('MembersFilterForm'));
             let filterForm = new Modal(document.getElementById(`${this.$options.name}FilterForm`));
             filterForm.show();
@@ -172,17 +187,38 @@ export default {
         searchData(row, searchText) {
             return row['full_name'].includes(searchText) || row['household_number'].includes(searchText);
         },
+        // searchData(value) {
+        //     console.log(value);
+        // },
         showDocument(id) {
             this.$router.push({name: 'household-member', params: { id: id }});
-        },       
+        },        
+        openDocumentsForm() {
+            this.modalTitle = 'Генерація документів';
+            this.modalSubmitCaption = 'Згенерувати';
+            let reportWizardForm = new Modal(document.getElementById(`DocumentGenerationForm`));
+            reportWizardForm.show();
+        }
     },
     computed: {
-        ...mapGetters('HouseholdMembers', ['members', 'filter', 'pagination', 'entities']),        
+        ...mapGetters('HouseholdMembers', [
+            'members', 
+            'filter', 
+            'pagination', 
+            'entities', 
+            'inSelectMode', 
+            'isIndeterminate', 
+            'selectedRecords',
+            'selectedRecordsCount', 
+            'isAllSelected',
+            'toggleSelectAllTitle'
+        ]),   
     },
     components: {
         DataTable,
         MembersFilterForm,
-        ButtonSelectRecords
+        ButtonSelectRecords,
+        DocumentGenerationForm
     }
 
 }

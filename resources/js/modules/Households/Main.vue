@@ -15,6 +15,7 @@
                         v-if="households.length > 0" 
                         title="Множиний відбір" 
                         :btnClass="[inSelectMode ? 'btn-primary' : 'btn-outline-primary' ]"
+                        :inSelectMode="inSelectMode"
                         :selectedRecordsCount="selectedRecordsCount"
                         @toggleSelectMode="toggleSelectMode" />     
                 <button type="button"

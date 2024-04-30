@@ -33,7 +33,7 @@
                             </td>
                             <td>{{ relative.relation }}</td>
                             <td>{{ relative.surname }} {{ relative.name }} {{ relative.patronymic }}</td>
-                            <td>{{ formatedDate(relative.birthdate) }}</td>
+                            <td>{{ relative.formatted_birthdate }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -51,7 +51,7 @@
 <script>
 
 import ModalForm    from '../../../components/ui/ModalForm.vue';
-import DateFormate  from '../../../mixins/DateFormat';
+// import DateFormate  from '../../../mixins/DateFormat';
 
 export default {
     name: 'FamilyCompositionReportForm',
@@ -62,7 +62,7 @@ export default {
             default: 0
         }
     },
-    mixins: [DateFormate],
+    // mixins: [DateFormate],
     data() {
         return {
             memberId: this.selectedMember,

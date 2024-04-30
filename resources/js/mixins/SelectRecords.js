@@ -27,6 +27,24 @@ export default {
                 this.inSelectMode = false;
                 this[this.entities].forEach(r => r.selected = false);                
             }
+        },
+        selectMultipleRecords(e, id) {            
+            if (e.target.checked) {
+                let selectedIndex = this.members.findIndex(m => m.id == id);
+                
+                if (selectedIndex > -1) {
+                
+                    let previousIndex = this.members
+                                                .slice(0,selectedIndex)                
+                                                .findLastIndex(m => m.selected == true);
+                    
+                    if (previousIndex > -1) {
+                        for (let i = previousIndex+1; i< selectedIndex; i++) {
+                            this.members[i].selected = true;
+                        }
+                    }
+                }
+            }   
         }
     },
     computed: {

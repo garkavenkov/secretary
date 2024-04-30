@@ -16,14 +16,14 @@
                 </select>
             </div>
             <div class="search__wrapper">
-                <form autocomplete="off">
+                <form autocomplete="off" @submit.prevent>
                     <label  for="search">Поіск</label>
                     <!-- <input  type="search"
                             id="search"
-                            class="search"
-                            readonly
+                            class="search"                                                      
                             autocomplete="off"
-                            @input="$emit('searchInput', $event.target.value)"> -->
+                            v-model.lazy="searchData"> -->
+                            <!-- -- @input="$emit('searchInput', $event.target.value)"> -->
                     <input  type="search"
                             id="search"
                             class="search"
@@ -107,6 +107,10 @@ export default {
                 ];
             }
         },
+        // 'searchData': {
+        //     type: String,
+        //     required:true
+        // },
         'dataTable': {
             type: Array
         },
@@ -371,7 +375,11 @@ export default {
             if (oldVal == 1 && newVal == 0) {
                 this.dataShouldBeSorted = true;
             }
-        }
+        },
+        // searchData(newVal, oldVal) {
+        //     console.log(`searchInput has been changed: new value is ${newVal}`);
+        //     this.$emit('searchInput', newVal);
+        // }
     }
 }
 </script>

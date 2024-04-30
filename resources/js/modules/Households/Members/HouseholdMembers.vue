@@ -154,7 +154,7 @@
                                         @click="showHouseholdMemberInfo(member)">
                                     <span class="mdi mdi-eye-outline"></span>
                                 </button> -->
-                                <router-link :to="{name: 'HouseholdMember', params: { id: member.id }}">
+                                <router-link :to="{name: 'household-member', params: { id: member.id }}">
                                     <span class="mdi mdi-eye-outline"></span>
                                 </router-link>
                             </td>

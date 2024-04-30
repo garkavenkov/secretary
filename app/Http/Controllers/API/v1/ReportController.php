@@ -13,13 +13,14 @@ use PhpOffice\PhpWord\Style\Font;
 use App\Http\Controllers\Controller;
 use App\Models\HouseholdMemberLand;
 use DateTime;
-use DateTimeImmutable;
+// use DateTimeImmutable;
 use DeclensionUkrainian\Anthroponym;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Storage;
 use JsonException;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use ZipArchive;
 
 use function PHPUnit\Framework\throwException;
 
@@ -249,69 +250,96 @@ class ReportController extends Controller
 
     public function familyComposition($params)
     {
-        try {
-            $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));
-        } catch (Exception $e) {
-
-            $msg = 'Шаблон звіту FamilyComposition.docx не знайден. Завантажіть шаблон';
-            throw new Exception($msg,500);
-
-        }
-
+        
         if(!isset($params['member_id'])) {
             throw new Exception('Member did not pass');
         }
-        $member = HouseholdMember::findOrFail($params['member_id']);
-        $member_name = $member->surname . ' ' . $member->name . ' ' . $member->patronymic;
-        $member_birthdate =  (new DateTimeImmutable($member->birthdate))->format('d.m.Y');
+
+        $ids = explode(',', $params['member_id']);
+        $members = HouseholdMember::findOrFail($ids);
         
-        $person_pronoun = 'ним';
+        $reports = [];
 
-        if ($member->sex == 'жіноча')  {        
-            $person_pronoun = 'нею';
+        foreach($members as $member) {
+
+         // Make function for checking report template
+            try {
+                $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));
+            } catch (Exception $e) {
+                $msg = 'Шаблон звіту FamilyComposition.docx не знайден. Завантажіть шаблон';
+                throw new Exception($msg,500);
+            }        
+            
+            $person_pronoun =  $member->sex == 'жіноча' ? 'нею' : 'ним';
+            
+            if (isset($params['relatives'])) {
+                $relatives_ids = explode(',', $params['relatives']);
+    
+                $relatives = $member->relatives()->filter(function($r) use($relatives_ids) {
+                    return in_array($r->id, $relatives_ids);
+                });
+    
+            } else {
+                $relatives = $member->relatives();
+            }
+            
+            $templateProcessor->setValue('person_pronoun', $person_pronoun);
+            $templateProcessor->setValue('person_name', $member->full_name);
+            $templateProcessor->setValue('person_birthdate', $member->formatted_birthdate);
+            $templateProcessor->setValue('person_address_registration', $member->registration_address);
+            
+            $rels = [];
+
+            foreach($relatives as $relative) {
+                $rel['relative'] =  "$relative->relation - $relative->full_name, $relative->formatted_birthdate р.н.,";
+                $rels[] = $rel;
+            }
+
+            $templateProcessor->cloneBlock('relatives', 0, true, false, $rels);
+            
+            $filename = str_replace(' ', '_', $member->full_name).".docx";
+            $templateProcessor->saveAs(storage_path($filename));
+            $reports[] = $filename;            
+        }
+        
+        if (count($reports) > 1) {
+
+            $zip = new ZipArchive();
+            
+            $archive = "familyComposition.zip";
+    
+            if ($zip->open(storage_path($archive), ZipArchive::CREATE)!==TRUE) {
+                throw new Exception("Cannot open familyComposition.zip",500);
+            } else {
+                foreach($reports as $report) {
+                    $zip->addFile(storage_path($report), $report);        
+                }
+                $zip->close();
+    
+                foreach($reports as $report) {
+                    unlink(storage_path($report));
+                }
+                $this->downloadFile(content_type: "application/zip", filename: $archive);
+                
+            }
+
+        } else if (count($reports) == 1 ) {
+            $filename = $reports[0];
+            $this->downloadFile(content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8", filename: $filename);            
+            
         }
 
-        if (isset($params['relatives'])) {
-            $ids = explode(',', $params['relatives']);
-
-            $relatives = $member->relatives()->filter(function($r) use($ids) {
-                return in_array($r->id, $ids);
-            });
-
-        } else {
-            $relatives = [];
-        }
-
-        $address =$member->household->getFullAddress();
-
-        $person_address_registration = ($member->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') .
-                                        " за адресою: $address";
-
-        // $templateProcessor = new TemplateProcessor(storage_path('app/documents/FamilyComposition.docx'));
-        // $phpWord = new PhpWord();
-        $templateProcessor->setValue('person_pronoun', $person_pronoun);
-        $templateProcessor->setValue('person_name', $member_name);
-        $templateProcessor->setValue('person_birthdate', $member_birthdate);
-        $templateProcessor->setValue('person_address_registration', $person_address_registration);
-
-
-        $rels = [];
-
-        foreach($relatives as $relative) {
-            $rel['relative'] =  "$relative->relation - $relative->surname $relative->name $relative->patronymic, " .
-                                (new DateTimeImmutable($relative->birthdate))->format('d.m.Y') .
-                                ' р.н.,';
-            $rels[] = $rel;
-        }
-
-        $templateProcessor->cloneBlock('relatives', 0, true, false, $rels);
-
-        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8');
-        header("Content-Disposition: attachment; filename='familyComposition.docx");
-
-        $templateProcessor->saveAs('php://output');
     }
 
+    private function downloadFile(string $filename, string $content_type)
+    {  
+        header("Content-Type: $content_type");
+        header("Content-Disposition: attachment; filename=$filename");
+        header("Content-Length: " . filesize(storage_path($filename)));
+        readfile(storage_path($filename));
+        unlink(storage_path($filename));
+        exit;
+    }
 
     public function uploadTemplate(Request $request, $id)
     {
@@ -362,8 +390,8 @@ class ReportController extends Controller
         // dd($templateProcessor->getVariables());
 
         $member = HouseholdMember::findOrFail($params['member_id']);
-        $member_name = $member->surname . ' ' . $member->name . ' ' . $member->patronymic;
 
+        // $member_name = $member->surname . ' ' . $member->name . ' ' . $member->patronymic;
 
         $member_name = Anthroponym::inDative([
             'gender'    =>  $member->sex,
@@ -371,19 +399,11 @@ class ReportController extends Controller
             'name'      =>  $member->name,
             'patronymic'=>  $member->patronymic,
         ]);
-        //  ReportVariable::where('report', $report)->where('name','member_name')->first(); ($member_name) ????
-        //  person_name => Anthroponym::inDative($member) ?????
-
-        $member_birthdate =  (new DateTimeImmutable($member->birthdate))->format('d.m.Y');
-
-        $address =$member->household->getFullAddress();
-
-        $person_address_registration = ($member->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') .
-                                        " за адресою: $address";
-
+      
         $templateProcessor->setValue('person_name', $member_name);
-        $templateProcessor->setValue('person_birthdate', $member_birthdate);
-        $templateProcessor->setValue('person_address_registration', $person_address_registration);
+        // $templateProcessor->setValue('person_name', $member->full_name_in_dative);
+        $templateProcessor->setValue('person_birthdate', $member->formatted_birthdate);
+        $templateProcessor->setValue('person_address_registration', $member->registration_address);
         $templateProcessor->setValue('land_year', $params['year']);
         $templateProcessor->setValue(
             'land_total',

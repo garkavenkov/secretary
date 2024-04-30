@@ -1,11 +1,12 @@
-import crud         from '../core/crud';
-import pagination   from '../core/pagination';
-import filter       from '../core/filter';
-import queryString  from '../core/queryString';
+import crud             from '../core/crud';
+import pagination       from '../core/pagination';
+import filter           from '../core/filter';
+import queryString      from '../core/queryString';
+import selectRecords    from '../core/selectRecords';
 
 export const HouseholdMembers = {
     namespaced: true,
-    state: {
+    state: {        
         members: [],
         member: {
             // info: {},
@@ -28,7 +29,8 @@ export const HouseholdMembers = {
         entities: 'members',
         entity: 'member',
         pagination: {},
-        perPage: 10
+        perPage: 10,
+        ...selectRecords.state
     },
     getters: {
         members: state => state.members,
@@ -39,6 +41,7 @@ export const HouseholdMembers = {
         pagination: state => state.pagination,
         relatives: state => state.member.relatives,
         entities: state => state.entities,
+        ...selectRecords.getters
         // info: state => Object.assign({}, state.member.info),
         // members: state => state.household.members,
         // household_id: state => state.household.id,
@@ -59,5 +62,12 @@ export const HouseholdMembers = {
         ...crud.actions,
         ...pagination.actions,
         ...filter.actions,
+        ...selectRecords.actions,
+        searchData({state}, searchText) {
+            console.log(`Vuex HouseholdMembers:searchData whith searched text: ${searchText}`);
+            // state.members.filter(row => {
+            //     return row['full_name'].includes(searchText) || row['household_number'].includes(searchText);
+            // })
+        },
     }
 }
