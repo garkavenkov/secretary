@@ -1,18 +1,7 @@
 <template>
 
-    <ModalForm formId="DocumentGenerationForm" @submitData="submitData" :sumbitIsDisabled="reportName == ''">
-        <!-- <div class="d-flex gap-3">
-            <div class="report" @click="generateReport('members_list_1')">
-                <span>
-                    Звіт про склад земельної ділянки
-                </span>
-            </div>
-            <div class="report" @click="generateReport('familyComposition')">
-                <span>
-                    Довідка про стан родини
-                </span>
-            </div>
-        </div> -->
+    <ModalForm formId="DocumentGenerationForm" @submitData="submitData" :sumbitIsDisabled="reportName == ''" @closeForm="closeForm">
+      
         <div class="row mb-3">
             <div class="col">
                 <label for="reportName" class="form-label">Назва документу</label>
@@ -29,17 +18,23 @@
                 </select>                
             </div>      
         </div>
-        <!-- {{ params }} -->
-        <div class="row mb-3" v-if="params.length > 0">            
+        
+        <div class="row mb-3" v-if="reportParams.length > 0">            
             <div class="col">   
                 <div>
                     Заповніть параметри для звіту
                 </div>             
-                <div v-for="param in params" :key="param.id">
-                    {{ param.name }}
+                <div v-for="param in reportParams" :key="param.id">
+                    <div class="row">
+                        <label :for="param.code" class="col col-form-label">{{ param.name }}</label>
+                        <div class="col">
+                            <input class="form-control" :id="param.code" type="number" v-model="paramsValue[param.code]" autocomplete="false">
+                        </div>
+                    </div>
                 </div>
             </div>    
         </div>
+        
     </ModalForm>
 
 </template>
@@ -59,7 +54,7 @@ export default {
     data() {
         return {
             reportName: '',
-            // available reports for HouseholdMembers get from api/available-reports?model=HouseholdMember&multiselect=true
+            
             reports: [
                 {
                     id: 1,
@@ -74,50 +69,79 @@ export default {
                     params: [
                         {
                             id: 1,
-                            code: "landYear",
-                            name: 'Рік',
+                            required: true,
+                            code: "year",
+                            name: 'Рік звітності',
                             type: 'number',
-                            mask: /[1-9][0-9]{3}/,
-                            default: 2023
+                            mask: /[1-9][0-9]{3}/, // ???
+                            default: (new Date()).getFullYear(),
                         }
                     ]
                 },
             ],
-            params: []
+            reportParams: [],
+            paramsValue: {},            
         }
     },
     methods: {
         submitData() {
+            let data = {
+                report: this.reportName, 
+                member_id: this.records.map(r => r.id).join(','),
+                ...this.paramsValue
+            }            
             axios.post(
                 'api/v1/generate-report', 
-                {
-                    report: this.reportName, 
-                    member_id: this.records.map(r => r.id).join(',')
-                },
+                data,
                 { responseType: 'arraybuffer'} 
             )
             .then(res => {
                     const url = window.URL.createObjectURL(new Blob([res.data]));
-                    const link = document.createElement('a');
-
-                    link.href = url;
-                    let fileName = `familyCompositions.zip`;
+                    const link = document.createElement('a');                    
+                    link.href = url;                    
+                    let fileName = this.getFileName();
                     link.setAttribute('download', fileName);
                     document.body.appendChild(link);
-
                     link.click();
             })
-        },        
+        },
+        getFileName() {
+            let document_name = this.reports.find(r => r.code == this.reportName)['name'];
+            let persons = this.records.length;
+            if ( persons > 1)  {
+                let cnt = (persons < 5) ? cnt = 'особи' : ( (persons > 11 && persons % 10 == 1) ? 'особа' : 'осіб' );                    
+                return `${document_name}(${persons} ${cnt}).zip`;
+            } else {
+                let member_name = this.records[0].full_name;                
+                return `${member_name}.${document_name}.docx`;
+            }
+        },
+        closeForm() {
+            this.reportParams = [];
+            this.paramsValue = Object.assign({});
+            this.reportName  = '';
+        }
     },
+    
     watch: {
-        'reportName'(newVal) {
-            console.log(newVal)
+        'reportName'(newVal) {            
             if (newVal !== 0) {
                 let report = this.reports.find(r => r.code == newVal);
+                this.paramsValue = Object.assign({}); 
                 if (report) {
-                    this.params = [...report.params];
+                    this.reportParams = [...report.params];                    
+                    let required = this.reportParams.filter(p => p.required);
+
+                    if (required.length > 0) {                        
+                        required.forEach(r => {
+                            console.log(r.code, r.default);
+                            this.paramsValue[r.code] = r.default
+                        });
+                    }
+                } else {
+                    this.reportParams = [];                    
                 }
-            }
+            }                         
         }
     },
     components: {

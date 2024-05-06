@@ -108,18 +108,18 @@
 
 <script>
 
-import { Modal }        from 'bootstrap';
-import { mapGetters }   from 'vuex';
+import { mapGetters }           from 'vuex';
 
-import TableRow         from '../../../components/ui/TableRow.vue';
-import LandYearForm     from './LandYearForm.vue';
-import YearsPaginator   from '../../../components/ui/YearsPaginator.vue';
+import TableRow                 from '../../../components/ui/TableRow.vue';
+import LandYearForm             from './LandYearForm.vue';
+import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
 
-import YearsCUD         from '../../../mixins/YearsCUD';
+import YearsCUD                 from '../../../mixins/YearsCUD';
+import PrepareDataForDownload   from '../../../mixins/PrepareDataForDownload';
 
 export default {
     name: 'MemberLandYearsTab',
-    mixins: [YearsCUD],
+    mixins: [YearsCUD, PrepareDataForDownload],
     components: {
         TableRow,
         LandYearForm,
@@ -171,20 +171,21 @@ export default {
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
                 .then(res => {
 
-                    const url = window.URL.createObjectURL(new Blob([res.data]));
-                    const link = document.createElement('a');
+                    // const url = window.URL.createObjectURL(new Blob([res.data]));
+                    // const link = document.createElement('a');
 
-                    link.href = url;
+                    // link.href = url;
                     let fileName = `${this.member.surname} ${this.member.name} ${this.member.patronymic}. Довідка про склад земельної ділянки.docx`;
-                    link.setAttribute('download', fileName);
-                    document.body.appendChild(link);
+                    this.prepareDataForDownload(res, fileName);
+                    // link.setAttribute('download', fileName);
+                    // document.body.appendChild(link);
 
-                    link.click();
+                    // link.click();
                 })
         },
         fetchYears(url) {
             if (url == undefined) {
-                url = `/api/v1/household-members/${this.$route.params.id}/land?per_page=${this.perPage}`;
+                url = `/api/v1/household-members/${this.$route.params.id}/land-years?per_page=${this.perPage}`;
             }
             axios.get(url)
                 .then(res => {

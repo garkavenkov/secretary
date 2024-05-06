@@ -14,6 +14,8 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 
+use function PHPUnit\Framework\isNull;
+
 class HouseholdMember extends Model
 {
     use HasFactory, AdditionalParams;
@@ -53,7 +55,7 @@ class HouseholdMember extends Model
         self::deleting(function($member)
         {
             // Delete land years information
-            $member->land()->delete();
+            $member->landYears()->delete();
 
             // Delete additional params values
             DB::table('additional_param_values as apv')
@@ -110,7 +112,7 @@ class HouseholdMember extends Model
         return $this->belongsTo(Household::class);
     }
 
-    public function land()
+    public function landYears()
     {
         return $this->hasMany(HouseholdMemberLand::class, 'member_id')->orderBy('year', 'desc');
     }
@@ -138,6 +140,16 @@ class HouseholdMember extends Model
     public function getFullNameAttribute()
     {
         return  $this->surname . ' ' . $this->name . ' ' . $this->patronymic;
+    }
+
+    public function getFullNameInDativeAttribute()
+    {
+        return  Anthroponym::inDative([
+            'gender'    =>  $this->sex,
+            'surname'   =>  $this->surname,
+            'name'      =>  $this->name,
+            'patronymic'=>  $this->patronymic,
+        ]);
     }
 
     public function getShortNameAttribute()
@@ -171,6 +183,10 @@ class HouseholdMember extends Model
         return ($this->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') . 
                 " за адресою: $address";
 
+    }
+
+    public function getRelativesAttribute() {
+        return $this->relatives()->toArray();
     }
 
     // ******************************** Methods *****************************************************
@@ -225,7 +241,18 @@ class HouseholdMember extends Model
         ]);
     }
 
-
+    /**
+     * Return inforbation about member's land for partuclar $year
+     * or null if information doesn't exist
+     *
+     * @param integer $year Year
+     * @return HouseholdMemberLand|null
+     */
+    public function landYear(int $year): ?HouseholdMemberLand
+    {
+        return $this->landYears()->where('year', $year)->first();
+    }
+    
     // *********************************************** Scopes ************************************************
 
     public function scopeMale($query)

@@ -5,19 +5,13 @@ namespace App\Http\Controllers\API\v1;
 use Exception;
 use App\Models\Settlement;
 use Illuminate\Http\Request;
-use PhpOffice\PhpWord\PhpWord;
 use App\Models\HouseholdMember;
-use PhpOffice\PhpWord\IOFactory;
-
-use PhpOffice\PhpWord\Style\Font;
 use App\Http\Controllers\Controller;
-use App\Models\HouseholdMemberLand;
-use DateTime;
-// use DateTimeImmutable;
-use DeclensionUkrainian\Anthroponym;
-use Illuminate\Support\Facades\Date;
+use App\Http\Resources\API\v1\Report\ReportResource;
+// use App\Models\HouseholdMemberLand;
+use App\Models\Report;
+
 use Illuminate\Support\Facades\Storage;
-use JsonException;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use ZipArchive;
@@ -34,7 +28,9 @@ class ReportController extends Controller
     public function index()
     {
         // return available reports
-        // $reports = Report::all()
+        $reports = Report::all();
+        
+        return ReportResource::collection($reports);
     }
 
     /**
@@ -56,7 +52,9 @@ class ReportController extends Controller
      */
     public function show($id)
     {
-        //
+        $report = Report::findOrFail($id);
+
+        return new ReportResource($report);
     }
 
     /**
@@ -302,14 +300,20 @@ class ReportController extends Controller
             $reports[] = $filename;            
         }
         
+        $this->prepareForDownload(reports: $reports, archive: 'familyComposition');      
+
+    }
+
+    private function prepareForDownload(array $reports, string $archive)
+    {
         if (count($reports) > 1) {
 
             $zip = new ZipArchive();
             
-            $archive = "familyComposition.zip";
+            $archive = "$archive.zip";
     
             if ($zip->open(storage_path($archive), ZipArchive::CREATE)!==TRUE) {
-                throw new Exception("Cannot open familyComposition.zip",500);
+                throw new Exception("Cannot open $archive.zip",500);
             } else {
                 foreach($reports as $report) {
                     $zip->addFile(storage_path($report), $report);        
@@ -325,10 +329,9 @@ class ReportController extends Controller
 
         } else if (count($reports) == 1 ) {
             $filename = $reports[0];
-            $this->downloadFile(content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8", filename: $filename);            
+            $this->downloadFile(content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8", filename: $filename);
             
         }
-
     }
 
     private function downloadFile(string $filename, string $content_type)
@@ -371,122 +374,115 @@ class ReportController extends Controller
             throw new Exception('Year does not passed', 500);
         }
 
-        $member = HouseholdMember::findOrFail($params['member_id']);
+        $ids = explode(',', $params['member_id']);
+        $members = HouseholdMember::findOrFail($ids);
+        
+        $reports = [];
 
-        $year = HouseholdMemberLand::where('year', $params['year'])->where('member_id', $params['member_id'])->first();
+        foreach($members as $member) {
 
-        if (is_null($year)) {
-            throw new Exception("Інформація за ". $params['year'] . " відсутня", 404);
+            $year = $member->landYear($params['year']);
+            
+            if (is_null($year)) {
+
+                if (count($members) == 1) {
+                    throw new Exception("Інформація за ". $params['year'] . " відсутня", 404);
+                }
+
+            } else {
+
+                try {
+                    $templateProcessor = new TemplateProcessor(storage_path('app/documents/LandOwned.docx'));
+                } catch (Exception $e) {
+                    $msg = 'Шаблон звіту LandOwned.docx не знайден. Завантажіть шаблон';
+                    throw new Exception($msg,500);
+                }
+
+                $templateProcessor->setValue('person_name',                 $member->full_name_in_dative);
+                $templateProcessor->setValue('person_birthdate',            $member->formatted_birthdate);
+                $templateProcessor->setValue('person_address_registration', $member->registration_address);
+                $templateProcessor->setValue('land_year',                   $params['year']);
+                $templateProcessor->setValue('land_total',                  $year->formatted_total);
+                $templateProcessor->setValue('land_maintenance',            $year->formatted_maintenance);
+                $templateProcessor->setValue('land_personal_agriculture',   $year->formatted_personal_agriculture);
+                $templateProcessor->setValue('land_share',                  $year->formatted_land_share);
+                $templateProcessor->setValue('land_property_share',         $year->formatted_property_share);
+                $templateProcessor->setValue('land_hay_cutting',            $year->formatted_hay_cutting);
+                $templateProcessor->setValue('land_pastures',               $year->formatted_hay_cutting);
+
+                $filename = str_replace(' ', '_', $member->full_name).".docx";
+                $templateProcessor->saveAs(storage_path($filename));
+                $reports[] = $filename;
+
+            }
+
         }
 
-        try {
-            $templateProcessor = new TemplateProcessor(storage_path('app/documents/LandOwned.docx'));
-        } catch (Exception $e) {
-
-            $msg = 'Шаблон звіту LandOwned.docx не знайден. Завантажіть шаблон';
-            throw new Exception($msg,500);
-
-        }
-        // dd($templateProcessor->getVariables());
-
-        $member = HouseholdMember::findOrFail($params['member_id']);
-
-        // $member_name = $member->surname . ' ' . $member->name . ' ' . $member->patronymic;
-
-        $member_name = Anthroponym::inDative([
-            'gender'    =>  $member->sex,
-            'surname'   =>  $member->surname,
-            'name'      =>  $member->name,
-            'patronymic'=>  $member->patronymic,
-        ]);
+        $this->prepareForDownload(reports: $reports, archive: 'landOwned');
+        
       
-        $templateProcessor->setValue('person_name', $member_name);
-        // $templateProcessor->setValue('person_name', $member->full_name_in_dative);
-        $templateProcessor->setValue('person_birthdate', $member->formatted_birthdate);
-        $templateProcessor->setValue('person_address_registration', $member->registration_address);
-        $templateProcessor->setValue('land_year', $params['year']);
-        $templateProcessor->setValue(
-            'land_total',
-            $year->total > 0 ? (number_format($year->total, 4) . ' га') : 'немає'
-        );
+    }
 
-        $templateProcessor->setValue(
-            'land_maintenance',
-            $year->maintenance > 0 ? (number_format($year->maintenance, 4) . ' га'): 'немає'
-        );
-        $templateProcessor->setValue(
-            'land_personal_agriculture',
-            $year->personal_agriculture > 0 ? (number_format($year->personal_agriculture, 4). ' га') : 'немає
-        ');
-        $templateProcessor->setValue(
-            'land_share',
-            $year->land_share > 0 ? (number_format($year->land_share, 4) . ' га') : 'немає'
-        );
-        $templateProcessor->setValue(
-            'land_property_share',
-            $year->property_share > 0 ? (number_format($year->property_share, 4). ' га') : 'немає'
-        );
-        $templateProcessor->setValue(
-            'land_hay_cutting',
-            $year->hay_cutting > 0 ? (number_format($year->hay_cutting, 4) . ' га') : 'немає'
-        );
-        $templateProcessor->setValue(
-            'land_pastures',
-            $year->pastures > 0 ? (number_format($year->pastures, 4) . ' га') : 'немає'
-        );
-
-        // for($tv in $report_variables) {
-        //
-        //      $report_value = $report_entities[$tv]['value']              --- maintenance
-        //      $report_value_format = $report_entities[$tv]['format']      --- number:4
-        //      $report_value_prefix = $report_entities[$tv]['prefix']      --- 'га'
-        //      $report_value_default = $report_entities[$tv]['default']    --- 'немає'
-        //
-        //
-        //      $templateProcessor->setValue($tv, generate_report_value($report_variable[$tv]));
-        // }
-
-        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8');
-        header("Content-Disposition: attachment; filename='landOwned.docx");
-
-
-        $templateProcessor->saveAs('php://output');
-
+    protected function formatTemplateValue($value, $suffix = '', $default = '')
+    {
+        if ($default !== '') {
+            if ($value == 0 || $value == '' || !$value || $value == 'false') {
+                return $default.$suffix;
+            }
+        }
+        return $value.$suffix;
     }
 
     public function generateReport(Request $request)
     {
+        if (!isset($request->report)) {
+            return response()->json(['message' => 'Report did not pass'], 404);
+        }
+
         // Income parameters:
-        // $report_name = $request->report_name
-
-        // $parameters  = explode(';',$request->params);
-        /*
-            report: family_composition
-            params: member_id=1;relatives_ids=2,3,4,5
-
-            report: member_land
-            params: member_id=1;year=2020
-        */
+        $report_code = $request->report;        
 
         // Check whether report exists in DB;
-        /*
-            $report = Report::where('code', $report_name)->first();
-            if (!$report) {
-                $msg = 'Звіту $report->name відсутній в системі. Зверниться до довідника звітів.';
-                throw new Exception($msg,500);
-            }
-        */
-
+        $report = Report::where('code', $report_code)->first();        
+        
+        if (!$report) {
+            $msg = "Договір '$report->name' відсутній в системі. Зверниться до довідника дороворів.";
+            throw new Exception($msg,500);
+        }
+        
         // Check id report's template exists
+        if (!Storage::disk('local')->exists("documents/LandOwned.docx")) {
+            // $templateProcessor = new TemplateProcessor(storage_path('app/documents/$report->file_name'));
+            $msg = "Шаблон документа '$report->file_name' для документу '$report->name' не знайден.<br>Завантажіть шаблон документа";
+            throw new Exception($msg,500);
+        } 
+        
+
+        $report_params = [
+            // 'land_owned'    => [
+                'member_id' =>  [
+                    'type'  => 'key',
+                    'model' => 'App\Models\HouseholdMember',
+                    'required'  =>  true,
+                    'multiple'  =>  true,
+                ],
+                'year'  =>  [
+                    'type'  => 'property',
+                    'model' =>  'App\Models\HouseholdMember',
+                    'required'  =>  true,
+                    'multiple'  =>  false,
+                ]
+            // ]        
+        ];
         /*
-            try {
-                $templateProcessor = new TemplateProcessor(storage_path('app/documents/$report->template'));
-            } catch (Exception $e) {
-                $msg = 'Шаблон звіту $report->template не знайден. Завантажіть шаблон';
-                throw new Exception($msg,500);
-            }
+
+            $entity = $model::findOrFail($member_id);
+
         */
 
+
+        $report_params_keys = array_keys($report_params);
+        dd($request->all(), $report_params_keys);
         // Check report input parameters based on report
         /*
             $report_params = $report->input_params;
@@ -498,9 +494,59 @@ class ReportController extends Controller
             }
         */
 
+        /*
+            $template_variables = [
+                'person_name'                   =>  [model => 'App\Models\HouseholdMember', property => 'full_name_id_dative'],
+                'person_birthdate',             =>  [model => 'App\Models\HouseholdMember', property => 'formatted_birthdate'],
+                'person_address_registration',  =>  [model => 'App\Models\HouseholdMember', property => 'person_address_registration'],
+                'land_year',                    =>  
+                'land_total',
+                'land_maintenance', 
+                'land_personal_agriculture',
+                'land_share',
+                'land_property_share',
+                'land_hay_cutting',
+                'land_pastures'
+            ];
+
+            $templateProcessor->setValue('person_name',                 $member->full_name_in_dative);
+            $templateProcessor->setValue('person_birthdate',            $member->formatted_birthdate);
+            $templateProcessor->setValue('person_address_registration', $member->registration_address);
+            $templateProcessor->setValue('land_year',                   $params['year']);
+            $templateProcessor->setValue('land_total',                  $year->formatted_total);
+            $templateProcessor->setValue('land_maintenance',            $year->formatted_maintenance);
+            $templateProcessor->setValue('land_personal_agriculture',   $year->formatted_personal_agriculture);
+            $templateProcessor->setValue('land_share',                  $year->formatted_land_share);
+            $templateProcessor->setValue('land_property_share',         $year->formatted_property_share);
+            $templateProcessor->setValue('land_hay_cutting',            $year->formatted_hay_cutting);
+            $templateProcessor->setValue('land_pastures',               $year->formatted_hay_cutting);
+        */
+
+
         // Fetch report_snippets
         /*
             $snippets = ReportVariable::where('report_id', $report->id)->get();
         */
+
+        // Replace template variables with values
+        /*
+        foreach($parsedTempateVariable as $variable => $value) {
+            $templateProcessor->setValue($variable, $value);
+        }
+        */
+    }
+
+    public function downloadReportTemplate($id)
+    {
+        // $report = Report::findOrFail($id);
+        $report = 'FamilyComposition.docx';
+        // dd(file_exists(storage_path("app/documents/$report")));
+        // return Storage::download(storage_path("app/documents/$report"));
+        return response()->download(storage_path("app/documents/$report"));
+        // header("Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8");
+        // header("Content-Disposition: attachment; filename=$report");
+        // header("Content-Length: " . filesize(storage_path($report)));
+        // readfile(storage_path($report));
+        // exit;
     }
 }

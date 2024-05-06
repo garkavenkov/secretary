@@ -149,7 +149,7 @@ class HouseholdMemberController extends Controller
      */
     public function show($id)
     {
-        $member = HouseholdMember::with('household', 'workPlace', 'movements.type', 'land')->findOrFail($id);
+        $member = HouseholdMember::with('household', 'workPlace', 'movements.type', 'landYears')->findOrFail($id);
 
         return new HouseholdMemberResource($member);
     }
@@ -227,7 +227,7 @@ class HouseholdMemberController extends Controller
         }
         // dd($per_page);
         $member = HouseholdMember::findOrFail($id);
-        return HouseholdMemberLandResource::collection($member->land()->paginate($per_page)->withQueryString());
+        return HouseholdMemberLandResource::collection($member->landYears()->paginate($per_page)->withQueryString());
         // return new HouseholdMemberLandResource($member->land(5)->get());
     }
 

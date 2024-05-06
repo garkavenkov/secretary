@@ -134,12 +134,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'DocumentGenerationForm',
@@ -152,7 +158,6 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
   data: function data() {
     return {
       reportName: '',
-      // available reports for HouseholdMembers get from api/available-reports?model=HouseholdMember&multiselect=true
       reports: [{
         id: 1,
         code: "familyComposition",
@@ -164,45 +169,81 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         name: "Звіт про склад земельної ділянки",
         params: [{
           id: 1,
-          code: "landYear",
-          name: 'Рік',
+          required: true,
+          code: "year",
+          name: 'Рік звітності',
           type: 'number',
           mask: /[1-9][0-9]{3}/,
-          "default": 2023
+          // ???
+          "default": new Date().getFullYear()
         }]
       }],
-      params: []
+      reportParams: [],
+      paramsValue: {}
     };
   },
   methods: {
     submitData: function submitData() {
-      axios.post('api/v1/generate-report', {
+      var _this = this;
+      var data = _objectSpread({
         report: this.reportName,
         member_id: this.records.map(function (r) {
           return r.id;
         }).join(',')
-      }, {
+      }, this.paramsValue);
+      axios.post('api/v1/generate-report', data, {
         responseType: 'arraybuffer'
       }).then(function (res) {
         var url = window.URL.createObjectURL(new Blob([res.data]));
         var link = document.createElement('a');
         link.href = url;
-        var fileName = "familyCompositions.zip";
+        var fileName = _this.getFileName();
         link.setAttribute('download', fileName);
         document.body.appendChild(link);
         link.click();
       });
+    },
+    getFileName: function getFileName() {
+      var _this2 = this;
+      var document_name = this.reports.find(function (r) {
+        return r.code == _this2.reportName;
+      })['name'];
+      var persons = this.records.length;
+      if (persons > 1) {
+        var cnt = persons < 5 ? cnt = 'особи' : persons > 11 && persons % 10 == 1 ? 'особа' : 'осіб';
+        return "".concat(document_name, "(").concat(persons, " ").concat(cnt, ").zip");
+      } else {
+        var member_name = this.records[0].full_name;
+        return "".concat(member_name, ".").concat(document_name, ".docx");
+      }
+    },
+    closeForm: function closeForm() {
+      this.reportParams = [];
+      this.paramsValue = Object.assign({});
+      this.reportName = '';
     }
   },
   watch: {
     'reportName': function reportName(newVal) {
-      console.log(newVal);
+      var _this3 = this;
       if (newVal !== 0) {
         var report = this.reports.find(function (r) {
           return r.code == newVal;
         });
+        this.paramsValue = Object.assign({});
         if (report) {
-          this.params = _toConsumableArray(report.params);
+          this.reportParams = _toConsumableArray(report.params);
+          var required = this.reportParams.filter(function (p) {
+            return p.required;
+          });
+          if (required.length > 0) {
+            required.forEach(function (r) {
+              console.log(r.code, r["default"]);
+              _this3.paramsValue[r.code] = r["default"];
+            });
+          }
+        } else {
+          this.reportParams = [];
         }
       }
     }
@@ -579,12 +620,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
-/* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
-/* harmony import */ var _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LandYearForm.vue */ "./resources/js/modules/HouseholdMembers/Tabs/LandYearForm.vue");
-/* harmony import */ var _components_ui_YearsPaginator_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/ui/YearsPaginator.vue */ "./resources/js/components/ui/YearsPaginator.vue");
-/* harmony import */ var _mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/YearsCUD */ "./resources/js/mixins/YearsCUD.js");
+/* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
+/* harmony import */ var _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LandYearForm.vue */ "./resources/js/modules/HouseholdMembers/Tabs/LandYearForm.vue");
+/* harmony import */ var _components_ui_YearsPaginator_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../components/ui/YearsPaginator.vue */ "./resources/js/components/ui/YearsPaginator.vue");
+/* harmony import */ var _mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/YearsCUD */ "./resources/js/mixins/YearsCUD.js");
+/* harmony import */ var _mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../mixins/PrepareDataForDownload */ "./resources/js/mixins/PrepareDataForDownload.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -599,11 +640,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'MemberLandYearsTab',
-  mixins: [_mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_4__["default"]],
+  mixins: [_mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_4__["default"]],
   components: {
-    TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    LandYearForm: _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    YearsPaginator: _components_ui_YearsPaginator_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    LandYearForm: _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    YearsPaginator: _components_ui_YearsPaginator_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -651,19 +692,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       axios.post('/api/v1/generate-report', data, {
         responseType: 'arraybuffer'
       }).then(function (res) {
-        var url = window.URL.createObjectURL(new Blob([res.data]));
-        var link = document.createElement('a');
-        link.href = url;
+        // const url = window.URL.createObjectURL(new Blob([res.data]));
+        // const link = document.createElement('a');
+
+        // link.href = url;
         var fileName = "".concat(_this.member.surname, " ").concat(_this.member.name, " ").concat(_this.member.patronymic, ". \u0414\u043E\u0432\u0456\u0434\u043A\u0430 \u043F\u0440\u043E \u0441\u043A\u043B\u0430\u0434 \u0437\u0435\u043C\u0435\u043B\u044C\u043D\u043E\u0457 \u0434\u0456\u043B\u044F\u043D\u043A\u0438.docx");
-        link.setAttribute('download', fileName);
-        document.body.appendChild(link);
-        link.click();
+        _this.prepareDataForDownload(res, fileName);
+        // link.setAttribute('download', fileName);
+        // document.body.appendChild(link);
+
+        // link.click();
       });
     },
     fetchYears: function fetchYears(url) {
       var _this2 = this;
       if (url == undefined) {
-        url = "/api/v1/household-members/".concat(this.$route.params.id, "/land?per_page=").concat(this.perPage);
+        url = "/api/v1/household-members/".concat(this.$route.params.id, "/land-years?per_page=").concat(this.perPage);
       }
       axios.get(url).then(function (res) {
         _this2.years = res.data.data.reverse();
@@ -1102,16 +1146,24 @@ var _hoisted_7 = {
 var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " Заповніть параметри для звіту ", -1 /* HOISTED */);
 });
-
+var _hoisted_9 = {
+  "class": "row"
+};
+var _hoisted_10 = ["for"];
+var _hoisted_11 = {
+  "class": "col"
+};
+var _hoisted_12 = ["id", "onUpdate:modelValue"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
     formId: "DocumentGenerationForm",
     onSubmitData: $options.submitData,
-    sumbitIsDisabled: $data.reportName == ''
+    sumbitIsDisabled: $data.reportName == '',
+    onCloseForm: $options.closeForm
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"d-flex gap-3\">\n            <div class=\"report\" @click=\"generateReport('members_list_1')\">\n                <span>\n                    Звіт про склад земельної ділянки\n                </span>\n            </div>\n            <div class=\"report\" @click=\"generateReport('familyComposition')\">\n                <span>\n                    Довідка про стан родини\n                </span>\n            </div>\n        </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         "class": "form-control",
         id: "reportName",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
@@ -1122,14 +1174,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: report.id,
           value: report.code
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(report.name), 9 /* TEXT, PROPS */, _hoisted_5);
-      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.reportName]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" {{ params }} "), $data.params.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.params, function (param) {
+      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.reportName]])])]), $data.reportParams.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.reportParams, function (param) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
           key: param.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(param.name), 1 /* TEXT */);
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+          "for": param.code,
+          "class": "col col-form-label"
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(param.name), 9 /* TEXT, PROPS */, _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+          "class": "form-control",
+          id: param.code,
+          type: "number",
+          "onUpdate:modelValue": function onUpdateModelValue($event) {
+            return $data.paramsValue[param.code] = $event;
+          },
+          autocomplete: "false"
+        }, null, 8 /* PROPS */, _hoisted_12), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.paramsValue[param.code]]])])])]);
       }), 128 /* KEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["onSubmitData", "sumbitIsDisabled"]);
+  }, 8 /* PROPS */, ["onSubmitData", "sumbitIsDisabled", "onCloseForm"]);
 }
 
 /***/ }),

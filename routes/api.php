@@ -81,9 +81,12 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     Route::resource('permissions',                  PermissionController::class);
     Route::resource('positions',                    PositionController::class);
     Route::resource('users',                        UserController::class);
+    Route::resource('reports',                      ReportController::class);
 
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
+    // Route::post('generate-report',                  [ReportController::class, 'generateReport'])->name('generate-report');
     Route::post('upload-report-template/{id}',      [ReportController::class, 'uploadTemplate'])->name('upload-report-template');
+    Route::get('download-report-template/{id}',    [ReportController::class, 'downloadReportTemplate'])->name('download-report-template');
     Route::post('family-composition-report',        [ReportController::class, 'familyComposition']);
 
     Route::post('establish-family-relationships',   [FamilyRelationshipController::class, 'establishRelationships'])->name('establish-family-relationships');
@@ -98,7 +101,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     // Route::get('households/{id}/house-info',        [HouseholdController::class, 'houseInfo'])->name('household-house-info');
     // Route::get('households/{id}/members',           [HouseholdController::class, 'members'])->name('household-members');
 
-    Route::get('household-members/{id}/land',               [HouseholdMemberController::class, 'landYears'])->name('member-land-years');
+    Route::get('household-members/{id}/land-years',         [HouseholdMemberController::class, 'landYears'])->name('member-land-years');
     Route::get('household-members/{id}/additional-data',    [HouseholdMemberController::class, 'additionalParams'])->name('member-additional-data');
     Route::get('household-members/{id}/movements',          [HouseholdMemberController::class, 'memberMovements'])->name('member-additional-movements');
     Route::get('household-members/{id}/relatives',          [HouseholdMemberController::class, 'memberRelatives'])->name('member-relatives');

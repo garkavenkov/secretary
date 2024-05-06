@@ -20,17 +20,17 @@ class ReportSeeder extends Seeder
 
         DB::table('reports')->insert([
             [
-                'icon'          =>  'mdi mdi-file',
-                'name'          =>  "Довідка про стан сім\'ї",
-                'description'   =>  "Довідка про стан сім\'ї",
-                'file_name'     =>  "family_composition.docx",
+                // 'icon'          =>  'mdi mdi-file',
+                'code'          =>  "family_composition",
+                'name'          =>  "Довідка про склад сім\'ї",
+                'file_name'     =>  "FamilyComposition.docx",
                 'model'         =>  "App\Models\HouseholdMember"
             ],
             [
-                'icon'          =>  'mdi mdi-file',
-                'name'          =>  "Земельна ділянка",
-                'description'   =>  "Довідка про наявність земельної ділянки",
-                'file_name'     =>  "member_land.docx",
+                // 'icon'          =>  'mdi mdi-file',
+                'code'          =>  "land_owned",
+                'name'          =>  "Довідка про наявність земельної ділянки",
+                'file_name'     =>  "LandOwned.docx",
                 'model'         =>  "App\Models\HouseholdMember"
             ]
         ]);

@@ -17,7 +17,10 @@ class ReportFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name'          =>  $this->faker->unique()->sentence(1),
+            'description'   =>  $this->faker->sentence(3),            
+            'path'          =>  $this->faker->sentence(3),
+            'model'         =>  $this->faker->sentence(1),
         ];
     }
 }

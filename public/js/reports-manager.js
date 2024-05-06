@@ -170,6 +170,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/PrepareDataForDownload */ "./resources/js/mixins/PrepareDataForDownload.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ReportsShow',
   props: {
@@ -178,20 +180,31 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
+  mixins: [_mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_0__["default"]],
   data: function data() {
     return {
       templateVariables: []
     };
   },
   methods: {
-    uploadImage: function uploadImage(e) {
+    downloadReportTemplate: function downloadReportTemplate() {
       var _this = this;
-      console.log(e.target.files[0]);
+      axios.get("/api/v1/download-report-template/1", {
+        responseType: 'arraybuffer'
+      }).then(function (res) {
+        // console.log(res);
+
+        _this.prepareDataForDownload(res, 'template.docx');
+      });
+    },
+    uploadReportTemplate: function uploadReportTemplate(e) {
+      var _this2 = this;
+      // console.log(e.target.files[0])
       var URL = "/api/v1/upload-report-template/".concat(this.id);
       var data = new FormData();
       data.append('name', 'template');
       data.append('file', e.target.files[0]);
-      console.log(data);
+      // console.log(data);
       var config = {
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -199,7 +212,7 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post(URL, data, config).then(function (res) {
         if (res.status == 200) {
-          _this.templateVariables = res.data.variables;
+          _this2.templateVariables = res.data.variables;
           // this.fetchData()
           // this.$swal({
           //     toast: true,
@@ -463,12 +476,18 @@ var _hoisted_11 = {
   "class": "col-md-8"
 };
 var _hoisted_12 = {
-  "class": "col"
+  "class": "row mb-2"
 };
 var _hoisted_13 = {
+  "class": "col"
+};
+var _hoisted_14 = {
+  "class": "col"
+};
+var _hoisted_15 = {
   "class": "col-md-6"
 };
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-md-6"
 }, "memberFullName", -1 /* HOISTED */);
 
@@ -480,13 +499,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     id: "templateFile",
     name: "template",
     onChange: _cache[0] || (_cache[0] = function ($event) {
-      return $options.uploadImage($event);
+      return _ctx.uploadImage($event);
     })
-  }, null, 32 /* HYDRATE_EVENTS */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.templateVariables, function (variable, index) {
+  }, null, 32 /* HYDRATE_EVENTS */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-primary",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.downloadReportTemplate && $options.downloadReportTemplate.apply($options, arguments);
+    })
+  }, " Download Template ")])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.templateVariables, function (variable, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "row mb-3",
       key: index
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(variable), 1 /* TEXT */), _hoisted_14]);
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(variable), 1 /* TEXT */), _hoisted_16]);
   }), 128 /* KEYED_FRAGMENT */))])])])])], 64 /* STABLE_FRAGMENT */);
 }
 

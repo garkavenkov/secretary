@@ -50,8 +50,8 @@
 
 <script>
 
-import ModalForm    from '../../../components/ui/ModalForm.vue';
-// import DateFormate  from '../../../mixins/DateFormat';
+import ModalForm                from '../../../components/ui/ModalForm.vue';
+import PrepareDataForDownload   from '../../../mixins/PrepareDataForDownload';
 
 export default {
     name: 'FamilyCompositionReportForm',
@@ -62,7 +62,7 @@ export default {
             default: 0
         }
     },
-    // mixins: [DateFormate],
+    mixins: [PrepareDataForDownload],
     data() {
         return {
             memberId: this.selectedMember,
@@ -88,16 +88,18 @@ export default {
 
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
                 .then(res => {
+                    
+                    // const url = window.URL.createObjectURL(new Blob([res.data]));
+                    // const link = document.createElement('a');
 
-                    const url = window.URL.createObjectURL(new Blob([res.data]));
-                    const link = document.createElement('a');
-
-                    link.href = url;
+                    // link.href = url;
                     let fileName = `${this.info.surname} ${this.info.name} ${this.info.patronymic}. Довідка про склад родини.docx`;
-                    link.setAttribute('download', fileName);
-                    document.body.appendChild(link);
+                    // link.setAttribute('download', fileName);
+                    // document.body.appendChild(link);
 
-                    link.click();
+                    // link.click();
+                    this.prepareDataForDownload(res, fileName);
+                    
                     this.closeForm();
                 })
         },

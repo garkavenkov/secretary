@@ -23128,8 +23128,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+/* harmony import */ var _mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../mixins/PrepareDataForDownload */ "./resources/js/mixins/PrepareDataForDownload.js");
 
-// import DateFormate  from '../../../mixins/DateFormat';
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'FamilyCompositionReportForm',
@@ -23140,7 +23140,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": 0
     }
   },
-  // mixins: [DateFormate],
+  mixins: [_mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       memberId: this.selectedMember,
@@ -23170,13 +23170,16 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/v1/generate-report', data, {
         responseType: 'arraybuffer'
       }).then(function (res) {
-        var url = window.URL.createObjectURL(new Blob([res.data]));
-        var link = document.createElement('a');
-        link.href = url;
+        // const url = window.URL.createObjectURL(new Blob([res.data]));
+        // const link = document.createElement('a');
+
+        // link.href = url;
         var fileName = "".concat(_this2.info.surname, " ").concat(_this2.info.name, " ").concat(_this2.info.patronymic, ". \u0414\u043E\u0432\u0456\u0434\u043A\u0430 \u043F\u0440\u043E \u0441\u043A\u043B\u0430\u0434 \u0440\u043E\u0434\u0438\u043D\u0438.docx");
-        link.setAttribute('download', fileName);
-        document.body.appendChild(link);
-        link.click();
+        // link.setAttribute('download', fileName);
+        // document.body.appendChild(link);
+
+        // link.click();
+        _this2.prepareDataForDownload(res, fileName);
         _this2.closeForm();
       });
     },
@@ -28444,6 +28447,33 @@ __webpack_require__.r(__webpack_exports__);
     formatedNumber: function formatedNumber(number) {
       var precision = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
       return number.toFixed(precision);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/PrepareDataForDownload.js":
+/*!*******************************************************!*\
+  !*** ./resources/js/mixins/PrepareDataForDownload.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    prepareDataForDownload: function prepareDataForDownload(res, fileName) {
+      var url = window.URL.createObjectURL(new Blob([res.data]));
+      var link = document.createElement('a');
+      link.href = url;
+      // let fileName = `sadcsdsdc.docx`;
+      link.setAttribute('download', fileName);
+      document.body.appendChild(link);
+      link.click();
     }
   }
 });

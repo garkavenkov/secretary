@@ -32,7 +32,7 @@
                         <div class="col-md-8">
                             App\Models\HouseholdMember
                         </div>
-                    </div>
+                    </div>                    
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="formFile" class="form-label">Шаблон документа</label>
@@ -40,6 +40,14 @@
                         <div class="col-md-8">
                             <input class="form-control" type="file" id="templateFile" name="template" @change="uploadImage($event)">
                         </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col">
+                            <button class="btn btn-primary" @click="downloadReportTemplate">
+                                Download Template
+                            </button>
+
+                        </div>                        
                     </div>
                 </div>
                 <div class="col">
@@ -57,6 +65,8 @@
 
 <script>
 
+import PrepareDataForDownload from '../../mixins/PrepareDataForDownload';
+
 export default {
     name: 'ReportsShow',
     props: {
@@ -65,6 +75,7 @@ export default {
             required: true,
         }
     },
+    mixins: [PrepareDataForDownload],
     data() {
         return {
             templateVariables: [],
@@ -72,14 +83,23 @@ export default {
         }
     },
     methods: {
-        uploadImage(e) {
-            console.log(e.target.files[0])
+        downloadReportTemplate() {
+            axios.get(`/api/v1/download-report-template/1`, { responseType: 'arraybuffer'} )
+                .then(res => {
+                    // console.log(res);
+
+                    this.prepareDataForDownload(res, 'template.docx')                    
+                    
+                })
+        },
+        uploadReportTemplate(e) {
+            // console.log(e.target.files[0])
             const URL = `/api/v1/upload-report-template/${this.id}`;
 
             let data = new FormData();
             data.append('name', 'template');
             data.append('file', e.target.files[0]);
-            console.log(data);
+            // console.log(data);
             let config = {
                 headers : {
                     'Content-Type' : 'multipart/form-data'
