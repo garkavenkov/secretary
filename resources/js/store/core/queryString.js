@@ -33,6 +33,10 @@ export default {
                     conditions.push('age=' + state.filter.age.values.join(','));                    
                 }
 
+                if (state.filter.hasOwnProperty('address') && state.filter.address !== '') {
+                    conditions.push('address=' + state.filter.address);
+                }
+                
                 if (conditions.length > 0) {
                     // state.queryString = `?per_page=${state.perPage}&where=` + conditions.join(';');                 
                     state.url = `${state.baseUrl}?per_page=${state.perPage}&where=` + conditions.join(';');                 

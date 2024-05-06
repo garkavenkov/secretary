@@ -29,6 +29,20 @@
             </div>
         </div>
         
+        <div class="row mb-3">
+            <div class="col">
+                <label for="addressFilter" class="form-label" :class="{'filtered' : filter.address !== ''}">
+                    Адреса домогосподарства (вулиця, або № будинку)
+                </label>
+                <input  type="text"
+                        class="form-control"
+                        id="addressFilter"
+                        name="addressFilter"
+                        autocomplete="false"
+                        v-model="filter.address">
+            </div>
+        </div>
+
         <AdditionalParamsFormFilter :params="params" :filter="filter" v-if="params.length > 0"/>
 
         <template v-slot:footer>

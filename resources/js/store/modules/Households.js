@@ -20,6 +20,7 @@ export const Households = {
             settlement_id: 0,
             household_type_id: 0,
             additionalParams: {},
+            address: '',
             isFiltered: false,
         },
         baseUrl: '/api/v1/households',

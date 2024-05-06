@@ -28,6 +28,7 @@ class Household extends Model
     protected static $filterable = [
         'settlement_id',
         'household_type_id',
+        'address'
     ];
 
     public static function isFieldFilterable($field) {

@@ -113,7 +113,19 @@ class HouseholdController extends Controller
                 $parts = explode('=', $condition);                
                 if (count($parts) == 2) {
                     if (Household::isFieldFilterable($parts[0])) {
-                        $households = $households->where($parts[0], $parts[1]);
+                        if ($parts[0] == 'address') {
+                            // check weather address contains street with number 
+                            $address = explode(' ', $parts[1]);
+                            if (count($address) > 1) {
+                                $address = implode("%", $address);
+                            } else {
+                                $address = $parts[1];
+                            }                
+                            // dd($address);
+                            $households = $households->where($parts[0], 'like', '%'. $address. '%');
+                        } else {
+                            $households = $households->where($parts[0], $parts[1]);
+                        }
                     } else if ($parts[0] == 'additional_params') {
                         $params = explode(',', $parts[1]);
                         $households = $households->whereHas('additionalParamsFilled.param', function($q) use($params) {
