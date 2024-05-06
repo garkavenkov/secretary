@@ -331,6 +331,8 @@ class ReportController extends Controller
             $filename = $reports[0];
             $this->downloadFile(content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8", filename: $filename);
             
+        } else {
+            throw new Exception("Не вдалося згненерувати файл.<br>Можливо відсутні данні необхідні для формування документу", 500);            
         }
     }
 
@@ -417,10 +419,8 @@ class ReportController extends Controller
             }
 
         }
-
-        $this->prepareForDownload(reports: $reports, archive: 'landOwned');
         
-      
+        $this->prepareForDownload(reports: $reports, archive: 'landOwned');      
     }
 
     protected function formatTemplateValue($value, $suffix = '', $default = '')
