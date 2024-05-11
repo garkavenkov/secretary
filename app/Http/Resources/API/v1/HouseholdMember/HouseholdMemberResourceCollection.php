@@ -30,7 +30,7 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'family_relationship_type'  =>  $member->whenLoaded('familyRelationshipType', $member->familyRelationshipType->name),
                 'status'                    =>  $member->status,
                 'death_date'                =>  $member->death_date,
-                'address'                   =>  $member->whenLoaded('household', $member->household->getFullAddress()),
+                'full_address'              =>  $member->whenLoaded('household', $member->household->getFullAddress()),
                 'household_number'          =>  $member->whenLoaded('household', $member->household->fullNumber()),
                 // 'relatives'                 =>  $member->relatives()
             ];

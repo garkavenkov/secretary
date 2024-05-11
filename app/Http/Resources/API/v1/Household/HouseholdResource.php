@@ -36,7 +36,7 @@ class HouseholdResource extends JsonResource
                 'number'                =>  (int)   $this->number,
                 'household_head'        =>  $this->household_head(),
                 'raw_address'           =>  $this->address,
-                'address'               =>  $this->getAddress(),
+                'short_address'         =>  $this->getShortAddress(),
                 'full_address'          =>  $this->getFullAddress(),                
                 'special_marks'         =>  $this->special_marks,
                 'additional_data'       =>  $this->additional_data,

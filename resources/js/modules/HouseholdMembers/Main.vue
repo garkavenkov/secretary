@@ -5,45 +5,37 @@
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
-                <span>Члени домогосподарств</span>
-                <button class="btn btn-sm btn-outline-primary ms-2" @click="$store.dispatch('HouseholdMembers/fetchRecords')" title="Оновити дані">
-                    <span class="mdi mdi-refresh"></span>
-                </button>
+                <span>Члени домогосподарств</span>                
+
+                <ButtonRefreshData 
+                        @click="$store.dispatch('HouseholdMembers/fetchRecords')" />
+
                 <ButtonSelectRecords 
                         v-if="members.length > 0" 
-                        :title="inSelectMode ? 'Викмнути режим відбору записів' : 'Увімкнути режим відбору записів'" 
+                        :title="inSelectMode ? 'Вимкнути режим відбору записів' : 'Увімкнути режим відбору записів'" 
                         :btnClass="[inSelectMode ? 'btn-primary' : 'btn-outline-primary' ]"
                         :inSelectMode="inSelectMode"
                         :selectedRecordsCount="selectedRecordsCount"
-                        @toggleSelectMode="toggleSelectMode" />     
-                <div class="d-flext flex-gap-1 ms-3" v-if="selectedRecordsCount  > 0">
-                    <!-- <button type="button"
-                            class="btn btn-sm btn-outline-info"
-                            title="Додаткові параметри"
-                            @click="() => {}">
-                        <span class="mdi mdi-tag-multiple"></span>
-                    </button> -->                    
-                    <button type="button"
-                            class="btn btn-sm btn-outline-primary ms-2"
-                            title="Генерація документів"
-                            @click="openDocumentsForm">
-                        <span class="mdi mdi-file-cog-outline"></span>
-                    </button>
-                    <button type="button"
-                            class="btn btn-sm btn-outline-primary ms-2"
-                            title="Експорт поточних записів"
-                            @click="openExportRecordForm">                            
-                        <span class="mdi mdi-file-export-outline"></span>
-                    </button>
+                        @click="toggleSelectMode" />
+
+                <div class="d-flex gap-2 ms-4" v-if="selectedRecordsCount  > 0">                                                 
+
+                    <ButtonDocumentGenerationForm 
+                        @click="openDocumentsForm" />
+
+                    <ButtonExportRecordForm 
+                        @click="openExportRecordForm" />
+                    
                 </div>
             </div>
             <div>
-                <button :class="['btn btn-sm btn-outline-secondary', filter.isFiltered ? 'active' : '' ]"
-                        @click.exact="openFilterForm"
-                        @click.ctrl="resetFilter"
-                        title="Фільтр членів домогосподарств">
-                    <span class="mdi mdi-filter-outline"></span>
-                </button>
+                
+                <ButtonFilter 
+                    @click.exact="openFilterForm"
+                    @click.ctrl="resetFilter"
+                    :isFiltered="filter.isFiltered"
+                    title="Фільтр членів домогосподарств"/>
+
             </div>
         </div>
         <div class="card-body">
@@ -83,8 +75,8 @@
                             class="sortable"
                             style="min-width: 70px;">
                             Вік
-                        </th>
-                        <th>Адреса</th>
+                        </th> 
+                        <th>Повна адреса</th>
                         <th data-sort-field="household_number"
                             data-field-type="string"
                             class="sortable">
@@ -112,7 +104,7 @@
                         <td>{{record.full_name}}</td>
                         <td class="text-center">{{record.birthdate_formatted}}</td>
                         <td class="text-center">{{record.full_age}}</td>
-                        <td>{{record.address}}</td>
+                        <td>{{record.full_address}}</td>
                         <td class="text-center">
                             <router-link :to="{name: 'households.show.info', params: { id: record.household_id }}" style="text-decoration: none;">
                                 {{record.household_number}}
@@ -129,7 +121,7 @@
 
     <MembersFilterForm  @resetFilter="resetFilter"/>
     <DocumentGenerationForm :records="selectedRecords"/>
-    <ExportRecordForm :records="selectedRecords" :availableFields="availabaleFields"/>
+    <ExportRecordForm :records="selectedRecords" :availableFields="availabaleFields" :model="'App\\Models\\HouseholdMember'"/>
     
 
 </template>
@@ -139,11 +131,20 @@ import { mapGetters, mapActions }   from 'vuex';
 import { Modal }                    from 'bootstrap';
 import { computed }                 from 'vue';
 
+import ExportDataForm               from '../../mixins/ExportDataForm';
+
 import DataTable                    from '../../components/ui/DataTable.vue';
-import ButtonSelectRecords          from '../../components/ui/ButtonSelectRecords.vue';
+import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSelectRecords.vue';
+import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
+import ButtonDocumentGenerationForm from '../../components/ui/Buttons/ButtonDocumentGenerationForm.vue';
+import ButtonRefreshData            from '../../components/ui/Buttons/ButtonRefreshData.vue';
+// import SvgButton                    from '../../components/ui/Buttons/SvgButton.vue';
+import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
+import ButtonFilter                 from '../../components/ui/Buttons/ButtonFilter.vue';
+
 import MembersFilterForm            from './MembersFilterForm.vue';
 import DocumentGenerationForm       from './DocumentGenerationForm.vue';
-import ExportRecordForm             from './ExportRecordForm.vue';
+
 
 export default {
     name: 'HouseholdMembersMain',    
@@ -161,12 +162,13 @@ export default {
                 full_name: 'Призвіще ім\'я по батькові',
                 formatted_birthdate: 'Дата народження',
                 full_age: 'Вік',
-                address: 'Адреса',
+                full_address: 'Повна адреса',
                 household_number: 'Домогосподарство',                
-            },
-   
+            },   
+         
         }
     },
+    mixins: [ExportDataForm],
     provide() {
         return {
             modalTitle: computed(() => this.modalTitle),
@@ -177,8 +179,7 @@ export default {
         ...mapActions('HouseholdMembers', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords']),
         openFilterForm() {
             this.modalTitle = 'Фільтр членів домогосподарств';
-            this.modalSubmitCaption = 'Застосувати';
-            // let filterForm = new Modal(document.getElementById('MembersFilterForm'));
+            this.modalSubmitCaption = 'Застосувати';            
             let filterForm = new Modal(document.getElementById(`${this.$options.name}FilterForm`));
             filterForm.show();
         },
@@ -207,13 +208,7 @@ export default {
             this.modalSubmitCaption = 'Згенерувати';
             let reportWizardForm = new Modal(document.getElementById('DocumentGenerationForm'));
             reportWizardForm.show();
-        },
-        openExportRecordForm() {
-            this.modalTitle = 'Експорт записів';
-            this.modalSubmitCaption = 'Експорт';
-            let exportRecordForm = new Modal(document.getElementById('ExportRecordForm'));
-            exportRecordForm.show();
-        }
+        },        
     },
     computed: {
         ...mapGetters('HouseholdMembers', [
@@ -233,8 +228,13 @@ export default {
         DataTable,
         MembersFilterForm,
         ButtonSelectRecords,
+        ButtonExportRecordForm,
+        ButtonDocumentGenerationForm,
+        ButtonRefreshData,
         DocumentGenerationForm,
-        ExportRecordForm
+        ExportRecordForm,
+        ButtonFilter
+        // SvgButton
     }
 
 }

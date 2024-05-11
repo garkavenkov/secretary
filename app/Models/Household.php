@@ -6,7 +6,6 @@ use App\Models\Settlement;
 use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
 use DeclensionUkrainian\Toponym;
-use Illuminate\Support\Facades\DB;
 use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -31,29 +30,7 @@ class Household extends Model
         'address'
     ];
 
-    public static function isFieldFilterable($field) {
-        return in_array($field, self::$filterable);
-    }
-
-    protected static function boot()
-    {
-
-        parent::boot();
-
-        // static::creating(function($model)
-        // {
-        //     $settlement = Settlement::findOrFail($model->settlement_id);
-
-        //     $number = Household::where('settlement_id', $settlement->id)->max('number');
-        //     if (is_null($number)) {
-        //         $number = 1;
-        //     } else {
-        //         $number = $number + 1;
-        //     }
-        //     $model->number = $number;
-        // });
-    }
-
+    // ***************************************  Relationships ****************************************************
     public function houseYears()
     {
         return $this->hasMany(HouseholdHouse::class)->orderBy('year', 'desc');
@@ -73,28 +50,10 @@ class Household extends Model
     {
         return $this->hasMany(HouseholdMember::class);
     }
-
-    public function household_head()
-    {
-        // dd($this->members);
-        $head = $this->members->first(function($m) {
-            return $m->familyRelationshipType->name == 'голова домогосподарства';
-        });
-        // dd($head);
-        if ($head) {
-            return $head->surname . ' ' . $head->name . ' ' . $head->patronymic;
-        }
-        return "";
-    }
-
+    
     public function landYears()
     {
         return $this->hasMany(HouseholdLand::class)->orderBy('year', 'desc');
-    }
-
-    public function scopeLiving($q)
-    {
-        return $q->whereIn('household_type_id', [1, 2]);
     }
 
     public function owners(): HasMany
@@ -102,7 +61,26 @@ class Household extends Model
         return $this->hasMany(HouseholdOwner::class);
     }
 
-    public function getAddress()
+
+    // ******************************** Methods *****************************************************
+
+    public static function isFieldFilterable($field) {
+        return in_array($field, self::$filterable);
+    }
+
+    public function household_head()
+    {        
+        $head = $this->members->first(function($m) {
+            return $m->familyRelationshipType->name == 'голова домогосподарства';
+        });
+        
+        if ($head) {
+            return $head->surname . ' ' . $head->name . ' ' . $head->patronymic;
+        }
+        return "";
+    }
+
+    public function getShortAddress()
     {
         $parts = explode(',', $this->address);
         $address = "$parts[0] $parts[1], буд. $parts[2]";
@@ -129,7 +107,7 @@ class Household extends Model
         $region = explode(' ', $region);
         $region = Toponym::inGenetive(['name' => $region[0], 'type' => $region[1]]);
 
-        return $this->getAddress() . ", $settlement_type $settlement, $district, $region";
+        return $this->getShortAddress() . ", $settlement_type $settlement, $district, $region";
     }
 
     public function houseInfo()
@@ -173,4 +151,35 @@ class Household extends Model
                 . $this->household_type_id;
     }
 
+    //********************************** Attributes *********************************************************
+    public function getSettlementNameAttribute()
+    {
+        return $this->settlement->name;
+    }
+
+    public function getHouseholdNumberAttribute()
+    {
+        return $this->fullNumber();
+    }
+
+    public function getHouseholdHeadAttribute()
+    {
+        return $this->household_head();
+    }
+
+    public function getShortAddressAttribute()
+    {
+        return $this->getShortAddress();
+    }
+
+    public function getFullAddressAttribute()
+    {
+        return $this->getFullAddress();
+    }
+
+    // *********************************************** Scopes ************************************************
+    public function scopeLiving($q)
+    {
+        return $q->whereIn('household_type_id', [1, 2]);
+    }
 }

@@ -5,41 +5,37 @@
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Облікові картки</span>
-                <button class="btn btn-sm btn-primary" @click="addCard">
-                    <span class="mdi mdi-plus"></span>
-                </button>
-                <button class="btn btn-sm btn-outline-primary ms-2" @click="$store.dispatch('Households/fetchRecords')" title="Оновити дані">
-                    <span class="mdi mdi-refresh"></span>
-                </button>
+
+                <ButtonAdd @click="addCard" title="Додати картку домогосподарства" />
+
+                <ButtonRefreshData 
+                        @click="$store.dispatch('Households/fetchRecords')"
+                        buttonClass="ms-2" />
+
                 <ButtonSelectRecords 
                         v-if="households.length > 0" 
-                        title="Множиний відбір" 
+                        :title="inSelectMode ? 'Вимкнути режим відбору записів' : 'Увімкнути режим відбору записів'" 
                         :btnClass="[inSelectMode ? 'btn-primary' : 'btn-outline-primary' ]"
                         :inSelectMode="inSelectMode"
                         :selectedRecordsCount="selectedRecordsCount"
-                        @toggleSelectMode="toggleSelectMode" />     
-                <button type="button"
-                        class="btn btn-sm btn-outline-info ms-3"
-                        title="Додаткові параметри"
-                        @click="() => {}"
-                        v-if="selectedRecordsCount  > 0">
-                    <span class="mdi mdi-tag-multiple"></span>
-                </button>
-                <button type="button"
-                        class="btn btn-sm btn-outline-info ms-2"
-                        title="Формування звіту"
-                        @click="() => {}"
-                        v-if="selectedRecordsCount  > 0">                    
-                    <span class="mdi mdi-file-document-arrow-right-outline"></span>
-                </button>
+                        @click="toggleSelectMode" />     
+
+                <div class="d-flex gap-2 ms-4" v-if="selectedRecordsCount  > 0">                                                 
+
+                    <ButtonExportRecordForm  @click="openExportRecordForm" />
+
+                </div>
+
             </div>
+                    
             <div>
-                <button :class="['btn btn-sm btn-outline-secondary', filter.isFiltered ? 'active' : '' ]"
-                        @click.exact="openFilterForm"
-                        @click.ctrl="resetFilter"
-                        title="Фільтр облікових карток">
-                    <span class="mdi mdi-filter-outline"></span>
-                </button>
+
+                <ButtonFilter 
+                    @click.exact="openFilterForm"
+                    @click.ctrl="resetFilter"
+                    :isFiltered="filter.isFiltered"
+                    title="Фільтр облікових карток"/>
+               
             </div>
         </div>
         <div class="card-body">
@@ -90,7 +86,7 @@
                         </td>       
                         <td class="text-center">{{record.number}}</td>
                         <td>{{record.settlement}}</td>
-                        <td>{{record.address}}</td>
+                        <td>{{record.short_address}}</td>
                         <td>{{record.household_head}}</td>
                         <td class="text-center">{{record.household_members_count}}</td>
                     </tr>
@@ -111,21 +107,33 @@
     <HouseholdFilterForm
             @resetFilter="resetFilter"/>
 
-
+    <ExportRecordForm 
+            :records="selectedRecords" 
+            :availableFields="availabaleFields" 
+            :model="'App\\Models\\Household'" />
+    
+            
 </template>
 
 <script>
 
-import { mapGetters }       from 'vuex';
-import { Modal }            from 'bootstrap'
-import { computed }         from 'vue';
+import { mapGetters, mapActions }   from 'vuex';
+import { Modal }                    from 'bootstrap'
+import { computed }                 from 'vue';
 
-import SelectRecords        from '../../mixins/SelectRecords';
+import ExportDataForm               from '../../mixins/ExportDataForm';
 
-import DataTable            from '../../components/ui/DataTable.vue';
-import HouseholdForm        from './HouseholdForm.vue';
-import HouseholdFilterForm  from './HouseholdFilterForm.vue';
-import ButtonSelectRecords  from '../../components/ui/ButtonSelectRecords.vue';
+import DataTable                    from '../../components/ui/DataTable.vue';
+
+import HouseholdForm                from './HouseholdForm.vue';
+import HouseholdFilterForm          from './HouseholdFilterForm.vue';
+import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
+
+import ButtonAdd                    from '../../components/ui/Buttons/ButtonAdd.vue';
+import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSelectRecords.vue';
+import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
+import ButtonRefreshData            from '../../components/ui/Buttons/ButtonRefreshData.vue';
+import ButtonFilter                 from '../../components/ui/Buttons/ButtonFilter.vue';
 
 export default {
     name: 'HouseholdsMain',
@@ -133,9 +141,14 @@ export default {
         DataTable,
         HouseholdForm,
         HouseholdFilterForm,
-        ButtonSelectRecords
+        ExportRecordForm, 
+        ButtonAdd,       
+        ButtonSelectRecords,
+        ButtonExportRecordForm,
+        ButtonRefreshData,
+        ButtonFilter
     },
-    mixins: [SelectRecords],
+    mixins: [ExportDataForm],
     data() {
         return {
             perPageItems : [
@@ -158,7 +171,15 @@ export default {
             disabledFields: [],
             modalTitle: '',
             modalSubmitCaption: '',
-            fancyModalIsVisible: false,            
+            fancyModalIsVisible: false,
+            
+            availabaleFields: {
+                id: 'ID',
+                short_address: 'Місцезнаходження / адреса',
+                settlement_name: 'Населений пункт',
+                household_head: 'Голова домогосподарства',                
+                household_number: 'Домогосподарство',                
+            },         
         }
     },
     provide() {
@@ -168,6 +189,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions('Households', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords']),
         addCard() {
             this.modalTitle = 'Нова облікова картка';
             this.modalSubmitCaption = 'Додати';
@@ -188,8 +210,7 @@ export default {
                 }
             } else {
                 this.disabledFields = [];
-            }
-            // console.log(this.disabledFields);
+            }            
             let householdForm = new Modal(document.getElementById('HouseholdForm'));
             householdForm.show();
         },
@@ -223,10 +244,20 @@ export default {
             // console.log('sortData from Main component');
             console.log(a,b, criteria);
         },
-       
     },
     computed: {
-        ...mapGetters('Households', ['households', 'filter', 'pagination', 'entities']),        
+        ...mapGetters('Households', [            
+            'households',
+            'filter', 
+            'pagination', 
+            'entities', 
+            'inSelectMode', 
+            'isIndeterminate', 
+            'selectedRecords',
+            'selectedRecordsCount', 
+            'isAllSelected',
+            'toggleSelectAllTitle'
+        ]),           
     }
 }
 </script>

@@ -192,7 +192,7 @@ class HouseholdMember extends Model
         return $this->relatives()->toArray();
     }
 
-    public function getAddressAttribute()
+    public function getFullAddressAttribute()
     {
         return $this->household->getFullAddress();
     }

@@ -7,7 +7,7 @@
             <div>
                 <h5>{{ member.full_name }} </h5>
                 <h6>
-                    {{ member.address }} |
+                    {{ member.full_address }} |
                     <router-link 
                             v-if="member.household_id"
                             :to="{ name: 'households.show.info', params: { id: member.household_id }}" 

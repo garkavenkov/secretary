@@ -26,7 +26,7 @@ class HouseholdResourceCollection extends ResourceCollection
                 'household_type_id'         =>  (int)   $household->household_type_id,
                 'number'                    =>  $household->fullNumber(),
                 'raw_address'               =>  $household->address,
-                'address'                   =>  $household->getAddress(),
+                'short_address'             =>  $household->getShortAddress(),
                 'household_head'            =>  $household->household_head(),
                 'household_members_count'   =>  $household->members()->alive()->count()
                 // 'special_marks'         =>  $household->special_marks,

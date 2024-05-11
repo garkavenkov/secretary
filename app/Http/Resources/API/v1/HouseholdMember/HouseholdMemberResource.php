@@ -41,7 +41,7 @@ class HouseholdMemberResource extends JsonResource
             'death_date'                    =>  $this->death_date,
             'death_register_number'         =>  $this->death_register_number,
             'death_register_office'         =>  $this->death_register_office,
-            'address'                       =>  $this->whenLoaded('household', $this->household->getFullAddress()),
+            'full_address'                  =>  $this->whenLoaded('household', $this->household->getFullAddress()),
             'household_number'              =>  $this->whenLoaded('household', $this->household->fullNumber()),
             'relatives'                     =>  $this->relatives()
         ];

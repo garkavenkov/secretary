@@ -112,7 +112,7 @@
 <script>
 
 import SvgIcon          from '@jamescoyle/vue-icon'
-import ModalForm        from '../../components/ui/ModalForm.vue';
+import ModalForm        from './ModalForm.vue';
 import { 
     mdiFileExcel,
     mdiFileWord,    
@@ -132,8 +132,12 @@ export default {
         availableFields: {
             type: Object,
             required: true
+        },
+        model: {
+            type: String,
+            required: true
         }
-    },
+    },    
     data() {
         return {
             excelPath: mdiFileExcel,
@@ -173,7 +177,7 @@ export default {
             });
 
             let data = {
-                model: 'App\\Models\\HouseholdMember',
+                model: this.model,
                 format: this.formatType,
                 orientation: this.orientation,
                 fields: fields.join(','),

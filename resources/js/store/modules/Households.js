@@ -1,7 +1,8 @@
-import crud         from '../core/crud';
-import pagination   from '../core/pagination';
-import filter       from '../core/filter';
-import queryString  from '../core/queryString';
+import crud             from '../core/crud';
+import pagination       from '../core/pagination';
+import filter           from '../core/filter';
+import queryString      from '../core/queryString';
+import selectRecords    from '../core/selectRecords';
 
 export const Households = {
     namespaced: true,
@@ -28,7 +29,8 @@ export const Households = {
         entities: 'households',
         entity: 'household',
         pagination: {},
-        perPage: 10
+        perPage: 10,
+        ...selectRecords.state
     },
     getters: {
         households: state => state.households,
@@ -46,6 +48,7 @@ export const Households = {
         familyInfo: state => state.household.familyInfo,
         pagination: state => state.pagination,
         entities: state => state.entities,
+        ...selectRecords.getters
     },
     mutations: {
         ...crud.mutations,
@@ -56,5 +59,6 @@ export const Households = {
         ...crud.actions,
         ...pagination.actions,
         ...filter.actions,
+        ...selectRecords.actions,
     }
 }
