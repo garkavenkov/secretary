@@ -18,8 +18,19 @@
                         <slot name="footer"></slot>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="$emit('closeForm')">Відмінити</button>
-                        <button type="button" class="btn btn-primary ms-4" @click="$emit('submitData')" :disabled="sumbitIsDisabled">{{modalFormSubmitCaption}}</button>
+                        <button type="button" 
+                                class="btn btn-secondary" 
+                                data-bs-dismiss="modal" 
+                                @click="$emit('closeForm')">
+                            Відмінити
+                        </button>
+                        <button type="button" 
+                                class="ms-4 btn" 
+                                :class="[ sumbitIsDisabled ? 'btn-outline-primary' : 'btn-primary' ]"
+                                @click="$emit('submitData')" 
+                                :disabled="sumbitIsDisabled">
+                            {{modalFormSubmitCaption}}
+                        </button>
                     </div>
                 </div>
             </div>

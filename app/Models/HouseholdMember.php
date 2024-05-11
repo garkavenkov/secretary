@@ -45,6 +45,7 @@ class HouseholdMember extends Model
         'sex',
     ];
     
+    
     protected $appends = array('status', 'fullAge');
 
 
@@ -176,7 +177,8 @@ class HouseholdMember extends Model
   
     }
 
-    public function getRegistrationAddressAttribute() {
+    public function getRegistrationAddressAttribute()
+    {
 
         $address =$this->household->getFullAddress();
 
@@ -185,8 +187,19 @@ class HouseholdMember extends Model
 
     }
 
-    public function getRelativesAttribute() {
+    public function getRelativesAttribute()
+    {
         return $this->relatives()->toArray();
+    }
+
+    public function getAddressAttribute()
+    {
+        return $this->household->getFullAddress();
+    }
+
+    public function getHouseholdNumberAttribute()
+    {
+        return $this->household->fullNumber();
     }
 
     // ******************************** Methods *****************************************************

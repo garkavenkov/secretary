@@ -22,18 +22,18 @@
                             title="Додаткові параметри"
                             @click="() => {}">
                         <span class="mdi mdi-tag-multiple"></span>
-                    </button> -->
-                    <!-- <button type="button"
-                            class="btn btn-sm btn-outline-info ms-2"
-                            title="Формування звіту"
-                            @click="() => {}">                            
-                        <span class="mdi mdi-file-document-arrow-right-outline"></span>
-                    </button> -->
+                    </button> -->                    
                     <button type="button"
-                            class="btn btn-sm btn-outline-info ms-2"
-                            title="Друк документів"
+                            class="btn btn-sm btn-outline-primary ms-2"
+                            title="Генерація документів"
                             @click="openDocumentsForm">
-                        <span class="mdi mdi-printer"></span>
+                        <span class="mdi mdi-file-cog-outline"></span>
+                    </button>
+                    <button type="button"
+                            class="btn btn-sm btn-outline-primary ms-2"
+                            title="Експорт поточних записів"
+                            @click="openExportRecordForm">                            
+                        <span class="mdi mdi-file-export-outline"></span>
                     </button>
                 </div>
             </div>
@@ -129,6 +129,8 @@
 
     <MembersFilterForm  @resetFilter="resetFilter"/>
     <DocumentGenerationForm :records="selectedRecords"/>
+    <ExportRecordForm :records="selectedRecords" :availableFields="availabaleFields"/>
+    
 
 </template>
 
@@ -141,6 +143,7 @@ import DataTable                    from '../../components/ui/DataTable.vue';
 import ButtonSelectRecords          from '../../components/ui/ButtonSelectRecords.vue';
 import MembersFilterForm            from './MembersFilterForm.vue';
 import DocumentGenerationForm       from './DocumentGenerationForm.vue';
+import ExportRecordForm             from './ExportRecordForm.vue';
 
 export default {
     name: 'HouseholdMembersMain',    
@@ -152,7 +155,16 @@ export default {
                 20
             ],
             modalTitle: '',
-            modalSubmitCaption: '',            
+            modalSubmitCaption: '',     
+            availabaleFields: {
+                id: 'ID',
+                full_name: 'Призвіще ім\'я по батькові',
+                formatted_birthdate: 'Дата народження',
+                full_age: 'Вік',
+                address: 'Адреса',
+                household_number: 'Домогосподарство',                
+            },
+   
         }
     },
     provide() {
@@ -186,18 +198,21 @@ export default {
         },
         searchData(row, searchText) {
             return row['full_name'].includes(searchText) || row['household_number'].includes(searchText);
-        },
-        // searchData(value) {
-        //     console.log(value);
-        // },
+        },      
         showDocument(id) {
             this.$router.push({name: 'household-member', params: { id: id }});
         },        
         openDocumentsForm() {
             this.modalTitle = 'Генерація документів';
             this.modalSubmitCaption = 'Згенерувати';
-            let reportWizardForm = new Modal(document.getElementById(`DocumentGenerationForm`));
+            let reportWizardForm = new Modal(document.getElementById('DocumentGenerationForm'));
             reportWizardForm.show();
+        },
+        openExportRecordForm() {
+            this.modalTitle = 'Експорт записів';
+            this.modalSubmitCaption = 'Експорт';
+            let exportRecordForm = new Modal(document.getElementById('ExportRecordForm'));
+            exportRecordForm.show();
         }
     },
     computed: {
@@ -218,7 +233,8 @@ export default {
         DataTable,
         MembersFilterForm,
         ButtonSelectRecords,
-        DocumentGenerationForm
+        DocumentGenerationForm,
+        ExportRecordForm
     }
 
 }

@@ -10,7 +10,9 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@jamescoyle/vue-icon": "^0.1.2",
         "@mdi/font": "^7.1.96",
+        "@mdi/js": "^7.4.47",
         "@popperjs/core": "^2.10.2",
         "@vitejs/plugin-vue": "^3.0.1",
         "axios": "^1.1.2",
