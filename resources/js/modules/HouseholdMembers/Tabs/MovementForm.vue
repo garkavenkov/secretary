@@ -1,10 +1,9 @@
 <template>
 
-    <ModalForm  formId="MovementForm"
-                :submitCaption="submitCaption"
-                :title="title"
+    <ModalForm  formId="MovementForm"                
                 @closeForm="closeForm"
                 @submitData="submitData"
+                :sumbitIsDisabled="!readyForSubmit"
                 modalContentClass="second-modal">
 
             <div class="row mb-3">
@@ -32,9 +31,7 @@
                         {{ getError('date') }}
                     </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-            </div>
+            </div>            
             <div class="row mb-3">
                 <div class="col">
                     <label  for="movementEventComment" class="form-label">Примітка</label>
@@ -72,15 +69,7 @@ export default {
             type: String,
             required: false,
             default: 'create'
-        },
-        'title': {
-            type: String,
-            required: true
-        },
-        'submitCaption': {
-            type: String,
-            required: true
-        },
+        },       
         'movementTypes': {
             type: Array,
             required: true
@@ -130,6 +119,11 @@ export default {
         },
         closeForm() {
             this.clearForm();
+        }
+    },
+    computed: {
+        readyForSubmit() {
+            return this.formData.date != null && this.formData.movement_type_id != 0 && this.formData.comment != '';
         }
     },
     components: {

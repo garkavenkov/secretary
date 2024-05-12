@@ -1,8 +1,6 @@
 <template>
 
-    <ModalForm  formId="LandYearForm"
-                :submitCaption="submitCaption"
-                :title="title"
+    <ModalForm  formId="LandYearForm"                
                 @closeForm="closeForm"
                 @submitData="submitData"
                 modalContentClass="second-modal">
@@ -138,15 +136,7 @@ export default {
             type: String,
             required: false,
             default: 'create'
-        },
-        'title': {
-            type: String,
-            required: true
-        },
-        'submitCaption': {
-            type: String,
-            required: true
-        },
+        },     
     },
     emits: ['refreshData'],
     data() {

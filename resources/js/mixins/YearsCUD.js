@@ -1,6 +1,20 @@
-import { Modal } from "bootstrap";
+import { Modal }    from "bootstrap";
+import { computed } from 'vue';
 
 export default {
+    data() {
+        return {
+            action: '',
+            modalTitle: '',
+            modalSubmitCaption: ''
+        }
+    },
+    provide() {
+        return {
+            modalTitle: computed(() => this.modalTitle),
+            modalSubmitCaption: computed(() => this.modalSubmitCaption)
+        }
+    },    
     methods: {
         newYearData(e) {
             this.modalTitle = 'Додати дані';

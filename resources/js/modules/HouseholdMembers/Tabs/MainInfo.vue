@@ -13,29 +13,7 @@
                 <div id="memberSurnameValidation" class="invalid-feedback">
                     {{ getError('surname') }}
                 </div>
-            </div>
-            <!-- <div class="col">
-                <label  for="memberName" class="form-label">Ім'я</label>
-                <input  type="text"
-                        :class="['form-control', hasError('name') ? 'is-invalid' : '']"
-                        id="memberName"
-                        v-model="formData.name"
-                        :disabled="!isInEditMode">
-                <div id="memberNameValidation" class="invalid-feedback">
-                    {{ getError('name') }}
-                </div>
-            </div>
-            <div class="col">
-                <label  for="memberPatronymic" class="form-label">По батькові</label>
-                <input  type="text"
-                        :class="['form-control', hasError('patronymic') ? 'is-invalid' : '']"
-                        id="memberPatronymic"
-                        v-model="formData.patronymic"
-                        :disabled="!isInEditMode">
-                <div id="memberPatronymicValidation" class="invalid-feedback">
-                    {{ getError('patronymic') }}
-                </div>
-            </div> -->
+            </div>        
         </div>
         <div class="row mb-3">
             <div class="col">
@@ -88,22 +66,7 @@
                 <div id="memberSexValidation" class="invalid-feedback">
                     {{ getError('sex') }}
                 </div>
-            </div>
-            <!-- <div class="col">
-                <label for="familyRelationshipType" class="form-label">Родинні стосунки</label>
-                <select :class="['form-control', hasError('family_relationship_type_id') ? 'is-invalid' : '']"
-                        aria-label="Default select example"
-                        v-model="formData.family_relationship_type_id"
-                        :disabled="!isInEditMode">
-                    <option disabled value="0">Оберить тип родинних стосунків</option>
-                    <option :value="relationship.id" v-for="relationship in relationshipTypes" :key="relationship.id">
-                        {{relationship.name}}
-                    </option>
-                </select>
-                <div id="familyRelationshipTypeValidation" class="invalid-feedback">
-                    {{ getError('family_relationship_type_id') }}
-                </div>
-            </div> -->
+            </div>         
         </div>
         <div class="row mb-3">
             <div class="col">
@@ -161,25 +124,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-7">
-        <!-- <div class="row mb-3">
-            <div class="col-md-9">
-                <label  for="memberAddress" class="form-label">Адреса</label>
-                <input  type="text"
-                        class="form-control"
-                        id="memberAddress"
-                        v-model="formData.address"
-                        disabled>
-            </div>
-            <div class="col-md-3">
-                <label  for="memberHouseholdNumber" class="form-label">№ домогосподарства</label>
-                <input  type="text"
-                        class="form-control"
-                        id="memberHouseholdNumber"
-                        v-model="formData.household_number"
-                        disabled>
-            </div>
-        </div> -->
+    <div class="col-md-7">     
         <div class="row mb-3">
             <div class="col">
                 <label for="workPlace" class="form-label">Місце роботи залежно від територіального розташування</label>
@@ -247,37 +192,36 @@
 </div>
 <div class="row">
     <div class="d-flex justify-content-between">
-        <div>
-            <button v-if="!isInEditMode"
-                    class="btn btn-sm btn-outline-danger"
-                    title="Видалити члена домогосподарства"
-                    @click="deleteData">
-                <span class="mdi mdi-trash-can-outline"></span>
-                Видалити
-            </button>
+        <div>           
+            <IconButton  v-if="!isInEditMode"
+                :buttonClass="['btn-outline-danger']" 
+                title="Видалити члена домогосподарства"
+                @click="deleteData"                 
+                :mdiPath="pathMdiTrashCan" 
+                caption="Видалити"/>
+
         </div>
-        <div>
-            <button v-if="!isInEditMode"
-                    class="btn btn-sm btn-outline-secondary"
-                    title="Редагувати дані"
-                    @click="editData">
-                <span class="mdi mdi-pencil"></span>
-                Редагувати
-            </button>
-            <button v-if="isInEditMode"
-                    class="btn btn-sm btn-outline-secondary"
-                    title="Відмінити редагування"
-                    @click="cancelEdit">
-                <!-- <span class="mdi mdi-check-all"></span> -->
-                Відмінити
-            </button>
-            <button v-if="isInEditMode"
-                    class="btn btn-sm btn-outline-primary ms-3"
-                    title="Зберегти дані"
-                    @click="saveData">
-                <span class="mdi mdi-check-all"></span>
-                Зберегти
-            </button>
+        <div class="d-flex">            
+            <IconButton  v-if="!isInEditMode"
+                :buttonClass="['btn-outline-primary']" 
+                title="Редагувати дані" 
+                @click="editData"                 
+                :mdiPath="pathMdiPencil" 
+                caption="Редагувати"/>
+
+            <IconButton  v-if="isInEditMode"
+                :buttonClass="['btn-outline-secondary']" 
+                title="Відмінити редагування" 
+                @click="cancelEdit"                 
+                :mdiPath="pathMdiPencilOff" 
+                caption="Відмінити"/>
+           
+            <IconButton  v-if="isInEditMode"
+                :buttonClass="['btn-outline-primary ms-3']" 
+                title="Зберегти дані"
+                @click="saveData"                 
+                :mdiPath="pathMdiCheckAll" 
+                caption="Зберегти"/>
         </div>
     </div>
 </div>
@@ -290,6 +234,15 @@ import { mapGetters }   from 'vuex';
 
 import FormValidator    from '../../../mixins/FormValidator';
 
+import IconButton       from '../../../components/ui/Buttons/IconButton.vue';
+
+import {
+    mdiPencil,
+    mdiPencilOffOutline,
+    mdiTrashCanOutline,
+    mdiCheckAll
+}   from '@mdi/js';
+
 export default {
     name: 'MemberMainInfoTab',
     mixins: [FormValidator],
@@ -299,12 +252,19 @@ export default {
     //         required: true,
     //     },
     // },
+    components: {
+        IconButton
+    },
     emits: ['refreshData'],
     data() {
         return {
             isInEditMode: false,
             _formData: {},
             // formData:{} // JSON.parse(JSON.stringify(this.info)),
+            pathMdiPencil: mdiPencil,
+            pathMdiPencilOff: mdiPencilOffOutline,
+            pathMdiTrashCan: mdiTrashCanOutline,
+            pathMdiCheckAll: mdiCheckAll,
         }
     },
     methods: {

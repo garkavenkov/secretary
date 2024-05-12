@@ -19,33 +19,8 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="px-3 pt-3">
-                <ul class="nav nav-tabs px-3">
-                    <li class="nav-item">
-                        <router-link :to="{name: 'household-member.info'}" class="nav-link">
-                            <span class="mdi mdi-account-details-outline me-1"></span>
-                            Головна інформація
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link :to="{name: 'household-member.lands'}" class="nav-link">
-                            <span class="mdi mdi-land-fields me-1"></span>
-                            Земля
-                        </router-link>
-                    </li>
-                    <li class="nav-item" >
-                        <router-link :to="{name: 'household-member.movements'}" class="nav-link">
-                            <span class="mdi mdi-transit-transfer me-1"></span>
-                            Реєстрація / Переміщення
-                        </router-link>
-                    </li>                   
-                    <li class="nav-item">
-                        <router-link :to="{name: 'household-member.additional-data'}" class="nav-link">
-                            <span class="mdi mdi-tag-multiple me-1"></span>
-                            Додаткові дані
-                        </router-link>
-                    </li>
-                </ul>
+            <div class="px-3 pt-3">             
+                <NavigationTabs :tabs="tabs" :navigationClass="['px-3']"/>
                 <div class="pt-2">
                     <router-view></router-view>
                 </div>
@@ -64,10 +39,18 @@
 
 <script>
 
-import { mapGetters } from 'vuex';
-import { mapActions } from 'vuex/dist/vuex.cjs.js';
+import { mapGetters }   from 'vuex';
+import { mapActions }   from 'vuex/dist/vuex.cjs.js';
 
-import Page404 from '../../components/Page404.vue';
+import { 
+    mdiAccountDetailsOutline,
+    mdiLandFields,
+    mdiTransitTransfer,
+    mdiTagMultipleOutline    
+} from '@mdi/js';
+
+import Page404          from '../../components/Page404.vue';
+import NavigationTabs   from '../../components/ui/NavigationTabs.vue';
 
 export default {
     name: 'HouseholdMembersShow',
@@ -78,31 +61,45 @@ export default {
         }
     },
     components: {
-        Page404
+        Page404,                
+        NavigationTabs
     },
     data() {
         return {
-            notFoundMessage: ''
+            notFoundMessage: '',          
+
+            tabs: [
+                {
+                    routeName: 'household-member.info',
+                    iconPath: mdiAccountDetailsOutline,
+                    title: 'Головна інформація' 
+                },
+                {
+                    routeName: 'household-member.lands',
+                    iconPath: mdiLandFields,
+                    title: 'Земля' 
+                },
+                {
+                    routeName: 'household-member.movements',
+                    iconPath: mdiTransitTransfer,
+                    title: 'Реєстрація / Переміщення' 
+                },
+                {
+                    routeName: 'household-member.additional-data',
+                    iconPath: mdiTagMultipleOutline,
+                    title: 'Додаткові дані' 
+                },
+            ]
         }
     },
     methods: {
-        ...mapActions('HouseholdMembers', ['fetchRecord']),
-        // fetchMember() {
-        //     let memberId = this.$route.params.memberId;
-        //     axios.get(`/api/v1/household-members/${this.id}`)
-        //         .then(res => {
-        //             this.member = res.data.data;
-        //         })
-        // },
+        ...mapActions('HouseholdMembers', ['fetchRecord']),       
     },
     computed: {
         ...mapGetters('HouseholdMembers', ['member'])
     },  
-    created() {
-        // this.$store.dispatch('HouseholdMembers/fetchRecord', this.id);
-                
-        this.fetchRecord(this.id)
-            // .catch(err => console.log(err));
+    created() { 
+        this.fetchRecord(this.id)            
 
     },
     watch: {
@@ -115,14 +112,3 @@ export default {
 }
 
 </script>
-
-
-<style lang="scss" scoped>
-
-a.router-link-exact-active {
-    background: linear-gradient(#e9ecef, #f8fafc);
-    color: var(--bs-nav-tabs-link-active-color);
-    border-color: var(--bs-nav-tabs-link-active-border-color) !important;
-}
-
-</style>

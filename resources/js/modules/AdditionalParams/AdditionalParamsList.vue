@@ -34,28 +34,28 @@
             </table>
 
             <div class="row">
-                <div class="d-flex justify-content-end">
-                    <button v-if="!isInEditMode"
-                            class="btn btn-sm btn-outline-secondary"
-                            title="Редагувати дані"
-                            @click="editData">
-                        <span class="mdi mdi-pencil"></span>
-                        Редагувати
-                    </button>
-                    <button v-if="isInEditMode"
-                            class="btn btn-sm btn-outline-secondary"
-                            title="Відмінити редагування"
-                            @click="cancelEdit">
-                        Відмінити
-                    </button>
-                    <button v-if="isInEditMode"
-                            class="btn btn-sm btn-outline-primary ms-3"
+                <div class="d-flex justify-content-end">                 
+                    <IconButton  v-if="!isInEditMode"
+                            :buttonClass="['btn-outline-primary']" 
+                            title="Редагувати дані" 
+                            @click="editData"                 
+                            :mdiPath="pathMdiPencil" 
+                            caption="Редагувати"/>
+
+                    <IconButton  v-if="isInEditMode"
+                            :buttonClass="['btn-outline-secondary']" 
+                            title="Відмінити редагування" 
+                            @click="cancelEdit"                 
+                            :mdiPath="pathMdiPencilOff" 
+                            caption="Відмінити"/>
+           
+                    <IconButton  v-if="isInEditMode"
+                            :buttonClass="['btn-outline-primary ms-3']" 
                             title="Встановити додаткові параметри"
-                            @click="updateAdditionalParams"
-                            :disabled="!additionalParamsWereChanged">
-                        <span class="mdi mdi-check-all"></span>
-                        Встановити
-                    </button>
+                            @click="updateAdditionalParams"                 
+                            :mdiPath="pathMdiCheckAll" 
+                            :disabled="!additionalParamsWereChanged"
+                            caption="Встановити"/>
                 </div>
             </div>
         </div>
@@ -64,6 +64,14 @@
 </template>
 
 <script>
+
+import {
+    mdiPencil,
+    mdiPencilOffOutline,
+    mdiCheckAll
+}   from '@mdi/js';
+
+import IconButton   from '../../components/ui/Buttons/IconButton.vue';
 
 export default {
     name: 'AdditionalParamsList',
@@ -86,10 +94,16 @@ export default {
         //     default: () => false
         // }
     },
+    components: {
+        IconButton
+    },
     data() {
         return {
             _additionalParams: [],
-            isInEditMode: false
+            isInEditMode: false,
+            pathMdiPencil: mdiPencil,
+            pathMdiPencilOff: mdiPencilOffOutline,
+            pathMdiCheckAll: mdiCheckAll,
         }
     },
     methods: {

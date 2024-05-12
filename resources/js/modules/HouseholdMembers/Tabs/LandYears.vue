@@ -4,55 +4,52 @@
         <thead class="bg-body-secondary">
             <tr>
                 <th>
-                    <button type="button"
-                            class="btn btn-sm btn-outline-secondary btn-transparent"
-                            @click="newYearData($event)">
-                        <span class="mdi mdi-plus-thick"></span>
-                        Додати рік
-                    </button>
+                    <IconButton 
+                            :buttonClass="['btn-sm btn-outline-primary btn-transparent']"                             
+                            title="Додати інформацію за рік"
+                            @click="newYearData($event)"
+                            :size="16"
+                            :mdiPath="pathMdiPlusThick" 
+                            :captionClass="['lh-24']"
+                            caption="Додати рік"/>
+                
                 </th>
-                <th v-for="year in years"
+                <th v-for="year in years"                
                     :key="year.year">
-                    {{year.year}}
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-light btn-transparent"
-                                type="button"
+                    <div class="d-flex align-items-center justify-content-end">
+                        <span style="line-height: 24px;">{{year.year}}</span>
+                        <div class="dropdown">
+    
+                            <IconButton 
+                                :buttonClass="['btn-sm btn-light btn-transparent ms-1 me-1 p-2']" 
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
-                                title="Операції з даними за рік">
-                            <span class="mdi mdi-cog"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <!--
-                                ---- place widget for available reports ??????
-
-                                <li v-for="report in reports" :key=`year+report.id`>
-                                    <a class="dropdown-item" @click="report.code">  // arguments in report ????
-                                        <span :class="['me-2', report.icon]" style="color:green;"></span>
-                                        {{report.name}}
+                                :size="16"
+                                title="Операції з даними за рік"
+                                :mdiPath="pathMdiCog" />
+    
+                            <ul class="dropdown-menu dropdown-menu-end">                           
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" @click="landOwnedReport(year.year)">                                    
+                                        <SvgIcon type="mdi" :path="pathMdiLandFields" :size="16" class="text-success me-2" />
+                                        <span>Звіт про склад земельної ділянки</span>
                                     </a>
                                 </li>
-                             -->
-                            <li>
-                                <a class="dropdown-item" @click="landOwnedReport(year.year)">
-                                    <span class="mdi mdi-land-fields me-2" style="color:green;"></span>
-                                    Звіт про склад земельної ділянки
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item" @click="editYear(year)">
-                                    <span class="mdi mdi-pencil text-warning me-2"></span>
-                                    Редагувати дані
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" @click="deleteYear(year)">
-                                    <span class="mdi mdi-trash-can text-danger me-2"></span>
-                                    Видалити дані
-                                </a>
-                            </li>
-                        </ul>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" @click="editYear(year)">                                    
+                                        <SvgIcon type="mdi" :path="pathMdiPencil" :size="16" class="text-warning me-2" />
+                                        <span>Редагувати дані</span>                                    
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" @click="deleteYear(year)">                                    
+                                        <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="16" class="text-danger me-2" />                                    
+                                        <span>Видалити дані</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </th>
             </tr>
@@ -95,9 +92,7 @@
 
     <teleport to="body">
         <LandYearForm
-                :formData="yearData"
-                :title="title"
-                :submitCaption="submitCaption"
+                :formData="yearData"                
                 :action="action"
                 @closeYearForm="closeYearForm"
                 @refreshData="fetchYears"/>
@@ -109,10 +104,20 @@
 <script>
 
 import { mapGetters }           from 'vuex';
+import SvgIcon                  from '@jamescoyle/vue-icon';
+
+import { 
+    mdiCog, 
+    mdiPlusThick,
+    mdiLandFields,
+    mdiPencil,
+    mdiTrashCan
+} from '@mdi/js';
 
 import TableRow                 from '../../../components/ui/TableRow.vue';
 import LandYearForm             from './LandYearForm.vue';
 import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
+import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
 
 import YearsCUD                 from '../../../mixins/YearsCUD';
 import PrepareDataForDownload   from '../../../mixins/PrepareDataForDownload';
@@ -123,7 +128,9 @@ export default {
     components: {
         TableRow,
         LandYearForm,
-        YearsPaginator
+        YearsPaginator,
+        IconButton,
+        SvgIcon
     },
     data() {
         return {
@@ -137,16 +144,18 @@ export default {
                 pastures: 0,
                 land_share: 0,
                 property_share: 0
-            },
-            action: '',
-            title: '',
-            submitCaption: '',
+            },            
             owner: 'member_id',
             yearFormId: 'LandYearForm',
             apiUrl: '/api/v1/household-member-lands',
             years: [],
             meta: [],
-            perPage: 5
+            perPage: 5,
+            pathMdiCog: mdiCog,
+            pathMdiPlusThick: mdiPlusThick,
+            pathMdiLandFields: mdiLandFields,
+            pathMdiPencil: mdiPencil,
+            pathMdiTrashCan: mdiTrashCan
         }
     },
     methods: {
@@ -170,17 +179,8 @@ export default {
 
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
                 .then(res => {
-
-                    // const url = window.URL.createObjectURL(new Blob([res.data]));
-                    // const link = document.createElement('a');
-
-                    // link.href = url;
                     let fileName = `${this.member.surname} ${this.member.name} ${this.member.patronymic}. Довідка про склад земельної ділянки.docx`;
                     this.prepareDataForDownload(res, fileName);
-                    // link.setAttribute('download', fileName);
-                    // document.body.appendChild(link);
-
-                    // link.click();
                 })
         },
         fetchYears(url) {
