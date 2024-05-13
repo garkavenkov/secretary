@@ -53,7 +53,7 @@
                 <template v-slot:header>
                     <tr>
                         <th v-if="inSelectMode" 
-                            class="align-middle text-center">
+                            class="align-middle text-center show-record">
                             <input  type="checkbox"
                                     class="form-check-input cursor-pointer"
                                     name="selectAll"
@@ -63,7 +63,7 @@
                                     :title="toggleSelectAllTitle"
                                     @change="toggleSelectAll($event)"/>
                         </th>
-                        <th v-else></th>
+                        <th v-else class="show-record"></th>
                         <th data-sort-field="full_name"
                             data-field-type="string"
                             class="sortable">
@@ -88,11 +88,10 @@
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id"
-                            :class="{ 'table-primary': record.selected }">
-                            <!-- @click.ctrl="showDocument(record.id)"> -->
+                            :class="{ 'table-primary': record.selected }">                            
                         <td class="text-center" v-if="!inSelectMode" style="line-height: 24px;">
-                            <router-link :to="{name: 'household-member', params: { id: record.id }}">
-                                <span class="mdi mdi-eye-outline"></span>
+                            <router-link :to="{name: 'household-member', params: { id: record.id }}" title="Перейти до інформації по члену домогосподарства">
+                                <SvgIcon type="mdi" :path="pathMdiAccountEye" :size="18"/>
                             </router-link>
                         </td>
                         <td v-else class="text-center" style="line-height: 24px;">                            
@@ -130,6 +129,8 @@
 import { mapGetters, mapActions }   from 'vuex';
 import { Modal }                    from 'bootstrap';
 import { computed }                 from 'vue';
+import SvgIcon                      from '@jamescoyle/vue-icon';
+import { mdiAccountEyeOutline }     from '@mdi/js';
 
 import ExportDataForm               from '../../mixins/ExportDataForm';
 
@@ -147,7 +148,7 @@ import DocumentGenerationForm       from './DocumentGenerationForm.vue';
 
 
 export default {
-    name: 'HouseholdMembersMain',    
+    name: 'HouseholdMembersMain',  
     data() {
         return {
             perPageItems : [
@@ -165,7 +166,7 @@ export default {
                 full_address: 'Повна адреса',
                 household_number: 'Домогосподарство',                
             },   
-         
+            pathMdiAccountEye: mdiAccountEyeOutline            
         }
     },
     mixins: [ExportDataForm],
@@ -233,8 +234,8 @@ export default {
         ButtonRefreshData,
         DocumentGenerationForm,
         ExportRecordForm,
-        ButtonFilter
-        // SvgButton
+        ButtonFilter,
+        SvgIcon        
     }
 
 }

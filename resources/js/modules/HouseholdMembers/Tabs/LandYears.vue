@@ -39,12 +39,12 @@
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" @click="editYear(year)">                                    
                                         <SvgIcon type="mdi" :path="pathMdiPencil" :size="16" class="text-warning me-2" />
-                                        <span>Редагувати дані</span>                                    
+                                        <span>Редагувати дані</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" @click="deleteYear(year)">                                    
-                                        <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="16" class="text-danger me-2" />                                    
+                                        <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="16" class="text-danger me-2" />
                                         <span>Видалити дані</span>
                                     </a>
                                 </li>

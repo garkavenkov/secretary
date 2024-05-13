@@ -4,42 +4,47 @@
         <div class="row">
             <div class="col-md-9">
                 <table class="table table-sm table-bordered table-years">
-                    <thead>
+                    <thead class="bg-body-secondary">
                         <tr>
                             <th>
-                                <button type="button"
-                                        class="btn btn-sm btn-outline-secondary btn-transparent"
-                                        @click="newYearData($event)">
-                                    <span class="mdi mdi-plus-thick"></span>
-                                    Додати рік
-                                </button>
+                                
+                                <IconButton 
+                                    :buttonClass="['btn-sm btn-outline-primary btn-transparent']"                             
+                                    title="Додати інформацію за рік"
+                                    @click="newYearData($event)"
+                                    :size="16"
+                                    :mdiPath="pathMdiPlusThick" 
+                                    :captionClass="['lh-24']"
+                                    caption="Додати рік"/>
+
                             </th>
-                            <th v-for="year in years"
-                                :key="year.year">
-                                {{year.year}}
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-light btn-transparent"
-                                            type="button"
+                            <th v-for="year in years" :key="year.year">
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <span style="line-height: 24px;">{{year.year}}</span>
+                                    <div class="dropdown">                                     
+                                        <IconButton 
+                                            :buttonClass="['btn-sm btn-light btn-transparent ms-1 me-1 p-2']" 
                                             data-bs-toggle="dropdown"
                                             aria-expanded="false"
-                                            title="Операції з даними за рік">
-                                        <span class="mdi mdi-cog"></span>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" @click="editYear(year)">
-                                                <span class="mdi mdi-pencil text-warning me-2"></span>
-                                                Редагувати дані
-                                            </a>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <a class="dropdown-item" @click="deleteYear(year)">
-                                                <span class="mdi mdi-trash-can text-danger me-2"></span>
-                                                Видалити дані
-                                            </a>
-                                        </li>
-                                    </ul>
+                                            :size="16"
+                                            title="Операції з даними за рік"
+                                            :mdiPath="pathMdiCog" />
+    
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center" @click="editYear(year)">                                    
+                                                    <SvgIcon type="mdi" :path="pathMdiPencil" :size="16" class="text-warning me-2" />
+                                                    <span>Редагувати дані</span>                                    
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center" @click="deleteYear(year)">                                    
+                                                    <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="16" class="text-danger me-2" />
+                                                    <span>Видалити дані</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </th>
                         </tr>
@@ -136,12 +141,14 @@
                     № ПГО <span>02-0022-1</span>
                 </div> -->
                 <div class="card rounded-0 mb-4">
-                    <div class="card-header thin-header align-items-center">
+                    <div class="card-header thin-header align-items-center p-2">
                         <h6>Інформація по будинку</h6>
-                        <button class="btn btn-sm btn-light btn-transparent"
-                                @click="openHouseInfoForm">
-                            <span class="mdi mdi-pencil"></span>
-                        </button>
+                        <IconButton 
+                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
+                                title="Редагувати додаткову інформацію"
+                                @click="openHouseInfoForm"
+                                :size="16"
+                                :mdiPath="pathMdiPencil" />                        
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered table-sm mb-0" id="houseInfo">
@@ -178,12 +185,14 @@
                     </div>
                 </div>
                 <div class="card rounded-0">
-                    <div class="card-header thin-header align-items-center">
+                    <div class="card-header thin-header align-items-center p-2">
                         <h6>Додаткова інформація</h6>
-                        <button class="btn btn-sm btn-light btn-transparent"
-                                @click="openHouseAdditionalDataForm">
-                            <span class="mdi mdi-pencil"></span>
-                        </button>
+                        <IconButton 
+                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
+                                title="Редагувати додаткову інформацію"
+                                @click="openHouseAdditionalDataForm"
+                                :size="16"
+                                :mdiPath="pathMdiPencil" />              
                     </div>
                     <div class="card-body" v-if="info && (info.length > 0)">
                         <template v-if="houseInfo('house_additional_data') !== ''">
@@ -216,12 +225,21 @@
 import { computed }             from 'vue'
 import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap';
+import SvgIcon                  from '@jamescoyle/vue-icon';
+import { 
+    mdiCog, 
+    mdiPlusThick,    
+    mdiPencil,
+    mdiTrashCan
+} from '@mdi/js';
 
 import HouseYearForm            from './HouseYearForm.vue';
 import HouseInfoForm            from './HouseInfoForm.vue';
 import HouseAdditionalDataForm  from './HouseAdditionalDataForm.vue';
 import TableRow                 from '../../../components/ui/TableRow.vue';
 import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
+import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
+
 
 import YearsCUD                 from '../../../mixins/YearsCUD';
 
@@ -267,7 +285,12 @@ export default {
             houseInfoIsEditable: false,
             meta: {},
             years: [],
-            perPage: 5
+            perPage: 5,
+            pathMdiPlusThick: mdiPlusThick,
+            pathMdiCog: mdiCog,         
+            pathMdiPencil: mdiPencil,
+            pathMdiTrashCan: mdiTrashCan,
+         
         }
     },
     provide() {
@@ -343,7 +366,9 @@ export default {
         HouseYearForm,
         HouseInfoForm,
         HouseAdditionalDataForm,
-        YearsPaginator
+        YearsPaginator,
+        IconButton,
+        SvgIcon
     }
 }
 </script>

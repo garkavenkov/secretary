@@ -52,7 +52,7 @@
                 <template v-slot:header>
                     <tr>
                         <th v-if="inSelectMode" 
-                            class="align-middle text-center">
+                            class="align-middle text-center show-record">
                             <input  type="checkbox"
                                     class="form-check-input cursor-pointer"
                                     name="selectAll"
@@ -61,7 +61,7 @@
                                     :checked="isAllSelected"
                                     @change="toggleSelectAll($event)"/>
                         </th>
-                        <th v-else></th>                        
+                        <th v-else class="show-record"></th>                        
                         <th data-sort-field="number" data-field-type="string" class="sortable">Номер</th>
                         <th>Населений пункт</th>
                         <th data-sort-field="address" data-field-type="string" class="sortable">Місцезнаходження / адреса</th>
@@ -73,9 +73,14 @@
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id"
                             :class="{ 'table-primary': record.selected }">
-                        <td class="text-center" v-if="!inSelectMode" style="line-height: 24px;">
-                            <router-link :to="{name: 'households.show', params: { id: record.id }}">
-                                <span class="mdi mdi-eye-outline"></span>
+                        <td class="text-center show-record" v-if="!inSelectMode" style="line-height: 24px;">
+                            <router-link    :to="{name: 'households.show', params: { id: record.id }}" 
+                                            title="Перейти до інформації по домогосподарству">
+                                <SvgIcon 
+                                    type="mdi" 
+                                    :path="pathMdiFolderEye" 
+                                    :size="18" />
+
                             </router-link>                            
                         </td>
                         <td v-else class="text-center" style="line-height: 24px;">                            
@@ -121,14 +126,16 @@ import { mapGetters, mapActions }   from 'vuex';
 import { Modal }                    from 'bootstrap'
 import { computed }                 from 'vue';
 
-import ExportDataForm               from '../../mixins/ExportDataForm';
+import SvgIcon                      from '@jamescoyle/vue-icon';
+import { mdiFolderEyeOutline }      from '@mdi/js';
 
-import DataTable                    from '../../components/ui/DataTable.vue';
+import ExportDataForm               from '../../mixins/ExportDataForm';
 
 import HouseholdForm                from './HouseholdForm.vue';
 import HouseholdFilterForm          from './HouseholdFilterForm.vue';
-import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
 
+import DataTable                    from '../../components/ui/DataTable.vue';
+import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
 import ButtonAdd                    from '../../components/ui/Buttons/ButtonAdd.vue';
 import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSelectRecords.vue';
 import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
@@ -146,7 +153,8 @@ export default {
         ButtonSelectRecords,
         ButtonExportRecordForm,
         ButtonRefreshData,
-        ButtonFilter
+        ButtonFilter,
+        SvgIcon        
     },
     mixins: [ExportDataForm],
     data() {
@@ -179,7 +187,8 @@ export default {
                 settlement_name: 'Населений пункт',
                 household_head: 'Голова домогосподарства',                
                 household_number: 'Домогосподарство',                
-            },         
+            },   
+            pathMdiFolderEye: mdiFolderEyeOutline,
         }
     },
     provide() {

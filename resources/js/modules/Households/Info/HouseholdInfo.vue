@@ -23,10 +23,15 @@
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="d-flex justify-content-between align-items-center border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">
                     <span class="fw-bold">Власник<span v-show="info.owners && (info.owners.length > 1)">и</span></span>
-                    <button class="btn btn-sm btn-light ms-3 text-muted" @click="newOwner" title="Додати нового власника">
-                        <span class="mdi mdi-plus"></span>
-                        Додати власника
-                    </button>
+
+                    <IconButton 
+                            :buttonClass="[' btn-sm btn-light ms-3 text-muted']"
+                            title="Додати нового власника"
+                            @click="newOwner"
+                            :size="16"
+                            :mdiPath="pathMdiPlus" 
+                            caption="Додати власника"/>
+
                 </div>
                 <div class="owners-wrapper">
                     <template v-if="info.owners && (info.owners.length > 0)">
@@ -37,17 +42,22 @@
                                 <span>{{ owner.name }}</span>
                                 <span class="text-muted">{{ owner.address }}</span>
                             </div>
-                            <div class="align-self-center">
-                                <button class="btn btn-sm btn-outline-warning btn-transparent"
-                                        title="Редагувати інформацію про власника"
-                                        @click="editOwner(owner)">
-                                    <span class="mdi mdi-pencil"></span>
-                                </button>
-                                <button class="btn btn-sm btn-outline-danger btn-transparent ms-3"
-                                        title="Видалити інформацію про власника"
-                                        @click="deleteOwner(owner.id)">
-                                    <span class="mdi mdi-trash-can-outline"></span>
-                                </button>
+                            <div class="d-flex align-self-center">
+
+                                <IconButton 
+                                    :buttonClass="['btn-sm btn-outline-warning btn-transparent p-2']"
+                                    title="Редагувати інформацію про власника"
+                                    @click="editOwner(owner)"
+                                    :size="16"
+                                    :mdiPath="pathMdiPencil"/>
+
+                                <IconButton 
+                                    :buttonClass="['btn-sm btn-outline-danger btn-transparent ms-3 p-2']"
+                                    title="Видалити інформацію про власника"
+                                    @click="deleteOwner(owner.id)"
+                                    :size="16"
+                                    :mdiPath="pathMdiTrashCan"/>
+
                             </div>
                         </div>
                     </template>
@@ -106,8 +116,14 @@
 import { Modal }        from 'bootstrap'
 import { computed }     from '@vue/reactivity'
 import { mapGetters }   from 'vuex';
+import { 
+    mdiPlus,
+    mdiPencil,
+    mdiTrashCan
+ }  from '@mdi/js';
 
 import OwnerForm        from './OwnerForm.vue';
+import IconButton       from '../../../components/ui/Buttons/IconButton.vue';
 
 export default {
     name: 'HouseholdInfo',
@@ -121,7 +137,10 @@ export default {
             },
             modalTitle: '',
             modalSubmitCaption: '',
-            action: ''
+            action: '',
+            pathMdiPlus: mdiPlus,
+            pathMdiPencil: mdiPencil,
+            pathMdiTrashCan: mdiTrashCan
         }
     },
     provide() {
@@ -225,7 +244,8 @@ export default {
         }
     },
     components: {
-        OwnerForm
+        OwnerForm,
+        IconButton,
     }
 }
 

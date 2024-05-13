@@ -1,60 +1,68 @@
 <template>
     <div id="members">
         <div class="p-3 d-flex justify-content-between" v-if="members.length > 0">
-            <div>
-                <button type="button"
-                        id="additionalParams"
+            <div class="d-flex">
+             
+                <IconButton 
                         v-if="members.length > 0"
-                        class="btn btn-sm btn-outline-secondary me-2"
+                        id="additionalParams"
+                        :buttonClass="['btn-sm btn-outline-secondary me-2']"
                         title="Додаткова інформація о родині"
-                        @click="openAdditionalParamsForm">
-                    <span class="mdi mdi-tag-multiple me-1"></span>
-                    Інформація о родині
-                </button>
-                <button type="button"
+                        @click="openAdditionalParamsForm"
+                        :size="16"
+                        :mdiPath="pathMdiTagMultiple" 
+                        :captionClass="['lh-24']"
+                        caption="Інформація о родині"/>
+                
+                <IconButton 
+                        v-if="members.length > 1"                        
                         id="membersComposition"
-                        v-if="members.length > 1"
-                        :disabled="members.length <= 1"
-                        class="btn btn-sm btn-outline-secondary"
+                        :buttonClass="['btn-sm btn-outline-secondary']"
                         title="Встановити родинні відносини"
-                        @click="openHouseholdMembersComposition">
-                    <span class="mdi mdi-family-tree me-1"></span>
-                    Родинні відносини
-                </button>
-                <button type="button"
-                        class="ms-2 btn btn-sm btn-outline-secondary"
-                        :class="{'active' : showAllMembers}"
+                        @click="openHouseholdMembersComposition"
+                        :size="16"
+                        :captionClass="['lh-24']"
+                        :mdiPath="pathMdiFamilyTree" 
+                        caption="Родинні відносини"/>              
+
+                <IconButton 
+                        v-if="hiddenMemebersExist"                                               
+                        :buttonClass="['ms-2 btn-sm btn-outline-secondary', showAllMembers ? 'active' : '']"
                         title="Відобразити померлих і відсутніх"
-                        v-if="hiddenMemebersExist"
-                        @click="showAllMembers = !showAllMembers">
-                    <span class="mdi mdi-account-question-outline me-1"></span>
-                    Відобразити всіх
-                </button>
-                <button type="button"
-                        class="ms-2 btn btn-sm btn-outline-secondary"
+                        @click="showAllMembers = !showAllMembers"
+                        :size="16"
+                        :captionClass="['lh-24']"
+                        :mdiPath="pathMdiAccountQuestion" 
+                        caption="Відобразити всіх"/>
+
+                <IconButton 
+                        v-if="viewMode == 'table'"                                           
+                        :buttonClass="['ms-2 btn-sm btn-outline-secondary']"
                         title="Додати нового члена домогосподарства"
-                        v-if="viewMode == 'table'"
-                        @click="newMember">
-                    <span class="mdi mdi-account-plus-outline me-1"></span>
-                    Новий член
-                </button>
+                        @click="newMember"
+                        :size="16"
+                        :captionClass="['lh-24']"
+                        :mdiPath="pathMdiAccountPlus" 
+                        caption="Новий член"/>
+
             </div>
-            <div>
-                <button type="button"
+
+            <div class="d-flex">
+                <IconButton                                                                  
+                        :buttonClass="['btn-sm btn-outline-secondary me-2', viewMode == 'card' ? 'active' : '']"
                         title="Режим карток"
-                        class="btn btn-sm btn-outline-secondary me-2"
-                        :class="{'active' : viewMode == 'card'}"
-                        @click="viewMode = 'card'">
-                    <span class="mdi mdi-card-account-details-outline"></span>
-                </button>
-                <button type="button"
+                        @click="viewMode = 'card'"
+                        :size="16"                        
+                        :mdiPath="pathMdiAccountDetails" />                
+             
+                <IconButton                                                                
+                        :buttonClass="['btn-sm btn-outline-secondary', viewMode == 'table' ? 'active' : '']"
                         title="Режим таблиці"
-                        class="btn btn-sm btn-outline-secondary"
-                        :class="{'active' : viewMode == 'table'}"
-                        @click="viewMode = 'table'">
-                    <span class="mdi mdi-table-account"></span>
-                </button>
+                        @click="viewMode = 'table'"
+                        :size="16"                        
+                        :mdiPath="pathMdiTableAccount" />
             </div>
+
         </div>
         <div class="px-3 d-flex gap-3 flex-wrap" :class="{'pt-3': members.length == 0}">
             <template v-if="viewMode == 'card'">
@@ -63,77 +71,104 @@
                         v-for="member in shownMembers"
                         :key="member.id"
                         @dblclick="showHouseholdMemberInfo(member)">
+
                     <div class="card-header d-flex justify-content-between">
                         <div>
                             <div class="member-surname">{{member.surname}}</div>
                             <div class="member-name">{{member.name}} {{member.patronymic}}</div>
                         </div>
-                        <span   class="mdi mdi-head-alert-outline" 
-                                id="householdHead"
-                                title="Голова домогосподарства" 
-                                v-if="member.family_relationship_type == 'голова домогосподарства'">
-                        </span>
-                        <!-- <h4 class="mt-2" >
-                        </h4> -->
+
+                        <SvgIcon 
+                            v-if="member.family_relationship_type == 'голова домогосподарства'"
+                            type="mdi" 
+                            :path="pathMdiHeadAlert" 
+                            :size="16"
+                            title="Голова домогосподарства" 
+                            id="householdHead"/>                    
+                       
                     </div>
                     <div class="card-body">
-                        <div class="d-flex mb-2 align-items-center family-relationship">
-                            <span class="mdi mdi-family-tree me-3" style="color:blue" title="Родинні відносини"></span>
-                            {{member.family_relationship_type}}
+                        
+                        <div class="d-flex mb-2 align-items-center family-relationship">                           
+                            <SvgIcon
+                                type="mdi" 
+                                :path="pathMdiFamilyTree" 
+                                :size="16"
+                                class="me-3"
+                                style="color:blue" 
+                                title="Родинні відносини"/>
+                            <span>{{member.family_relationship_type}}</span>
                         </div>
+
                         <div class="d-flex mb-2 flex-column">
-                            <div>
-                                <span class="mdi mdi-cake-variant-outline me-3" style="color:red" title="Дата народження"></span>
+                            <div>                                
+                                <SvgIcon
+                                    type="mdi" 
+                                    :path="pathMdiCakeVariant"
+                                    :size="16"
+                                    class="me-3"
+                                    style="color:red" 
+                                    title="Дата народження"/>
                                 <span>{{formatedDate(member.birthdate)}}</span>
                             </div>
-                            <div v-if="member.death_date != null">
-                                <span class="mdi mdi-coffin me-3" title="Дата смерті"></span>
+                            <div v-if="member.death_date != null">                                
+                                <SvgIcon
+                                    type="mdi" 
+                                    :path="pathMdiCoffin"
+                                    :size="16"
+                                    class="me-3"
+                                    title="Дата смерті"/>
                                 <span>{{formatedDate(member.death_date)}}</span>
                             </div>
-                        </div>
-                        <!-- <div class="member-sex">
-                            <span v-if="member.sex=='чоловіча'" title="чоловік">
-                                &#9794;
-                            </span>
-                            <span v-else title="жінка">
-                                &#9792;
-                            </span>
-                        </div> -->
+                        </div>                      
                     </div>
                     <div class="card-footer d-flex justify-content-between">
-                        <div class="dropdown">
-                            <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
-                                    type="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                    title="Друк документів">
-                                <span class="mdi mdi-file"></span>
-                            </button>
+                        <div class="dropdown">                           
+                            <IconButton 
+                                :buttonClass="['btn-sm btn-outline-secondary btn-transparent dropdown-toggle p-1']" 
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                :size="18"
+                                title="Друк документів"
+                                :mdiPath="pathMdiFileCog" />
+
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item" @click="openFamilyCompositionReportForm(member)">
-                                        <span class="mdi mdi-human-capacity-decrease me-2" style="color:blue;"></span>
-                                        Довідка про склад родини
+                                    <a class="dropdown-item cursor-pointer" @click="openFamilyCompositionReportForm(member)">                                        
+                                        <SvgIcon
+                                            type="mdi" 
+                                            :path="pathMdiFamilyTree"
+                                            :size="18"
+                                            style="color: blue;"
+                                            class="me-3"/>
+                                        <span>Довідка про склад родини</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <button class="btn btn-sm btn-outline-secondary btn-transparent" @click="showHouseholdMemberInfo(member)">
-                            <span class="mdi mdi-eye-outline"></span>
-                        </button>
+                        <IconButton 
+                                :buttonClass="['btn-sm btn-outline-secondary btn-transparent p-1']" 
+                                @click="showHouseholdMemberInfo(member)"
+                                :size="18"
+                                title="Перейти до інформації по члену домогосподарства"
+                                :mdiPath="pathMdiAccountEye" />
+                     
                     </div>
                 </div>
                 <div class="new-member">
-                    <div title="Додати нового члена домогосподарства" @click="newMember">
-                        <span class="mdi mdi-account-plus-outline mdi-36px"></span>
+                    <div title="Додати нового члена домогосподарства" @click="newMember">                     
+                        <SvgIcon
+                            type="mdi" 
+                            :path="pathMdiAccountPlus"
+                            :size="36"/>
                     </div>
                 </div>
             </template>
             <template v-else>
                 <table class="table table-sm table-bordered">
-                    <thead>
+                    <thead class="table-secondary">
                         <tr>
-                            <th></th>
+                            <th class="show-record"></th>
                             <th>Прізвище</th>
                             <th>Ім'я</th>
                             <th>По батькові</th>
@@ -149,13 +184,12 @@
                         <tr v-for="member in shownMembers"
                             :key="member.id"
                             :class="{'table-primary' : member.family_relationship == 'голова домогосподарства'}">
-                            <td class="text-center">
-                                <!-- <button class="btn btn-sm btn-outline-secondary"
-                                        @click="showHouseholdMemberInfo(member)">
-                                    <span class="mdi mdi-eye-outline"></span>
-                                </button> -->
-                                <router-link :to="{name: 'household-member', params: { id: member.id }}">
-                                    <span class="mdi mdi-eye-outline"></span>
+                            <td class="text-center show-record">                                
+                                <router-link :to="{name: 'household-member', params: { id: member.id }}" title="Перейти до інформації по члену домогосподарства">                                
+                                    <SvgIcon
+                                        type="mdi" 
+                                        :path="pathMdiAccountEye"
+                                        :size="18"/>
                                 </router-link>
                             </td>
                             <td>{{member.surname}}</td>
@@ -204,14 +238,30 @@
 import { Modal }                        from 'bootstrap';
 import { computed, nextTick }           from 'vue';
 import { mapGetters }                   from 'vuex';
+import SvgIcon                          from '@jamescoyle/vue-icon';
+
+import { 
+    mdiTagMultiple,
+    mdiFamilyTree,
+    mdiAccountQuestionOutline,
+    mdiAccountPlusOutline,
+    mdiAccountDetailsOutline,
+    mdiAccountEyeOutline,
+    mdiTableAccount,
+    mdiHeadAlertOutline,
+    mdiCakeVariantOutline,
+    mdiCoffin,
+    mdiFileCogOutline
+} from '@mdi/js';
 
 import DateFormat                       from '../../../mixins/DateFormat';
 
 import HouseholdMemberForm              from './HouseholdMemberForm.vue';
-import HouseholdMemberInfo              from './HouseholdMemberInfo.vue';
+// import HouseholdMemberInfo              from './HouseholdMemberInfo.vue';
 import HouseholdMembersComposition      from './HouseholdMembersComposition.vue';
 import FamilyCompositionReportForm      from './FamilyCompositionReportForm.vue';
 import HouseholdMembersAdditionalParams from './HouseholdMembersAdditionalParams.vue';
+import IconButton                       from '../../../components/ui/Buttons/IconButton.vue';
 
 export default {
     name: 'HouseholdMembers',
@@ -251,7 +301,19 @@ export default {
             compositionReportFromIsVisible: false,
             householdMembersComposition: false,
             availableLinks: {},
-            establishedLinks: {}
+            establishedLinks: {},
+
+            pathMdiTagMultiple: mdiTagMultiple,
+            pathMdiFamilyTree: mdiFamilyTree,
+            pathMdiAccountQuestion: mdiAccountQuestionOutline,
+            pathMdiAccountPlus: mdiAccountPlusOutline,
+            pathMdiAccountDetails: mdiAccountDetailsOutline,
+            pathMdiTableAccount: mdiTableAccount,
+            pathMdiHeadAlert: mdiHeadAlertOutline,
+            pathMdiCakeVariant: mdiCakeVariantOutline,
+            pathMdiCoffin: mdiCoffin,
+            pathMdiFileCog: mdiFileCogOutline,
+            pathMdiAccountEye: mdiAccountEyeOutline
         }
     },
     provide() {
@@ -399,10 +461,12 @@ export default {
     },
     components: {
         HouseholdMemberForm,
-        HouseholdMemberInfo,
+        // HouseholdMemberInfo,
         HouseholdMembersComposition,
         FamilyCompositionReportForm,
-        HouseholdMembersAdditionalParams
+        HouseholdMembersAdditionalParams,
+        IconButton,
+        SvgIcon
     }
 }
 </script>
@@ -437,8 +501,8 @@ export default {
     #householdHead {
         position: absolute;
         right: 4px;
-        top: 0px;
-        font-size: 18px;
+        top: 4px;
+        // font-size: 18px;
         color: var(--bs-primary);
     }
     
@@ -470,7 +534,7 @@ export default {
         align-items: center;
         transition: all 0.3s ease;
 
-        span {
+        svg {
             color: #6c757d;
         }
 
@@ -478,7 +542,7 @@ export default {
             border-color: var(--bs-primary);
             transform: scale(1.1);
 
-            span {
+            svg {
                 color: var(--bs-primary);
             }
         }

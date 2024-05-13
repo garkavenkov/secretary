@@ -4,27 +4,28 @@
     <div class="card" v-if="household?.id">
         <div class="card-header">
             <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card--number">{{ household.number }}</span></h5>
-            <div class="dropdown" v-show="$route.name == 'households.show.info'">
-                <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
-                        type="button"
+            <div class="dropdown" v-show="$route.name == 'households.show.info'">                
+                <IconButton 
+                        :buttonClass="['btn-sm btn-sm btn-outline-secondary btn-transparent dropdown-toggle p-2']" 
                         data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    <span class="mdi mdi-cogs"></span>
-                </button>
+                        aria-expanded="false"
+                        :size="16"
+                        :mdiPath="pathMdiCogs" />
+
                 <ul class="dropdown-menu">
                     <li>
-                        <a  class="dropdown-item"
+                        <a  class="dropdown-item d-flex align-items-center cursor-pointer"
                             @click="openHouseholdForm">
-                                <span class="mdi mdi-pencil text-warning me-1"></span>
-                                Редагувати
+                                <SvgIcon type="mdi" :path="pathMdiPencil" :size="16" class="text-warning me-2" />
+                                <span>Редагувати</span>
                         </a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
-                        <a  class="dropdown-item"
-                            @click="deleteHouseholdCard(household.id)">
-                                <span class="mdi mdi-trash-can text-danger me-1"></span>
-                                Видалити
+                        <a  class="dropdown-item d-flex align-items-center cursor-pointer"
+                            @click="deleteHouseholdCard(household.id)">                                
+                                <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="16" class="text-danger me-2" />
+                                <span>Видалити</span>
                         </a>
                     </li>
                 </ul>
@@ -32,34 +33,11 @@
         </div>
         <div class="card-body">
 
-            <div class="px-3 pt-3">
-                <ul class="nav nav-tabs px-3">
-                    <li class="nav-item">
-                        <router-link :to="{name: 'households.show.info'}" class="nav-link">
-                            <span class="mdi mdi-information-outline"></span>
-                            Основна інформація
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link :to="{name: 'households.show.members'}" class="nav-link">
-                            <span class="mdi mdi-account-multiple-outline"></span>
-                            Члени домогосподарства
-                        </router-link>
-                    </li>
-                    <li class="nav-item" >
-                        <router-link :to="{name: 'households.show.house.years'}" class="nav-link">
-                            <span class="mdi mdi-home-outline"></span>
-                            Будинок / Квартира
-                        </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link :to="{name: 'households.show.land.years'}" class="nav-link">
-                            <span class="mdi mdi-land-fields"></span>
-                            Земля
-                        </router-link>
-                    </li>
-                </ul>
-                <router-view></router-view>
+            <div class="px-3 pt-3">             
+                <NavigationTabs :tabs="tabs" :navigationClass="['px-3']"/>
+                <div class="pt-2">
+                    <router-view></router-view>
+                </div>                
             </div>
         </div>
     </div>    
@@ -81,16 +59,32 @@
 
 import { mapGetters }   from 'vuex';
 import { Modal }        from 'bootstrap';
+import SvgIcon          from '@jamescoyle/vue-icon';
+
+import {
+    mdiCogs,
+    mdiLandFields,
+    mdiInformationOutline,
+    mdiHomeOutline,
+    mdiAccountMultipleOutline,
+    mdiPencil,
+    mdiTrashCan
+} from '@mdi/js';
 
 import HouseholdForm    from './HouseholdForm.vue';
 import Page404          from '../../components/Page404.vue';
+import NavigationTabs   from '../../components/ui/NavigationTabs.vue';
+import IconButton       from '../../components/ui/Buttons/IconButton.vue';
 
 export default {
     name: 'ShowCard',
     inheritAttrs:false,
     components: {
         HouseholdForm,
-        Page404
+        Page404,
+        NavigationTabs,
+        IconButton,
+        SvgIcon
     },
     props: {
         'id': {
@@ -113,6 +107,32 @@ export default {
                 special_marks: '',
                 additional_data: ''
             },
+            tabs: [
+                {
+                    routeName: 'households.show.info',
+                    iconPath: mdiInformationOutline,
+                    title: 'Головна інформація' 
+                },
+                {
+                    routeName: 'households.show.members',
+                    iconPath: mdiAccountMultipleOutline,
+                    title: 'Члени домогосподарства' 
+                },
+                {
+                    routeName: 'households.show.house.years',
+                    iconPath: mdiHomeOutline,
+                    title: 'Будинок / Квартира' 
+                },
+                {
+                    routeName: 'households.show.land.years',
+                    iconPath: mdiLandFields,
+                    title: 'Земля' 
+                },
+            ],
+
+            pathMdiCogs: mdiCogs,
+            pathMdiPencil: mdiPencil,
+            pathMdiTrashCan: mdiTrashCan
         }
     },
     provide() {

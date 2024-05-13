@@ -3,42 +3,46 @@
         <div class="row">
             <div class="col-md-9">
                 <table class="table table-sm table-bordered table-years">
-                    <thead>
+                    <thead class="bg-body-secondary">
                         <tr>
-                            <th>
-                                <button type="button"
-                                        class="btn btn-sm btn-outline-secondary btn-transparent"
-                                        @click="newYearData">
-                                    <span class="mdi mdi-plus-thick"></span>
-                                    Додати рік
-                                </button>
+                            <th>                                
+                                <IconButton 
+                                    :buttonClass="['btn-sm btn-outline-primary btn-transparent']"                             
+                                    title="Додати інформацію за рік"
+                                    @click="newYearData($event)"
+                                    :size="16"
+                                    :mdiPath="pathMdiPlusThick" 
+                                    :captionClass="['lh-24']"
+                                    caption="Додати рік"/>
                             </th>
-                            <th v-for="year in years"
-                                :key="year.year">
-                                {{year.year}}
-                                <div class="dropdown">
-                                    <button class="btn btn-sm btn-light btn-transparent"
-                                            type="button"
-                                            data-bs-toggle="dropdown"
-                                            aria-expanded="false"
-                                            title="Операції з даними за рік">
-                                        <span class="mdi mdi-cog"></span>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" @click="editYear(year)">
-                                                <span class="mdi mdi-pencil text-warning me-2"></span>
-                                                Редагувати дані
-                                            </a>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <a class="dropdown-item" @click="deleteYear(year)">
-                                                <span class="mdi mdi-trash-can text-danger me-2"></span>
-                                                Видалити дані
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <th v-for="year in years" :key="year.year">                                
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <span style="line-height: 24px;">{{year.year}}</span>
+                                    <div class="dropdown">
+
+                                        <IconButton 
+                                                :buttonClass="['btn-sm btn-light btn-transparent ms-1 me-1 p-2']" 
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false"
+                                                :size="16"
+                                                title="Операції з даними за рік"
+                                                :mdiPath="pathMdiCog" />
+    
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center" @click="editYear(year)">                                    
+                                                    <SvgIcon type="mdi" :path="pathMdiPencil" :size="16" class="text-warning me-2" />
+                                                    <span>Редагувати дані</span>                                    
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item d-flex align-items-center" @click="deleteYear(year)">                                    
+                                                    <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="16" class="text-danger me-2" />
+                                                    <span>Видалити дані</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </th>
                         </tr>
@@ -81,12 +85,14 @@
             </div>
             <div class="col-md-3">
                 <div class="card rounded-0">
-                    <div class="card-header thin-header align-items-center">
-                        <h6>Додаткова інформація</h6>
-                        <button class="btn btn-sm btn-light btn-transparent"
-                                @click="openLandAdditionalDataForm">
-                            <span class="mdi mdi-pencil"></span>
-                        </button>
+                    <div class="card-header thin-header align-items-center p-2">
+                        <h6>Додаткова інформація</h6>                        
+                        <IconButton 
+                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
+                                title="Редагувати додаткову інформацію"
+                                @click="openLandAdditionalDataForm"
+                                :size="16"
+                                :mdiPath="pathMdiPencil" />
                     </div>
                     <div class="card-body" v-if="info && (info.length > 0)">
                         <template v-if="landInfo('land_additional_data') !== ''">
@@ -117,6 +123,14 @@
 import { computed }             from 'vue';
 import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap';
+import SvgIcon                  from '@jamescoyle/vue-icon';
+import { 
+    mdiCog, 
+    mdiPlusThick,    
+    mdiPencil,
+    mdiTrashCan
+} from '@mdi/js';
+
 
 import TableRow                 from '../../../components/ui/TableRow.vue';
 import LandYearForm             from './LandYearForm.vue';
@@ -125,6 +139,7 @@ import YearsPaginator           from '../../../components/ui/YearsPaginator.vue'
 
 import NumberFormat             from '../../../mixins/NumberFormat';
 import YearsCUD                 from '../../../mixins/YearsCUD';
+import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
 
 export default {
     name: 'HouseholdLandYears',
@@ -150,7 +165,11 @@ export default {
             apiUrl: '/api/v1/household-lands',
             meta: {},
             years: [],
-            perPage: 5
+            perPage: 5,
+            pathMdiPlusThick: mdiPlusThick,
+            pathMdiCog: mdiCog,         
+            pathMdiPencil: mdiPencil,
+            pathMdiTrashCan: mdiTrashCan,
         }
     },
     provide() {
@@ -207,7 +226,9 @@ export default {
         TableRow,
         LandYearForm,
         LandAdditionalDataForm,
-        YearsPaginator
+        YearsPaginator,
+        IconButton,
+        SvgIcon
     }
 }
 </script>

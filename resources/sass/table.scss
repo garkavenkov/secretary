@@ -92,5 +92,19 @@ table thead {
             opacity: 1;
         }
     }
+
+    th.show-record {
+        width: 50px;      
+    }
+
+    // td.show-record {
+    //     a {
+    //         color: var(--bs-gray-500);
+
+    //         &:hover {
+    //             color: var(--bs-primary);
+    //         }
+    //     }
+    // }
 }
 

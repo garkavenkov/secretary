@@ -12080,6 +12080,9 @@ table thead th.sortable.descending:after {
   content: "↑";
   opacity: 1;
 }
+table thead th.show-record {
+  width: 50px;
+}
 
 .swal-dialog-title {
   font-size: 1.3rem !important;
