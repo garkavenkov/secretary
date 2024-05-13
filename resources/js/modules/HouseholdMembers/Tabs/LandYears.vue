@@ -14,43 +14,25 @@
                             caption="Додати рік"/>
                 
                 </th>
-                <th v-for="year in years"                
-                    :key="year.year">
-                    <div class="d-flex align-items-center justify-content-end">
-                        <span style="line-height: 24px;">{{year.year}}</span>
-                        <div class="dropdown">
-    
-                            <IconButton 
-                                :buttonClass="['btn-sm btn-light btn-transparent ms-1 me-1 p-2']" 
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                :size="16"
-                                title="Операції з даними за рік"
-                                :mdiPath="pathMdiCog" />
-    
-                            <ul class="dropdown-menu dropdown-menu-end">                           
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" @click="landOwnedReport(year.year)">                                    
-                                        <SvgIcon type="mdi" :path="pathMdiLandFields" :size="16" class="text-success me-2" />
-                                        <span>Звіт про склад земельної ділянки</span>
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" @click="editYear(year)">                                    
-                                        <SvgIcon type="mdi" :path="pathMdiPencil" :size="16" class="text-warning me-2" />
-                                        <span>Редагувати дані</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" @click="deleteYear(year)">                                    
-                                        <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="16" class="text-danger me-2" />
-                                        <span>Видалити дані</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <th v-for="year in years" :key="year.year">
+
+                    <YearDropDownMenu 
+                            :year="year.year" 
+                            @editYear="editYear(year)" 
+                            @deleteYear="deleteYear(year)">
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" @click="landOwnedReport(year.year)">                                    
+                                <SvgIcon type="mdi" :path="pathMdiLandFields" :size="16" class="text-success me-2" />
+                                <span>Звіт про склад земельної ділянки</span>
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                    </YearDropDownMenu>
+
                 </th>
             </tr>
         </thead>
@@ -118,6 +100,7 @@ import TableRow                 from '../../../components/ui/TableRow.vue';
 import LandYearForm             from './LandYearForm.vue';
 import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
 import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
+import YearDropDownMenu         from '../../../components/ui/YearDropDownMenu.vue';
 
 import YearsCUD                 from '../../../mixins/YearsCUD';
 import PrepareDataForDownload   from '../../../mixins/PrepareDataForDownload';
@@ -130,7 +113,8 @@ export default {
         LandYearForm,
         YearsPaginator,
         IconButton,
-        SvgIcon
+        SvgIcon,
+        YearDropDownMenu
     },
     data() {
         return {

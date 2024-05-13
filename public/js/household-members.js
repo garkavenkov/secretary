@@ -705,15 +705,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _jamescoyle_vue_icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @jamescoyle/vue-icon */ "./node_modules/@jamescoyle/vue-icon/lib/svg-icon.vue");
-/* harmony import */ var _mdi_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mdi/js */ "./node_modules/@mdi/js/mdi.js");
+/* harmony import */ var _mdi_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @mdi/js */ "./node_modules/@mdi/js/mdi.js");
 /* harmony import */ var _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../components/ui/TableRow.vue */ "./resources/js/components/ui/TableRow.vue");
 /* harmony import */ var _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LandYearForm.vue */ "./resources/js/modules/HouseholdMembers/Tabs/LandYearForm.vue");
 /* harmony import */ var _components_ui_YearsPaginator_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../components/ui/YearsPaginator.vue */ "./resources/js/components/ui/YearsPaginator.vue");
 /* harmony import */ var _components_ui_Buttons_IconButton_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../components/ui/Buttons/IconButton.vue */ "./resources/js/components/ui/Buttons/IconButton.vue");
-/* harmony import */ var _mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../mixins/YearsCUD */ "./resources/js/mixins/YearsCUD.js");
-/* harmony import */ var _mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../mixins/PrepareDataForDownload */ "./resources/js/mixins/PrepareDataForDownload.js");
+/* harmony import */ var _components_ui_YearDropDownMenu_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../components/ui/YearDropDownMenu.vue */ "./resources/js/components/ui/YearDropDownMenu.vue");
+/* harmony import */ var _mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../mixins/YearsCUD */ "./resources/js/mixins/YearsCUD.js");
+/* harmony import */ var _mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../mixins/PrepareDataForDownload */ "./resources/js/mixins/PrepareDataForDownload.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -729,15 +730,17 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'MemberLandYearsTab',
-  mixins: [_mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_5__["default"], _mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  mixins: [_mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_6__["default"], _mixins_PrepareDataForDownload__WEBPACK_IMPORTED_MODULE_7__["default"]],
   components: {
     TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     LandYearForm: _LandYearForm_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     YearsPaginator: _components_ui_YearsPaginator_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     IconButton: _components_ui_Buttons_IconButton_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    SvgIcon: _jamescoyle_vue_icon__WEBPACK_IMPORTED_MODULE_0__["default"]
+    SvgIcon: _jamescoyle_vue_icon__WEBPACK_IMPORTED_MODULE_0__["default"],
+    YearDropDownMenu: _components_ui_YearDropDownMenu_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   data: function data() {
     return {
@@ -758,11 +761,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       years: [],
       meta: [],
       perPage: 5,
-      pathMdiCog: _mdi_js__WEBPACK_IMPORTED_MODULE_7__.mdiCog,
-      pathMdiPlusThick: _mdi_js__WEBPACK_IMPORTED_MODULE_7__.mdiPlusThick,
-      pathMdiLandFields: _mdi_js__WEBPACK_IMPORTED_MODULE_7__.mdiLandFields,
-      pathMdiPencil: _mdi_js__WEBPACK_IMPORTED_MODULE_7__.mdiPencil,
-      pathMdiTrashCan: _mdi_js__WEBPACK_IMPORTED_MODULE_7__.mdiTrashCan
+      pathMdiCog: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiCog,
+      pathMdiPlusThick: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiPlusThick,
+      pathMdiLandFields: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiLandFields,
+      pathMdiPencil: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiPencil,
+      pathMdiTrashCan: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiTrashCan
     };
   },
   methods: {
@@ -802,7 +805,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       });
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_8__.mapGetters)('HouseholdMembers', {
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_9__.mapGetters)('HouseholdMembers', {
     'owner_id': 'memberId',
     'member': 'member'
   })),
@@ -1983,35 +1986,18 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "bg-body-secondary"
 };
-var _hoisted_3 = {
-  "class": "d-flex align-items-center justify-content-end"
-};
-var _hoisted_4 = {
-  style: {
-    "line-height": "24px"
-  }
-};
-var _hoisted_5 = {
-  "class": "dropdown"
-};
-var _hoisted_6 = {
-  "class": "dropdown-menu dropdown-menu-end"
-};
-var _hoisted_7 = ["onClick"];
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Звіт про склад земельної ділянки", -1 /* HOISTED */);
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+var _hoisted_3 = ["onClick"];
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Звіт про склад земельної ділянки", -1 /* HOISTED */);
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
   "class": "dropdown-divider"
 })], -1 /* HOISTED */);
-var _hoisted_10 = ["onClick"];
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Редагувати дані", -1 /* HOISTED */);
-var _hoisted_12 = ["onClick"];
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Видалити дані", -1 /* HOISTED */);
-var _hoisted_14 = {
+var _hoisted_6 = {
   "class": "table-group-divider"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_IconButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("IconButton");
   var _component_SvgIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SvgIcon");
+  var _component_YearDropDownMenu = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("YearDropDownMenu");
   var _component_TableRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TableRow");
   var _component_YearsPaginator = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("YearsPaginator");
   var _component_LandYearForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LandYearForm");
@@ -2028,45 +2014,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8 /* PROPS */, ["mdiPath"])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.years, function (year) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
       key: year.year
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconButton, {
-      buttonClass: ['btn-sm btn-light btn-transparent ms-1 me-1 p-2'],
-      "data-bs-toggle": "dropdown",
-      "aria-expanded": "false",
-      size: 16,
-      title: "Операції з даними за рік",
-      mdiPath: $data.pathMdiCog
-    }, null, 8 /* PROPS */, ["mdiPath"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-      "class": "dropdown-item d-flex align-items-center",
-      onClick: function onClick($event) {
-        return $options.landOwnedReport(year.year);
-      }
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
-      type: "mdi",
-      path: $data.pathMdiLandFields,
-      size: 16,
-      "class": "text-success me-2"
-    }, null, 8 /* PROPS */, ["path"]), _hoisted_8], 8 /* PROPS */, _hoisted_7)]), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-      "class": "dropdown-item d-flex align-items-center",
-      onClick: function onClick($event) {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_YearDropDownMenu, {
+      year: year.year,
+      onEditYear: function onEditYear($event) {
         return _ctx.editYear(year);
-      }
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
-      type: "mdi",
-      path: $data.pathMdiPencil,
-      size: 16,
-      "class": "text-warning me-2"
-    }, null, 8 /* PROPS */, ["path"]), _hoisted_11], 8 /* PROPS */, _hoisted_10)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-      "class": "dropdown-item d-flex align-items-center",
-      onClick: function onClick($event) {
+      },
+      onDeleteYear: function onDeleteYear($event) {
         return _ctx.deleteYear(year);
       }
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
-      type: "mdi",
-      path: $data.pathMdiTrashCan,
-      size: 16,
-      "class": "text-danger me-2"
-    }, null, 8 /* PROPS */, ["path"]), _hoisted_13], 8 /* PROPS */, _hoisted_12)])])])])]);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+    }, {
+      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+          "class": "dropdown-item d-flex align-items-center",
+          onClick: function onClick($event) {
+            return $options.landOwnedReport(year.year);
+          }
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
+          type: "mdi",
+          path: $data.pathMdiLandFields,
+          size: 16,
+          "class": "text-success me-2"
+        }, null, 8 /* PROPS */, ["path"]), _hoisted_4], 8 /* PROPS */, _hoisted_3)]), _hoisted_5];
+      }),
+      _: 2 /* DYNAMIC */
+    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["year", "onEditYear", "onDeleteYear"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"d-flex align-items-center justify-content-end\">\n                        <span style=\"line-height: 24px;\">{{year.year}}</span>\n                        <div class=\"dropdown\">\n    \n                            <IconButton \n                                :buttonClass=\"['btn-sm btn-light btn-transparent ms-1 me-1 p-2']\" \n                                data-bs-toggle=\"dropdown\"\n                                aria-expanded=\"false\"\n                                :size=\"16\"\n                                title=\"Операції з даними за рік\"\n                                :mdiPath=\"pathMdiCog\" />\n    \n                            <ul class=\"dropdown-menu dropdown-menu-end\">                           \n                                <li>\n                                    <a class=\"dropdown-item d-flex align-items-center\" @click=\"landOwnedReport(year.year)\">                                    \n                                        <SvgIcon type=\"mdi\" :path=\"pathMdiLandFields\" :size=\"16\" class=\"text-success me-2\" />\n                                        <span>Звіт про склад земельної ділянки</span>\n                                    </a>\n                                </li>\n                                <li><hr class=\"dropdown-divider\"></li>\n                                <li>\n                                    <a class=\"dropdown-item d-flex align-items-center\" @click=\"editYear(year)\">                                    \n                                        <SvgIcon type=\"mdi\" :path=\"pathMdiPencil\" :size=\"16\" class=\"text-warning me-2\" />\n                                        <span>Редагувати дані</span>\n                                    </a>\n                                </li>\n                                <li>\n                                    <a class=\"dropdown-item d-flex align-items-center\" @click=\"deleteYear(year)\">                                    \n                                        <SvgIcon type=\"mdi\" :path=\"pathMdiTrashCan\" :size=\"16\" class=\"text-danger me-2\" />\n                                        <span>Видалити дані</span>\n                                    </a>\n                                </li>\n                            </ul>\n                        </div>\n                    </div> ")]);
+  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $data.years,
     field: "total",
     rowTitle: "<b>Площа земельних ділянок - усього</b>"
