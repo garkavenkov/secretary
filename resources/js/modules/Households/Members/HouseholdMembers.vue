@@ -6,60 +6,55 @@
                 <IconButton 
                         v-if="members.length > 0"
                         id="additionalParams"
-                        :buttonClass="['btn-sm btn-outline-secondary me-2']"
+                        buttonClass="btn-sm btn-outline-secondary me-2"
                         title="Додаткова інформація о родині"
-                        @click="openAdditionalParamsForm"
-                        :size="16"
-                        :mdiPath="pathMdiTagMultiple" 
-                        :captionClass="['lh-24']"
-                        caption="Інформація о родині"/>
+                        @click="openAdditionalParamsForm"                        
+                        :mdiPath="pathMdiTagMultiple">
+                    Інформація о родині
+                </IconButton>
                 
                 <IconButton 
                         v-if="members.length > 1"                        
                         id="membersComposition"
-                        :buttonClass="['btn-sm btn-outline-secondary']"
+                        buttonClass="btn-sm btn-outline-secondary"
                         title="Встановити родинні відносини"
                         @click="openHouseholdMembersComposition"
-                        :size="16"
-                        :captionClass="['lh-24']"
-                        :mdiPath="pathMdiFamilyTree" 
-                        caption="Родинні відносини"/>              
+                        :mdiPath="pathMdiFamilyTree">
+                    Родинні відносини
+                </IconButton>
 
                 <IconButton 
                         v-if="hiddenMemebersExist"                                               
                         :buttonClass="['ms-2 btn-sm btn-outline-secondary', showAllMembers ? 'active' : '']"
                         title="Відобразити померлих і відсутніх"
                         @click="showAllMembers = !showAllMembers"
-                        :size="16"
-                        :captionClass="['lh-24']"
-                        :mdiPath="pathMdiAccountQuestion" 
-                        caption="Відобразити всіх"/>
+                        :mdiPath="pathMdiAccountQuestion">
+                    Відобразити всіх
+                </IconButton>
 
                 <IconButton 
                         v-if="viewMode == 'table'"                                           
-                        :buttonClass="['ms-2 btn-sm btn-outline-secondary']"
+                        buttonClass="ms-2 btn-sm btn-outline-secondary"
                         title="Додати нового члена домогосподарства"
                         @click="newMember"
-                        :size="16"
-                        :captionClass="['lh-24']"
-                        :mdiPath="pathMdiAccountPlus" 
-                        caption="Новий член"/>
+                        :mdiPath="pathMdiAccountPlus">
+                    Новий член
+                </IconButton>
 
             </div>
 
             <div class="d-flex">
+
                 <IconButton                                                                  
                         :buttonClass="['btn-sm btn-outline-secondary me-2', viewMode == 'card' ? 'active' : '']"
                         title="Режим карток"
                         @click="viewMode = 'card'"
-                        :size="16"                        
                         :mdiPath="pathMdiAccountDetails" />                
              
                 <IconButton                                                                
                         :buttonClass="['btn-sm btn-outline-secondary', viewMode == 'table' ? 'active' : '']"
                         title="Режим таблиці"
                         @click="viewMode = 'table'"
-                        :size="16"                        
                         :mdiPath="pathMdiTableAccount" />
             </div>
 
@@ -81,8 +76,8 @@
                         <SvgIcon 
                             v-if="member.family_relationship_type == 'голова домогосподарства'"
                             type="mdi" 
+                            :size="18"
                             :path="pathMdiHeadAlert" 
-                            :size="16"
                             title="Голова домогосподарства" 
                             id="householdHead"/>                    
                        
@@ -125,7 +120,7 @@
                     <div class="card-footer d-flex justify-content-between">
                         <div class="dropdown">                           
                             <IconButton 
-                                :buttonClass="['btn-sm btn-outline-secondary btn-transparent dropdown-toggle p-1']" 
+                                buttonClass="btn-outline-secondary btn-transparent dropdown-toggle p-1" 
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                                 :size="18"
@@ -147,7 +142,7 @@
                             </ul>
                         </div>
                         <IconButton 
-                                :buttonClass="['btn-sm btn-outline-secondary btn-transparent p-1']" 
+                                buttonClass="btn-outline-secondary btn-transparent p-1" 
                                 @click="showHouseholdMemberInfo(member)"
                                 :size="18"
                                 title="Перейти до інформації по члену домогосподарства"

@@ -5,8 +5,9 @@
         <div class="card-header">
             <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card--number">{{ household.number }}</span></h5>
             <div class="dropdown" v-show="$route.name == 'households.show.info'">                
+                
                 <IconButton 
-                        :buttonClass="['btn-sm btn-sm btn-outline-secondary btn-transparent dropdown-toggle p-2']" 
+                        buttonClass="btn-outline-secondary btn-transparent dropdown-toggle p-2" 
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                         :size="16"

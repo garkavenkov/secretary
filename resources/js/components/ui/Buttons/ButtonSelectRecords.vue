@@ -1,25 +1,19 @@
 <template>
 
-    <button type="button"
-            class="position-relative ms-2 btn btn-sm"
-            :class="btnClass"
-            @click="$emit('click')"
-            :title="title">
-        
-        <SvgIcon type="mdi" :path="pathCheckBox" :size="size" v-if="!inSelectMode" />
-        <SvgIcon type="mdi" :path="pathCloseBox" :size="size" v-else />
-
-        <span   class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+    <IconButton :class="buttonClass" :title="title" :size="size" :mdiPath="path"  @click="$emit('click', $event)" >
+        <template v-slot:default>
+            <span   class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 v-if="selectedRecordsCount > 0">
             {{ selectedRecordsCount }}
         </span>        
-    </button>
+        </template>
+    </IconButton>
 
 </template>
 
 <script>
 
-import SvgIcon                  from '@jamescoyle/vue-icon'
+import IconButton from './IconButton.vue';
 import { 
     mdiCheckboxMultipleOutline,
     mdiCloseBoxMultipleOutline
@@ -28,40 +22,39 @@ import {
 export default {
     name: 'ButtonSelectRecords',
     props: {
-        'title': {
+        title: {
             type: String,
             required: false,
             default: ''
         },
-        'selectedRecordsCount': {
+        selectedRecordsCount: {
             type: Number,
             required: false,
             default: 0
         },
-        'inSelectMode': {
+        inSelectMode: {
             type: Boolean,
             required: true
         },
-        'btnClass': {
-            type: [String, Array],
+        buttonClass: {
+            type: [Array, String],
             required: false,
             default: ''
         },
-        'size': {
-            type: Number,
+        size: {
+            type: [String, Number],
             required: false,
             default: 18
         },
     },
-    emits: ['click'],
-    data() {
-        return {
-            pathCheckBox: mdiCheckboxMultipleOutline,
-            pathCloseBox: mdiCloseBoxMultipleOutline
+    emits: ['click'],    
+    computed: {
+        path() {
+            return this.inSelectMode ? mdiCloseBoxMultipleOutline : mdiCheckboxMultipleOutline;
         }
     },
-    components: {
-        SvgIcon
+    components: {        
+        IconButton
     }
 }
 </script>

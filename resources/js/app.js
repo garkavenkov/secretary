@@ -19,11 +19,19 @@ const app = createApp({});
 import SideBarMenu  from './components/SideBarMenu.vue';
 import Breadcrumbs  from './components/ui/Breadcrumbs.vue';
 import SearchForm   from './components/ui/SearchForm.vue'
-// import Page404      from './components/404.vue';
+import ButtonAdd    from './components/ui/Buttons/ButtonAdd.vue';
+import ButtonEdit   from './components/ui/Buttons/ButtonEdit.vue';
+import ButtonDelete from './components/ui/Buttons/ButtonDelete.vue';
 
 app.component('sidebar-menu', SideBarMenu);
 app.component('breadcrumbs', Breadcrumbs);
 app.component('search-form', SearchForm);
+app.component('ButtonAdd', ButtonAdd);
+app.component('ButtonEdit', ButtonEdit);
+app.component('ButtonDelete', ButtonDelete);
+
+
+// import Page404      from './components/404.vue';
 // app.component('Page404', Page404);
 
 app.config.unwrapInjectedRef = true;

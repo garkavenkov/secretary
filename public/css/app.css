@@ -11999,7 +11999,6 @@ input:-webkit-autofill:active{
 .card .card-header .dictionary-name__wrapper {
   display: flex;
   align-items: center;
-  height: 1.875rem;
 }
 .card .card-header .dictionary-name__wrapper > span {
   font-size: 16px;
@@ -12080,8 +12079,10 @@ table thead th.sortable.descending:after {
   content: "↑";
   opacity: 1;
 }
-table thead th.show-record {
+
+table th.show-record {
   width: 50px;
+  text-align: center;
 }
 
 .swal-dialog-title {
@@ -12094,4 +12095,13 @@ table thead th.show-record {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.nav-link {
+  user-drag: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }

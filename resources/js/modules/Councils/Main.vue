@@ -1,29 +1,21 @@
-<template>
-    <breadcrumbs />
+<template>    
 
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Довідник 'Міські / сільські ради'</span>
-                <button class="btn btn-sm btn-primary" @click="openCouncilForm">
-                    <span class="mdi mdi-plus"></span>
-                </button>
-            </div>
-            <div>
-                <button class="btn btn-sm btn-outline-secondary">
-                    <span class="mdi mdi-filter-outline"></span>
-                </button>
-            </div>
+                <ButtonAdd buttonClass="btn-primary p-2" @click="openCouncilForm" />                
+            </div>           
         </div>
         <div class="card-body">
             <DataTable
                     :dataTable="councils"
+                    tableClass="table-bordered table-hover"
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>
-                        <th></th>
-                        <th>Громада</th>
-                        <!-- <th>Тип</th> -->
+                        <th class="show-record"></th>
+                        <th>Громада</th>                        
                         <th>Назва </th>
                         <th>Адреса</th>
                         <th>ЕДРПОУ</th>
@@ -33,13 +25,11 @@
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
-                        <td>
-                            <router-link :to="{name: 'councils.show', params: { id: record.id }}">
-                                <span class="mdi mdi-eye-outline"></span>
-                            </router-link>
-                        </td>
+                       
+                        <td class="text-center">
+                            <DictionaryShowRecordLink routeName="councils.show" :routeParamId="record.id" />
+                        </td>                       
                         <td>{{record.community.name}}</td>
-                        <!-- <td>{{record.council_type.name}}</td> -->
                         <td>{{record.name}}</td>
                         <td>{{record.address}}</td>
                         <td>{{record.edrpou}}</td>
@@ -57,17 +47,19 @@
 </template>
 
 <script>
-import { mapGetters }   from 'vuex';
-import { Modal }        from 'bootstrap';
+import { mapGetters }           from 'vuex';
+import { Modal }                from 'bootstrap';
 
-import DataTable        from '../../components/ui/DataTable.vue';
-import CouncilForm      from './Form.vue';
+import CouncilForm              from './Form.vue';
+import DataTable                from '../../components/ui/DataTable.vue';
+import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'CouncilsMain',
     components: {
         DataTable,
-        CouncilForm
+        CouncilForm,
+        DictionaryShowRecordLink
     },
     data() {
         return {

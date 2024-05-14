@@ -8,33 +8,34 @@
                 <span>Члени домогосподарств</span>                
 
                 <ButtonRefreshData 
-                        @click="$store.dispatch('HouseholdMembers/fetchRecords')" />
+                        @click="$store.dispatch('HouseholdMembers/fetchRecords')"
+                        buttonClass="btn-sm btn-outline-primary p-2" />
 
                 <ButtonSelectRecords 
                         v-if="members.length > 0" 
                         :title="inSelectMode ? 'Вимкнути режим відбору записів' : 'Увімкнути режим відбору записів'" 
-                        :btnClass="[inSelectMode ? 'btn-primary' : 'btn-outline-primary' ]"
+                        :buttonClass="['position-relative ms-2 p-2 btn btn-sm', inSelectMode ? 'btn-primary' : 'btn-outline-primary']"
                         :inSelectMode="inSelectMode"
                         :selectedRecordsCount="selectedRecordsCount"
-                        @click="toggleSelectMode" />
+                        @click="toggleSelectMode" />                  
 
                 <div class="d-flex gap-2 ms-4" v-if="selectedRecordsCount  > 0">                                                 
 
                     <ButtonDocumentGenerationForm 
-                        @click="openDocumentsForm" />
+                            @click="openDocumentsForm"
+                            buttonClass="btn-sm btn-outline-primary p-2" />
 
-                    <ButtonExportRecordForm 
-                        @click="openExportRecordForm" />
+                    <ButtonExportRecordForm  
+                            @click="openExportRecordForm" 
+                            buttonClass="btn-sm btn-outline-primary p-2" />
                     
                 </div>
             </div>
             <div>
-                
                 <ButtonFilter 
-                    @click.exact="openFilterForm"
-                    @click.ctrl="resetFilter"
-                    :isFiltered="filter.isFiltered"
-                    title="Фільтр членів домогосподарств"/>
+                    @click="openFilterForm"                    
+                    :buttonClass="['btn-sm btn-outline-secondary p-2', isFiltered ? 'active': '' ]"    
+                    title="Фільтр членів домогосподарств" />                
 
             </div>
         </div>
@@ -139,7 +140,6 @@ import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSele
 import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
 import ButtonDocumentGenerationForm from '../../components/ui/Buttons/ButtonDocumentGenerationForm.vue';
 import ButtonRefreshData            from '../../components/ui/Buttons/ButtonRefreshData.vue';
-// import SvgButton                    from '../../components/ui/Buttons/SvgButton.vue';
 import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
 import ButtonFilter                 from '../../components/ui/Buttons/ButtonFilter.vue';
 
@@ -218,6 +218,7 @@ export default {
             'pagination', 
             'entities', 
             'inSelectMode', 
+            'isFiltered',
             'isIndeterminate', 
             'selectedRecords',
             'selectedRecordsCount', 

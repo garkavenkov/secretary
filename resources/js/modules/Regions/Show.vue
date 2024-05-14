@@ -1,17 +1,19 @@
 <template>
     <breadcrumbs v-if="region.name"/>
 
+    <!--
     <div class="row" v-if="region.name">
         <div class="col-md-8 mx-auto">
             <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація</span>
-                        <button class="btn btn-sm btn-light btn-transparent"
+
+                        <ButtonEdit 
+                                buttonClass="btn-light btn-transparent p-2"
                                 @click="openRegionForm"
-                                title="Редагувати дані">
-                            <span class="mdi mdi-pencil"></span>
-                        </button>
+                                title="Редагувати дані" />
+                        
                     </div>
                 </div>
                 <div class="card-body">
@@ -37,11 +39,12 @@
                         <div class="card-header">
                             <div class="dictionary-name__wrapper flex-grow-1 justify-content-between">
                                 <span>Районі в регіоні</span>
-                                <button class="btn btn-sm btn-light btn-transparent"
+
+                                <ButtonAdd 
+                                        buttonClass="btn-light btn-transparent p-2"
                                         title="Додати район"
-                                        @click="openDistrictForm">
-                                    <span class="mdi mdi-plus"></span>
-                                </button>
+                                        @click="openDistrictForm" />
+                                
                             </div>
                         </div>
                         <div class="card-body">
@@ -78,6 +81,90 @@
             </div>
         </div>
     </div>
+    -->
+    <div class="row" v-if="region.name">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
+                        <span>Інформація</span>
+
+                        <ButtonEdit 
+                                buttonClass="btn-light btn-transparent p-2"
+                                @click="openRegionForm"
+                                title="Редагувати дані" />
+                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                Назва
+                            </div>
+                            <div class="col-md-6">
+                                {{ region.name }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                Адміністративний центр
+                            </div>
+                            <div class="col-md-6">
+                                {{ region.center }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dictionary-name__wrapper flex-grow-1 justify-content-between">
+                        <span>Районі в регіоні</span>
+
+                        <ButtonAdd 
+                            buttonClass="btn-light btn-transparent p-2"
+                            title="Додати район"
+                            @click="openDistrictForm" />
+                                
+                    </div>
+                </div>
+                <div class="card-body">
+                    <template v-if="region.districts.length > 0">
+                        <DataTable  :dataTable="region.districts"
+                                    tableClass="table-bordered"
+                                    tableHeaderClass="table-secondary">
+                            <template v-slot:header>
+                                <tr>
+                                    <th>Назва</th>
+                                    <th>Центр</th>
+                                </tr>
+                            </template>
+                            <template v-slot:default="slotProps">
+                                <tr     v-for="record in slotProps.paginatedData"
+                                        :key="record.id">
+                                    <td>
+                                        <router-link :to="{name: 'districts.show', params: { id: record.id }}">
+                                            {{record.name}}
+                                        </router-link>
+                                    </td>
+                                    <td>{{ record.center }}</td>
+                                </tr>
+                            </template>
+                        </DataTable>
+                    </template>
+                    <template v-else>
+                        <div class="text-center text-muted">
+                            Відсутня інформація по районах в данному данному регіоні
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <Page404 v-else
         :message="`Регіон з id:${id} відсутній`" 
         resource="img/404/dictionary.png"  
@@ -101,10 +188,12 @@ import { Modal }        from 'bootstrap';
 import { computed }     from 'vue';
 import { mapGetters }   from 'vuex';
 
-import DataTable        from '../../components/ui/DataTable.vue';
 import RegionForm       from './Form.vue';
 import DistrictForm     from '../Districts/Form.vue';
+import DataTable        from '../../components/ui/DataTable.vue';
 import Page404          from '../../components/Page404.vue';
+import ButtonEdit       from '../../components/ui/Buttons/ButtonEdit.vue';
+import ButtonAdd        from '../../components/ui/Buttons/ButtonAdd.vue';
 
 export default {
     name: 'RegionsShow',
@@ -140,7 +229,7 @@ export default {
         openRegionForm() {
             let myModal = new Modal(document.getElementById('RegionForm'))
 
-            this.modalTitle         = 'Редагувати регіон';
+            this.modalTitle         = 'Редагувати інформацію о регіоні';
             this.modalSubmitCaption = 'Зберегти';
 
             this.regionFormData.name      = this.region.name;
@@ -168,7 +257,9 @@ export default {
         DataTable,
         RegionForm,
         DistrictForm,
-        Page404
+        Page404,
+        ButtonEdit,
+        ButtonAdd
     }
 }
 </script>

@@ -2,7 +2,7 @@
     <breadcrumbs v-if="community.name" />
 
     <div class="row" v-if="community.name">
-        <div class="col-md-8 mx-auto">
+        <!-- <div class="col-md-8 mx-auto">
             <div class="card" >
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
@@ -111,8 +111,90 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+        <div class="col-md-5">
+            <div class="card" >
+                <div class="card-header">
+                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
+                        <span>Інформація о громаді</span>
+                        <ButtonEdit buttonClass="btn-light btn-transparent p-2" @click="openCommunityForm" />                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="row mb-3">
+                            <div class="col-md-5">Назва</div>
+                            <div class="col-md-7">{{ community.name }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">Адміністративний центр</div>
+                            <div class="col-md-7">{{ community.center }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">Адреса</div>
+                            <div class="col-md-7">{{ community.address }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">ЕДРПОУ</div>
+                            <div class="col-md-7">{{ community.edrpou }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">КОАТУУ</div>
+                            <div class="col-md-7">{{ community.koatuu }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">Район</div>
+                            <div class="col-md-7">
+                                <router-link :to="{name: 'districts.show', params: {id: community.district.id}}">
+                                    {{ community.district.name }}
+                                </router-link>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-5">Регіон</div>
+                            <div class="col-md-7">
+                                <router-link :to="{name: 'regions.show', params: {id: community.district.region.id}}">
+                                    {{ community.district.region.name }}
+                                </router-link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
         </div>
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
+                        <span>Міські / сільські ради в громаді</span>
+                        <ButtonAdd buttonClass="btn-light btn-transparent p-2" title="Додати раду" @click="openCouncilForm"/>                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <DataTable  :dataTable="community.councils"
+                                tableClass="table-bordered table-hover"
+                                tableHeaderClass="table-secondary">
+                        <template v-slot:header>
+                            <tr>
+                                <th>Назва</th>
+                                <th>Адреса</th>
+                            </tr>
+                        </template>
+                        <template v-slot:default="slotProps">
+                            <tr     v-for="record in slotProps.paginatedData"
+                                    :key="record.id">
+                                <td>
+                                    <router-link :to="{name: 'councils.show', params: { id: record.id }}">{{record.name}}</router-link>
+                                </td>
+                                <td>{{ record.address }}</td>
+                            </tr>
+                        </template>
+                    </DataTable>
+                </div>                
+            </div>
+        </div>        
     </div>
+
     <Page404 v-else
         :message="`Громада з id:${id} відсутня`" 
         resource="img/404/dictionary.png"  

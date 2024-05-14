@@ -6,17 +6,15 @@
                 <table class="table table-sm table-bordered table-years">
                     <thead class="bg-body-secondary">
                         <tr>
-                            <th>
-                                
-                                <IconButton 
-                                    :buttonClass="['btn-sm btn-outline-primary btn-transparent']"                             
-                                    title="Додати інформацію за рік"
-                                    @click="newYearData($event)"
-                                    :size="16"
-                                    :mdiPath="pathMdiPlusThick" 
-                                    :captionClass="['lh-24']"
-                                    caption="Додати рік"/>
-
+                            <th class="align-middle">
+                                  
+                                <ButtonAdd 
+                                        @click="newYearData($event)" 
+                                        :buttonClass="['btn-sm btn-outline-primary btn-transparent']"
+                                        title="Додати інформацію за рік">
+                                    Додати рік
+                                </ButtonAdd>                                
+                            
                             </th>
                             <th v-for="year in years" :key="year.year">
                                 
@@ -122,12 +120,13 @@
                 <div class="card rounded-0 mb-4">
                     <div class="card-header thin-header align-items-center p-2">
                         <h6>Інформація по будинку</h6>
-                        <IconButton 
-                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
-                                title="Редагувати додаткову інформацію"
-                                @click="openHouseInfoForm"
+
+                        <ButtonEdit 
+                                @click="openHouseInfoForm" 
                                 :size="16"
-                                :mdiPath="pathMdiPencil" />                        
+                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
+                                title="Редагувати інформацію по будинку" />
+                      
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered table-sm mb-0" id="houseInfo">
@@ -166,12 +165,13 @@
                 <div class="card rounded-0">
                     <div class="card-header thin-header align-items-center p-2">
                         <h6>Додаткова інформація</h6>
-                        <IconButton 
-                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
-                                title="Редагувати додаткову інформацію"
-                                @click="openHouseAdditionalDataForm"
+
+                        <ButtonEdit 
+                                @click="openHouseAdditionalDataForm" 
                                 :size="16"
-                                :mdiPath="pathMdiPencil" />              
+                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
+                                title="Редагувати додаткову інформацію" />
+                                
                     </div>
                     <div class="card-body" v-if="info && (info.length > 0)">
                         <template v-if="houseInfo('house_additional_data') !== ''">
@@ -204,22 +204,13 @@
 import { computed }             from 'vue'
 import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap';
-import SvgIcon                  from '@jamescoyle/vue-icon';
-import { 
-    mdiCog, 
-    mdiPlusThick,    
-    mdiPencil,
-    mdiTrashCan
-} from '@mdi/js';
 
 import HouseYearForm            from './HouseYearForm.vue';
 import HouseInfoForm            from './HouseInfoForm.vue';
 import HouseAdditionalDataForm  from './HouseAdditionalDataForm.vue';
 import TableRow                 from '../../../components/ui/TableRow.vue';
 import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
-import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
 import YearDropDownMenu         from '../../../components/ui/YearDropDownMenu.vue';
-
 
 import YearsCUD                 from '../../../mixins/YearsCUD';
 
@@ -265,12 +256,7 @@ export default {
             houseInfoIsEditable: false,
             meta: {},
             years: [],
-            perPage: 5,
-            pathMdiPlusThick: mdiPlusThick,
-            pathMdiCog: mdiCog,         
-            pathMdiPencil: mdiPencil,
-            pathMdiTrashCan: mdiTrashCan,
-         
+            perPage: 5
         }
     },
     provide() {
@@ -346,10 +332,8 @@ export default {
         HouseYearForm,
         HouseInfoForm,
         HouseAdditionalDataForm,
-        YearsPaginator,
-        IconButton,
-        SvgIcon,
-        YearDropDownMenu
+        YearsPaginator,        
+        YearDropDownMenu,        
     }
 }
 </script>

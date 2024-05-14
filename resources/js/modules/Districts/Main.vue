@@ -1,28 +1,29 @@
-<template>
-    <breadcrumbs />
+<template>    
 
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Довідник 'Райони'</span>
-                <button class="btn btn-sm btn-primary"
-                        @click="openDistrictForm">
-                    <span class="mdi mdi-plus"></span>
-                </button>
-            </div>
-            <div>
-                <button class="btn btn-sm btn-outline-secondary">
-                    <span class="mdi mdi-filter-outline"></span>
-                </button>
-            </div>
+
+                <ButtonAdd 
+                    @click="openDistrictForm"
+                    buttonClass="btn-primary p-2"
+                    title="Додати новий район" />
+               
+                <ButtonRefreshData 
+                    buttonClass="btn-outline-primary ms-2 p-2"   
+                    @click="$store.dispatch('Districts/fetchRecords')" />
+           
+            </div>            
         </div>
         <div class="card-body">
             <DataTable
                     :dataTable="districts"
+                    tableClass="table-bordered table-hover"
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>
-                        <th></th>
+                        <th class="show-record"></th>
                         <th>Назва района</th>
                         <th>Адміністративний центр</th>
                         <th>Область</th>
@@ -31,11 +32,9 @@
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
-                        <td>
-                            <router-link :to="{name: 'districts.show', params: { id: record.id }}">
-                                <span class="mdi mdi-eye-outline"></span>
-                            </router-link>
-                        </td>
+                        <td class="text-center">
+                            <DictionaryShowRecordLink routeName="districts.show" :routeParamId="record.id" />
+                        </td>                       
                         <td>{{record.name}}</td>
                         <td>{{record.center}}</td>
                         <td>{{record.region.name}}</td>
@@ -52,17 +51,21 @@
 </template>
 
 <script>
-import { mapGetters }   from 'vuex';
-import { Modal }        from 'bootstrap';
+import { mapGetters }           from 'vuex';
+import { Modal }                from 'bootstrap';
 
-import DataTable        from '../../components/ui/DataTable.vue';
-import DistrictForm     from './Form.vue';
+import DistrictForm             from './Form.vue';
+import DataTable                from '../../components/ui/DataTable.vue';
+import ButtonRefreshData        from '../../components/ui/Buttons/ButtonRefreshData.vue';
+import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'DistrictsMain',
     components: {
         DataTable,
-        DistrictForm
+        DistrictForm,        
+        ButtonRefreshData,
+        DictionaryShowRecordLink
     },
     data() {
         return {

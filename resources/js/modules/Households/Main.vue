@@ -1,29 +1,26 @@
 <template>
-    <!-- <breadcrumbs /> -->
-
+ 
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Облікові картки</span>
 
-                <ButtonAdd @click="addCard" title="Додати картку домогосподарства" />
+                <ButtonAdd @click="addCard" title="Додати картку домогосподарства" class="btn-sm btn-primary p-2"/>
 
                 <ButtonRefreshData 
                         @click="$store.dispatch('Households/fetchRecords')"
-                        buttonClass="ms-2" />
+                        buttonClass="btn-outline-primary p-2 ms-2" />
 
                 <ButtonSelectRecords 
                         v-if="households.length > 0" 
                         :title="inSelectMode ? 'Вимкнути режим відбору записів' : 'Увімкнути режим відбору записів'" 
-                        :btnClass="[inSelectMode ? 'btn-primary' : 'btn-outline-primary' ]"
+                        :buttonClass="['position-relative ms-2 p-2', inSelectMode ? 'btn-primary' : 'btn-outline-primary']"
                         :inSelectMode="inSelectMode"
                         :selectedRecordsCount="selectedRecordsCount"
                         @click="toggleSelectMode" />     
 
-                <div class="d-flex gap-2 ms-4" v-if="selectedRecordsCount  > 0">                                                 
-
-                    <ButtonExportRecordForm  @click="openExportRecordForm" />
-
+                <div class="d-flex gap-2 ms-4" v-if="selectedRecordsCount  > 0">
+                    <ButtonExportRecordForm  @click="openExportRecordForm" buttonClass="btn-outline-primary p-2"/>
                 </div>
 
             </div>
@@ -31,11 +28,10 @@
             <div>
 
                 <ButtonFilter 
-                    @click.exact="openFilterForm"
-                    @click.ctrl="resetFilter"
-                    :isFiltered="filter.isFiltered"
-                    title="Фільтр облікових карток"/>
-               
+                    :buttonClass="['btn-outline-secondary p-2', isFiltered ? 'active': '' ]"    
+                    @click="openFilterForm"                    
+                    title="Фільтр облікових карток" />
+                    
             </div>
         </div>
         <div class="card-body">
@@ -52,7 +48,7 @@
                 <template v-slot:header>
                     <tr>
                         <th v-if="inSelectMode" 
-                            class="align-middle text-center show-record">
+                            class="show-record">
                             <input  type="checkbox"
                                     class="form-check-input cursor-pointer"
                                     name="selectAll"
@@ -73,17 +69,16 @@
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id"
                             :class="{ 'table-primary': record.selected }">
-                        <td class="text-center show-record" v-if="!inSelectMode" style="line-height: 24px;">
-                            <router-link    :to="{name: 'households.show', params: { id: record.id }}" 
-                                            title="Перейти до інформації по домогосподарству">
-                                <SvgIcon 
-                                    type="mdi" 
-                                    :path="pathMdiFolderEye" 
-                                    :size="18" />
+                        <td class="text-center show-record" v-if="!inSelectMode">
 
-                            </router-link>                            
+                            <DictionaryShowRecordLink 
+                                    routeName="households.show" 
+                                    :routeParamId="record.id" 
+                                    :mdiIconPath="pathRouterLinkIcon" 
+                                    title="Перейти до інформації по домогосподарству" />                            
+                                            
                         </td>
-                        <td v-else class="text-center" style="line-height: 24px;">                            
+                        <td v-else class="text-center show-record">
                             <input  class="form-check-input cursor-pointer"
                                     type="checkbox"
                                     v-model="record.selected"/>
@@ -126,8 +121,7 @@ import { mapGetters, mapActions }   from 'vuex';
 import { Modal }                    from 'bootstrap'
 import { computed }                 from 'vue';
 
-import SvgIcon                      from '@jamescoyle/vue-icon';
-import { mdiFolderEyeOutline }      from '@mdi/js';
+import { mdiFolderHomeOutline }     from '@mdi/js';
 
 import ExportDataForm               from '../../mixins/ExportDataForm';
 
@@ -136,11 +130,11 @@ import HouseholdFilterForm          from './HouseholdFilterForm.vue';
 
 import DataTable                    from '../../components/ui/DataTable.vue';
 import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
-import ButtonAdd                    from '../../components/ui/Buttons/ButtonAdd.vue';
 import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSelectRecords.vue';
 import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
 import ButtonRefreshData            from '../../components/ui/Buttons/ButtonRefreshData.vue';
 import ButtonFilter                 from '../../components/ui/Buttons/ButtonFilter.vue';
+import DictionaryShowRecordLink     from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'HouseholdsMain',
@@ -148,13 +142,12 @@ export default {
         DataTable,
         HouseholdForm,
         HouseholdFilterForm,
-        ExportRecordForm, 
-        ButtonAdd,       
+        ExportRecordForm,         
         ButtonSelectRecords,
         ButtonExportRecordForm,
         ButtonRefreshData,
         ButtonFilter,
-        SvgIcon        
+        DictionaryShowRecordLink
     },
     mixins: [ExportDataForm],
     data() {
@@ -188,7 +181,7 @@ export default {
                 household_head: 'Голова домогосподарства',                
                 household_number: 'Домогосподарство',                
             },   
-            pathMdiFolderEye: mdiFolderEyeOutline,
+            pathRouterLinkIcon: mdiFolderHomeOutline,
         }
     },
     provide() {
@@ -260,6 +253,7 @@ export default {
             'filter', 
             'pagination', 
             'entities', 
+            'isFiltered',
             'inSelectMode', 
             'isIndeterminate', 
             'selectedRecords',

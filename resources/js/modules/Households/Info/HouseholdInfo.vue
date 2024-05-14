@@ -23,14 +23,10 @@
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="d-flex justify-content-between align-items-center border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">
                     <span class="fw-bold">Власник<span v-show="info.owners && (info.owners.length > 1)">и</span></span>
-
-                    <IconButton 
-                            :buttonClass="[' btn-sm btn-light ms-3 text-muted']"
-                            title="Додати нового власника"
-                            @click="newOwner"
-                            :size="16"
-                            :mdiPath="pathMdiPlus" 
-                            caption="Додати власника"/>
+                  
+                    <ButtonAdd buttonClass="btn-sm btn-light ms-3 text-muted" title="Додати нового власника" @click="newOwner">
+                        Додати власника
+                    </ButtonAdd>
 
                 </div>
                 <div class="owners-wrapper">
@@ -42,21 +38,17 @@
                                 <span>{{ owner.name }}</span>
                                 <span class="text-muted">{{ owner.address }}</span>
                             </div>
-                            <div class="d-flex align-self-center">
+                            <div class="d-flex align-self-center">                               
 
-                                <IconButton 
-                                    :buttonClass="['btn-sm btn-outline-warning btn-transparent p-2']"
-                                    title="Редагувати інформацію про власника"
+                                <ButtonEdit 
                                     @click="editOwner(owner)"
-                                    :size="16"
-                                    :mdiPath="pathMdiPencil"/>
+                                    title="Редагувати інформацію про власника"
+                                    buttonClass="btn-outline-warning btn-transparent p-2" />
 
-                                <IconButton 
-                                    :buttonClass="['btn-sm btn-outline-danger btn-transparent ms-3 p-2']"
+                                <ButtonDelete
+                                    buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
                                     title="Видалити інформацію про власника"
-                                    @click="deleteOwner(owner.id)"
-                                    :size="16"
-                                    :mdiPath="pathMdiTrashCan"/>
+                                    @click="deleteOwner(owner.id)" />
 
                             </div>
                         </div>
@@ -108,7 +100,7 @@
         :formData="ownerData"
         :action="action"
         @refreshData="$store.dispatch('Households/fetchRecord', household_id)"
-        @getHouseholdAddress="ownerData.address = info.address"/>
+        @getHouseholdAddress="ownerData.address = info.address" />
 
 </template>
 
@@ -116,14 +108,8 @@
 import { Modal }        from 'bootstrap'
 import { computed }     from '@vue/reactivity'
 import { mapGetters }   from 'vuex';
-import { 
-    mdiPlus,
-    mdiPencil,
-    mdiTrashCan
- }  from '@mdi/js';
 
 import OwnerForm        from './OwnerForm.vue';
-import IconButton       from '../../../components/ui/Buttons/IconButton.vue';
 
 export default {
     name: 'HouseholdInfo',
@@ -137,10 +123,7 @@ export default {
             },
             modalTitle: '',
             modalSubmitCaption: '',
-            action: '',
-            pathMdiPlus: mdiPlus,
-            pathMdiPencil: mdiPencil,
-            pathMdiTrashCan: mdiTrashCan
+            action: '',            
         }
     },
     provide() {
@@ -201,7 +184,7 @@ export default {
 
                 e.dataTransfer.dropEffect = "move";
                 e.dataTransfer.effectAllowed = "move";
-                e.dataTransfer.setData('head', JSON.stringify({name: head, address: this.info.address}));
+                e.dataTransfer.setData('head', JSON.stringify({name: head, address: this.info.short_address}));
             }
         },
         dropHead(e) {
@@ -244,8 +227,7 @@ export default {
         }
     },
     components: {
-        OwnerForm,
-        IconButton,
+        OwnerForm,        
     }
 }
 

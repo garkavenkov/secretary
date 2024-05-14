@@ -9,12 +9,13 @@
                     <th class="align-middle">Коментар</th>
                     <th style="width:150px; text-align: center !important;">
                         <IconButton 
-                            :buttonClass="['btn-sm btn-outline-primary btn-transparent lh-24 d-inline-flex']"
-                            title="Додати подію"
-                            @click="newMovementEvent"
-                            :size="16"
-                            :mdiPath="pathMdiCalendar" 
-                            caption="Додати подію"/>
+                                buttonClass="btn-sm btn-outline-primary btn-transparent lh-24 d-inline-flex"
+                                title="Додати подію"
+                                @click="newMovementEvent"
+                                :size="16"
+                                :mdiPath="pathMdiCalendar">
+                            Додати подію
+                        </IconButton>
                     </th>
                 </tr>
             </thead>
@@ -25,19 +26,19 @@
                     <td>{{ movement.comment }}</td>
                     <td class="text-center">
                         <div class="d-flex justify-content-around">
-                            <IconButton 
-                                    :buttonClass="['btn-sm btn-outline-warning btn-transparent p-2']"
-                                    title="Редагувати подію"
-                                    @click="editMovementEvent(movement)"
-                                    :size="14"
-                                    :mdiPath="pathMdiPencil" />
 
-                            <IconButton 
-                                    :buttonClass="['btn-sm btn-outline-danger btn-transparent p-2']"
-                                    title="Видалити подію"
-                                    @click="deleteMovementEvent(movement.id)"
+                            <ButtonEdit 
+                                    buttonClass="btn-outline-warning btn-transparent p-2"
+                                    title="Редагувати інформацію про власника"
                                     :size="14"
-                                    :mdiPath="pathMdiTrashCan" />
+                                    @click="editMovementEvent(movement)" />
+
+                            <ButtonDelete
+                                    buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
+                                    title="Видалити інформацію про власника"
+                                    :size="14"
+                                    @click="deleteMovementEvent(movement.id)" />
+
                         </div>                                         
                     </td>
                 </tr>
@@ -51,13 +52,14 @@
             </span>
 
             <IconButton 
-                :buttonClass="['btn-sm btn-outline-primary lh-24']"
-                title="Додати подію"
-                @click="newMovementEvent"
-                :size="16"
-                :mdiPath="pathMdiCalendar" 
-                caption="Додати подію"/>
-            </div>
+                    buttonClass="btn-sm btn-outline-primary lh-24"
+                    title="Додати подію"
+                    @click="newMovementEvent"
+                    :size="16"
+                    :mdiPath="pathMdiCalendar">
+                Додати подію
+            </IconButton>
+        </div>
 
     </template>
 
@@ -89,7 +91,7 @@ export default {
     name: 'MemberMovementsTab',
     components: {
         MovementForm,
-        IconButton
+        IconButton,        
     },
     data() {
         return {
@@ -104,9 +106,7 @@ export default {
             modalTitle: '',
             modalSubmitCaption: '',
             movements: [],
-            pathMdiCalendar: mdiCalendar,
-            pathMdiPencil: mdiPencil,    
-            pathMdiTrashCan: mdiTrashCanOutline,
+            pathMdiCalendar: mdiCalendar,            
         }
     },
     provide() {

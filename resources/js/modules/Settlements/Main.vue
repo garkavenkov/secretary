@@ -1,26 +1,20 @@
 <template>
-    <breadcrumbs />
+ 
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Довідник 'Населенні пункти'</span>
-                <button class="btn btn-sm btn-primary" @click="openSettlementForm">
-                    <span class="mdi mdi-plus"></span>
-                </button>
-            </div>
-            <div>
-                <button class="btn btn-sm btn-outline-secondary">
-                    <span class="mdi mdi-filter-outline"></span>
-                </button>
-            </div>
+                <ButtonAdd buttonClass="btn-primary p-2" @click="openSettlementForm" />                
+            </div>         
         </div>
         <div class="card-body">
             <DataTable
                     :dataTable="settlements"
+                    tableClass="table-bordered table-hover"
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>
-                        <th></th>
+                        <th class="show-record"></th>
                         <th>Назва</th>
                         <th>Тип</th>
                         <th>Сільська рада</th>
@@ -32,11 +26,9 @@
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
-                        <td>
-                            <router-link :to="{name: 'settlements.show', params: { id: record.id }}">
-                                <span class="mdi mdi-eye-outline"></span>
-                            </router-link>
-                        </td>
+                        <td class="text-center">
+                            <DictionaryShowRecordLink routeName="settlements.show" :routeParamId="record.id" />                         
+                        </td>                        
                         <td>{{ record.name }}</td>
                         <td>{{ record.settlement_type.name }}</td>
                         <td>{{ record.council.name }}</td>
@@ -56,17 +48,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import { Modal } from 'bootstrap'
+import { mapGetters }           from 'vuex';
+import { Modal }                from 'bootstrap'
 
-import DataTable from '../../components/ui/DataTable.vue';
-import SettlementForm from './Form.vue';
+import SettlementForm           from './Form.vue';
+import DataTable                from '../../components/ui/DataTable.vue';
+import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'SettlementsMain',
     components: {
         DataTable,
-        SettlementForm
+        SettlementForm,
+        DictionaryShowRecordLink
     },
     data() {
         return {

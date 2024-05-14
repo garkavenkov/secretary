@@ -4,10 +4,8 @@
             :class="buttonClass"
             :title="title"
             @click="$emit('click', $event)">
-        <SvgIcon type="mdi" :path="mdiPath" :size="size" />
-        <span v-if="caption.length > 0" :class="captionClass">
-            {{ caption }}
-        </span>
+        <SvgIcon type="mdi" :path="mdiPath" :size="size" />        
+        <slot />
     </button>
 
 </template>
@@ -30,23 +28,13 @@ export default {
             type: String,
             required: false,
             default: ''
-        },
-        caption: {
-            type: String,
+        },   
+        buttonClass: {
+            type: [String, Array],
             required: false,
             default: ''
-        },
-        buttonClass: {
-            type: Array,
-            required: false,
-            default: () => []
-        },
-        captionClass: {
-            type: Array,
-            required: false,
-            default: () => []
-        }
-    },
+        },        
+    },    
     emits: ['click'],
     components: {
         SvgIcon
@@ -57,13 +45,9 @@ export default {
 <style lang="scss" scoped>
 
 button {
-
     display: flex;
     align-items: center;
-
-    span {
-        margin-left: 8px;
-    }
+    gap: 0.25rem;   
 }
 
 </style>

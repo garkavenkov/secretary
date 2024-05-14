@@ -2,95 +2,65 @@
     <breadcrumbs  v-if="settlement.name"/>
 
     <div class="row"  v-if="settlement.name">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-6 mx-auto">
             <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
-                        <span>Інформація о поселенні</span>
-                        <button class="btn btn-sm btn-light" @click="openSettlementForm" title="Редагувати дані">
-                            <span class="mdi mdi-pencil"></span>
-                        </button>
+                        <span>Інформація о населенному пункті</span>
+                        <ButtonEdit buttonClass="btn-light btn-transparent p-2" @click="openSettlementForm" />                        
                     </div>
                 <div>
             </div>
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                Назва
-                            </div>
-                            <div class="col-md-9">
-                                {{ settlement.name }}
-                            </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">Назва</div>
+                            <div class="col-md-8">{{ settlement.name }}</div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                Тип поселення
-                            </div>
-                            <div class="col-md-9">
-                                {{ settlement.settlement_type.name }}
-                            </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">Тип поселення</div>
+                            <div class="col-md-8">{{ settlement.settlement_type.name }}</div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                Внутрішній код
-                            </div>
-                            <div class="col-md-9">
-                                {{ settlement.inner_code }}
-                            </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">Внутрішній код</div>
+                            <div class="col-md-8">{{ settlement.inner_code }}</div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                Індекс
-                            </div>
-                            <div class="col-md-9">
-                                {{ settlement.postcode }}
-                            </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">Індекс</div>
+                            <div class="col-md-8">{{ settlement.postcode }}</div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                КАТОТТГ
-                            </div>
-                            <div class="col-md-9">
-                                {{ settlement.katottg }}
-                            </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">КАТОТТГ</div>
+                            <div class="col-md-8">{{ settlement.katottg }}</div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                Міська / сільська рада
-                            </div>
-                            <div class="col-md-9">
+                        <div class="row mb-3">
+                            <div class="col-md-4">Міська / сільська рада</div>
+                            <div class="col-md-8">
                                 <router-link :to="{name: 'councils.show', params: {id: settlement.council_id}}">
                                     {{ settlement.council.name }}
                                 </router-link>
                             </div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                Громада
-                            </div>
-                            <div class="col-md-9">
+                        <div class="row mb-3">
+                            <div class="col-md-4">Громада</div>
+                            <div class="col-md-8">
                                 <router-link :to="{name: 'communities.show', params: {id: settlement.council.community_id}}">
                                     {{ settlement.council.community.name }}
                                 </router-link>
                             </div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                Район
-                            </div>
-                            <div class="col-md-9">
+                        <div class="row mb-3">
+                            <div class="col-md-4">Район</div>
+                            <div class="col-md-8">
                                 <router-link :to="{name: 'districts.show', params: {id: settlement.council.community.district_id}}">
                                     {{ settlement.council.community.district.name }}
                                 </router-link>
                             </div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">
-                                Регіон
-                            </div>
-                            <div class="col-md-9">
+                        <div class="row mb-3">
+                            <div class="col-md-4">Регіон</div>
+                            <div class="col-md-8">
                                 <router-link :to="{name: 'regions.show', params: {id: settlement.council.community.district.region_id}}">
                                     {{ settlement.council.community.district.region.name }}
                                 </router-link>
@@ -101,6 +71,7 @@
             </div>
         </div>
     </div>
+
     <Page404 v-else
         :message="`Населенний пункт з id:${id} відсутній`" 
         resource="img/404/dictionary.png"  

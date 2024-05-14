@@ -11,7 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _jamescoyle_vue_icon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @jamescoyle/vue-icon */ "./node_modules/@jamescoyle/vue-icon/lib/svg-icon.vue");
+/* harmony import */ var _IconButton_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IconButton.vue */ "./resources/js/components/ui/Buttons/IconButton.vue");
 /* harmony import */ var _mdi_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mdi/js */ "./node_modules/@mdi/js/mdi.js");
 
 
@@ -19,7 +19,7 @@ __webpack_require__.r(__webpack_exports__);
   name: 'ButtonDocumentGenerationForm',
   props: {
     size: {
-      type: Number,
+      type: [String, Number],
       required: false,
       "default": 18
     },
@@ -29,7 +29,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": "Генерація документів"
     },
     buttonClass: {
-      type: String,
+      type: [String, Array],
       required: false,
       "default": ''
     }
@@ -41,7 +41,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   components: {
-    SvgIcon: _jamescoyle_vue_icon__WEBPACK_IMPORTED_MODULE_0__["default"]
+    IconButton: _IconButton_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -343,7 +343,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 
-// import SvgButton                    from '../../components/ui/Buttons/SvgButton.vue';
 
 
 
@@ -417,7 +416,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       reportWizardForm.show();
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_14__.mapGetters)('HouseholdMembers', ['members', 'filter', 'pagination', 'entities', 'inSelectMode', 'isIndeterminate', 'selectedRecords', 'selectedRecordsCount', 'isAllSelected', 'toggleSelectAllTitle'])),
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_14__.mapGetters)('HouseholdMembers', ['members', 'filter', 'pagination', 'entities', 'inSelectMode', 'isFiltered', 'isIndeterminate', 'selectedRecords', 'selectedRecordsCount', 'isAllSelected', 'toggleSelectAllTitle'])),
   components: {
     DataTable: _components_ui_DataTable_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     MembersFilterForm: _MembersFilterForm_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
@@ -761,11 +760,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       years: [],
       meta: [],
       perPage: 5,
-      pathMdiCog: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiCog,
-      pathMdiPlusThick: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiPlusThick,
-      pathMdiLandFields: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiLandFields,
-      pathMdiPencil: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiPencil,
-      pathMdiTrashCan: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiTrashCan
+      // pathMdiPlusThick: mdiPlusThick,
+      pathMdiLandFields: _mdi_js__WEBPACK_IMPORTED_MODULE_8__.mdiLandFields
     };
   },
   methods: {
@@ -855,12 +851,6 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'MemberMainInfoTab',
   mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_0__["default"]],
-  // props: {
-  //     'formData': {
-  //         type: Object,
-  //         required: true,
-  //     },
-  // },
   components: {
     IconButton: _components_ui_Buttons_IconButton_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
@@ -1097,9 +1087,7 @@ __webpack_require__.r(__webpack_exports__);
       modalTitle: '',
       modalSubmitCaption: '',
       movements: [],
-      pathMdiCalendar: _mdi_js__WEBPACK_IMPORTED_MODULE_4__.mdiCalendar,
-      pathMdiPencil: _mdi_js__WEBPACK_IMPORTED_MODULE_4__.mdiPencil,
-      pathMdiTrashCan: _mdi_js__WEBPACK_IMPORTED_MODULE_4__.mdiTrashCanOutline
+      pathMdiCalendar: _mdi_js__WEBPACK_IMPORTED_MODULE_4__.mdiCalendar
     };
   },
   provide: function provide() {
@@ -1181,21 +1169,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = ["title"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_SvgIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SvgIcon");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    type: "button",
-    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["btn btn-sm btn-outline-primary", $props.buttonClass]),
+  var _component_IconButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("IconButton");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_IconButton, {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)($props.buttonClass),
     title: $props.title,
+    size: $props.size,
+    mdiPath: $data.path,
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return _ctx.$emit('click');
+      return _ctx.$emit('click', $event);
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
-    type: "mdi",
-    path: $data.path,
-    size: $props.size
-  }, null, 8 /* PROPS */, ["path", "size"])], 10 /* CLASS, PROPS */, _hoisted_1);
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")];
+    }),
+    _: 3 /* FORWARDED */
+  }, 8 /* PROPS */, ["class", "title", "size", "mdiPath"]);
 }
 
 /***/ }),
@@ -1449,23 +1438,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <breadcrumbs /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonRefreshData, {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.$store.dispatch('HouseholdMembers/fetchRecords');
-    })
+    }),
+    buttonClass: "btn-sm btn-outline-primary p-2"
   }), _ctx.members.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ButtonSelectRecords, {
     key: 0,
     title: _ctx.inSelectMode ? 'Вимкнути режим відбору записів' : 'Увімкнути режим відбору записів',
-    btnClass: [_ctx.inSelectMode ? 'btn-primary' : 'btn-outline-primary'],
+    buttonClass: ['position-relative ms-2 p-2 btn btn-sm', _ctx.inSelectMode ? 'btn-primary' : 'btn-outline-primary'],
     inSelectMode: _ctx.inSelectMode,
     selectedRecordsCount: _ctx.selectedRecordsCount,
     onClick: _ctx.toggleSelectMode
-  }, null, 8 /* PROPS */, ["title", "btnClass", "inSelectMode", "selectedRecordsCount", "onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.selectedRecordsCount > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonDocumentGenerationForm, {
-    onClick: $options.openDocumentsForm
+  }, null, 8 /* PROPS */, ["title", "buttonClass", "inSelectMode", "selectedRecordsCount", "onClick"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.selectedRecordsCount > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonDocumentGenerationForm, {
+    onClick: $options.openDocumentsForm,
+    buttonClass: "btn-sm btn-outline-primary p-2"
   }, null, 8 /* PROPS */, ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonExportRecordForm, {
-    onClick: _ctx.openExportRecordForm
+    onClick: _ctx.openExportRecordForm,
+    buttonClass: "btn-sm btn-outline-primary p-2"
   }, null, 8 /* PROPS */, ["onClick"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonFilter, {
-    onClick: [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.openFilterForm, ["exact"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($options.resetFilter, ["ctrl"])],
-    isFiltered: _ctx.filter.isFiltered,
+    onClick: $options.openFilterForm,
+    buttonClass: ['btn-sm btn-outline-secondary p-2', _ctx.isFiltered ? 'active' : ''],
     title: "Фільтр членів домогосподарств"
-  }, null, 8 /* PROPS */, ["onClick", "isFiltered"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_ctx.members.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DataTable, {
+  }, null, 8 /* PROPS */, ["onClick", "buttonClass"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_ctx.members.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DataTable, {
     key: 0,
     dataTable: _ctx.members,
     perPageItems: $data.perPageItems,
@@ -1986,32 +1978,36 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "bg-body-secondary"
 };
-var _hoisted_3 = ["onClick"];
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Звіт про склад земельної ділянки", -1 /* HOISTED */);
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
+var _hoisted_3 = {
+  "class": "align-middle"
+};
+var _hoisted_4 = ["onClick"];
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Звіт про склад земельної ділянки", -1 /* HOISTED */);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
   "class": "dropdown-divider"
 })], -1 /* HOISTED */);
-var _hoisted_6 = {
+var _hoisted_7 = {
   "class": "table-group-divider"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_IconButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("IconButton");
+  var _component_ButtonAdd = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonAdd");
   var _component_SvgIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SvgIcon");
   var _component_YearDropDownMenu = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("YearDropDownMenu");
   var _component_TableRow = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TableRow");
   var _component_YearsPaginator = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("YearsPaginator");
   var _component_LandYearForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("LandYearForm");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconButton, {
-    buttonClass: ['btn-sm btn-outline-primary btn-transparent'],
-    title: "Додати інформацію за рік",
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonAdd, {
     onClick: _cache[0] || (_cache[0] = function ($event) {
       return _ctx.newYearData($event);
     }),
-    size: 16,
-    mdiPath: $data.pathMdiPlusThick,
-    captionClass: ['lh-24'],
-    caption: "Додати рік"
-  }, null, 8 /* PROPS */, ["mdiPath"])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.years, function (year) {
+    buttonClass: "btn-sm btn-outline-primary btn-transparent",
+    title: "Додати інформацію за рік"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати рік ")];
+    }),
+    _: 1 /* STABLE */
+  })]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.years, function (year) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
       key: year.year
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_YearDropDownMenu, {
@@ -2034,11 +2030,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           path: $data.pathMdiLandFields,
           size: 16,
           "class": "text-success me-2"
-        }, null, 8 /* PROPS */, ["path"]), _hoisted_4], 8 /* PROPS */, _hoisted_3)]), _hoisted_5];
+        }, null, 8 /* PROPS */, ["path"]), _hoisted_5], 8 /* PROPS */, _hoisted_4)]), _hoisted_6];
       }),
       _: 2 /* DYNAMIC */
-    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["year", "onEditYear", "onDeleteYear"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"d-flex align-items-center justify-content-end\">\n                        <span style=\"line-height: 24px;\">{{year.year}}</span>\n                        <div class=\"dropdown\">\n    \n                            <IconButton \n                                :buttonClass=\"['btn-sm btn-light btn-transparent ms-1 me-1 p-2']\" \n                                data-bs-toggle=\"dropdown\"\n                                aria-expanded=\"false\"\n                                :size=\"16\"\n                                title=\"Операції з даними за рік\"\n                                :mdiPath=\"pathMdiCog\" />\n    \n                            <ul class=\"dropdown-menu dropdown-menu-end\">                           \n                                <li>\n                                    <a class=\"dropdown-item d-flex align-items-center\" @click=\"landOwnedReport(year.year)\">                                    \n                                        <SvgIcon type=\"mdi\" :path=\"pathMdiLandFields\" :size=\"16\" class=\"text-success me-2\" />\n                                        <span>Звіт про склад земельної ділянки</span>\n                                    </a>\n                                </li>\n                                <li><hr class=\"dropdown-divider\"></li>\n                                <li>\n                                    <a class=\"dropdown-item d-flex align-items-center\" @click=\"editYear(year)\">                                    \n                                        <SvgIcon type=\"mdi\" :path=\"pathMdiPencil\" :size=\"16\" class=\"text-warning me-2\" />\n                                        <span>Редагувати дані</span>\n                                    </a>\n                                </li>\n                                <li>\n                                    <a class=\"dropdown-item d-flex align-items-center\" @click=\"deleteYear(year)\">                                    \n                                        <SvgIcon type=\"mdi\" :path=\"pathMdiTrashCan\" :size=\"16\" class=\"text-danger me-2\" />\n                                        <span>Видалити дані</span>\n                                    </a>\n                                </li>\n                            </ul>\n                        </div>\n                    </div> ")]);
-  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
+    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["year", "onEditYear", "onDeleteYear"])]);
+  }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $data.years,
     field: "total",
     rowTitle: "<b>Площа земельних ділянок - усього</b>"
@@ -2443,33 +2439,49 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     disabled: !$data.isInEditMode
   }, "\n                ", 10 /* CLASS, PROPS */, _hoisted_69), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, _ctx.formData.additional_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('additional_information')), 1 /* TEXT */)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [!$data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_IconButton, {
     key: 0,
-    buttonClass: ['btn-outline-danger'],
+    buttonClass: "btn-outline-danger",
     title: "Видалити члена домогосподарства",
     onClick: $options.deleteData,
-    mdiPath: $data.pathMdiTrashCan,
-    caption: "Видалити"
-  }, null, 8 /* PROPS */, ["onClick", "mdiPath"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [!$data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_IconButton, {
+    mdiPath: $data.pathMdiTrashCan
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Видалити ")];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onClick", "mdiPath"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [!$data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_IconButton, {
     key: 0,
-    buttonClass: ['btn-outline-primary'],
+    buttonClass: "btn-outline-primary",
     title: "Редагувати дані",
     onClick: $options.editData,
-    mdiPath: $data.pathMdiPencil,
-    caption: "Редагувати"
-  }, null, 8 /* PROPS */, ["onClick", "mdiPath"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_IconButton, {
+    mdiPath: $data.pathMdiPencil
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Редагувати ")];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onClick", "mdiPath"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_IconButton, {
     key: 1,
-    buttonClass: ['btn-outline-secondary'],
+    buttonClass: "btn-outline-secondary",
     title: "Відмінити редагування",
     onClick: $options.cancelEdit,
-    mdiPath: $data.pathMdiPencilOff,
-    caption: "Відмінити"
-  }, null, 8 /* PROPS */, ["onClick", "mdiPath"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_IconButton, {
+    mdiPath: $data.pathMdiPencilOff
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Відмінити ")];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onClick", "mdiPath"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isInEditMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_IconButton, {
     key: 2,
-    buttonClass: ['btn-outline-primary ms-3'],
+    buttonClass: "btn-outline-primary ms-3",
     title: "Зберегти дані",
     onClick: $options.saveData,
-    mdiPath: $data.pathMdiCheckAll,
-    caption: "Зберегти"
-  }, null, 8 /* PROPS */, ["onClick", "mdiPath"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])], 64 /* STABLE_FRAGMENT */);
+    mdiPath: $data.pathMdiCheckAll
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Зберегти ")];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onClick", "mdiPath"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -2631,43 +2643,51 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _$data$movements;
   var _component_IconButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("IconButton");
+  var _component_ButtonEdit = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonEdit");
+  var _component_ButtonDelete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonDelete");
   var _component_MovementForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MovementForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(_$data$movements = $data.movements) !== null && _$data$movements !== void 0 && _$data$movements.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_3, _hoisted_4, _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconButton, {
-    buttonClass: ['btn-sm btn-outline-primary btn-transparent lh-24 d-inline-flex'],
+    buttonClass: "btn-sm btn-outline-primary btn-transparent lh-24 d-inline-flex",
     title: "Додати подію",
     onClick: $options.newMovementEvent,
     size: 16,
-    mdiPath: $data.pathMdiCalendar,
-    caption: "Додати подію"
-  }, null, 8 /* PROPS */, ["onClick", "mdiPath"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.movements, function (movement, index) {
+    mdiPath: $data.pathMdiCalendar
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати подію ")];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onClick", "mdiPath"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.movements, function (movement, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: index,
       "class": "align-middle"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movement.date_formatted), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movement.movement_type), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movement.comment), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconButton, {
-      buttonClass: ['btn-sm btn-outline-warning btn-transparent p-2'],
-      title: "Редагувати подію",
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movement.date_formatted), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movement.movement_type), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(movement.comment), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonEdit, {
+      buttonClass: "btn-outline-warning btn-transparent p-2",
+      title: "Редагувати інформацію про власника",
+      size: 14,
       onClick: function onClick($event) {
         return $options.editMovementEvent(movement);
-      },
+      }
+    }, null, 8 /* PROPS */, ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonDelete, {
+      buttonClass: "btn-outline-danger btn-transparent ms-3 p-2",
+      title: "Видалити інформацію про власника",
       size: 14,
-      mdiPath: $data.pathMdiPencil
-    }, null, 8 /* PROPS */, ["onClick", "mdiPath"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconButton, {
-      buttonClass: ['btn-sm btn-outline-danger btn-transparent p-2'],
-      title: "Видалити подію",
       onClick: function onClick($event) {
         return $options.deleteMovementEvent(movement.id);
-      },
-      size: 14,
-      mdiPath: $data.pathMdiTrashCan
-    }, null, 8 /* PROPS */, ["onClick", "mdiPath"])])])]);
+      }
+    }, null, 8 /* PROPS */, ["onClick"])])])]);
   }), 128 /* KEYED_FRAGMENT */))])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconButton, {
-    buttonClass: ['btn-sm btn-outline-primary lh-24'],
+    buttonClass: "btn-sm btn-outline-primary lh-24",
     title: "Додати подію",
     onClick: $options.newMovementEvent,
     size: 16,
-    mdiPath: $data.pathMdiCalendar,
-    caption: "Додати подію"
-  }, null, 8 /* PROPS */, ["onClick", "mdiPath"])])), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Teleport, {
+    mdiPath: $data.pathMdiCalendar
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати подію ")];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["onClick", "mdiPath"])])), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Teleport, {
     to: "body"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MovementForm, {
     formData: $data.eventForm,

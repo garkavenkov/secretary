@@ -354,6 +354,7 @@ export default {
         border-radius: 0.2rem;
         background: #eee;
         cursor: pointer;
+        font-size: 0.85rem;
 
         &.selected {            
             background: #d7d7d7;
@@ -384,6 +385,7 @@ export default {
         background: #eee;
         cursor: grabbing;
         position: relative;
+        font-size: 0.85rem;
 
         &::before {
             position: absolute;            

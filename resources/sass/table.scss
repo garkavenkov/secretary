@@ -92,19 +92,13 @@ table thead {
             opacity: 1;
         }
     }
+}
 
+
+table {
     th.show-record {
-        width: 50px;      
-    }
-
-    // td.show-record {
-    //     a {
-    //         color: var(--bs-gray-500);
-
-    //         &:hover {
-    //             color: var(--bs-primary);
-    //         }
-    //     }
-    // }
+        width: 50px;
+        text-align: center;
+    }    
 }
 

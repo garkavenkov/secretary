@@ -34,7 +34,7 @@
         </div>
         <div class="table__wrapper">
             <div class="table-responsive">
-                <table class="table table-striped" :class="tableClass">
+                <table class="table" :class="tableClass">
                     <thead :class="tableHeaderClass">
                         <slot name="header">
                             <tr v-if="dataFields.length > 0">

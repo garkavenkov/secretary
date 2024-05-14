@@ -48,6 +48,7 @@ export const Households = {
         familyInfo: state => state.household.familyInfo,
         pagination: state => state.pagination,
         entities: state => state.entities,
+        isFiltered: state => state.filter.isFiltered,
         ...selectRecords.getters
     },
     mutations: {

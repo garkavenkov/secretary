@@ -5,15 +5,15 @@
                 <table class="table table-sm table-bordered table-years">
                     <thead class="bg-body-secondary">
                         <tr>
-                            <th>                                
-                                <IconButton 
-                                    :buttonClass="['btn-sm btn-outline-primary btn-transparent']"                             
-                                    title="Додати інформацію за рік"
-                                    @click="newYearData($event)"
-                                    :size="16"
-                                    :mdiPath="pathMdiPlusThick" 
-                                    :captionClass="['lh-24']"
-                                    caption="Додати рік"/>
+                            <th class="align-middle">
+                               
+                                <ButtonAdd 
+                                        @click="newYearData($event)" 
+                                        buttonClass="btn-sm btn-outline-primary btn-transparent"
+                                        title="Додати інформацію за рік">
+                                    Додати рік
+                                </ButtonAdd>
+
                             </th>
                             <th v-for="year in years" :key="year.year">                                
                                 
@@ -63,14 +63,15 @@
             </div>
             <div class="col-md-3">
                 <div class="card rounded-0">
-                    <div class="card-header thin-header align-items-center p-2">
-                        <h6>Додаткова інформація</h6>                        
-                        <IconButton 
-                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
-                                title="Редагувати додаткову інформацію"
-                                @click="openLandAdditionalDataForm"
+                    <div class="card-header thin-header align-items-center p-2">                        
+                        <h6>Додаткова інформація</h6>
+
+                        <ButtonEdit 
+                                @click="openLandAdditionalDataForm" 
                                 :size="16"
-                                :mdiPath="pathMdiPencil" />
+                                buttonClass="btn-light btn-transparent p-1"
+                                title="Редагувати додаткову інформацію" />
+                        
                     </div>
                     <div class="card-body" v-if="info && (info.length > 0)">
                         <template v-if="landInfo('land_additional_data') !== ''">
@@ -101,14 +102,6 @@
 import { computed }             from 'vue';
 import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap';
-import SvgIcon                  from '@jamescoyle/vue-icon';
-import { 
-    mdiCog, 
-    mdiPlusThick,    
-    mdiPencil,
-    mdiTrashCan
-} from '@mdi/js';
-
 
 import TableRow                 from '../../../components/ui/TableRow.vue';
 import LandYearForm             from './LandYearForm.vue';
@@ -117,7 +110,9 @@ import YearsPaginator           from '../../../components/ui/YearsPaginator.vue'
 
 import NumberFormat             from '../../../mixins/NumberFormat';
 import YearsCUD                 from '../../../mixins/YearsCUD';
-import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
+// import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
+import ButtonAdd                from '../../../components/ui/Buttons/ButtonAdd.vue';
+import ButtonEdit               from '../../../components/ui/Buttons/ButtonEdit.vue';
 import YearDropDownMenu         from '../../../components/ui/YearDropDownMenu.vue';
 
 export default {
@@ -144,11 +139,7 @@ export default {
             apiUrl: '/api/v1/household-lands',
             meta: {},
             years: [],
-            perPage: 5,
-            pathMdiPlusThick: mdiPlusThick,
-            pathMdiCog: mdiCog,         
-            pathMdiPencil: mdiPencil,
-            pathMdiTrashCan: mdiTrashCan,
+            perPage: 5            
         }
     },
     provide() {
@@ -206,9 +197,10 @@ export default {
         LandYearForm,
         LandAdditionalDataForm,
         YearsPaginator,
-        IconButton,
-        SvgIcon,
-        YearDropDownMenu
+        // IconButton,        
+        YearDropDownMenu,
+        ButtonAdd,
+        ButtonEdit
     }
 }
 </script>

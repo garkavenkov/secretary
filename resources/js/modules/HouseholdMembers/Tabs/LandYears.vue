@@ -3,15 +3,14 @@
     <table class="table table-sm  table-bordered table-years">
         <thead class="bg-body-secondary">
             <tr>
-                <th>
-                    <IconButton 
-                            :buttonClass="['btn-sm btn-outline-primary btn-transparent']"                             
-                            title="Додати інформацію за рік"
-                            @click="newYearData($event)"
-                            :size="16"
-                            :mdiPath="pathMdiPlusThick" 
-                            :captionClass="['lh-24']"
-                            caption="Додати рік"/>
+                <th class="align-middle">
+                    
+                    <ButtonAdd 
+                            @click="newYearData($event)" 
+                            buttonClass="btn-sm btn-outline-primary btn-transparent"
+                            title="Додати інформацію за рік">
+                        Додати рік
+                    </ButtonAdd>
                 
                 </th>
                 <th v-for="year in years" :key="year.year">
@@ -88,18 +87,15 @@
 import { mapGetters }           from 'vuex';
 import SvgIcon                  from '@jamescoyle/vue-icon';
 
-import { 
-    mdiCog, 
-    mdiPlusThick,
-    mdiLandFields,
-    mdiPencil,
-    mdiTrashCan
+import {         
+    mdiLandFields,    
 } from '@mdi/js';
 
 import TableRow                 from '../../../components/ui/TableRow.vue';
 import LandYearForm             from './LandYearForm.vue';
 import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
 import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
+
 import YearDropDownMenu         from '../../../components/ui/YearDropDownMenu.vue';
 
 import YearsCUD                 from '../../../mixins/YearsCUD';
@@ -113,7 +109,7 @@ export default {
         LandYearForm,
         YearsPaginator,
         IconButton,
-        SvgIcon,
+        SvgIcon,        
         YearDropDownMenu
     },
     data() {
@@ -134,12 +130,9 @@ export default {
             apiUrl: '/api/v1/household-member-lands',
             years: [],
             meta: [],
-            perPage: 5,
-            pathMdiCog: mdiCog,
-            pathMdiPlusThick: mdiPlusThick,
-            pathMdiLandFields: mdiLandFields,
-            pathMdiPencil: mdiPencil,
-            pathMdiTrashCan: mdiTrashCan
+            perPage: 5,            
+            // pathMdiPlusThick: mdiPlusThick,
+            pathMdiLandFields: mdiLandFields,            
         }
     },
     methods: {

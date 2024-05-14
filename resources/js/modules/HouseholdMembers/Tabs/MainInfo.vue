@@ -193,35 +193,47 @@
 <div class="row">
     <div class="d-flex justify-content-between">
         <div>           
-            <IconButton  v-if="!isInEditMode"
-                :buttonClass="['btn-outline-danger']" 
-                title="Видалити члена домогосподарства"
-                @click="deleteData"                 
-                :mdiPath="pathMdiTrashCan" 
-                caption="Видалити"/>
+            
+            <IconButton
+                    v-if="!isInEditMode"
+                    buttonClass="btn-outline-danger" 
+                    title="Видалити члена домогосподарства"
+                    @click="deleteData"
+                    :mdiPath="pathMdiTrashCan">
+                Видалити
+            </IconButton>
+            
 
         </div>
-        <div class="d-flex">            
-            <IconButton  v-if="!isInEditMode"
-                :buttonClass="['btn-outline-primary']" 
-                title="Редагувати дані" 
-                @click="editData"                 
-                :mdiPath="pathMdiPencil" 
-                caption="Редагувати"/>
+        <div class="d-flex">
 
-            <IconButton  v-if="isInEditMode"
-                :buttonClass="['btn-outline-secondary']" 
-                title="Відмінити редагування" 
-                @click="cancelEdit"                 
-                :mdiPath="pathMdiPencilOff" 
-                caption="Відмінити"/>
+            <IconButton  
+                    v-if="!isInEditMode"
+                    buttonClass="btn-outline-primary" 
+                    title="Редагувати дані" 
+                    @click="editData"                 
+                    :mdiPath="pathMdiPencil">
+                Редагувати
+            </IconButton>
+
+            <IconButton  
+                    v-if="isInEditMode"
+                    buttonClass="btn-outline-secondary" 
+                    title="Відмінити редагування" 
+                    @click="cancelEdit"                 
+                    :mdiPath="pathMdiPencilOff">
+                Відмінити
+            </IconButton>
            
-            <IconButton  v-if="isInEditMode"
-                :buttonClass="['btn-outline-primary ms-3']" 
-                title="Зберегти дані"
-                @click="saveData"                 
-                :mdiPath="pathMdiCheckAll" 
-                caption="Зберегти"/>
+            <IconButton
+                    v-if="isInEditMode"
+                    buttonClass="btn-outline-primary ms-3" 
+                    title="Зберегти дані"
+                    @click="saveData"                 
+                    :mdiPath="pathMdiCheckAll">
+                Зберегти
+            </IconButton>
+
         </div>
     </div>
 </div>
@@ -243,17 +255,13 @@ import {
     mdiCheckAll
 }   from '@mdi/js';
 
+
+
 export default {
     name: 'MemberMainInfoTab',
-    mixins: [FormValidator],
-    // props: {
-    //     'formData': {
-    //         type: Object,
-    //         required: true,
-    //     },
-    // },
+    mixins: [FormValidator],   
     components: {
-        IconButton
+        IconButton,        
     },
     emits: ['refreshData'],
     data() {

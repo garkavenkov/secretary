@@ -36,26 +36,29 @@
             <div class="row">
                 <div class="d-flex justify-content-end">                 
                     <IconButton  v-if="!isInEditMode"
-                            :buttonClass="['btn-outline-primary']" 
+                            buttonClass="btn-outline-primary" 
                             title="Редагувати дані" 
                             @click="editData"                 
-                            :mdiPath="pathMdiPencil" 
-                            caption="Редагувати"/>
+                            :mdiPath="pathMdiPencil">
+                        Редагувати
+                    </IconButton> 
 
                     <IconButton  v-if="isInEditMode"
-                            :buttonClass="['btn-outline-secondary']" 
+                            buttonClass="btn-outline-secondary" 
                             title="Відмінити редагування" 
                             @click="cancelEdit"                 
-                            :mdiPath="pathMdiPencilOff" 
-                            caption="Відмінити"/>
+                            :mdiPath="pathMdiPencilOff">
+                        Відмінити
+                    </IconButton>
            
                     <IconButton  v-if="isInEditMode"
-                            :buttonClass="['btn-outline-primary ms-3']" 
+                            buttonClass="btn-outline-primary ms-3" 
                             title="Встановити додаткові параметри"
                             @click="updateAdditionalParams"                 
                             :mdiPath="pathMdiCheckAll" 
-                            :disabled="!additionalParamsWereChanged"
-                            caption="Встановити"/>
+                            :disabled="!additionalParamsWereChanged">
+                        Встановити
+                    </IconButton>
                 </div>
             </div>
         </div>

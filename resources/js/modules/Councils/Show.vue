@@ -2,85 +2,77 @@
     <breadcrumbs  v-if="council.name"/>
 
     <div class="row" v-if="council.name">
-        <div class="col-md-8 mx-auto">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
                         <span>Інформація о раді</span>
-                        <button class="btn btn-sm btn-light btn-transparent"
-                                @click="openCouncilForm"
-                                title="Редагувати дані">
-                            <span class="mdi mdi-pencil"></span>
-                        </button>
+                        <ButtonEdit buttonClass="btn-light btn-transparent p-2" @click="openCouncilForm" title="Редагувати дані"/>                        
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <div class="row mb-2">
-                            <div class="col-md-3">Назва</div>
-                            <div class="col-md-9">{{ council.name }}</div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">Адреса</div>
-                            <div class="col-md-9">{{ council.address }}</div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">ЕДРПОУ</div>
-                            <div class="col-md-9">{{ council.edrpou }}</div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">КОАТУУ</div>
-                            <div class="col-md-9">{{ council.koatuu }}</div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-md-3">Громада</div>
-                            <div class="col-md-9">
-                                <router-link :to="{name: 'communities.show', params: {id: council.community_id}}">
-                                    {{ council.community.name }}
-                                </router-link>
-                            </div>
-                        </div>
+                <div class="card-body">                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">Назва</div>
+                        <div class="col-md-8">{{ council.name }}</div>
                     </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
-                                <span>Підпорядковані населенні пункти</span>
-                                <button class="btn btn-sm btn-light btn-transparent"
-                                        title="Додати населенний пункт"
-                                        @click="openSettlementForm">
-                                    <span class="mdi mdi-plus"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <DataTable  :dataTable="council.settlements"
-                                        tableHeaderClass="table-dark">
-                                <template v-slot:header>
-                                    <tr>
-                                        <th>Назва</th>
-                                        <th>Індекс</th>
-                                        <th>КАТОТТГ</th>
-                                    </tr>
-                                </template>
-                                <template v-slot:default="slotProps">
-                                    <tr     v-for="record in slotProps.paginatedData"
-                                            :key="record.id">
-                                        <td>
-                                            <router-link :to="{name: 'settlements.show', params: { id: record.id }}">
-                                                <td>{{record.name}}</td>
-                                            </router-link>
-                                        </td>
-                                        <td>{{record.postcode}}</td>
-                                        <td>{{record.katottg}}</td>
-                                    </tr>
-                                </template>
-                            </DataTable>
-                        </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">Адреса</div>
+                        <div class="col-md-8">{{ council.address }}</div>
                     </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">ЕДРПОУ</div>
+                        <div class="col-md-8">{{ council.edrpou }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">КОАТУУ</div>
+                        <div class="col-md-8">{{ council.koatuu }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">Громада</div>
+                        <div class="col-md-8">
+                            <router-link :to="{name: 'communities.show', params: {id: council.community_id}}">
+                                {{ council.community.name }}
+                            </router-link>
+                        </div>
+                    </div>                    
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dictionary-name__wrapper d-flex justify-content-between flex-grow-1">
+                        <span>Підпорядковані населенні пункти</span>                        
+                        <ButtonAdd buttonClass="btn-light btn-transparent p-2" title="Додати населенний пункт" @click="openSettlementForm"/>                        
+                    </div>
+                </div>
+                <div class="card-body">
+                    <DataTable  :dataTable="council.settlements"
+                                tableClass="table-bordered table-hover"
+                                tableHeaderClass="table-dark">
+                        <template v-slot:header>
+                            <tr>
+                                <th>Назва</th>
+                                <th>Індекс</th>
+                                <th>КАТОТТГ</th>
+                            </tr>
+                        </template>
+                        <template v-slot:default="slotProps">
+                            <tr     v-for="record in slotProps.paginatedData"
+                                    :key="record.id">
+                                <td>
+                                    <router-link :to="{name: 'settlements.show', params: { id: record.id }}">{{record.name}}</router-link>
+                                </td>
+                                <td>{{record.postcode}}</td>
+                                <td>{{record.katottg}}</td>
+                            </tr>
+                        </template>
+                    </DataTable>
+                </div>                
+            </div>
+        </div>
     </div>
+    
     <Page404 v-else
         :message="`Міська/сільська рада з id:${id} відсутня`" 
         resource="img/404/dictionary.png"  

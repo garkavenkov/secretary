@@ -1,18 +1,18 @@
 <template>       
-    
-    <button class="btn btn-sm btn-outline-secondary"
-            :class="[buttonClass, isFiltered ? 'active': '' ]"            
-            @click.exact="$emit('click.exact')"
-            @click.ctrl="$emit('click.ctrl')"    
-            :title="title">        
-        <SvgIcon type="mdi" :path="path" :size="size" />
-    </button>        
-        
+
+    <IconButton :class="buttonClass" :title="title" :size="size" :mdiPath="path"  @click="$emit('click', $event)" >
+        <template v-slot:default>
+            <slot />
+        </template>
+    </IconButton>
+
 </template>
 
 <script>
-import SvgIcon              from '@jamescoyle/vue-icon'
+
+import IconButton           from './IconButton.vue';
 import { mdiFilterOutline } from '@mdi/js';
+
 export default {
     name: 'ButtonFilter',
     props: {
@@ -27,25 +27,19 @@ export default {
             default: ''
         },
         buttonClass: {
-            type: String,
+            type: [String, Array],
             required: false,
             default: ''
-        },
-        isFiltered: {
-            type: Boolean,
-            required:true,
-            default: () => false
-        }
+        },       
     },
-    emits: ['click.exact', 'click.ctrl'],
-    // emits: ['click'],
+    emits: ['click'],
     data() {
         return {
             path: mdiFilterOutline
         }
     },
     components: {
-        SvgIcon
+        IconButton
     },
 }
 </script>

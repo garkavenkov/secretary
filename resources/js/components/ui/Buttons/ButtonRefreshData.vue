@@ -1,16 +1,16 @@
 <template>    
-    <button type="button"
-            class="btn btn-sm btn-outline-primary"
-            :class="buttonClass"
-            :title="title"
-            @click="$emit('click')">
-        <SvgIcon type="mdi" :path="path" :size="size" />
-    </button>
+    
+    <IconButton :class="buttonClass" :title="title" :size="size" :mdiPath="path"  @click="$emit('click', $event)" >
+        <template v-slot:default>
+            <slot />
+        </template>
+    </IconButton>
+    
 </template>
 
 <script>
 
-import SvgIcon          from '@jamescoyle/vue-icon'
+import IconButton       from './IconButton.vue';
 import { mdiRefresh }   from '@mdi/js';
 
 export default {
@@ -38,8 +38,8 @@ export default {
             path: mdiRefresh
         }
     },
-    components: {
-        SvgIcon
+    components: {        
+        IconButton
     },
 }
 </script>

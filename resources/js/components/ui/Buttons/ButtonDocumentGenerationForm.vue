@@ -1,23 +1,23 @@
 <template>
-
-    <button type="button"
-            class="btn btn-sm btn-outline-primary"
-            :class="buttonClass"
-            :title="title"
-            @click="$emit('click')">
-        <SvgIcon type="mdi" :path="path" :size="size" />
-    </button>                        
-             
+          
+    <IconButton :class="buttonClass" :title="title" :size="size" :mdiPath="path"  @click="$emit('click', $event)" >
+        <template v-slot:default>
+            <slot />
+        </template>
+    </IconButton>
+    
 </template>
 
 <script>
-import SvgIcon                  from '@jamescoyle/vue-icon'
+
+import IconButton               from './IconButton.vue';
 import { mdiFileCogOutline }    from '@mdi/js';
+
 export default {
     name: 'ButtonDocumentGenerationForm',        
     props: {
         size: {
-            type: Number,
+            type: [String, Number],
             required: false,
             default: 18
         },
@@ -27,7 +27,7 @@ export default {
             default: "Генерація документів"
         },
         buttonClass: {
-            type: String,
+            type: [String, Array],
             required: false,
             default: ''
         }
@@ -39,7 +39,7 @@ export default {
         }
     },
     components: {
-        SvgIcon
+        IconButton
     },
 }
 </script>

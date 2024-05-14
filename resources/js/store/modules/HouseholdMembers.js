@@ -41,6 +41,7 @@ export const HouseholdMembers = {
         pagination: state => state.pagination,
         relatives: state => state.member.relatives,
         entities: state => state.entities,
+        isFiltered: state => state.filter.isFiltered,
         ...selectRecords.getters
         // info: state => Object.assign({}, state.member.info),
         // members: state => state.household.members,
