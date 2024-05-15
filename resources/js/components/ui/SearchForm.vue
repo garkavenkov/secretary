@@ -31,16 +31,22 @@
                 <li>Нічого не знайдено. Спробуйте змінити текст</li>
             </ul>
         </div>
-        <button class="btn btn-outline-secondary ms-2" type="buton" @click="search" :disabled="searchText == ''">
-            <span class="mdi mdi-magnify"></span>
+        <button class="btn btn-outline-secondary ms-2 py-1 px-2" type="buton" @click="search" :disabled="searchText == ''">            
+            <SvgIcon type="mdi" :path="path" />
         </button>
     </form>
 </template>
 
 <script>
 
+import SvgIcon          from '@jamescoyle/vue-icon';
+import { mdiMagnify }   from '@mdi/js';
+
 export default {
     name: 'SearchForm',
+    components: {
+        SvgIcon
+    },
     data() {
         return {
             searchText: '',
@@ -49,6 +55,7 @@ export default {
             searchInputEl: null,
             foundedHouseholds: null,
             currentHousehodldItem: -1,
+            path: mdiMagnify
         }
     },
     methods: {

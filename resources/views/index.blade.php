@@ -66,8 +66,8 @@
                     if (scrn.requestFullscreen) {
                         scrn.requestFullscreen();
                         scrnToggler.dataset.screen = 'expand'
-                        scrnToggler.firstChild.classList.remove('mdi-fullscreen');
-                        scrnToggler.firstChild.classList.add('mdi-fullscreen-exit');
+                        // scrnToggler.firstChild.classList.remove('mdi-fullscreen');
+                        // scrnToggler.firstChild.classList.add('mdi-fullscreen-exit');
                         scrnToggler.setAttribute('title', 'Відновити розмір');
                         // Shrink sidebar menu
                         if (event.ctrlKey) {
@@ -80,8 +80,8 @@
                         document.exitFullscreen();
                     }
                     scrnToggler.dataset.screen = 'collapse';
-                    scrnToggler.firstChild.classList.add('mdi-fullscreen');
-                    scrnToggler.firstChild.classList.remove('mdi-fullscreen-exit');
+                    // scrnToggler.firstChild.classList.add('mdi-fullscreen');
+                    // scrnToggler.firstChild.classList.remove('mdi-fullscreen-exit');
                     scrnToggler.setAttribute('title', 'Розгорнути на повний екран');
                 }
             })

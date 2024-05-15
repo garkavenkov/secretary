@@ -12,13 +12,38 @@
     /* box-shadow: 0 0 2px 1px #e7e7e7; */
 
     #sidebar-toggler, #fullscreen-toggler {
-        font-size: 32px;
-        color: grey;
+        // font-size: 32px;
+        // color: grey;
+        display: flex;
+        transition: all 0.3s;
+        svg {
+            width: 38px;
+            // fill: #6c757d;            
+            filter: opacity(0.5);
+            cursor: pointer;
+
+            &:hover {
+                filter: opacity(0.8);
+            }
+
+            &:last-of-type {
+                display: none;
+            }
+        }
     }
 
     #sidebar-toggler {
         padding: 0.5rem 1rem 0.5rem 0.5rem;
         border-right: 1px solid #e7e7e7;
+    }
+
+    #fullscreen-toggler[data-screen="expand"] {
+        svg:first-of-type {
+            display: none;
+        }
+        svg:last-of-type {
+            display: block;
+        }
     }
 }
 
@@ -46,6 +71,15 @@
 
     &.expand {
         padding-left: $sidebar-shrinked-width;
+
+        #sidebar-toggler {
+            svg:first-of-type {
+                display: none;
+            }
+            svg:last-of-type {
+                display: block;
+            }
+        }
     }
 }
 
