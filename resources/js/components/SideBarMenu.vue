@@ -12,59 +12,53 @@
         <ul class="sidebar-menu__wrapper">
             <li>
                 <router-link to="/">
-                    <span class="icon">
-                        <span class="mdi mdi-monitor-dashboard"></span>
+                    <span>
+                        <SvgIcon type="mdi" :path="pathMdiMonitorDashboard" :size="20"/>
                     </span>
                     <span class="nav-title">Робочий стіл</span>
                 </router-link>
             </li>
             <li title="Облікові картки" >
-                <router-link to="/households" :class="[{'router-link-active': $route.path.indexOf('households/') > -1 }]">
-                    <span class="icon">
-                        <span class="mdi mdi-folder-home"></span>
+                <router-link to="/households" :class="[{'router-link-active': $route.path.indexOf('households/') > -1 }]">                    
+                    <span>
+                        <SvgIcon type="mdi" :path="pathMdiFolderHome" :size="20"/>
                     </span>
                     <span class="nav-title">Облікові картки</span>
                 </router-link>
             </li>
             <li title="Члени домогосподарств">
-                <router-link to="/household-members" :class="[{'router-link-active': $route.path.indexOf('household-members/') > -1 }]">
-                    <span class="icon">
-                        <span class="mdi mdi-human-male-female-child"></span>
+                <router-link to="/household-members" :class="[{'router-link-active': $route.path.indexOf('household-members/') > -1 }]">                    
+                    <span>
+                        <SvgIcon type="mdi" :path="pathMdiHumanFemaleFemaleChild" :size="20" />
                     </span>
                     <span class="nav-title">Члени домогосподарств</span>
                 </router-link>
             </li>
             <li class="has-submenu">
                 <a>
-                    <span class="icon">
-                        <span class="mdi mdi-abacus"></span>
+                    <span>
+                        <SvgIcon type="mdi" :path="pathMdiAbacus" :size="20" />                    
                     </span>
                     <span class="nav-title">Аналітика</span>
-                    <span class="mdi mdi-chevron-down"></span>
+                    <SvgIcon type="mdi" :path="pathMdiChevronDown" :size="16" />
                 </a>
                 <ul class="sub-menu">
                     <li class="sub-menu-title"><span>Аналітика</span></li>
                     <li>
                         <router-link to="/members-by-age">
-                            <span class="icon">
-                                <span class="mdi mdi-account-question-outline"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiAccountQuestionOutline" :size="18" />
                             <span class="nav-title">Вікові групи населення</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/adulds-and-children">
-                            <span class="icon">
-                                <span class="mdi mdi-human-male-female-child"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiHumanFemaleFemaleChild" :size="18" />                            
                             <span class="nav-title">Дорослі і діти</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/reports-manager">
-                            <span class="icon">
-                                <span class="mdi mdi-file-cog-outline"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiFileCogOutline" :size="18" />
                             <span class="nav-title">Менеджер звітів</span>
                         </router-link>
                     </li>
@@ -72,51 +66,41 @@
             </li>
             <li class="has-submenu">
                 <a>
-                    <span class="icon">
-                        <span class="mdi mdi-inbox-multiple"></span>
+                    <span>
+                        <SvgIcon type="mdi" :path="pathMdiInboxMultiple" :size="20" />
                     </span>
                     <span class="nav-title">Довідники</span>
-                    <span class="mdi mdi-chevron-down"></span>
+                    <SvgIcon type="mdi" :path="pathMdiChevronDown" :size="16" />
                 </a>
                 <ul class="sub-menu">
                     <li class="sub-menu-title"><span>Довідники</span></li>
                     <li>
                         <router-link to="/regions">
-                            <span class="icon">
-                                <span class="mdi mdi-map"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiMap" :size="18" />
                             <span class="nav-title">Регіони</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/districts">
-                            <span class="icon">
-                                <span class="mdi mdi-domain"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiDomain" :size="18" />
                             <span class="nav-title">Райони</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/communities">
-                            <span class="icon">
-                                <span class="mdi mdi-home-city"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiHomeCity" :size="18" />
                             <span class="nav-title">Громади</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/councils">
-                            <span class="icon">
-                                <span class="mdi mdi-bank"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiBank" :size="18" />
                             <span class="nav-title">Міськи / сільські ради</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/settlements">
-                            <span class="icon">
-                                <span class="mdi mdi-home-group"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiHomeGroup" :size="18" />
                             <span class="nav-title">Населені пункти</span>
                         </router-link>
                     </li>
@@ -124,43 +108,35 @@
             </li>
             <li class="has-submenu">
                 <a>
-                    <span class="icon">
-                        <span class="mdi mdi-cog"></span>
+                    <span>
+                        <SvgIcon type="mdi" :path="pathMdiCog" :size="20" />
                     </span>
                     <span class="nav-title">Налаштування</span>
-                    <span class="mdi mdi-chevron-down"></span>
+                    <SvgIcon type="mdi" :path="pathMdiChevronDown" :size="16" />
                 </a>
                 <ul class="sub-menu">
                     <li class="sub-menu-title"><span>Налаштування</span></li>
                     <li>
                         <router-link to="/users">
-                            <span class="icon">
-                                <span class="mdi mdi-account-supervisor-outline"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiAccountSupervisorOutline" :size="18" />
                             <span class="nav-title">Користувачі</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/roles">
-                            <span class="icon">
-                                <span class="mdi mdi-shield-account-variant-outline"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiShieldAccountVariant" :size="18" />
                             <span class="nav-title">Ролі</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/permissions">
-                            <span class="icon">
-                                <span class="mdi mdi-shield-key-outline"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiShieldKeyOutline" :size="18" />
                             <span class="nav-title">Дозволи</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/permission-rights">
-                            <span class="icon">
-                                <span class="mdi mdi-account-key-outline"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiAccountKeyOutline" :size="18" />
                             <span class="nav-title">Керування правами дозволу</span>
                         </router-link>
                     </li>
@@ -168,43 +144,35 @@
             </li>
             <li class="has-submenu">
                 <a>
-                    <span class="icon">
-                        <span class="mdi mdi-table-cog"></span>
+                    <span>
+                        <SvgIcon type="mdi" :path="pathMdiTableCog" :size="20" />
                     </span>
                     <span class="nav-title">Системні довідники</span>
-                    <span class="mdi mdi-chevron-down"></span>
+                    <SvgIcon type="mdi" :path="pathMdiChevronDown" :size="16" />
                 </a>
                 <ul class="sub-menu">
                     <li class="sub-menu-title"><span>Системні довідники</span></li>
                     <li>
                         <router-link to="/household-types">
-                            <span class="icon">
-                                <span class="mdi mdi-home-circle-outline"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiHomeCircleOutline" :size="18" />
                             <span class="nav-title">Типи погосподарського обліку</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/settlement-types">
-                            <span class="icon">
-                                <span class="mdi mdi-store-cog"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiStoreCog" :size="18" />
                             <span class="nav-title">Типи населеного пункту</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/work-places">
-                            <span class="icon">
-                                <span class="mdi mdi-wrench-cog"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiWrenchCog" :size="18" />
                             <span class="nav-title">Коди місця роботи (заняття)</span>
                         </router-link>
                     </li>
                     <li>
                         <router-link to="/family-relationship-types">
-                            <span class="icon">
-                                <span class="mdi mdi-family-tree"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiFamilyTree" :size="18" />
                             <span class="nav-title">Типи родинних стосунків</span>
                         </router-link>
                     </li>
@@ -218,9 +186,7 @@
                     </li> -->
                     <li>
                         <router-link to="/additional-params">
-                            <span class="icon">
-                                <span class="mdi mdi-tag-multiple"></span>
-                            </span>
+                            <SvgIcon type="mdi" :path="pathMdiTagMultiple" :size="18" />
                             <span class="nav-title">Додаткові параметри</span>
                         </router-link>
                     </li>
@@ -236,11 +202,68 @@
 
 <script>
 
+import SvgIcon from '@jamescoyle/vue-icon';
+import { 
+    mdiMonitorDashboard,
+    mdiFolderHome,
+    mdiHumanFemaleFemaleChild,
+    mdiAbacus,
+    mdiChevronDown,
+    mdiChevronUp,
+    mdiAccountQuestionOutline,
+    mdiFileCogOutline,
+    mdiInboxMultiple,
+    mdiMap,
+    mdiDomain,
+    mdiHomeCity,
+    mdiBank,
+    mdiHomeGroup,
+    mdiCog,
+    mdiAccountSupervisorOutline,
+    mdiShieldAccountVariant,
+    mdiShieldKeyOutline,
+    mdiAccountKeyOutline,
+    mdiTableCog,
+    mdiHomeCircleOutline,
+    mdiStoreCog,
+    mdiWrenchCog,
+    mdiFamilyTree,
+    mdiTagMultiple
+} from '@mdi/js';
+
 export default {
     name: 'SideBarMenu',
+    components: {
+        SvgIcon
+    },
     data() {
         return {
-            appVersion: ''
+            appVersion: '',
+            pathMdiMonitorDashboard: mdiMonitorDashboard,
+            pathMdiFolderHome :mdiFolderHome,
+            pathMdiHumanFemaleFemaleChild: mdiHumanFemaleFemaleChild,
+            pathMdiAbacus: mdiAbacus,
+            pathMdiChevronDown: mdiChevronDown,
+            pathMdiChevronUp: mdiChevronUp,
+            pathMdiAccountQuestionOutline: mdiAccountQuestionOutline,
+            pathMdiFileCogOutline: mdiFileCogOutline,
+            pathMdiInboxMultiple: mdiInboxMultiple,
+            pathMdiMap: mdiMap,
+            pathMdiDomain: mdiDomain,
+            pathMdiHomeCity: mdiHomeCity,
+            pathMdiBank: mdiBank,
+            pathMdiHomeGroup: mdiHomeGroup,
+            pathMdiCog: mdiCog,
+            pathMdiAccountSupervisorOutline: mdiAccountSupervisorOutline,
+            pathMdiShieldAccountVariant: mdiShieldAccountVariant,
+            pathMdiShieldKeyOutline: mdiShieldKeyOutline,
+            pathMdiAccountKeyOutline: mdiAccountKeyOutline,
+            pathMdiTableCog: mdiTableCog,
+            pathMdiHomeCircleOutline :mdiHomeCircleOutline,
+            pathMdiStoreCog: mdiStoreCog,
+            pathMdiWrenchCog: mdiWrenchCog,
+            pathMdiFamilyTree: mdiFamilyTree,
+            pathMdiTagMultiple: mdiTagMultiple
         }
     },
     created() {

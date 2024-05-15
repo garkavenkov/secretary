@@ -11844,19 +11844,41 @@ input:-webkit-autofill:active{
   list-style-type: none;
 }
 .sidebar-menu ul.sidebar-menu__wrapper li:has(.router-link-exact-active, .router-link-active) > a {
-  /* background: white; */
   color: var(--bs-white) !important;
   font-weight: bold;
 }
-.sidebar-menu ul.sidebar-menu__wrapper li.sub-menu-title {
-  display: none;
+.sidebar-menu ul.sidebar-menu__wrapper li > a {
+  padding: 1rem;
+  line-height: 20px;
+  color: #a6aab4;
+  display: flex;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  white-space: nowrap;
+  align-items: center;
 }
-.sidebar-menu ul.sidebar-menu__wrapper li.expanded > a {
+.sidebar-menu ul.sidebar-menu__wrapper li > a:not([href]):not([class]) {
+  color: #a6aab4;
+}
+.sidebar-menu ul.sidebar-menu__wrapper li > a .nav-title {
+  margin-right: auto;
+  padding-left: 21px;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+.sidebar-menu ul.sidebar-menu__wrapper li > a.router-link-exact-active {
   color: white;
   font-weight: bold;
 }
-.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu a :nth-child(3) {
-  font-size: 1.1rem;
+.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu.expanded > a > svg {
+  transform: rotate(180deg);
+}
+.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu.expanded ul.sub-menu {
+  display: block;
+}
+.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu.expanded ul.sub-menu li.sub-menu-title {
+  display: none;
 }
 .sidebar-menu ul.sidebar-menu__wrapper li.has-submenu ul.sub-menu {
   display: none;
@@ -11870,77 +11892,17 @@ input:-webkit-autofill:active{
   color: white;
 }
 .sidebar-menu ul.sidebar-menu__wrapper li.has-submenu ul.sub-menu li a {
-  padding-left: 30px;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu ul.sub-menu li a .icon {
-  font-size: 18px;
+  padding-left: 32px;
 }
 .sidebar-menu ul.sidebar-menu__wrapper li.has-submenu ul.sub-menu li a .nav-title {
   font-size: 14px;
-  padding-left: 11px;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu ul.sub-menu li a span span:nth-of-type(2) {
-  transition: 0.3s;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu ul.sub-menu li:hover a span span:nth-of-type(2) {
-  transform: translate(5px, -5px);
-}
-.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu ul.sub-menu li a span {
+  padding-left: 18px;
   text-transform: none;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu.expanded a :nth-child(3)::before {
-  transform: rotate(180deg);
-}
-.sidebar-menu ul.sidebar-menu__wrapper li.has-submenu.expanded ul.sub-menu {
-  display: block;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li > a {
-  padding: 1.1rem;
-  line-height: 20px;
-  color: #a6aab4;
-  display: flex;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li > a:not([href]):not([class]) {
-  color: #a6aab4;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li > a .icon {
-  font-size: 24px;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li > a .icon span:nth-of-type(2) {
-  position: absolute;
-  left: 12px;
-  /* right: -5px; */
-  font-size: 0.8rem;
-  color: white;
-  top: -1px;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li > a .nav-title {
-  margin-right: auto;
-  padding-left: 21px;
-  opacity: 1;
-  transition: opacity 0.3s;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li > a.router-link-exact-active {
-  color: white;
-  font-weight: bold;
-}
-.sidebar-menu ul.sidebar-menu__wrapper li a.router-link-exact-active {
-  color: white;
-  font-weight: bold;
 }
 .sidebar-menu.shrinked {
   width: 60px;
 }
 .sidebar-menu.shrinked .logo__wrapper span {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s linear 300ms, opacity 300ms;
-}
-.sidebar-menu.shrinked .app-version {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s linear 300ms, opacity 300ms;
@@ -11967,8 +11929,8 @@ input:-webkit-autofill:active{
   display: block;
   color: white;
   text-align: center;
-  padding-top: 1.1rem;
-  padding-bottom: 1.1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   border-bottom: 1px solid #f5f6fa;
   pointer-events: none;
 }
@@ -11986,6 +11948,11 @@ input:-webkit-autofill:active{
 }
 .sidebar-menu.shrinked .sidebar-menu__wrapper li.has-submenu.expanded:hover ul.sub-menu {
   display: block;
+}
+.sidebar-menu.shrinked .app-version {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 300ms;
 }
 
 .card .card-header {
