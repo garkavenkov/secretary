@@ -90,27 +90,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'SystemDictionaryTable',
   props: {
-    'title': {
+    title: {
       type: String,
       required: true
     },
-    'dataTable': {
+    dataTable: {
       type: Array,
       required: true
     },
-    'fieldsTitle': {
+    fieldsTitle: {
       type: Array,
       required: false,
       "default": function _default() {
         return ['Назва'];
       }
     },
-    'fieldsName': {
+    fieldsName: {
       type: Array,
       required: false,
       "default": function _default() {
         return ['name'];
       }
+    },
+    newRecordTitle: {
+      type: String,
+      required: false,
+      "default": 'Додати новий запис'
+    },
+    editRecordTitle: {
+      type: String,
+      required: false,
+      "default": 'Редагувати запис'
+    },
+    deleteRecordTitle: {
+      type: String,
+      required: false,
+      "default": 'Видалити запис'
     }
   },
   data: function data() {
@@ -240,34 +255,27 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "dictionary-name__wrapper"
 };
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-plus"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_5 = [_hoisted_4];
-var _hoisted_6 = {
+var _hoisted_4 = {
   "class": "card-body"
 };
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, null, -1 /* HOISTED */);
 });
-var _hoisted_8 = ["onClick"];
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-    "class": "mdi mdi-pencil"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_10 = [_hoisted_9];
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_ButtonAdd = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonAdd");
+  var _component_ButtonEdit = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonEdit");
+  var _component_ButtonDelete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonDelete");
   var _component_DataTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DataTable");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "btn btn-sm btn-primary",
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonAdd, {
+    buttonClass: "btn-primary p-2",
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return _ctx.$emit('newRecord');
-    })
-  }, _hoisted_5)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
+      return _ctx.$parent.$emit('newRecord');
+    }),
+    title: $props.newRecordTitle
+  }, null, 8 /* PROPS */, ["title"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
     dataTable: $props.dataTable,
+    tableClass: "table-bordered table-hover table-sm",
     tableHeaderClass: "table-dark"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -275,7 +283,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
           key: index
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(title), 1 /* TEXT */);
-      }), 128 /* KEYED_FRAGMENT */)), _hoisted_7])];
+      }), 128 /* KEYED_FRAGMENT */)), _hoisted_5])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
@@ -285,13 +293,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
             key: index
           }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record[name]), 1 /* TEXT */);
-        }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-          "class": "btn btn-sm btn-outline-secondary",
+        }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonEdit, {
           onClick: function onClick($event) {
-            return _ctx.$emit('editRecord', record);
+            return _ctx.$parent.$emit('editRecord', record);
           },
-          title: "Редагувати інформацію"
-        }, _hoisted_10, 8 /* PROPS */, _hoisted_8)])]);
+          title: $props.editRecordTitle,
+          buttonClass: "btn-outline-warning btn-transparent p-2"
+        }, null, 8 /* PROPS */, ["onClick", "title"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonDelete, {
+          buttonClass: "btn-outline-danger btn-transparent ms-3 p-2",
+          title: $props.deleteRecordTitle,
+          onClick: function onClick($event) {
+            return _ctx.$parent.$emit('deleteRecord', record);
+          }
+        }, null, 8 /* PROPS */, ["title", "onClick"])])]);
       }), 128 /* KEYED_FRAGMENT */))];
     }),
 
@@ -317,7 +331,7 @@ var _hoisted_1 = {
   "class": "row"
 };
 var _hoisted_2 = {
-  "class": "col-md-8 col-lg-6 mx-auto"
+  "class": "col-md-8 col-lg-8 mx-auto"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_breadcrumbs = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("breadcrumbs");
@@ -326,15 +340,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breadcrumbs), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryTable, {
     dataTable: _ctx.settlementTypes,
     title: "Довідник 'Тип населеного пункту'",
+    newRecordTitle: "Додати новий тип населенного пункту",
+    editRecordTitle: "Редагувати тип населенного пункту",
+    deleteRecordTitle: "Видалити тип населенного пункту",
     onNewRecord: _ctx.openFormForAdd,
-    onEditRecord: _ctx.openFormForEdit
+    onEditRecord: _ctx.openFormForEdit,
+    onDeleteRecprd: _cache[0] || (_cache[0] = function () {})
   }, null, 8 /* PROPS */, ["dataTable", "onNewRecord", "onEditRecord"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryForm, {
     formData: _ctx.formData,
     action: _ctx.action,
     formId: $data.formId,
     fieldId: "settlementTypeName",
     url: "/api/v1/settlement-types",
-    onRefreshData: _cache[0] || (_cache[0] = function ($event) {
+    onRefreshData: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.$store.dispatch('SettlementTypes/fetchRecords');
     })
   }, null, 8 /* PROPS */, ["formData", "action", "formId"])], 64 /* STABLE_FRAGMENT */);
@@ -416,7 +434,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "table tr td[data-v-ceb82cce]:last-of-type {\n  text-align: center;\n  width: 5rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "table th[data-v-ceb82cce]:last-of-type {\n  width: 7rem;\n}\ntable tr[data-v-ceb82cce] {\n  vertical-align: middle;\n}\ntable tr td[data-v-ceb82cce]:last-of-type {\n  display: flex;\n  justify-content: space-around;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

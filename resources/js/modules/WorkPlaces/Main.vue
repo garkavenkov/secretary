@@ -1,13 +1,17 @@
 <template>
     <breadcrumbs />
     <div class="row">
-        <div class="col-md-10 col-lg-8 mx-auto">
+        <div class="col-md-10 col-lg-10 mx-auto">
 
             <SystemDictionaryTable
                     :dataTable="places"
                     title="Довідник 'Коди місця роботи (заняття)'"
+                    newRecordTitle="Додати новий код місця роботи"
+                    editRecordTitle="Редагувати код місця роботи"
+                    deleteRecordTitle="Видалити код місця роботи"
                     @newRecord="openFormForAdd"
-                    @editRecord="openFormForEdit" />
+                    @editRecord="openFormForEdit"
+                    @deleteRecord="() => {}" />
 
         </div>
     </div>

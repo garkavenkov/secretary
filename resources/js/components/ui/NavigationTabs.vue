@@ -1,12 +1,22 @@
 <template>
     
     <ul class="nav nav-tabs" :class="navigationClass">    
-        <li class="nav-item" :class="tabClass" v-for="(tab,index) in tabs" :key="index">        
-            <router-link :to="{name: tab.routeName}" class="nav-link" :class="linkClass">            
-                <SvgIcon type="mdi" :path="tab.iconPath" :size="iconSize"/>
-                <span>{{ tab.title }}</span>
-            </router-link>
-        </li>
+        <template v-if="tabType == 'link'">
+            <li class="nav-item" :class="tabClass" v-for="(tab,index) in tabs" :key="index">        
+                <router-link :to="{name: tab.routeName}" class="nav-link" :class="linkClass">            
+                    <SvgIcon type="mdi" :path="tab.iconPath" :size="iconSize"/>
+                    <span>{{ tab.title }}</span>
+                </router-link>
+            </li>
+        </template>
+        <template v-else-if="tabType == 'button'">
+            <li class="nav-item" :class="tabClass" v-for="(tab,index) in tabs" :key="index">        
+                <button class="nav-link" :class="[linkClass, tab.activeTab ? 'active' : '']" @click="$emit('click', tab.tabName)">
+                    <SvgIcon type="mdi" :path="tab.iconPath" :size="iconSize"/>
+                    <span>{{ tab.title }}</span>
+                </button>
+            </li>
+        </template>
     </ul>
 
 </template>
@@ -20,6 +30,14 @@ export default {
         tabs: {
             type: Array,
             required: true
+        },
+        tabType: {
+            type: String,
+            required: false,
+            default: 'link',
+            validator(value) {                
+                return ['link', 'button'].includes(value)
+            }
         },
         iconSize: {
             type: Number,
@@ -42,6 +60,7 @@ export default {
             default: () => []
         }
     },
+    emits: ['click'],
     components: {
         SvgIcon
     }

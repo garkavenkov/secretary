@@ -27,8 +27,8 @@
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
                         <td class="text-center">
-                            <DictionaryShowRecordLink routeName="settlements.show" :routeParamId="record.id" />                         
-                        </td>                        
+                            <DictionaryShowRecordLink routeName="settlements.show" :routeParamId="record.id" />
+                        </td>
                         <td>{{ record.name }}</td>
                         <td>{{ record.settlement_type.name }}</td>
                         <td>{{ record.council.name }}</td>

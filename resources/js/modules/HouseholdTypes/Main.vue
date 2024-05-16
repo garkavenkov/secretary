@@ -1,13 +1,17 @@
 <template>
-    <breadcrumbs />
+
     <div class="row">
         <div class="col-md-10 col-lg-8 mx-auto">
 
             <SystemDictionaryTable
                     :dataTable="householdTypes"
                     title="Довідник 'Типи об'єктів погосподарського обліку'"
+                    newRecordTitle="Додати новий тип обліку"
+                    editRecordTitle="Редагувати тип обліку"
+                    deleteRecordTitle="Видалити тип обліку"
                     @newRecord="openFormForAdd"
-                    @editRecord="openFormForEdit" />
+                    @editRecord="openFormForEdit"
+                    @deleteRecord="() => {}"/>
 
         </div>
     </div>

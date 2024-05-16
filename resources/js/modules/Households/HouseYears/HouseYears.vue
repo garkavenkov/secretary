@@ -17,11 +17,16 @@
                             
                             </th>
                             <th v-for="year in years" :key="year.year">
-                                
-                                <YearDropDownMenu 
-                                    :year="year.year" 
-                                    @editYear="editYear(year)" 
-                                    @deleteYear="deleteYear(year)" />
+                                <div class="d-flex align-items-center justify-content-end">
+
+                                    <span>{{year.year}}</span>
+                                    <DropDownMenu
+                                        buttonClass="btn-outline-secondary btn-transparent"
+                                        :showToggler="false"
+                                        @editYear="editYear(year)" 
+                                        @deleteYear="deleteYear(year)" />
+
+                                </div>
                                
                             </th>
                         </tr>
@@ -210,7 +215,7 @@ import HouseInfoForm            from './HouseInfoForm.vue';
 import HouseAdditionalDataForm  from './HouseAdditionalDataForm.vue';
 import TableRow                 from '../../../components/ui/TableRow.vue';
 import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
-import YearDropDownMenu         from '../../../components/ui/YearDropDownMenu.vue';
+import DropDownMenu             from '../../../components/ui/DropDownMenu.vue';
 
 import YearsCUD                 from '../../../mixins/YearsCUD';
 
@@ -333,7 +338,7 @@ export default {
         HouseInfoForm,
         HouseAdditionalDataForm,
         YearsPaginator,        
-        YearDropDownMenu,        
+        DropDownMenu,        
     }
 }
 </script>

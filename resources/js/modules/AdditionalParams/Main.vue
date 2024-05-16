@@ -1,32 +1,24 @@
-<template>
-    <breadcrumbs />
+<template>    
 
     <div class="row">
         <!-- Additional Param Categories -->
-        <div class="col">
+        <div class="col-md-5">
             <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper">
                         <span>Категорії додаткових параметрів</span>
                     </div>
-                    <div>
-                        <button class="btn btn-sm btn-outline-secondary btn-transparent me-2"
-                                @click="fetchAdditionalParamCategories"
-                                title="Оновити дані">
-                            <span class="mdi mdi-refresh"></span>
-                        </button>
-                        <button class="btn btn-sm btn-outline-secondary btn-transparent"
-                                @click="newCategory"
-                                title="Додати категорію">
-                            <span class="mdi mdi-plus-thick"></span>
-                        </button>
-                    </div>
-                    <!-- <h5>Категорії додаткових параметрів</h5>
-                    <button class="btn btn-sm btn-outline-secondary btn-transparent"
-                            @click="newCategory"
-                            title="Додати категорію">
-                        <span class="mdi mdi-plus-thick"></span>
-                    </button> -->
+                    <div class="d-flex">                                               
+
+                        <ButtonAdd 
+                                buttonClass="btn-outline-secondary btn-transparent p-2" 
+                                @click="newCategory" 
+                                title="Додати категорію" />
+
+                        <ButtonRefreshData 
+                                buttonClass="btn-outline-secondary btn-transparent ms-2 p-2"
+                                @click="fetchAdditionalParamCategories" />                  
+                    </div>                    
                 </div>
                 <div class="card-body">
                     <table class="table table-sm table-bordered">
@@ -34,7 +26,7 @@
                             <tr>
                                 <th>Модель</th>
                                 <th>Назва</th>
-                                <th></th>
+                                <th class="actions"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,12 +37,15 @@
                                     </a>
                                 </td>
                                 <td>{{ category.name }}</td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm btn-outline-warning btn-transparent"
+                                <td class="actions">
+                                    <ButtonEdit 
+                                            @click="editCategory(category)" 
                                             title="Редагувати категорію"
-                                            @click="editCategory(category)">
-                                        <span class="mdi mdi-pencil"></span>
-                                    </button>
+                                            buttonClass="btn-outline-warning btn-transparent p-2" />
+                                    <ButtonDelete
+                                            buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
+                                            title="Видалити категорію"
+                                            @click="() => {}" />
                                 </td>
                             </tr>
                         </tbody>
@@ -59,33 +54,25 @@
             </div>
         </div>
         <!-- Additional Params -->
-        <div class="col">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper">
                         <span>Додаткові параметри{{ selectedCategoryName }}</span>
                     </div>
-                    <div>
-                        <button class="btn btn-sm btn-outline-secondary btn-transparent me-2"
-                                    @click="fetchAdditionalParams(selectedCategory.id)"
-                                    title="Оновити дані"
-                                    v-if="selectedCategoryName !== ''">
-                                <span class="mdi mdi-refresh"></span>
-                        </button>
-                        <button class="btn btn-sm btn-outline-secondary btn-transparent"
-                                @click="newParam"
-                                title="Додати параметр"
-                                v-if="selectedCategoryName !== ''">
-                            <span class="mdi mdi-plus-thick"></span>
-                        </button>
-                    </div>
-                    <!-- <h5>Додаткові параметри{{ selectedCategoryName }}</h5>
-                    <button class="btn btn-sm btn-outline-secondary btn-transparent"
-                            @click="newParam"
-                            title="Додати параметр"
-                            v-if="selectedCategoryName !== ''">
-                        <span class="mdi mdi-plus-thick"></span>
-                    </button> -->
+                    <div class="d-flex">
+
+                        <ButtonRefreshData 
+                                :disabled="selectedCategoryName == ''"
+                                buttonClass="btn-outline-secondary btn-transparent me-2 p-2"
+                                @click="fetchAdditionalParams(selectedCategory.id)" />
+
+                        <ButtonAdd 
+                                v-if="selectedCategoryName !== ''"
+                                buttonClass="btn btn-sm btn-outline-secondary btn-transparent p-2"
+                                @click="newParam" title="Додати параметр" />
+                        
+                    </div>                    
                 </div>
                 <div class="card-body">
                     <table class="table table-sm table-bordered" v-if="params.length > 0">
@@ -95,7 +82,7 @@
                                 <th>Назва</th>
                                 <th>Значення</th>
                                 <th class="text-center" title="Системний параметр або параметр користувача">Тип</th>
-                                <th></th>
+                                <th class="actions"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,25 +91,32 @@
                                 <td>{{ param.name }}</td>
                                 <td>{{ param.value_type.name }}</td>
                                 <td class="text-center">
-                                    <span class="mdi mdi-cog-outline text-danger" v-if="param.is_system" title="Системний параметр"></span>
-                                    <span class="mdi mdi-account-outline text-primary" v-else title="Параментр користувача"></span>
+                                    <span v-if="param.is_system" title="Системний параметр" >
+                                        <SvgIcon                                    
+                                            type="mdi" 
+                                            :size="16"
+                                            :path="pathSystemParamIcon" 
+                                            class="mdi mdi-cog-outline text-danger" />
+                                    </span>
+                                    <span v-else title="Параментр користувача">
+                                        <SvgIcon                                    
+                                            type="mdi" 
+                                            :path="pathUserParamIcon" 
+                                            :size="16"
+                                            class="mdi mdi-account-outline text-primary"/>
+                                    </span>                                    
                                 </td>
                                 <td class="actions">
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-warning btn-transparent"
-                                                title="Редагувати параметр"
-                                                @click="editParam(param)">
-                                            <span class="mdi mdi-pencil"></span>
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-sm btn-outline-danger btn-transparent"
-                                                title="Видалити параметр"
-                                                @click="deleteParam(param)"
-                                                v-if="!param.is_system">
-                                            <span class="mdi mdi-trash-can"></span>
-                                        </button>
-                                    </div>
+                                    <ButtonEdit 
+                                            @click="editParam(param)"
+                                            title="Редагувати параметр"
+                                            buttonClass="btn-outline-warning btn-transparent p-2" />
+
+                                    <ButtonDelete
+                                            buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
+                                            title="Видалити параметр"
+                                            @click="deleteParam(param)"
+                                            v-if="!param.is_system" />                                  
                                 </td>
                             </tr>
                         </tbody>
@@ -156,11 +150,18 @@
 
 <script>
 
-import { Modal }        from 'bootstrap';
-import { computed }     from 'vue';
+import { Modal }            from 'bootstrap';
+import { computed }         from 'vue';
+import SvgIcon              from '@jamescoyle/vue-icon';
+import { 
+    mdiCogOutline,
+    mdiAccountOutline
+} from '@mdi/js';
 
-import CategoryForm     from './CategoryForm.vue';
-import ParamForm        from './ParamForm.vue';
+import CategoryForm         from './CategoryForm.vue';
+import ParamForm            from './ParamForm.vue';
+
+import ButtonRefreshData    from '../../components/ui/Buttons/ButtonRefreshData.vue';
 
 export default {
     name: 'AdditionalParams',
@@ -182,7 +183,9 @@ export default {
             },
             action: '',
             modalTitle: '',
-            modalSubmitCaption: ''
+            modalSubmitCaption: '',
+            pathSystemParamIcon: mdiCogOutline,
+            pathUserParamIcon: mdiAccountOutline
         }
     },
     provide() {
@@ -279,7 +282,9 @@ export default {
     },
     components: {
         CategoryForm,
-        ParamForm
+        ParamForm,
+        ButtonRefreshData,
+        SvgIcon
     },
     created() {
         this.fetchAdditionalParamCategories();
@@ -292,17 +297,21 @@ export default {
 <style lang="scss" scoped>
 tr {
     vertical-align: middle;
-    &.selected {
-        background: #d8d9db38;
-    }
+    // &.selected {
+    //     background: #d8d9db38;
+    // }
 }
 
-.actions {
-    display: flex;
+th.actions {
+    width: 100px; 
+}
 
-    & > div {
-        flex: 1 0 0;
-        text-align: center;
-    }
+td.actions {
+    display: flex;    
+
+    // & > div {
+    //     flex: 1 0 0;
+    //     text-align: center;
+    // }
 }
 </style>

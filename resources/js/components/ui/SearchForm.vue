@@ -32,7 +32,7 @@
             </ul>
         </div>
         <button class="btn btn-outline-secondary ms-2 py-1 px-2" type="buton" @click="search" :disabled="searchText == ''">            
-            <SvgIcon type="mdi" :path="path" />
+            <SvgIcon type="mdi" :path="path" :size="18"/>
         </button>
     </form>
 </template>

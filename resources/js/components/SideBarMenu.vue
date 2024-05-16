@@ -13,7 +13,7 @@
             <li>
                 <router-link to="/">
                     <span>
-                        <SvgIcon type="mdi" :path="pathMdiMonitorDashboard" :size="20"/>
+                        <SvgIcon type="mdi" :path="pathMdiMonitorDashboard"/>
                     </span>
                     <span class="nav-title">Робочий стіл</span>
                 </router-link>
@@ -21,7 +21,7 @@
             <li title="Облікові картки" >
                 <router-link to="/households" :class="[{'router-link-active': $route.path.indexOf('households/') > -1 }]">                    
                     <span>
-                        <SvgIcon type="mdi" :path="pathMdiFolderHome" :size="20"/>
+                        <SvgIcon type="mdi" :path="pathMdiFolderHome"/>
                     </span>
                     <span class="nav-title">Облікові картки</span>
                 </router-link>
@@ -29,7 +29,7 @@
             <li title="Члени домогосподарств">
                 <router-link to="/household-members" :class="[{'router-link-active': $route.path.indexOf('household-members/') > -1 }]">                    
                     <span>
-                        <SvgIcon type="mdi" :path="pathMdiHumanFemaleFemaleChild" :size="20" />
+                        <SvgIcon type="mdi" :path="pathMdiHumanFemaleFemaleChild" />
                     </span>
                     <span class="nav-title">Члени домогосподарств</span>
                 </router-link>
@@ -37,7 +37,7 @@
             <li class="has-submenu">
                 <a>
                     <span>
-                        <SvgIcon type="mdi" :path="pathMdiAbacus" :size="20" />                    
+                        <SvgIcon type="mdi" :path="pathMdiAbacus" />                    
                     </span>
                     <span class="nav-title">Аналітика</span>
                     <SvgIcon type="mdi" :path="pathMdiChevronDown" :size="16" />
@@ -67,7 +67,7 @@
             <li class="has-submenu">
                 <a>
                     <span>
-                        <SvgIcon type="mdi" :path="pathMdiInboxMultiple" :size="20" />
+                        <SvgIcon type="mdi" :path="pathMdiInboxMultiple" />
                     </span>
                     <span class="nav-title">Довідники</span>
                     <SvgIcon type="mdi" :path="pathMdiChevronDown" :size="16" />
@@ -109,7 +109,7 @@
             <li class="has-submenu">
                 <a>
                     <span>
-                        <SvgIcon type="mdi" :path="pathMdiCog" :size="20" />
+                        <SvgIcon type="mdi" :path="pathMdiCog" />
                     </span>
                     <span class="nav-title">Налаштування</span>
                     <SvgIcon type="mdi" :path="pathMdiChevronDown" :size="16" />
@@ -145,7 +145,7 @@
             <li class="has-submenu">
                 <a>
                     <span>
-                        <SvgIcon type="mdi" :path="pathMdiTableCog" :size="20" />
+                        <SvgIcon type="mdi" :path="pathMdiTableCog" />
                     </span>
                     <span class="nav-title">Системні довідники</span>
                     <SvgIcon type="mdi" :path="pathMdiChevronDown" :size="16" />

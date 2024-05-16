@@ -15,13 +15,18 @@
                                 </ButtonAdd>
 
                             </th>
-                            <th v-for="year in years" :key="year.year">                                
-                                
-                                <YearDropDownMenu 
-                                    :year="year.year" 
-                                    @editYear="editYear(year)" 
-                                    @deleteYear="deleteYear(year)" />
-                                                                   
+                            <th v-for="year in years" :key="year.year">         
+
+                                <div class="d-flex align-items-center justify-content-end">
+                                    <span>{{year.year}}</span>
+                                    <DropDownMenu
+                                        buttonClass="btn-outline-secondary btn-transparent"
+                                        :showToggler="false"
+                                        @editYear="editYear(year)" 
+                                        @deleteYear="deleteYear(year)" />
+
+                                </div>
+                                                             
                             </th>
                         </tr>
                     </thead>
@@ -110,10 +115,9 @@ import YearsPaginator           from '../../../components/ui/YearsPaginator.vue'
 
 import NumberFormat             from '../../../mixins/NumberFormat';
 import YearsCUD                 from '../../../mixins/YearsCUD';
-// import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
 import ButtonAdd                from '../../../components/ui/Buttons/ButtonAdd.vue';
 import ButtonEdit               from '../../../components/ui/Buttons/ButtonEdit.vue';
-import YearDropDownMenu         from '../../../components/ui/YearDropDownMenu.vue';
+import DropDownMenu             from '../../../components/ui/DropDownMenu.vue';
 
 export default {
     name: 'HouseholdLandYears',
@@ -198,7 +202,8 @@ export default {
         LandAdditionalDataForm,
         YearsPaginator,
         // IconButton,        
-        YearDropDownMenu,
+        // YearDropDownMenu,
+        DropDownMenu,
         ButtonAdd,
         ButtonEdit
     }

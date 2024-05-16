@@ -6,18 +6,17 @@
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>Користувачі</span>
-                <button class="btn btn-sm btn-primary" @click="openUserForm">
-                    <span class="mdi mdi-plus"></span>
-                </button>
+                <ButtonAdd buttonClass="btn btn-primary p-2" @click="openUserForm" title="Додати нового користувача"/>
             </div>
         </div>
         <div class="card-body">
             <DataTable
                     :dataTable="users"
+                    tableClass="table-bordered table-hover"
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>
-                        <th></th>
+                        <th class="show-record"></th>
                         <th>Прізвище Ім'я по Батькові</th>
                         <th>Логін</th>
                         <th>Посада</th>
@@ -26,10 +25,8 @@
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
-                        <td>
-                            <router-link :to="{name: 'users.profile', params: { id: record.id }}">
-                                <span class="mdi mdi-eye-outline"></span>
-                            </router-link>
+                        <td class="text-center">
+                            <DictionaryShowRecordLink routeName="users.profile" :routeParamId="record.id" />
                         </td>
                         <td>{{ record.name }}</td>
                         <td>{{ record.user_name }}</td>
@@ -49,11 +46,13 @@
 
 <script>
 
-import { Modal } from 'bootstrap';
+import { Modal }                from 'bootstrap';
 
-import DataTable from '../../components/ui/DataTable.vue'
+import UserForm                 from './Form.vue';
 
-import UserForm  from './Form.vue';
+import DataTable                from '../../components/ui/DataTable.vue'
+import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
+
 
 export default {
     name: 'UsersMain',
@@ -99,7 +98,8 @@ export default {
     },
     components: {
         DataTable,
-        UserForm
+        UserForm,
+        DictionaryShowRecordLink
     },
     created() {
         this.fetchUsers();

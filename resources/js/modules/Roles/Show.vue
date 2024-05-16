@@ -7,7 +7,8 @@
             <div class="card" v-if="role.code">
                 <div class="card-header">
                     <h5>Інформація</h5>
-                    <div class="dropdown">
+                    <DropDownMenu @edit="editRole" @delete="deleteRole" buttonClass="btn-outline-secondary btn-transparent" :divideItems="true"/>
+                    <!-- <div class="dropdown">
                         <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
                                 type="button"
                                 data-bs-toggle="dropdown"
@@ -31,7 +32,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -80,6 +81,7 @@
 import { Modal }    from 'bootstrap';
 
 import RoleForm     from './Form.vue';
+import DropDownMenu from '../../components/ui/DropDownMenu.vue';
 
 export default {
     name: 'RolesShow',
@@ -114,17 +116,17 @@ export default {
                     this.role = res.data.data
                 });
         },
-        openRoleForm() {
+        editRole() {
             this.form = Object.assign({}, this.role);
 
             var roleForm = new Modal(document.getElementById('RoleForm'))
             roleForm.show();
         },
-        deleteRole(id) {
+        deleteRole() {
             this.$confirmDelete('Ви дійсно бажаєти видалити роль')
                 .then(res => {
                     if(res.isConfirmed) {
-                        axios.delete(`${this.apiUrl}/${id}`)
+                        axios.delete(`${this.apiUrl}/${this.id}`)
                             .then(res => {
                                 this.$toast(res.data.message);
                                 this.$router.push({name: 'roles'});
@@ -137,7 +139,8 @@ export default {
         }
     },
     components: {
-        RoleForm
+        RoleForm,
+        DropDownMenu
     },
     created() {
         this.fetchData()

@@ -12012,15 +12012,6 @@ input:-webkit-autofill:active{
   width: 125px;
   vertical-align: middle;
 }
-.table-years thead .dropdown button {
-  color: var(--bs-gray-500);
-}
-.table-years thead .dropdown button:hover, .table-years thead .dropdown button:active, .table-years thead .dropdown button.show {
-  color: var(--bs-gray-700);
-}
-.table-years thead .dropdown .dropdown-item:hover {
-  background-color: var(--bs-secondary-bg);
-}
 
 table thead th.sortable {
   position: relative;
@@ -12068,9 +12059,8 @@ table thead th.sortable.descending:after {
   content: "↑";
   opacity: 1;
 }
-
-table th.show-record {
-  width: 50px;
+table thead th.show-record {
+  width: 40px;
   text-align: center;
 }
 

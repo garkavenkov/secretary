@@ -4,14 +4,13 @@
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>{{ title }}</span>
-                <button class="btn btn-sm btn-primary" @click="$emit('newRecord')">
-                    <span class="mdi mdi-plus"></span>
-                </button>
+                <ButtonAdd buttonClass="btn-primary p-2" @click="$parent.$emit('newRecord')" :title="newRecordTitle"/>
             </div>
         </div>
         <div class="card-body">
             <DataTable
                     :dataTable="dataTable"
+                    tableClass="table-bordered table-hover table-sm"
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
                     <tr>
@@ -28,11 +27,15 @@
                             {{ record[name] }}
                         </td>
                         <td>
-                            <button class="btn btn-sm btn-outline-secondary"
-                                    @click="$emit('editRecord', record)"
-                                    title="Редагувати інформацію">
-                                <span class="mdi mdi-pencil"></span>
-                            </button>
+                            <ButtonEdit 
+                                    @click="$parent.$emit('editRecord', record)" 
+                                    :title="editRecordTitle"
+                                    buttonClass="btn-outline-warning btn-transparent p-2" />
+
+                            <ButtonDelete
+                                    buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
+                                    :title="deleteRecordTitle"
+                                    @click="$parent.$emit('deleteRecord', record)" />
                         </td>
                     </tr>
                 </template>
@@ -49,25 +52,39 @@ import DataTable from './DataTable.vue';
 export default {
     name:'SystemDictionaryTable',
     props: {
-        'title': {
+        title: {
             type: String,
             required: true
         },
-        'dataTable': {
+        dataTable: {
             type: Array,
             required: true
         },
-        'fieldsTitle': {
+        fieldsTitle: {
             type: Array,
             required: false,
             default: () => ['Назва']
         },
-        'fieldsName': {
+        fieldsName: {
             type: Array,
             required: false,
             default: () => ['name']
-        }
-
+        },
+        newRecordTitle: {
+            type: String,
+            required: false,
+            default: 'Додати новий запис'
+        },
+        editRecordTitle: {
+            type: String,
+            required: false,
+            default: 'Редагувати запис'
+        },
+        deleteRecordTitle: {
+            type: String,
+            required: false,
+            default: 'Видалити запис'
+        },
     },
     data() {
         return {
@@ -83,9 +100,20 @@ export default {
 
 <style lang="scss" scoped>
 
-table tr td:last-of-type {
-    text-align: center;
-    width: 5rem;
+table {
+    
+    th:last-of-type {
+        width: 7rem;
+    }
+
+    tr {
+        vertical-align: middle;
+
+        td:last-of-type {    
+            display: flex;
+            justify-content: space-around;       
+        }
+    }
 }
 
 </style>

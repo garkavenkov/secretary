@@ -9,8 +9,12 @@
                     title="Довідник 'Родинні стосунки'"
                     :fieldsTitle="['Назва', 'Стать']"
                     :fieldsName="['name', 'sex']"
+                    newRecordTitle="Додати новий тип родинних стосунків"
+                    editRecordTitle="Редагувати тип родинних стосунків"
+                    deleteRecordTitle="Видалити тип родинних стосунків"
                     @newRecord="openFormForAdd"
-                    @editRecord="openFormForEdit" />
+                    @editRecord="openFormForEdit" 
+                    @deleteRecord="() => {}" />
 
         </div>
     </div>

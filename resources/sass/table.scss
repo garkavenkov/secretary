@@ -13,27 +13,7 @@
         border-left: 1px solid #dee2e6;
         width: 125px;
         vertical-align: middle;
-    }
-
-    .dropdown {
-        // position:absolute;
-        // right: 5px;
-        // top:4px;
-
-        button {
-            color: var(--bs-gray-500);
-
-            &:hover, &:active, &.show {
-                color: var(--bs-gray-700);
-            }
-
-        }
-
-        .dropdown-item:hover {
-            background-color: var(--bs-secondary-bg);
-        }
-
-    }
+    }  
 }
 
 table thead {
@@ -92,13 +72,9 @@ table thead {
             opacity: 1;
         }
     }
-}
 
-
-table {
     th.show-record {
-        width: 50px;
+        width: 40px;
         text-align: center;
     }    
 }
-

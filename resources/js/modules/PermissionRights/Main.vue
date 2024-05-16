@@ -1,7 +1,5 @@
 <template>
 
-    <breadcrumbs />
-
     <!-- <div class="card">
         <div class="card-body"> -->
             <div class="row">

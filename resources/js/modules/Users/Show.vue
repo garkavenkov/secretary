@@ -1,37 +1,11 @@
 <template>
 
-    <breadcrumbs />
-
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card" v-if="user.name">
                 <div class="card-header">
                     <h5>Інформація о користувачі: <span>{{ user.name }}</span></h5>
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-outline-secondary btn-transparent dropdown-toggle"
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                            <span class="mdi mdi-cogs"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a  class="dropdown-item"
-                                    @click="editUser">
-                                        <span class="mdi mdi-pencil text-warning me-1"></span>
-                                        Редагувати
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a  class="dropdown-item"
-                                    @click="deleteUser(user.id)">
-                                        <span class="mdi mdi-trash-can text-danger me-1"></span>
-                                        Видалити
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <DropDownMenu @edit="editUser" @delete="deleteUser(user.id)" buttonClass="btn-outline-secondary btn-transparent"/>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -45,33 +19,9 @@
                             <input type="file" accept="image/*"  id="file-input" name="photo"  @change="imageSelected($event)">
                         </div>
                         <div class="col-md-8">
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button :class="['nav-link', currentTab == 'MainInfo' ? 'active' : '']"
-                                            id="main-tab"
-                                            @click="currentTab = 'MainInfo'"
-                                            type="button">
-                                        <span class="mdi mdi-account-details-outline me-1"></span>
-                                        Головна інформація
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button :class="['nav-link', currentTab == 'Roles' ? 'active' : '']"
-                                            id="main-tab"
-                                            @click="currentTab = 'Roles'"
-                                            type="button">
-                                            <span class="mdi mdi-shield-account-variant-outline me-1"></span>
-                                        Ролі
-                                    </button>
-                                </li>
-                            </ul>
-                            <div class="tab-content p-3">
-                                <!-- <KeepAlive>
-                                    <component  :is="currentTab"
-                                                v-bind="componentProps"
-                                                @refreshData="fetchUser">
-                                    </component>
-                                </KeepAlive> -->
+                            <NavigationTabs :tabs="tabs" @click="switchTab" tabType="button"/>
+                           
+                            <div class="tab-content p-3">                                
                                 <div v-if="currentTab == 'MainInfo'">
                                     <div>
                                         <dl class="row">
@@ -82,10 +32,10 @@
                                             <dt class="col-md-4">Логін</dt>
                                             <dd class="col-md-8">{{user.user_name}}</dd>
                                         </dl>
-                                        <dl class="row">
+                                        <!-- <dl class="row">
                                             <dt class="col-md-4">Посада</dt>
                                             <dd class="col-md-8">{{user.position}}</dd>
-                                        </dl>
+                                        </dl> -->
                                         <dl class="row">
                                             <dt class="col-md-4">Електронна пошта</dt>
                                             <dd class="col-md-8">{{user.email}}</dd>
@@ -177,12 +127,15 @@
 
 <script>
 
-import { Modal }    from 'bootstrap';
+import { Modal }        from 'bootstrap';
+import { 
+    mdiAccountDetailsOutline,
+    mdiShieldAccountVariantOutline 
+} from '@mdi/js';
 
-import UserForm     from './Form.vue';
-// import Checkbox  from '../../components/ui/Chekbox.vue';
-// import MainInfo     from './Tabs/MainInfo.vue';
-// import Roles        from './Tabs/Roles.vue';
+import UserForm         from './Form.vue';
+import DropDownMenu     from '../../components/ui/DropDownMenu.vue';
+import NavigationTabs   from '../../components/ui/NavigationTabs.vue';
 
 export default {
     name: 'UserProfile',
@@ -208,6 +161,20 @@ export default {
                 email: '',
                 position: '',
             },
+            tabs: [
+                {
+                    tabName: 'MainInfo',
+                    iconPath: mdiAccountDetailsOutline,
+                    title: 'Головна інформація',
+                    activeTab: true
+                },
+                {
+                    tabName: 'Roles',
+                    iconPath: mdiShieldAccountVariantOutline,
+                    title: 'Ролі',
+                    activeTab: false
+                },                
+            ],            
             roles: [],
             currentTab: 'MainInfo',
             rolesIsEditable: false,
@@ -225,6 +192,17 @@ export default {
                 .then(res => {
                     this.roles = res.data.data
                 })
+        },
+        switchTab(tabName) {
+            this.currentTab = tabName;
+            this.tabs.forEach(t => {
+                if (t.tabName == tabName) {
+                    t.activeTab = true;
+                } else {
+                    t.activeTab = false;
+                }
+            });
+            
         },
         imageSelected(event) {
             console.log(event)
@@ -344,6 +322,8 @@ export default {
     },
     components: {
         UserForm,
+        DropDownMenu,
+        NavigationTabs
         // Roles,
         // MainInfo
         // Checkbox

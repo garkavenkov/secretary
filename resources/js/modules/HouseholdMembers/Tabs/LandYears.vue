@@ -15,23 +15,27 @@
                 </th>
                 <th v-for="year in years" :key="year.year">
 
-                    <YearDropDownMenu 
-                            :year="year.year" 
-                            @editYear="editYear(year)" 
-                            @deleteYear="deleteYear(year)">
+                    <div class="d-flex align-items-center justify-content-end">
 
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center" @click="landOwnedReport(year.year)">                                    
-                                <SvgIcon type="mdi" :path="pathMdiLandFields" :size="16" class="text-success me-2" />
-                                <span>Звіт про склад земельної ділянки</span>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                    </YearDropDownMenu>
-
+                        <span>{{year.year}}</span>
+                        <DropDownMenu
+                                buttonClass="btn-outline-secondary btn-transparent"
+                                :showToggler="false"
+                                @editYear="editYear(year)" 
+                                @deleteYear="deleteYear(year)">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" @click="landOwnedReport(year.year)">                                    
+                                    <SvgIcon type="mdi" :path="pathMdiLandFields" :size="16" class="text-success me-2" />
+                                    <span>Звіт про склад земельної ділянки</span>
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        </DropDownMenu>
+                        
+                    </div>
+                    
                 </th>
             </tr>
         </thead>
@@ -91,12 +95,12 @@ import {
     mdiLandFields,    
 } from '@mdi/js';
 
-import TableRow                 from '../../../components/ui/TableRow.vue';
 import LandYearForm             from './LandYearForm.vue';
+
+import TableRow                 from '../../../components/ui/TableRow.vue';
 import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
 import IconButton               from '../../../components/ui/Buttons/IconButton.vue';
-
-import YearDropDownMenu         from '../../../components/ui/YearDropDownMenu.vue';
+import DropDownMenu             from '../../../components/ui/DropDownMenu.vue';
 
 import YearsCUD                 from '../../../mixins/YearsCUD';
 import PrepareDataForDownload   from '../../../mixins/PrepareDataForDownload';
@@ -110,7 +114,7 @@ export default {
         YearsPaginator,
         IconButton,
         SvgIcon,        
-        YearDropDownMenu
+        DropDownMenu
     },
     data() {
         return {
