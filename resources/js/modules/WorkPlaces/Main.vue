@@ -1,5 +1,5 @@
 <template>
-    <breadcrumbs />
+   
     <div class="row">
         <div class="col-md-10 col-lg-10 mx-auto">
 

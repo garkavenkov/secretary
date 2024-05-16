@@ -1,5 +1,4 @@
-<template>
-    <breadcrumbs />
+<template>   
 
     <div class="row">
         <div class="col-md-10 col-lg-8 mx-auto">
