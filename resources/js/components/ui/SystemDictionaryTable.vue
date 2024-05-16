@@ -49,8 +49,6 @@
 
 <script>
 
-import DataTable from './DataTable.vue';
-
 export default {
     name:'SystemDictionaryTable',
     props: {
@@ -96,15 +94,8 @@ export default {
     methods: {
         searchData(row, searchText) {
             return this.fieldsName.some(field => row[field].toLowerCase().includes(searchText.toLowerCase()) );
-            // let res = this.fieldsName.forEach(field => {
-            //     return  row[field].toLowerCase().includes(searchText.toLowerCase());                    
-            // });
-            // console.log(res);
         }
-    },
-    components: {
-        DataTable
-    }
+    }    
 }
 </script>
 

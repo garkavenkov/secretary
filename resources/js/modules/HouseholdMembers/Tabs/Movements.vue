@@ -79,9 +79,7 @@ import { Modal }        from 'bootstrap';
 import { computed }     from 'vue';
 
 import { 
-    mdiCalendar,
-    mdiPencil,    
-    mdiTrashCanOutline,
+    mdiCalendar    
 }  from '@mdi/js';
 
 import MovementForm     from './MovementForm.vue'

@@ -54,17 +54,14 @@
 import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap';
 
-import DataTable                from '../../components/ui/DataTable.vue';
 import RegionForm               from './Form.vue';
-import ButtonAdd                from '../../components/ui/Buttons/ButtonAdd.vue';
+
 import ButtonRefreshData        from '../../components/ui/Buttons/ButtonRefreshData.vue';
 import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     components: {
-        DataTable,
-        RegionForm,
-        ButtonAdd,
+        RegionForm,        
         ButtonRefreshData,
         DictionaryShowRecordLink
     },

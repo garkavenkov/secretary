@@ -144,6 +144,7 @@
 
 <script>
 import { mapGetters }   from 'vuex';
+
 import FormValidator    from '../../mixins/FormValidator';
 import SubmitData       from '../../mixins/SubmitData';
 

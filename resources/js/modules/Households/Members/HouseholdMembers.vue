@@ -252,10 +252,10 @@ import {
 import DateFormat                       from '../../../mixins/DateFormat';
 
 import HouseholdMemberForm              from './HouseholdMemberForm.vue';
-// import HouseholdMemberInfo              from './HouseholdMemberInfo.vue';
 import HouseholdMembersComposition      from './HouseholdMembersComposition.vue';
 import FamilyCompositionReportForm      from './FamilyCompositionReportForm.vue';
 import HouseholdMembersAdditionalParams from './HouseholdMembersAdditionalParams.vue';
+
 import IconButton                       from '../../../components/ui/Buttons/IconButton.vue';
 
 export default {
@@ -455,8 +455,7 @@ export default {
         this.fetchMembers();
     },
     components: {
-        HouseholdMemberForm,
-        // HouseholdMemberInfo,
+        HouseholdMemberForm,        
         HouseholdMembersComposition,
         FamilyCompositionReportForm,
         HouseholdMembersAdditionalParams,

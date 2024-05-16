@@ -15,7 +15,7 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-
+import DataTable    from './components/ui/DataTable.vue';
 import SideBarMenu  from './components/SideBarMenu.vue';
 import Breadcrumbs  from './components/ui/Breadcrumbs.vue';
 import SearchForm   from './components/ui/SearchForm.vue'
@@ -29,6 +29,7 @@ app.component('search-form', SearchForm);
 app.component('ButtonAdd', ButtonAdd);
 app.component('ButtonEdit', ButtonEdit);
 app.component('ButtonDelete', ButtonDelete);
+app.component('DataTable', DataTable);
 
 
 // import Page404      from './components/404.vue';

@@ -52,13 +52,11 @@ import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap'
 
 import SettlementForm           from './Form.vue';
-import DataTable                from '../../components/ui/DataTable.vue';
 import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'SettlementsMain',
     components: {
-        DataTable,
         SettlementForm,
         DictionaryShowRecordLink
     },

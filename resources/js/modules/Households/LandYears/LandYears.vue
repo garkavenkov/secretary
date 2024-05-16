@@ -108,16 +108,15 @@ import { computed }             from 'vue';
 import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap';
 
-import TableRow                 from '../../../components/ui/TableRow.vue';
 import LandYearForm             from './LandYearForm.vue';
 import LandAdditionalDataForm   from './LandAdditionalDataForm.vue';
+
+import TableRow                 from '../../../components/ui/TableRow.vue';
 import YearsPaginator           from '../../../components/ui/YearsPaginator.vue';
+import DropDownMenu             from '../../../components/ui/DropDownMenu.vue';
 
 import NumberFormat             from '../../../mixins/NumberFormat';
 import YearsCUD                 from '../../../mixins/YearsCUD';
-import ButtonAdd                from '../../../components/ui/Buttons/ButtonAdd.vue';
-import ButtonEdit               from '../../../components/ui/Buttons/ButtonEdit.vue';
-import DropDownMenu             from '../../../components/ui/DropDownMenu.vue';
 
 export default {
     name: 'HouseholdLandYears',

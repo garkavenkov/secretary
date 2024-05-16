@@ -55,14 +55,12 @@ import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap';
 
 import DistrictForm             from './Form.vue';
-import DataTable                from '../../components/ui/DataTable.vue';
 import ButtonRefreshData        from '../../components/ui/Buttons/ButtonRefreshData.vue';
 import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'DistrictsMain',
-    components: {
-        DataTable,
+    components: {        
         DistrictForm,        
         ButtonRefreshData,
         DictionaryShowRecordLink

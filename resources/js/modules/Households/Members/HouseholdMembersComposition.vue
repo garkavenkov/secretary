@@ -66,9 +66,7 @@
             </tbody>
 
         </table>
-        <!-- <pre>
-            {{ availableLinks }}
-        </pre> -->
+       
     </ModalForm>
 
 </template>

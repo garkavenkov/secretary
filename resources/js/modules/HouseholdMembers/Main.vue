@@ -135,7 +135,6 @@ import { mdiAccountEyeOutline }     from '@mdi/js';
 
 import ExportDataForm               from '../../mixins/ExportDataForm';
 
-import DataTable                    from '../../components/ui/DataTable.vue';
 import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSelectRecords.vue';
 import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
 import ButtonDocumentGenerationForm from '../../components/ui/Buttons/ButtonDocumentGenerationForm.vue';
@@ -227,7 +226,6 @@ export default {
         ]),   
     },
     components: {
-        DataTable,
         MembersFilterForm,
         ButtonSelectRecords,
         ButtonExportRecordForm,

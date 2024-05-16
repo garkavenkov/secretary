@@ -30,6 +30,7 @@
 import { mapGetters }           from 'vuex';
 
 import SystemDictionary         from '../../mixins/SystemDictionary';
+
 import SystemDictionaryTable    from '../../components/ui/SystemDictionaryTable.vue';
 import SystemDictionaryForm     from '../../components/ui/SystemDictionaryForm.vue';
 

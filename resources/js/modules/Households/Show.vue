@@ -73,6 +73,7 @@ import {
 } from '@mdi/js';
 
 import HouseholdForm    from './HouseholdForm.vue';
+
 import Page404          from '../../components/Page404.vue';
 import NavigationTabs   from '../../components/ui/NavigationTabs.vue';
 import IconButton       from '../../components/ui/Buttons/IconButton.vue';

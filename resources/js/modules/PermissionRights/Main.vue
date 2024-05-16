@@ -233,13 +233,8 @@
 
 <script>
 
-import DataTable from '../../components/ui/DataTable.vue';
-
 export default {
-    name: 'PermissionRightsMain',
-    components: {
-        DataTable
-    },
+    name: 'PermissionRightsMain',    
     data() {
         return {
             ownerId: 0,

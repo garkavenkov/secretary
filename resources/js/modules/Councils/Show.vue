@@ -97,7 +97,6 @@ import { Modal }        from 'bootstrap';
 import { computed }     from 'vue';
 import { mapGetters }   from 'vuex';
 
-import DataTable        from '../../components/ui/DataTable.vue';
 import CouncilForm      from './Form.vue';
 import SettlementForm   from '../Settlements/Form.vue';
 import Page404          from '../../components/Page404.vue';
@@ -185,7 +184,6 @@ export default {
         this.$store.dispatch('Councils/fetchRecord', this.id)
     },
     components: {
-        DataTable,
         CouncilForm,
         SettlementForm,
         Page404

@@ -48,7 +48,6 @@ import { Modal }                from 'bootstrap';
 
 import UserForm                 from './Form.vue';
 
-import DataTable                from '../../components/ui/DataTable.vue'
 import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 
@@ -95,7 +94,6 @@ export default {
         }
     },
     components: {
-        DataTable,
         UserForm,
         DictionaryShowRecordLink
     },

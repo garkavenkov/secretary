@@ -128,7 +128,6 @@ import ExportDataForm               from '../../mixins/ExportDataForm';
 import HouseholdForm                from './HouseholdForm.vue';
 import HouseholdFilterForm          from './HouseholdFilterForm.vue';
 
-import DataTable                    from '../../components/ui/DataTable.vue';
 import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
 import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSelectRecords.vue';
 import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
@@ -138,8 +137,7 @@ import DictionaryShowRecordLink     from '../../components/ui/DictionaryShowReco
 
 export default {
     name: 'HouseholdsMain',
-    components: {
-        DataTable,
+    components: {        
         HouseholdForm,
         HouseholdFilterForm,
         ExportRecordForm,         

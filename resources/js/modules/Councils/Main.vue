@@ -51,13 +51,11 @@ import { mapGetters }           from 'vuex';
 import { Modal }                from 'bootstrap';
 
 import CouncilForm              from './Form.vue';
-import DataTable                from '../../components/ui/DataTable.vue';
 import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'CouncilsMain',
     components: {
-        DataTable,
         CouncilForm,
         DictionaryShowRecordLink
     },

@@ -190,10 +190,9 @@ import { mapGetters }   from 'vuex';
 
 import RegionForm       from './Form.vue';
 import DistrictForm     from '../Districts/Form.vue';
-import DataTable        from '../../components/ui/DataTable.vue';
+
 import Page404          from '../../components/Page404.vue';
-import ButtonEdit       from '../../components/ui/Buttons/ButtonEdit.vue';
-import ButtonAdd        from '../../components/ui/Buttons/ButtonAdd.vue';
+
 
 export default {
     name: 'RegionsShow',
@@ -253,13 +252,10 @@ export default {
     created() {
         this.$store.dispatch('Regions/fetchRecord', this.id);
     },
-    components:{
-        DataTable,
+    components:{        
         RegionForm,
         DistrictForm,
-        Page404,
-        ButtonEdit,
-        ButtonAdd
+        Page404
     }
 }
 </script>

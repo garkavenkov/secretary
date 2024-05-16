@@ -108,9 +108,6 @@ import { Modal }        from 'bootstrap';
 import DistrictForm     from './Form.vue';
 import CommunityForm    from '../Communities/Form.vue';
 import Page404          from '../../components/Page404.vue';
-import DataTable        from '../../components/ui/DataTable.vue'
-import ButtonEdit       from '../../components/ui/Buttons/ButtonEdit.vue';
-import ButtonAdd        from '../../components/ui/Buttons/ButtonAdd.vue';
 
 export default {
     name: 'DistrictsShow',
@@ -178,13 +175,10 @@ export default {
     created() {
         this.$store.dispatch('Districts/fetchRecord', this.id);
     },
-    components: {
-        DataTable,
+    components: {        
         DistrictForm,
         CommunityForm,
-        Page404,
-        ButtonAdd,
-        ButtonEdit
+        Page404        
     }
 }
 </script>

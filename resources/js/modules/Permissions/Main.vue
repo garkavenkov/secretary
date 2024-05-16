@@ -44,13 +44,12 @@
 import { Modal }                from 'bootstrap';
 
 import PermissionForm           from './Form.vue';
-import DataTable                from '../../components/ui/DataTable.vue';
+
 import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'PermissionsMain',
     components: {
-        DataTable,
         PermissionForm,
         DictionaryShowRecordLink
     },

@@ -62,6 +62,7 @@
 import { mapGetters }           from 'vuex';
 
 import AdditionalParamsFilter       from '../../mixins/AdditionalParamsFilter';
+
 import ModalForm                    from '../../components/ui/ModalForm.vue';
 import AdditionalParamsFormFilter   from '../../components/ui/AdditionalParamFormFilter.vue';
 
