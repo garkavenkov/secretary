@@ -1,7 +1,5 @@
 <template>
 
-    <breadcrumbs />
-
     <div class="card">
         <div class="card-header">
             <div class="dictionary-name__wrapper">
