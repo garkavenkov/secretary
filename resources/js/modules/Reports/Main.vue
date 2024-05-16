@@ -1,19 +1,15 @@
 <template>
-    <breadcrumbs />
 
     <div class="card">
         <div class="card-header">
             <h6>Менеджер звітів</h6>
-            <button class="btn btn-sm btn-primary"
-                    @click="openReportForm">
-                <span class="mdi mdi-plus"></span>
-            </button>
+            <ButtonAdd buttonClass="btn-primary p-2" @click="openReportForm" title="Додати новий звіт" />
         </div>
         <div class="card-body">
-            <table class="table">
-                <thead>
+            <table class="table table-bordered table-hover">
+                <thead class="table-secondary">
                     <tr>
-                        <th></th>
+                        <th class="show-record"></th>
                         <th>Назва</th>
                         <th>Описа</th>
                         <th>Файл</th>
@@ -24,9 +20,10 @@
                 <tbody>
                     <tr v-for="report in reports" :key="report.id">
                         <td class="text-center">
-                            <router-link :to="{name: 'reports.manager.show', params: {id: report.id}}">
-                                <span class="mdi mdi-eye"></span>
-                            </router-link>
+                            <DictionaryShowRecordLink 
+                                    routeName="reports.manager.show" 
+                                    :routeParamId="report.id"
+                                    title="Перейти до інформації по звіту" />                           
                         </td>
                         <td>{{ report.name }}</td>
                         <td>{{ report.description }}</td>
@@ -50,10 +47,12 @@
 
 <script>
 
-import { Modal }    from 'bootstrap';
-import { computed } from 'vue';
+import { Modal }                from 'bootstrap';
+import { computed }             from 'vue';
 
-import ReportForm   from './ReportForm.vue';
+import ReportForm               from './ReportForm.vue';
+
+import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
 
 export default {
     name: 'ReportsMain',
@@ -117,7 +116,8 @@ export default {
         }
     },
     components: {
-        ReportForm
+        ReportForm,
+        DictionaryShowRecordLink
     }
 }
 </script>

@@ -106,6 +106,10 @@
 .btn-transparent {
     border-color: transparent;
     background: transparent;
+
+    &:disabled {
+        border-color: transparent;
+    }
 }
 
 .lh-24 {

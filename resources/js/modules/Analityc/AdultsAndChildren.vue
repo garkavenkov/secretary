@@ -1,5 +1,4 @@
 <template>
-    <breadcrumbs />
 
     <div class="row">
         <div class="col-md-3" v-show="!reportIsExpanded">
@@ -37,16 +36,21 @@
         <div :class="[reportIsExpanded ? 'col-md-12' : 'col-md-9']">
             <div class="card">
                 <div class="card-header">
-                    <div class="d-flex">
-                        <button class="btn btn-sm btn-outline-secondary me-3" :title="reportIsExpanded ? 'Сгорнути' : 'Розгорнути'" @click="reportIsExpanded = !reportIsExpanded">
-                            <span :class="['mdi', reportIsExpanded ? 'mdi-arrow-expand-right' : 'mdi-arrow-expand-left']"></span>
-                        </button>
+                    <div class="d-flex align-items-center">
+                        <IconButton 
+                                buttonClass="btn-outline-secondary btn-transparent me-2 p-2" 
+                                :title="reportIsExpanded ? 'Сгорнути' : 'Розгорнути'" 
+                                @click="reportIsExpanded = !reportIsExpanded"
+                                :mdiPath="pathMdiExpand" />
                         <h5>Вікові групи населення <span v-if="(formData != '') && (report.length > 0)">станом на {{ formatedDate(formData.date) }}</span></h5>
                     </div>
-                    <div>
-                        <button class="btn btn-sm btn-outline-primary" @click="printReport" title="Роздрукувати звіт" :disabled="report.length == 0">
-                            <span class="mdi mdi-printer"></span>
-                        </button>
+                    <div>                        
+                        <IconButton
+                                :disabled="report.length == 0"
+                                buttonClass="btn-outline-primary btn-transparent p-2"
+                                @click="printReport" 
+                                title="Роздрукувати звіт" 
+                                :mdiPath="pathMdiPrinter"/>
                     </div>
                 </div>
                 <div class="card-body" id="report">
@@ -150,11 +154,22 @@
 
 <script>
 import { mapGetters }   from 'vuex';
+
+import {
+    mdiPrinter,
+    mdiArrowExpandRight,
+    mdiArrowExpandLeft
+}   from '@mdi/js';
+
 import DateFormat       from '../../mixins/DateFormat';
+import IconButton       from '../../components/ui/Buttons/IconButton.vue';
 
 export default {
     name: 'AdultsAndChildrenReport',
     mixins: [DateFormat],
+    components: {        
+        IconButton
+    },
     data() {
         return {
             formData: {
@@ -163,7 +178,8 @@ export default {
                 date: new Date().toISOString().slice(0, 10)
             },
             reportIsExpanded: false,
-            report: []
+            report: [],
+            pathMdiPrinter: mdiPrinter,
         }
     },
     methods: {
@@ -281,7 +297,10 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('Settlements', ['settlements'])
+        ...mapGetters('Settlements', ['settlements']),
+        pathMdiExpand() {
+            return this.reportIsExpanded ? mdiArrowExpandRight : mdiArrowExpandLeft;
+        }
     }
 }
 </script>

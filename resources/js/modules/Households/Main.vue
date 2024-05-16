@@ -75,7 +75,7 @@
                                     routeName="households.show" 
                                     :routeParamId="record.id" 
                                     :mdiIconPath="pathRouterLinkIcon" 
-                                    title="Перейти до інформації по домогосподарству" />                            
+                                    title="Перейти до інформації по домогосподарству" />
                                             
                         </td>
                         <td v-else class="text-center show-record">
