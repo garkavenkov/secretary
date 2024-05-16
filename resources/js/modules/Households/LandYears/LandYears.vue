@@ -199,12 +199,8 @@ export default {
         TableRow,
         LandYearForm,
         LandAdditionalDataForm,
-        YearsPaginator,
-        // IconButton,        
-        // YearDropDownMenu,
+        YearsPaginator,        
         DropDownMenu,
-        ButtonAdd,
-        ButtonEdit
     }
 }
 </script>
