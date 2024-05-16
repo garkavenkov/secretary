@@ -20,25 +20,27 @@
                         <th></th>
                     </tr>
                 </template>
-                <template v-slot:default="slotProps">
+                <template v-slot:default="slotProps">                    
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id">
                         <td v-for="(name,index) in fieldsName" :key="index">
                             {{ record[name] }}
                         </td>
                         <td>
+
                             <ButtonEdit 
-                                    @click="$parent.$emit('editRecord', record)" 
-                                    :title="editRecordTitle"
-                                    buttonClass="btn-outline-warning btn-transparent p-2" />
+                                    buttonClass="btn-outline-warning btn-transparent p-2" 
+                                    :title="editRecordTitle" 
+                                    @click="$parent.$emit('editRecord', record)" />
 
                             <ButtonDelete
                                     buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
-                                    :title="deleteRecordTitle"
+                                    :title="deleteRecordTitle" 
                                     @click="$parent.$emit('deleteRecord', record)" />
+                                    
                         </td>
-                    </tr>
-                </template>
+                    </tr>                    
+                </template>                
             </DataTable>
         </div>
     </div>
@@ -89,6 +91,15 @@ export default {
     data() {
         return {
 
+        }
+    },
+    methods: {
+        searchData(row, searchText) {
+            return this.fieldsName.some(field => row[field].toLowerCase().includes(searchText.toLowerCase()) );
+            // let res = this.fieldsName.forEach(field => {
+            //     return  row[field].toLowerCase().includes(searchText.toLowerCase());                    
+            // });
+            // console.log(res);
         }
     },
     components: {
