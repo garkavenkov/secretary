@@ -119,4 +119,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
 
     Route::post('export-data',                      [ExportDataController::class, 'exportData'])->name('export-data');
 
+    // Widgets API calls
+    Route::get('households-total-count',                        [HouseholdController::class, 'totalCount'])->name('households-total-count');
+    Route::get('household-members-total-count',                 [HouseholdMemberController::class, 'totalCount'])->name('household-members-total-count');
+    Route::get('household-members-birthday-in-month/{month?}',  [HouseholdMemberController::class, 'birthdayPeople'])->name('household-members-birthday-in-month');
+
 });

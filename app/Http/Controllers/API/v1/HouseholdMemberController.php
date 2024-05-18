@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\AdditionalParam;
 use App\Models\HouseholdMember;
 use App\Traits\Models\UserRights;
@@ -12,6 +13,7 @@ use App\Models\HouseholdMemberLand;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AdditionalParamCategory;
+use App\Models\AdditionalParamValueType;
 use App\Http\Requests\API\v1\HouseholdMemberRequest;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResource;
 use App\Http\Resources\API\v1\HouseholdMemberLand\HouseholdMemberLandResource;
@@ -19,7 +21,7 @@ use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberRelativesResource;
 use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
-use App\Models\AdditionalParamValueType;
+use App\Models\Household;
 
 class HouseholdMemberController extends Controller
 {
@@ -261,5 +263,28 @@ class HouseholdMemberController extends Controller
             return $member->fullAge;
         }
         return null;
+    }
+
+    public function totalCount(): int
+    {
+        return HouseholdMember::alive()->count();
+    }
+
+    public function birthdayPeople(int $month = null): int
+    {
+        $month ??= (Carbon::now())->month;
+                
+        $db_conn = config('database.default');
+        $sql = '';
+        if ($db_conn == 'sqlite') {
+
+            $sql = "cast(strftime('%m', birthdate) as integer) = ?";
+
+        } else if ($db_conn == 'mysql') {
+
+            $sql = "MONTH(birthdate) ?";
+        }
+        
+        return HouseholdMember::alive()->whereRaw($sql, $month)->count();
     }
 }

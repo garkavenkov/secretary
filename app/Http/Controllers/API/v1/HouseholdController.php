@@ -16,6 +16,7 @@ use App\Http\Resources\API\v1\Household\HouseholdResource;
 use App\Http\Resources\API\v1\HouseholdLand\HouseholdLandResource;
 use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
 use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResource;
+use Ramsey\Uuid\Type\Integer;
 
 class HouseholdController extends Controller
 {
@@ -357,5 +358,10 @@ class HouseholdController extends Controller
         }
 
         return HouseholdFamilyRelationsResource::collection($members);
+    }
+
+    public function totalCount(): int 
+    {
+        return Household::count();
     }
 }

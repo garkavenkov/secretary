@@ -1,0 +1,32 @@
+.card-body {
+    
+    &.widget {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    svg {
+        width: 48px;
+    }
+
+
+    .widget-info {
+        display: flex;
+        flex-direction: column;
+
+        span {
+            font-size: 1.1rem;
+        }
+
+        span:first-of-type {
+            opacity: 0.8;
+        }
+
+        span:last-of-type {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+    }
+    
+}
