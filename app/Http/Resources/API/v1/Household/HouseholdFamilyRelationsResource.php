@@ -25,6 +25,7 @@ class HouseholdFamilyRelationsResource extends JsonResource
             'full_name'                     =>  $this->fullName,
             'sex'                           =>  $this->sex,
             'birthdate'                     =>  $this->birthdate,
+            'full_age'                      =>  $this->fullAge,
             'birthdate_formatted'           =>  Carbon::parse($this->birthdate)->format('d.m.Y'),
             'family_relationship_type_id'   =>  (int)   $this->family_relationship_type_id,
             'status'                        =>  $this->status,

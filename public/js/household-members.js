@@ -3695,10 +3695,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(year.year), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DropDownMenu, {
       buttonClass: "btn-outline-secondary btn-transparent",
       showToggler: false,
-      onEditYear: function onEditYear($event) {
+      onEdit: function onEdit($event) {
         return _ctx.editYear(year);
       },
-      onDeleteYear: function onDeleteYear($event) {
+      onDelete: function onDelete($event) {
         return _ctx.deleteYear(year);
       }
     }, {
@@ -3716,11 +3716,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, null, 8 /* PROPS */, ["path"]), _hoisted_6], 8 /* PROPS */, _hoisted_5)]), _hoisted_7];
       }),
       _: 2 /* DYNAMIC */
-    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onEditYear", "onDeleteYear"])])]);
+    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["onEdit", "onDelete"])])]);
   }), 128 /* KEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $data.years,
     field: "total",
-    rowTitle: "<b>Площа земельних ділянок - усього</b>"
+    rowTitle: "<b>Площа земельних ділянок - усього, <small>га</small></b>"
   }, null, 8 /* PROPS */, ["years"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TableRow, {
     years: $data.years,
     field: "maintenance",

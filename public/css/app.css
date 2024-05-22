@@ -12093,20 +12093,20 @@ table thead th.show-record {
   align-items: center;
   gap: 1rem;
 }
-.card-body svg {
+.card-body.widget svg {
   width: 48px;
 }
-.card-body .widget-info {
+.card-body.widget .widget-info {
   display: flex;
   flex-direction: column;
 }
-.card-body .widget-info span {
+.card-body.widget .widget-info span {
   font-size: 1.1rem;
 }
-.card-body .widget-info span:first-of-type {
+.card-body.widget .widget-info span:first-of-type {
   opacity: 0.8;
 }
-.card-body .widget-info span:last-of-type {
+.card-body.widget .widget-info span:last-of-type {
   font-size: 1.1rem;
   font-weight: 700;
 }

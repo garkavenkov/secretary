@@ -70,7 +70,8 @@
                     <div class="card-header d-flex justify-content-between">
                         <div>
                             <div class="member-surname">{{member.surname}}</div>
-                            <div class="member-name">{{member.name}} {{member.patronymic}}</div>
+                            <div class="member-name">{{member.name}}</div>
+                            <div class="member-name">{{member.patronymic}}</div>
                         </div>
 
                         <SvgIcon 
@@ -169,6 +170,7 @@
                             <th>По батькові</th>
                             <th>Стать</th>
                             <th class="text-center">Дата народження</th>
+                            <th class="text-center">Вік</th>
                             <th class="text-center" v-if="showAllMembers">Дата смерті</th>
                             <th>Родинні стосунки</th>
                             <!-- <th>Місце роботи</th>
@@ -192,6 +194,7 @@
                             <td>{{member.patronymic}}</td>
                             <td>{{member.sex}}</td>
                             <td class="text-center">{{formatedDate(member.birthdate)}}</td>
+                            <td class="text-center">{{ member.full_age }}</td>
                             <td class="text-center" v-if="showAllMembers">
                                 <template v-if="member.death_date">
                                     {{formatedDate(member.death_date)}}

@@ -78,11 +78,11 @@ class AdditionalParamValueController extends Controller
         $request->request->remove('owner');
 
         // $permission = Permission::where('code', 'App\Models\AdditionalParamValue')->first();
-        $permission = Permission::where('code', $model)->first();
-        if (!Auth::user()->hasPermission($permission->code, 8)) {
-            $error_msg = 'У Вас відсутні права на редагування додаткових параметрів';
-            return response()->json(['message' => $error_msg], 403);
-        }
+        // $permission = Permission::where('code', $model)->first();
+        // if (!Auth::user()->hasPermission($permission->code, 8)) {
+        //     $error_msg = 'У Вас відсутні права на редагування додаткових параметрів';
+        //     return response()->json(['message' => $error_msg], 403);
+        // }
 
         // Owner ID
         if (!isset($request->owner_id)) {

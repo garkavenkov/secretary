@@ -23,8 +23,8 @@
                                     <DropDownMenu
                                         buttonClass="btn-outline-secondary btn-transparent"
                                         :showToggler="false"
-                                        @editYear="editYear(year)" 
-                                        @deleteYear="deleteYear(year)" />
+                                        @edit="editYear(year)" 
+                                        @delete="deleteYear(year)" />
 
                                 </div>
                                

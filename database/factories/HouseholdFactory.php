@@ -22,7 +22,7 @@ class HouseholdFactory extends Factory
             'settlement_id'     =>  Settlement::factory(),
             'household_type_id' =>  HouseholdType::factory(),
             'address'           =>  $this->faker->address(),
-            'number'            =>  $this->faker->unique()->randomNumber(2),
+            'number'            =>  $this->faker->unique()->randomNumber(3),
             'special_marks'     =>  $this->faker->sentence(5),
             'additional_data'   =>  $this->faker->sentence(2)
         ];

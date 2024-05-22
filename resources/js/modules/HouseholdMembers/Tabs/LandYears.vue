@@ -21,8 +21,8 @@
                         <DropDownMenu
                                 buttonClass="btn-outline-secondary btn-transparent"
                                 :showToggler="false"
-                                @editYear="editYear(year)" 
-                                @deleteYear="deleteYear(year)">
+                                @edit="editYear(year)" 
+                                @delete="deleteYear(year)">
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" @click="landOwnedReport(year.year)">                                    
                                     <SvgIcon type="mdi" :path="pathMdiLandFields" :size="16" class="text-success me-2" />
@@ -42,7 +42,7 @@
         <tbody class="table-group-divider">
             <TableRow   :years="years"
                         field="total"
-                        rowTitle="<b>Площа земельних ділянок - усього</b>" />
+                        rowTitle="<b>Площа земельних ділянок - усього, <small>га</small></b>" />
             <TableRow   :years="years"
                         field="maintenance"
                         rowTitle="під забудовою"

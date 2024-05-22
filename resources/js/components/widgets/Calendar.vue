@@ -198,7 +198,7 @@ export default {
             let previousDays = [];
             
             if (monthStartsOnWeekDayIndex > 0) {
-                console.log(`getPreviouseMonthDays currentMonth: ${currentMonth}`);
+                //console.log(`getPreviouseMonthDays currentMonth: ${currentMonth}`);
                 let previouseMonthInWeekStartsOn = daysInPreviousMonth - monthStartsOnWeekDayIndex+1;
                 // console.log(`Previous mouth's days start on ${previouseMonthInWeekStartsOn}`);
                 for(let i=previouseMonthInWeekStartsOn; i<=daysInPreviousMonth; i++) {

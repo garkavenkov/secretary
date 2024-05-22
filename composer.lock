@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbc7947af1d66f477e95c5da4664f76b",
+    "content-hash": "f73a694f204a6d1c24f35be77ebe512a",
     "packages": [
         {
             "name": "brick/math",
@@ -844,16 +844,16 @@
         },
         {
             "name": "garkavenkov/declension-ukrainian",
-            "version": "v0.9.3",
+            "version": "v0.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/garkavenkov/declension-ukraine.git",
-                "reference": "27513cf4ad03e4b85472a5f89aeaa030207140d4"
+                "reference": "1d55058680abf887bee11e041c0e5dec8e442641"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/garkavenkov/declension-ukraine/zipball/27513cf4ad03e4b85472a5f89aeaa030207140d4",
-                "reference": "27513cf4ad03e4b85472a5f89aeaa030207140d4",
+                "url": "https://api.github.com/repos/garkavenkov/declension-ukraine/zipball/1d55058680abf887bee11e041c0e5dec8e442641",
+                "reference": "1d55058680abf887bee11e041c0e5dec8e442641",
                 "shasum": ""
             },
             "type": "library",
@@ -875,9 +875,9 @@
             "description": "Declension Ukrainian",
             "support": {
                 "issues": "https://github.com/garkavenkov/declension-ukraine/issues",
-                "source": "https://github.com/garkavenkov/declension-ukraine/tree/v0.9.3"
+                "source": "https://github.com/garkavenkov/declension-ukraine/tree/v0.11.0"
             },
-            "time": "2023-03-20T07:21:52+00:00"
+            "time": "2024-05-22T13:36:38+00:00"
         },
         {
             "name": "graham-campbell/result-type",

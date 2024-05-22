@@ -85,6 +85,7 @@ class HouseholdController extends Controller
                             ->join('households as h', 'h.id', '=', 'hm.household_id')
                             ->join('settlements as s', 's.id', '=', 'h.settlement_id')
                             ->where($conditions)
+                            ->limit(10)
                             ->get()
                             ->toArray();
 

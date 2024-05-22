@@ -31,6 +31,7 @@ class HouseholdMemberResource extends JsonResource
             'sex'                           =>  $this->sex,
             'birthdate'                     =>  $this->birthdate,
             'family_relationship_type_id'   =>  (int)   $this->family_relationship_type_id,
+            'full_age'                      =>  (int)   $this->fullAge,
             'family_relationship_type'      =>  $this->whenLoaded('familyRelationshipType', $this->familyRelationshipType->name),
             'employment_information'        =>  $this->employment_information,
             'social_information'            =>  $this->social_information,

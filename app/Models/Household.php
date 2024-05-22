@@ -6,6 +6,7 @@ use App\Models\Settlement;
 use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
 use DeclensionUkrainian\Toponym;
+use Illuminate\Support\Facades\DB;
 use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,6 +30,32 @@ class Household extends Model
         'household_type_id',
         'address'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function($household)
+        {
+            // Delete land years information
+            $household->landYears()->delete();
+
+            // Delete land years information
+            $household->houseYears()->delete();
+
+            // Delete owners
+            $household->owners()->delete();
+
+            // Delete additional params values
+            DB::table('additional_param_values as apv')
+                ->join('additional_params as ap', 'ap.id', '=', 'apv.param_id')
+                ->join('additional_param_categories as apc', 'apc.id', '=', 'ap.category_id')
+                ->where('apc.code', get_class($household))
+                ->where('apv.owner_id', $household->id)
+                ->delete();
+
+        });
+    }
 
     // ***************************************  Relationships ****************************************************
     public function houseYears()

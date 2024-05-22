@@ -197,9 +197,19 @@ class HouseholdMember extends Model
         return $this->household->getFullAddress();
     }
 
+    public function getShortAddressAttribute()
+    {
+        return $this->household->getShortAddress();
+    }
+    
     public function getHouseholdNumberAttribute()
     {
         return $this->household->fullNumber();
+    }
+
+    public function getGenderAttribute()
+    {
+        return $this->sex == 'чоловіча' ? 'male' : ($this->sex == 'жіноча' ? 'female' : null);
     }
 
     // ******************************** Methods *****************************************************
@@ -266,6 +276,15 @@ class HouseholdMember extends Model
         return $this->landYears()->where('year', $year)->first();
     }
     
+    public function died(string $date, string $register_number, string $register_office)
+    {
+        $this->death_date            = $date;
+        $this->death_register_number = $register_number;
+        $this->death_register_office = $register_office;
+        
+        $this->save();
+    }
+
     // *********************************************** Scopes ************************************************
 
     public function scopeMale($query)

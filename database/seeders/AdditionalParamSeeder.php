@@ -64,17 +64,24 @@ class AdditionalParamSeeder extends Seeder
             ],
             [
                 'category_id'   =>  $household->id,
+                'code'          =>  'family_multi_child',
+                'name'          =>  'Багатодітна сім\'я',
+                'value_type_id' =>  $bool_type->id,
+                'is_system'     =>  true
+            ],
+            [
+                'category_id'   =>  $household->id,
                 'code'          =>  'family_single_parent',
                 'name'          =>  'Неповна сім\'я',
                 'value_type_id' =>  $bool_type->id,
-                'is_system'     =>  false
+                'is_system'     =>  true
             ],
             [
                 'category_id'   =>  $household->id,
                 'code'          =>  'family_single_parent_multi_child',
                 'name'          =>  'Неповна багатодітна сім\'я',
                 'value_type_id' =>  $bool_type->id,
-                'is_system'     =>  false
+                'is_system'     =>  true
             ],
 
             [
@@ -82,35 +89,35 @@ class AdditionalParamSeeder extends Seeder
                 'code'          =>  'disabled',
                 'name'          =>  'Інвалід',
                 'value_type_id' =>  $bool_type->id,
-                'is_system'     =>  false
+                'is_system'     =>  true
             ],
             [
                 'category_id'   =>  $member->id,
                 'code'          =>  'child_orphan',
                 'name'          =>  'Дитина сирота',
                 'value_type_id' =>  $bool_type->id,
-                'is_system'     =>  false
+                'is_system'     =>  true
             ],
             [
                 'category_id'   =>  $member->id,
                 'code'          =>  'child_disabled',
                 'name'          =>  'Дитина інвалід',
                 'value_type_id' =>  $bool_type->id,
-                'is_system'     =>  false
+                'is_system'     =>  true
             ],
             [
                 'category_id'   =>  $member->id,
                 'code'          =>  'single_parent_multi_child',
                 'name'          =>  'Одинока багатодітна мати(батько)',
                 'value_type_id' =>  $bool_type->id,
-                'is_system'     =>  false
+                'is_system'     =>  true
             ],
             [
                 'category_id'   =>  $member->id,
                 'code'          =>  'single_parent',
                 'name'          =>  'Одинока мати(батько)',
                 'value_type_id' =>  $bool_type->id,
-                'is_system'     =>  false
+                'is_system'     =>  true
             ],
         ]);
     }

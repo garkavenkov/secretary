@@ -22,8 +22,8 @@
                                     <DropDownMenu
                                         buttonClass="btn-outline-secondary btn-transparent"
                                         :showToggler="false"
-                                        @editYear="editYear(year)" 
-                                        @deleteYear="deleteYear(year)" />
+                                        @edit="editYear(year)" 
+                                        @delete="deleteYear(year)" />
 
                                 </div>
                                                              
@@ -33,22 +33,21 @@
                     <tbody class="table-group-divider">
                         <TableRow   :years="years"
                                     field="total"
-                                    rowTitle="<b>Площа земельних ділянок - усього</b>" />
-                        <!-- <TableRow :years="years" field="purpose" rowTitle="з неї за цільовим призначенням <i>(відповідно до документів)</i>" /> -->
+                                    rowTitle="<b>Площа земельних ділянок - усього, <small>га</small></b>" />
                         <tr>
                             <td :colspan="(years.length+1)">з неї за цільовим призначенням <i>(відповідно до документів):</i></td>
                         </tr>
                         <TableRow   :years="years"
                                     field="maintenance"
-                                    rowTitle="для будівництва і обслуговування житлового будинку"
+                                    rowTitle="для будівництва і обслуговування житлового будинку, <small>га</small>"
                                     rowTitleClass="ps-3"/>
                         <TableRow   :years="years"
                                     field="personal_agriculture"
-                                    rowTitle="для ведення особистого селянського господарства"
+                                    rowTitle="для ведення особистого селянського господарства, <small>га</small>"
                                     rowTitleClass="ps-3"/>
                         <TableRow   :years="years"
                                     field="commercial_agriculture"
-                                    rowTitle="для ведення товарного сільськогосподарського виробництва"
+                                    rowTitle="для ведення товарного сільськогосподарського виробництва, <small>га</small>"
                                     rowTitleClass="ps-3"/>
                         <!-- <TableRow :years="years" field="arable" rowTitle="рілля" rowTitleClass="ps-5" />
                         <TableRow :years="years" field="perennial_plantations" rowTitle="багаторічні насадження" rowTitleClass="ps-5" />
