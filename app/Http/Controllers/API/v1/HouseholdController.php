@@ -4,19 +4,22 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Models\Household;
 use App\Models\Permission;
+use App\Models\Settlement;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Models\HouseholdType;
+use Ramsey\Uuid\Type\Integer;
 use App\Models\HouseholdMember;
 use App\Traits\Models\UserRights;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\HouseholdRequest;
-use App\Http\Resources\API\v1\Household\HouseholdFamilyRelationsResource;
 use App\Http\Resources\API\v1\Household\HouseholdResource;
 use App\Http\Resources\API\v1\HouseholdLand\HouseholdLandResource;
 use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
 use App\Http\Resources\API\v1\HouseholdHouse\HouseholdHouseResource;
-use Ramsey\Uuid\Type\Integer;
+use App\Http\Resources\API\v1\Household\HouseholdFamilyRelationsResource;
 
 class HouseholdController extends Controller
 {
@@ -364,5 +367,50 @@ class HouseholdController extends Controller
     public function totalCount(): int 
     {
         return Household::count();
+    }
+
+    
+    public function householdsByType(Request $request)
+    {
+        
+        $result = [];
+
+        $by_settlement = false;
+
+        if ($request->input('groupBy')) {
+            $by_settlement = in_array('settlement', $request->input('groupBy')) ? true : false ;            
+        }
+
+        $settlement_id = $request->input('settlement_id') ? $request->input('settlement_id') : null;
+      
+        /*
+        $types = HouseholdType::select('id', 'name')->orderBy('id')->get()->toArray();
+        foreach($types as $type) {
+            if (mb_strlen($type['name']) > 30) {
+                $type_words = explode(' ', $type['name']);
+
+            }
+            
+        }
+        */
+
+
+        $result = Household::groupByType(settlement_id: $settlement_id, group_by_settlement: $by_settlement);
+        return $result;
+        // dd($result);
+        // $datasets = [];
+        // foreach($result as $row) {            
+        //     if ($by_settlement) {                
+        //         $label = $row->settlement;
+        //         unset($row->settlement);
+        //         $data = array_values((array)$row);            
+        //         $datasets[$label] = $data;       
+        //     } else {
+        //         $data = array_values((array)$row);            
+        //         $datasets = $data;
+        //     }           
+        // }
+        
+        // return ['datasets' => $datasets]; //, 'labels' => $types];
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\API\v1;
 
+use DateTime;
+use App\Models\Household;
 use App\Models\Permission;
+use App\Models\Settlement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\AdditionalParam;
@@ -21,7 +24,6 @@ use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberRelativesResource;
 use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
-use App\Models\Household;
 
 class HouseholdMemberController extends Controller
 {
@@ -43,9 +45,12 @@ class HouseholdMemberController extends Controller
         if (request()->query('household_id')) {
 
             $household_id = request()->query('household_id');
-            $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')
-                        ->where('household_id', $household_id)
-                        ->get();
+            $h = Household::findOrFail($household_id);
+            $members = $h->members()->with('familyRelationshipType','workPlace','movements')->orderBy('family_relationship_type_id')->get();
+            // $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')
+            //             ->where('household_id', $household_id)
+            //             ->orderBy('family_relationship_id')
+            //             ->get();
             // return new HouseholdMemberResourceCollection($members);
             return HouseholdMemberResource::collection($members);
 
@@ -254,13 +259,28 @@ class HouseholdMemberController extends Controller
         return new HouseholdMemberRelativesResource($member);
     }
 
-    public function getAgeOfOldestPerson(Request $request)
-    {
-        // $per_page = $request->query('per_page');
-        $member = HouseholdMember::alive()->get()->sortBy([['fullAge', 'desc']])->first();
-
-        if ($member) {
-            return $member->fullAge;
+    /**
+     * Get the oldest living person on date
+     * If date isn't set - current date will be used
+     *
+     * @param Request $request
+     * @return integer|null
+     */
+    public function getAgeOfOldestPerson(Request $request): ?int
+    {   
+        $date = (new DateTime())->format('Y-m-d');
+        if ($request->input('date')) {
+            $date = $request->input('date');
+        }
+        
+        $sql = "SELECT ";
+        $sql .= HouseholdMember::memberFullAgeSQLSnippet($date);       
+        $sql .= "FROM household_members hm WHERE hm.death_date  IS NULL || hm.death_date > DATE('$date') ORDER BY 1 desc LIMIT 1";
+        
+        $res = DB::select($sql);
+        
+        if ($res) {
+            return $res[0]->full_age;        
         }
         return null;
     }
@@ -286,5 +306,48 @@ class HouseholdMemberController extends Controller
         }
         
         return HouseholdMember::alive()->whereRaw($sql, $month)->count();
+    }
+
+    /**
+     * Return array with members count in which age group.     
+     * Data will be groupped by settlement and gender on $request->input(date) or current date
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function membersByAgeRange(Request $request): array
+    {   
+        if ($request->input('ranges')) {
+            $age_ranges = $request->input('ranges');
+        } else {
+            $age_ranges = [
+                '0 - 17' => [0,17],
+                '18 - 59' => [18,59],
+                '> 60' => [60, 200],
+            ];
+        }
+
+        $date = $request->input('date') ??  (new DateTime)->format('Y-m-d');
+
+        $by_settlement = false;
+        $by_gender = false;
+        if ($request->input('groupBy')) {
+            $by_settlement = in_array('settlement', $request->input('groupBy')) ? true : false ;
+            $by_gender = in_array('gender', $request->input('groupBy')) ? true : false;
+        }
+
+        $settlement_id = $request->input('settlement_id') ? $request->input('settlement_id') : null;
+        $gender = $request->input('gender') ? $request->input('gender') : null;
+
+        $result = HouseholdMember::groupByAgeRanges(
+                    ages: $age_ranges, 
+                    settlement_id: $settlement_id, 
+                    gender: $gender, 
+                    date: $date, 
+                    group_by_settlement: $by_settlement, 
+                    group_by_gender: $by_gender
+                );        
+        // dd($result);
+        return $result;
     }
 }

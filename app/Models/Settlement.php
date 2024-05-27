@@ -56,8 +56,11 @@ class Settlement extends Model
         return $this->hasManyThrough(HouseholdMember::class, Household::class);
     }
 
-    public function membersByAge($ages, $sex = null, $date = null)
+    public function membersByAge(array $ages, string $sex = null, $date = null)
     {
+        if (is_null($date)) {
+            $date = (new DateTime)->format('Y-m-d');
+        }
         
         $members = $this->members();
 
@@ -70,9 +73,9 @@ class Settlement extends Model
 
         $members = $members
                         ->alive($date)
-                        ->get()
-                        ->transform(function($member) {
-                            $age = (new DateTime($member->birthdate))->diff(new DateTime())->y;
+                        ->get()                        
+                        ->transform(function($member) use($date) {                            
+                            $age = (new DateTime($member->birthdate))->diff(new DateTime($date))->y;
                             return ['age' => $age, 'sex' => $member->sex];
                         })                        
                         ->groupBy(['sex', function($item) use ($ages) {
@@ -86,12 +89,12 @@ class Settlement extends Model
                             return $sex->map->count();
                         })
                         ->transform(function($item) use ($ages) {                                                        
-                            $result = [];                            
-                            foreach(array_keys($ages) as $range) {                                
-                                $result[$range]  = $item[$range] ?? 0;                                
-                            }                            
-                            $result['total'] = $item->sum();                            
-                            return $result;                        
+                            $result = [];
+                            foreach(array_keys($ages) as $range) {
+                                $result[$range]  = $item[$range] ?? 0;
+                            }
+                            $result['total'] = $item->sum();
+                            return $result;
                         })
                         ->all();
                         

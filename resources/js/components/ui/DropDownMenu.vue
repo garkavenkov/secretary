@@ -5,26 +5,28 @@
         <button :class="finalClass"                
                 data-bs-toggle="dropdown"
                 aria-expanded="false">
-            <SvgIcon type="mdi" :path="pathMdiCog" :size="buttonIconSize"/>    
+            <SvgIcon type="mdi" :path="dropdownSvgPath" :size="buttonIconSize"/>    
         </button>                
 
         <ul class="dropdown-menu dropdown-menu-end">
             <slot />
-            <li>
-                <a  class="dropdown-item"
-                    @click="$emit('edit', $event)">
-                    <SvgIcon type="mdi" :path="pathMdiPencil" :size="menuIconSize" class="text-warning me-2" />
-                    <span>Редагувати дані</span>                    
-                </a>
-            </li>
-            <li v-if="divideItems"><hr class="dropdown-divider"></li>
-            <li>
-                <a  class="dropdown-item"
-                    @click="$emit('delete', $event)">
-                    <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="menuIconSize" class="text-danger me-2" />
-                    <span>Видалити дані</span>
-                </a>
-            </li>
+            <template v-if="showActionItems">
+                <li>
+                    <a  class="dropdown-item"
+                        @click="$emit('edit', $event)">
+                        <SvgIcon type="mdi" :path="pathMdiPencil" :size="menuIconSize" class="text-warning me-2" />
+                        <span>Редагувати дані</span>                    
+                    </a>
+                </li>
+                <li v-if="divideItems"><hr class="dropdown-divider"></li>
+                <li>
+                    <a  class="dropdown-item"
+                        @click="$emit('delete', $event)">
+                        <SvgIcon type="mdi" :path="pathMdiTrashCan" :size="menuIconSize" class="text-danger me-2" />
+                        <span>Видалити дані</span>
+                    </a>
+                </li>
+            </template>
         </ul>
 
     </div>
@@ -44,29 +46,32 @@ export default {
     name: 'DropDownMenu',
     emits: ['edit', 'delete'],
     props: {
-        buttonIconSize: {
-            type: [String, Number],
+        buttonSvgPath: {
+            type: String,
             required: false,
+        },
+        buttonIconSize: {
+            type: [String, Number],            
             default: 16
         },
         menuIconSize: {
-            type: [String, Number],
-            required: false,
+            type: [String, Number],            
             default: 16
         },
         buttonClass: {
-            type: [String, Array],
-            required: false,
+            type: [String, Array],            
             default: ''
         },
         showToggler: {
-            type: Boolean,
-            required: false,
+            type: Boolean,            
+            default: () => true
+        },
+        showActionItems: {
+            type: Boolean,            
             default: () => true
         },
         divideItems: {
-            type: Boolean,
-            required: false,
+            type: Boolean,            
             default: () => true
         }
     },
@@ -75,13 +80,15 @@ export default {
     },
     emits: ['edit', 'delete'],
     data() {
-        return  {            
-            pathMdiCog: mdiCog,         
+        return  {                        
             pathMdiPencil: mdiPencil,
             pathMdiTrashCan: mdiTrashCan,
         }
     },
     computed: {
+        dropdownSvgPath() {
+            return this.buttonSvgPath ?? mdiCog;
+        },
         finalClass() {
             let toggler = '';
             if (this.showToggler) {
@@ -99,21 +106,3 @@ export default {
 }
 
 </script>
-
-<style lang="scss" scoped>
-
-.dropdown {   
-
-    .dropdown-item {
-        
-        display: flex;
-        align-items: center;
-
-        &:hover {
-            background-color: var(--bs-secondary-bg);
-        }
-    }
-
-
-}
-</style>

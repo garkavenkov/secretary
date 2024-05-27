@@ -10,3 +10,20 @@
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+
+
+.dropdown {   
+
+    .dropdown-item {
+        
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover:not(.active) {
+            background-color: var(--bs-secondary-bg);
+        }
+    }
+
+
+}

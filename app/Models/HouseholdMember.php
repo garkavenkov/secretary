@@ -285,6 +285,161 @@ class HouseholdMember extends Model
         $this->save();
     }
 
+    /**
+     * Return SQL snippet which calculates member's full age on particular date
+     * If date is not passed, will be used current date.
+     * Available database connection: (MySQL, SQLITE)
+     *
+     * @param [type] $date  Date in format 'YYYY-MM-DD'
+     * @return string
+     */
+    public static function memberFullAgeSQLSnippet($date): string
+    {
+        $db_conn = config('database.default');
+        if ($db_conn == 'sqlite') {
+            //  'now'
+            $sql = "
+            (   strftime('%Y', DATE('$date')) - strftime('%Y', birthdate) + 			
+                case 
+                    when(strftime('%m', DATE('$date')) - strftime('%m', birthdate) ) < 0  then -1
+                    when (strftime('%m', DATE('$date')) - strftime('%m', birthdate) ) = 0 then 
+                        case 
+                            when (strftime('%d', DATE('$date')) - strftime('%d', birthdate) ) < 0 then -1
+                            else 0
+                        end
+                    else 0
+                end 
+            ) as full_age ";
+
+        } else if ($db_conn == 'mysql') {
+            // CURDATE()
+            $sql = "
+            (   YEAR('$date') - YEAR(birthdate) +
+                case 
+                    when ( MONTH('$date') - MONTH(birthdate) ) < 0 then -1
+                    when ( MONTH('$date') - MONTH(birthdate) ) = 0 then
+                        case
+                            when ( DAY('$date') - DAY(birthdate) ) < 0 then -1
+                            else 0
+                        end
+                    else 0			
+                end
+            ) AS full_age ";
+        }
+        
+        return $sql;
+
+    }
+
+    /**
+     * Get members grouped by age ranges, settlement and gender
+     *
+     * @param array $ages           
+     * @param integer|string|null $settlement_id    Settlement ID(s) (use ',' for several IDs ). If NULL - all Settlements will be used
+     * @param string|null $gender                   Member's gender ('жіноча' | 'чоловіча'). If NULL - both genders will be used
+     * @param string|null $date                     The Date in format ('YYYY-MM-DD') on which the data will be generated. If NULL - current date will be used
+     * @param boolean $group_by_settlement          By default data will be grouped by Settlement. Set FALSE to omit grouping by this field
+     * @param boolean $group_by_gender              By default data will be grouped by gender. Set FALSE to omit grouping by this field
+     * @return array                                
+     */
+    public static function groupByAgeRanges(
+                array $ages, 
+                int|string $settlement_id = null, 
+                string $gender = null, 
+                string $date = null, 
+                bool $group_by_settlement = true, 
+                bool $group_by_gender = true): array
+    {
+        
+        if (is_null($date)) {
+            $date = (new DateTime)->format('Y-m-d');
+        }
+
+        if (!is_null($settlement_id)) {
+            $group_by_settlement = true;
+        }
+
+        if (!is_null($gender)) {
+            $group_by_gender = true;
+        }
+
+      
+        $select_age_ranges_fields = "";
+
+        $case_age_range_sql = "CASE\n";
+       
+
+        foreach($ages as $name => $range) {
+
+            $case_age_range_sql .= " WHEN res.full_age >= ". $range[0] . " AND res.full_age <= " . $range[1] . " then '$name'\n";
+            $select_age_ranges_fields .= "SUM(CASE WHEN age_range = '$name' THEN 1 ELSE 0 end ) as '$name' ";
+            
+            // prevent put ',' after last field in SELECT befor FROM
+            if ($name !== array_key_last($ages)) {
+                $select_age_ranges_fields .= ",\n";
+            }
+
+        }
+
+        $case_age_range_sql .= "END AS age_range\n";
+
+        $sql = "SELECT ";
+        
+        if ($group_by_settlement) {
+            $sql .= "settlement, ";
+        }
+        if ($group_by_gender) {
+            $sql .= "gender, ";
+        }        
+
+        $sql .= $select_age_ranges_fields;
+		        
+        $sql .= 
+        "FROM (
+            SELECT 	res.settlement,
+		            res.gender,";
+        $sql .= $case_age_range_sql;
+		        
+        $sql .= "FROM (
+                SELECT 	s.name AS settlement,
+		                hm.sex AS gender,";
+
+        $sql .= self::memberFullAgeSQLSnippet($date);
+		                
+        $sql .="FROM 	household_members hm
+                INNER	JOIN households h ON h.id = hm.household_id 
+                INNER 	JOIN settlements s  ON s.id = h.settlement_id 
+                WHERE 	(hm.death_date  IS NULL || hm.death_date > DATE('$date')) ";
+
+        //  Make select for particular settlement(s)
+        if (!is_null($settlement_id)) {
+            $ids = explode(',',$settlement_id);
+            if (count($ids) == 1) {
+                $sql .= " AND (s.id = $ids[0])";
+            } else {
+                $sql .= " AND (s.id IN (" . implode(",", $ids) . ") )";
+            }
+        }
+
+        //  Make select for particular gender
+        if (!is_null($gender)) {            
+            $sql .= " AND (hm.sex = '$gender')";
+        }
+        $sql .= ") AS res )";
+
+
+        if ($group_by_settlement || $group_by_gender) {
+            $sql .= " GROUP BY " 
+                    . ($group_by_settlement ? 'settlement' : '')
+                    . ($group_by_gender ? ($group_by_settlement ? ', gender' : 'gender') : '' );
+            
+        }
+       
+
+        return DB::select($sql);
+    }    
+
+
     // *********************************************** Scopes ************************************************
 
     public function scopeMale($query)

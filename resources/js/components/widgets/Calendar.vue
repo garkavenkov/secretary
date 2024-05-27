@@ -1,7 +1,11 @@
 <template>
     
-    <div class="card">
-
+    <div class="card h-100">
+        <div class="card-header">
+            <div class="chart-name">
+                Календар
+            </div>
+        </div>
         <div class="card-body">
 
             <div class="calendar-header">
@@ -42,22 +46,24 @@
                 </div>                
             </div>
 
-            <div    class="week__wrapper" 
-                    v-for="(week,weekIndex) in weeks" 
-                    :key="weekIndex">
-
-                    <div    v-for="(day,dayIndex) in week" 
-                            class="day-number"
-                            :class="{
-                                'prev-month': day.month == calendarDate.previousMonth, 
-                                'today': (day.day == currentDate.day) && (day.month == currentDate.month) && (day.year == currentDate.year),
-                                'like-today': (day.day == currentDate.day) && ((day.month != currentDate.month) || (day.year != currentDate.year)),
-                                'next-month': day.month == calendarDate.nextMonth
-                            }"
-                            :key="`${weekIndex}:${dayIndex}`">
-                    <span>{{ day.day }}</span>    
+            <div class="weeks__wrapper">
+                <div    class="week__wrapper" 
+                        v-for="(week,weekIndex) in weeks" 
+                        :key="weekIndex">
+    
+                        <div    v-for="(day,dayIndex) in week" 
+                                class="day-number"
+                                :class="{
+                                    'prev-month': day.month == calendarDate.previousMonth, 
+                                    'today': (day.day == currentDate.day) && (day.month == currentDate.month) && (day.year == currentDate.year),
+                                    'like-today': (day.day == currentDate.day) && ((day.month != currentDate.month) || (day.year != currentDate.year)),
+                                    'next-month': day.month == calendarDate.nextMonth
+                                }"
+                                :key="`${weekIndex}:${dayIndex}`">
+                        <span>{{ day.day }}</span>    
+                    </div>
+    
                 </div>
-
             </div>
 
         </div>

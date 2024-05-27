@@ -121,7 +121,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
 
     // Widgets API calls
     Route::get('households-total-count',                        [HouseholdController::class, 'totalCount'])->name('households-total-count');
+    Route::post('households-by-type',                           [HouseholdController::class, 'householdsByType'])->name('households-by-type');
     Route::get('household-members-total-count',                 [HouseholdMemberController::class, 'totalCount'])->name('household-members-total-count');
     Route::get('household-members-birthday-in-month/{month?}',  [HouseholdMemberController::class, 'birthdayPeople'])->name('household-members-birthday-in-month');
+    Route::post('household-members-by-age-ranges',              [HouseholdMemberController::class, 'membersByAgeRange'])->name('household-members-by-age-range');
 
 });

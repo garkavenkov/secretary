@@ -95,7 +95,12 @@ class Household extends Model
         return in_array($field, self::$filterable);
     }
 
-    public function household_head()
+    /**
+     * Get household head
+     *
+     * @return string
+     */
+    public function household_head(): string
     {        
         $head = $this->members->first(function($m) {
             return $m->familyRelationshipType->name == 'голова домогосподарства';
@@ -107,7 +112,13 @@ class Household extends Model
         return "";
     }
 
-    public function getShortAddress()
+    /**
+     * Get short address.
+     * e.g: "вул. Свободи, буд. 5, корп. 3, кв. 4
+     *
+     * @return string
+     */
+    public function getShortAddress(): string
     {
         $parts = explode(',', $this->address);
         $address = "$parts[0] $parts[1], буд. $parts[2]";
@@ -121,7 +132,13 @@ class Household extends Model
         return $address;
     }
 
-    public function getFullAddress()
+    /**
+     * Get full address. 
+     * Which extends showrt address adding district and region name
+     *
+     * @return string
+     */
+    public function getFullAddress(): string
     {
         $settlement = $this->settlement->name;
         $settlement_type = mb_strtolower($this->settlement->type->name);
@@ -156,7 +173,12 @@ class Household extends Model
         return $this->additionalParamValue($params);
     }
 
-    public function familyInfo()
+    /**
+     * Return household family additional param values
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function familyInfo(): \Illuminate\Support\Collection
     {
         $params = $this->additionalParams('family_%')
                         ->get()
@@ -168,8 +190,16 @@ class Household extends Model
         return $this->additionalParamValue($params);
     }
 
-
-    public function fullNumber()
+    /**
+     * Get household number in ss-nnnn-t format.
+     * where:   
+     *      -ss     - settlement inner code
+     *      -nnnn   - household number through settlement, 1,2,3....etc  
+     *      -t      - household type [1..5]
+     *
+     * @return string
+     */
+    public function fullNumber(): string
     {
         return  str_pad($this->settlement->inner_code, 2, '0', STR_PAD_LEFT)
                 . '-'
@@ -178,6 +208,84 @@ class Household extends Model
                 . $this->household_type_id;
     }
 
+    /**
+     * Get household grouped by type and settlement
+     *
+     * @param integer|string|null $settlement_id    Settlement ID(s) (use ',' for several IDs ). If NULL - all Settlements will be used
+     * @param boolean $group_by_settlement          By default data will be grouped by Settlement. Set FALSE to omit grouping by this field
+     * @return array
+     */
+    public static function groupByType(int|string $settlement_id = null, bool $group_by_settlement = true): array
+    {
+        /*
+        SELECT	settlement,
+		        sum(case when type_id = 1 then 1 else 0 end) as 'домогосподарство з реєстрацією місця проживання на території населеного пункту',
+		        sum(case when type_id = 2 then 1 else 0 end) as 'домогосподарство з реґстрацією місця перебування на території населеного пункту',
+		        sum(case when type_id = 3 then 1 else 0 end) as 'домоволодіння',
+		        sum(case when type_id = 4 then 1 else 0 end) as 'землеволодіння',
+		        sum(case when type_id = 5 then 1 else 0 end) as `закинутий об'єкт`
+        FROM (
+                SELECT 	s.name as settlement,
+		                ht.id as type_id,		                
+                FROM 	households h 
+                INNER	JOIN household_types ht ON h.household_type_id  = ht.id
+                INNER	JOIN settlements s  ON h.settlement_id = s.id 
+                GROUP 	BY s.name, ht.id
+                ORDER 	BY s.id, ht.id 
+        )
+        */
+
+        if (!is_null($settlement_id)) {
+            $group_by_settlement = true;
+        }
+        $types = HouseholdType::select('id')->orderBy('id')->get()->toArray();
+
+        $sql = "SELECT ";
+
+        if ($group_by_settlement) {
+            $sql .= "settlement,";
+        }
+
+        $select_type_count_fields = '';
+        foreach($types as $id => $type) {
+            $select_type_count_fields .= "SUM(CASE WHEN type_id = " . $type['id'] . " THEN 1 ELSE 0 end ) as `" .$type['id'] ."` "; //.$type['name'] ."` ";
+            
+            // prevent put ',' after last field in SELECT befor FROM
+            if ($id !== array_key_last($types)) {
+                $select_type_count_fields .= ",\n";
+            }
+        }
+
+        $sql .= $select_type_count_fields;
+        $sql .= "FROM ( ";
+        $sql .= "SELECT " . ($group_by_settlement ? "s.name as settlement, " : "") . "ht.id as type_id ";
+        $sql .= "FROM 	households h ";
+        $sql .= "INNER	JOIN household_types ht ON h.household_type_id  = ht.id ";
+
+        if ($group_by_settlement) {
+            $sql .= "INNER	JOIN settlements s ON h.settlement_id = s.id ";
+        }
+        
+        if (!is_null($settlement_id)) {
+            $ids = explode(',',$settlement_id);
+            if (count($ids) == 1) {
+                $sql .= "WHERE (s.id = $ids[0])";
+            } else {
+                $sql .= "WHERE (s.id IN (" . implode(",", $ids) . ") )";
+            }
+        }
+
+        $sql .= ") ";
+
+        if ($group_by_settlement) {
+            $sql .= "GROUP 	BY settlement ";
+        }
+
+        $sql .= "ORDER  BY " . ($group_by_settlement ? "settlement, " : "") . "type_id";
+
+        return DB::select($sql);
+    }
+        
     //********************************** Attributes *********************************************************
     public function getSettlementNameAttribute()
     {
