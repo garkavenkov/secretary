@@ -171,6 +171,10 @@ export default {
 
             chartOptions: {
                 responsive: true,
+                onResize: function(chart) {
+                    chart.resize();
+                },
+                maintainAspectRatio: false
                 // scales: {
                 //     x: {
                 //         stacked: true,
