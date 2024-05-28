@@ -145,8 +145,8 @@ export default {
                     if (res.isConfirmed) {
                         axios.delete(`/api/v1/household-member-movements/${id}`)
                             .then(res => {
-                                this.$toast(res.data.message);
-                                this.$emit('refreshData');
+                                this.$toast(res.data.message);                                
+                                this.fetchMovementEvents();
                             })
                     }
                 })
