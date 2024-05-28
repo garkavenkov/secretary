@@ -10,7 +10,7 @@
                                   
                                 <ButtonAdd 
                                         @click="newYearData($event)" 
-                                        :buttonClass="['btn-sm btn-outline-primary btn-transparent']"
+                                        :buttonClass="['btn-outline-primary btn-transparent px-2 py-1']"
                                         title="Додати інформацію за рік">
                                     Додати рік
                                 </ButtonAdd>                                
@@ -19,7 +19,7 @@
                             <th v-for="year in years" :key="year.year">
                                 <div class="d-flex align-items-center justify-content-end">
 
-                                    <span>{{year.year}}</span>
+                                    <div class="year">{{year.year}}</div>
                                     <DropDownMenu
                                         buttonClass="btn-outline-secondary btn-transparent"
                                         :showToggler="false"
@@ -123,13 +123,13 @@
                     № ПГО <span>02-0022-1</span>
                 </div> -->
                 <div class="card rounded-0 mb-4">
-                    <div class="card-header thin-header align-items-center p-2">
+                    <div class="card-header thin-header align-items-center">
                         <h6>Інформація по будинку</h6>
 
                         <ButtonEdit 
                                 @click="openHouseInfoForm" 
                                 :size="16"
-                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
+                                :buttonClass="['btn-light btn-transparent p-2']"
                                 title="Редагувати інформацію по будинку" />
                       
                     </div>
@@ -168,13 +168,13 @@
                     </div>
                 </div>
                 <div class="card rounded-0">
-                    <div class="card-header thin-header align-items-center p-2">
+                    <div class="card-header thin-header align-items-center">
                         <h6>Додаткова інформація</h6>
 
                         <ButtonEdit 
                                 @click="openHouseAdditionalDataForm" 
                                 :size="16"
-                                :buttonClass="['btn-sm btn-light btn-transparent p-1']"
+                                :buttonClass="['btn-light btn-transparent p-2']"
                                 title="Редагувати додаткову інформацію" />
                                 
                     </div>

@@ -1,9 +1,26 @@
 <template>
-    <breadcrumbs v-if="household?.id"/>
+    <!-- <breadcrumbs v-if="household?.id"/> -->
 
     <div class="card" v-if="household?.id">
-        <div class="card-header">
-            <h5>Облікова картка об'єкта погосподарського обліку <span class="household-card--number">{{ household.number }}</span></h5>
+        <div class="card-header ">
+            <div class="card-title">
+                <span class="go-back-page" @click="$router.push({name: 'households'})">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M18.41,16.59L13.82,12L18.41,7.41L17,6L11,12L17,18L18.41,16.59M6,6H8V18H6V6Z" />
+                    </svg> -->
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <title>Повернутись по переліку погосподарських карт</title>
+                        <path d="M7,8L2.5,12L7,16V8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z" />
+                    </svg> -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <title>Повернутись по переліку погосподарських карт</title>
+                        <!-- <title>table-arrow-left</title> -->
+                        <path d="M4 3H18C19.11 3 20 3.9 20 5V12.08C18.45 11.82 16.92 12.18 15.68 13H12V17H13.08C12.97 17.68 12.97 18.35 13.08 19H4C2.9 19 2 18.11 2 17V5C2 3.9 2.9 3 4 3M4 7V11H10V7H4M12 7V11H18V7H12M4 13V17H10V13H4M18.44 15V17H22.44V19H18.44V21L15.44 18L18.44 15" />
+                    </svg>
+                </span>
+                <span>Облікова картка об'єкта погосподарського обліку:</span>
+                <span class="household-card--number">{{ household.number }}</span>
+            </div>
             <div class="dropdown" v-show="$route.name == 'households.show.info'">                
                 
                 <IconButton 
@@ -204,8 +221,38 @@ export default {
 
 <style lang="scss" scoped>
 .card-header {
-    h5 {
-        margin: 1px 0;
+    height: 50px;
+
+    // h5 {
+    //     margin: 1px 0;
+    // }
+
+    .card-title {
+        display: flex;
+        align-items: center;
+        // gap: 1rem;
+        font-size: 1.1rem;
+        margin-bottom: 0;
+
+        span:first-of-type {
+            height: 30px;
+            width: 30px;
+            opacity: 0.5;
+            transition: all 0.3s;
+            
+            &:hover {
+                opacity: 1;
+                fill: var(--bs-primary);
+            }
+        }
+
+        span:nth-of-type(2) {
+            border-left: 1px solid #adb5bd;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin-left: 1rem;
+        }
+
     }
 }
 
@@ -220,10 +267,10 @@ a.router-link-exact-active {
     margin-left: 0.5rem;
 }
 
-.dropdown-menu {
-    .dropdown-item:hover {
-        background-color: var(--bs-secondary-bg);
-    }
-}
+// .dropdown-menu {
+//     .dropdown-item:hover {
+//         background-color: var(--bs-secondary-bg);
+//     }
+// }
 
 </style>

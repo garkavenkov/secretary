@@ -94,8 +94,8 @@ export default {
             if (this.showToggler) {
                 toggler = 'dropdown-toggle'
             }
-            let tmpClass = `btn ${toggler} px-2 py-1 ms-1 me-1`;
-
+            // let tmpClass = `btn ${toggler} p-2 ms-2 me-1`;
+            let tmpClass = `btn ${toggler}`;
             if (this.buttonClass.isArray) {
                 return tmpClass + this.buttonClass.join(' ');
             } else {

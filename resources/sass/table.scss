@@ -5,15 +5,33 @@
 
 .table-years thead {
 
-    // background: #f1f3f5;
-
+    // background: #f1f3f5;    
+    
     tr th:not(:first-child) {
-        position: relative;
-        border-right: 1px solid #dee2e6;
-        border-left: 1px solid #dee2e6;
+        // line-height: 24px;
+        // position: relative;
+        // border-right: 1px solid #dee2e6;
+        // border-left: 1px solid #dee2e6;
         width: 125px;
         vertical-align: middle;
-    }  
+
+        .dropdown {
+            button {
+                line-height: 14px;
+            }
+        }
+        div.year {
+            height: 24px;
+            line-height: 24px;
+            margin-right: 0.5rem;
+        }
+
+        div.dropdown {
+            button {
+                padding: 0.375rem;
+            }
+        }
+    }
 }
 
 table thead {

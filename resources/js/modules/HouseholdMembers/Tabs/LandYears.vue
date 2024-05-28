@@ -7,7 +7,7 @@
                     
                     <ButtonAdd 
                             @click="newYearData($event)" 
-                            buttonClass="btn-sm btn-outline-primary btn-transparent"
+                            buttonClass="btn-outline-primary btn-transparent px-2 py-1"
                             title="Додати інформацію за рік">
                         Додати рік
                     </ButtonAdd>
@@ -17,7 +17,7 @@
 
                     <div class="d-flex align-items-center justify-content-end">
 
-                        <span>{{year.year}}</span>
+                        <div class="year">{{year.year}}</div>
                         <DropDownMenu
                                 buttonClass="btn-outline-secondary btn-transparent"
                                 :showToggler="false"

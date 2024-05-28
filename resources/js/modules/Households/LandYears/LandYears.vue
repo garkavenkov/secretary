@@ -9,7 +9,7 @@
                                
                                 <ButtonAdd 
                                         @click="newYearData($event)" 
-                                        buttonClass="btn-sm btn-outline-primary btn-transparent"
+                                        buttonClass="btn-outline-primary btn-transparent px-2 py-1"
                                         title="Додати інформацію за рік">
                                     Додати рік
                                 </ButtonAdd>
@@ -18,7 +18,7 @@
                             <th v-for="year in years" :key="year.year">         
 
                                 <div class="d-flex align-items-center justify-content-end">
-                                    <span>{{year.year}}</span>
+                                    <div class="year">{{year.year}}</div>
                                     <DropDownMenu
                                         buttonClass="btn-outline-secondary btn-transparent"
                                         :showToggler="false"
@@ -67,13 +67,13 @@
             </div>
             <div class="col-md-3">
                 <div class="card rounded-0">
-                    <div class="card-header thin-header align-items-center p-2">                        
+                    <div class="card-header thin-header align-items-center">                        
                         <h6>Додаткова інформація</h6>
 
                         <ButtonEdit 
                                 @click="openLandAdditionalDataForm" 
                                 :size="16"
-                                buttonClass="btn-light btn-transparent p-1"
+                                buttonClass="btn-light btn-transparent p-2"
                                 title="Редагувати додаткову інформацію" />
                         
                     </div>
