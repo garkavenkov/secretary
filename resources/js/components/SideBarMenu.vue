@@ -75,31 +75,31 @@
                 <ul class="sub-menu">
                     <li class="sub-menu-title"><span>Довідники</span></li>
                     <li>
-                        <router-link to="/regions">
+                        <router-link to="/regions" :class="[{'router-link-active': $route.path.indexOf('regions/') > -1 }]">
                             <SvgIcon type="mdi" :path="pathMdiMap" :size="18" />
                             <span class="nav-title">Регіони</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/districts">
+                        <router-link to="/districts" :class="[{'router-link-active': $route.path.indexOf('districts/') > -1 }]">
                             <SvgIcon type="mdi" :path="pathMdiDomain" :size="18" />
                             <span class="nav-title">Райони</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/communities">
+                        <router-link to="/communities" :class="[{'router-link-active': $route.path.indexOf('communities/') > -1 }]">
                             <SvgIcon type="mdi" :path="pathMdiHomeCity" :size="18" />
                             <span class="nav-title">Громади</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/councils">
+                        <router-link to="/councils" :class="[{'router-link-active': $route.path.indexOf('councils/') > -1 }]">
                             <SvgIcon type="mdi" :path="pathMdiBank" :size="18" />
                             <span class="nav-title">Міськи / сільські ради</span>
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/settlements">
+                        <router-link to="/settlements" :class="[{'router-link-active': $route.path.indexOf('settlements/') > -1 }]">
                             <SvgIcon type="mdi" :path="pathMdiHomeGroup" :size="18" />
                             <span class="nav-title">Населені пункти</span>
                         </router-link>
