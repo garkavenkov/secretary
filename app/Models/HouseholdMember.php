@@ -372,7 +372,7 @@ class HouseholdMember extends Model
         foreach($ages as $name => $range) {
 
             $case_age_range_sql .= " WHEN res.full_age >= ". $range[0] . " AND res.full_age <= " . $range[1] . " then '$name'\n";
-            $select_age_ranges_fields .= "SUM(CASE WHEN age_range = '$name' THEN 1 ELSE 0 end ) as '$name' ";
+            $select_age_ranges_fields .= "SUM(CASE WHEN r.age_range = '$name' THEN 1 ELSE 0 end ) as '$name' ";
             
             // prevent put ',' after last field in SELECT befor FROM
             if ($name !== array_key_last($ages)) {
@@ -425,7 +425,7 @@ class HouseholdMember extends Model
         if (!is_null($gender)) {            
             $sql .= " AND (hm.sex = '$gender')";
         }
-        $sql .= ") AS res )";
+        $sql .= ") AS res ) AS r";
 
 
         if ($group_by_settlement || $group_by_gender) {
