@@ -275,13 +275,13 @@ class Household extends Model
             }
         }
 
-        $sql .= ") ";
+        $sql .= ") AS r";
 
         if ($group_by_settlement) {
-            $sql .= "GROUP 	BY settlement ";
+            $sql .= "GROUP 	BY r.settlement ";
+            $sql .= "ORDER  BY r.settlement";
         }
 
-        $sql .= "ORDER  BY " . ($group_by_settlement ? "settlement, " : "") . "type_id";
 
         return DB::select($sql);
     }
