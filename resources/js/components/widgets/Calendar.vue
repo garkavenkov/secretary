@@ -1,68 +1,69 @@
 <template>
     
     <div class="card h-100">
-        <div class="card-header">
+        <!-- <div class="card-header">
             <div class="chart-name">
                 Календар
             </div>
-        </div>
+        </div> -->
         <div class="card-body">
-
-            <div class="calendar-header">
-                <div class="date__wrapper">
-                    <div class="date-month">{{ monthNames[calendarDate.month-1]}}</div>
-                    <div class="date-year">{{ calendarDate.year }}</div>
+            <div class="calendar__wrapper">
+                <div class="calendar-header">
+                    <div class="date__wrapper">
+                        <div class="date-month">{{ monthNames[calendarDate.month-1]}}</div>
+                        <div class="date-year">{{ calendarDate.year }}</div>
+                    </div>
+                    <div class="buttons__wrapper">
+                        <div    class="today-date" 
+                                @click="initializeCalendar(new Date)"
+                                v-show="((this.calendarDate.month != this.currentDate.month) 
+                                        || (this.calendarDate.year != this.currentDate.year))"
+                                title="Певернутись на поточну дату">
+                            Сьогодні
+                        </div>
+                        <div    class="prev_month" 
+                                @click.exact="prevMonth" 
+                                @click.ctrl="prevYear"
+                                title="Пепередній місяць (клік з 'ctrl' - попередній рік)">
+                            <slot name="previousMonth">&lt;</slot>
+                        </div>
+                        <div    class="next-month" 
+                                @click.exact="nextMonth" 
+                                @click.ctrl="nextYear"
+                                title=" Наступний місяць (клік з 'ctrl' - наступний рік)">                            
+                            <slot name="nextMonth">&gt;</slot>
+                        </div>
+                    </div>
+                    
                 </div>
-                <div class="buttons__wrapper">
-                    <div    class="today-date" 
-                            @click="initializeCalendar(new Date)"
-                            v-show="((this.calendarDate.month != this.currentDate.month) 
-                                    || (this.calendarDate.year != this.currentDate.year))"
-                            title="Певернутись на поточну дату">
-                        Сьогодні
-                    </div>
-                    <div    class="prev_month" 
-                            @click.exact="prevMonth" 
-                            @click.ctrl="prevYear"
-                            title="Пепередній місяць (клік з 'ctrl' - попередній рік)">
-                        <slot name="previousMonth">&lt;</slot>
-                    </div>
-                    <div    class="next-month" 
-                            @click.exact="nextMonth" 
-                            @click.ctrl="nextYear"
-                            title=" Наступний місяць (клік з 'ctrl' - наступний рік)">                            
-                        <slot name="nextMonth">&gt;</slot>
-                    </div>
+    
+                <div class="weekday-name__wrapper">
+                    <div    v-for="(day, index) in weekdayName" 
+                            :key="index" 
+                            class="day_name"
+                            :class="{'current': (index == currentDayOfWeek) && (this.calendarDate.month == this.currentDate.month) && (this.calendarDate.year == this.currentDate.year)}">
+                        <span>{{ day }}</span>
+                    </div>                
                 </div>
-                
-            </div>
-
-            <div class="weekday-name__wrapper">
-                <div    v-for="(day, index) in weekdayName" 
-                        :key="index" 
-                        class="day_name"
-                        :class="{'current': (index == currentDayOfWeek) && (this.calendarDate.month == this.currentDate.month) && (this.calendarDate.year == this.currentDate.year)}">
-                    <span>{{ day }}</span>
-                </div>                
-            </div>
-
-            <div class="weeks__wrapper">
-                <div    class="week__wrapper" 
-                        v-for="(week,weekIndex) in weeks" 
-                        :key="weekIndex">
     
-                        <div    v-for="(day,dayIndex) in week" 
-                                class="day-number"
-                                :class="{
-                                    'prev-month': day.month == calendarDate.previousMonth, 
-                                    'today': (day.day == currentDate.day) && (day.month == currentDate.month) && (day.year == currentDate.year),
-                                    'like-today': (day.day == currentDate.day) && ((day.month != currentDate.month) || (day.year != currentDate.year)),
-                                    'next-month': day.month == calendarDate.nextMonth
-                                }"
-                                :key="`${weekIndex}:${dayIndex}`">
-                        <span>{{ day.day }}</span>    
+                <div class="weeks__wrapper">
+                    <div    class="week__wrapper" 
+                            v-for="(week,weekIndex) in weeks" 
+                            :key="weekIndex">
+        
+                            <div    v-for="(day,dayIndex) in week" 
+                                    class="day-number"
+                                    :class="{
+                                        'prev-month': day.month == calendarDate.previousMonth, 
+                                        'today': (day.day == currentDate.day) && (day.month == currentDate.month) && (day.year == currentDate.year),
+                                        'like-today': (day.day == currentDate.day) && ((day.month != currentDate.month) || (day.year != currentDate.year)),
+                                        'next-month': day.month == calendarDate.nextMonth
+                                    }"
+                                    :key="`${weekIndex}:${dayIndex}`">
+                            <span>{{ day.day }}</span>    
+                        </div>
+        
                     </div>
-    
                 </div>
             </div>
 
@@ -369,7 +370,7 @@ export default {
     justify-content: space-between;
     font-weight: 700;
     border-bottom: 1px solid #e7e7e7;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     // padding-bottom: 0.5rem;
 
     .day_name {
@@ -388,33 +389,39 @@ export default {
     }
 }
 
-.week__wrapper {
-    display: flex;
-    justify-content: space-between;
+.weeks__wrapper {
+    display:  flex;
+    flex-direction: column;
+    gap: 1rem;
 
-    .day-number.prev-month, 
-    .day-number.next-month {
-        opacity: 0.4;
-    }
-
-    .day-number {
-        width: 100%;
-        text-align: center;
-        padding: 1rem 0;
-        border-radius: 0.2rem;
-
-        &.today {
-            background: indianred;
-            color: white;
+    .week__wrapper {
+        display: flex;
+        justify-content: space-between;
+    
+        .day-number.prev-month, 
+        .day-number.next-month {
+            opacity: 0.4;
+        }
+    
+        .day-number {
+            width: 100%;
+            text-align: center;
+            padding: 1rem 0;
+            border-radius: 0.2rem;
+    
+            &.today {
+                background: indianred;
+                color: white;
+                
+            }
             
-        }
-        
-        &.like-today {
-            background: var(--bs-secondary-bg);
-        }
-
-        &:hover:not(.today) {
-            background: lightblue;        
+            &.like-today {
+                background: var(--bs-secondary-bg);
+            }
+    
+            &:hover:not(.today) {
+                background: lightblue;        
+            }
         }
     }
 }
