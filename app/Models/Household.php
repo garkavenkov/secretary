@@ -275,7 +275,7 @@ class Household extends Model
             }
         }
 
-        $sql .= ") AS r";
+        $sql .= ") AS r ";
 
         if ($group_by_settlement) {
             $sql .= "GROUP 	BY r.settlement ";

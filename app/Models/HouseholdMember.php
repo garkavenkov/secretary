@@ -425,7 +425,7 @@ class HouseholdMember extends Model
         if (!is_null($gender)) {            
             $sql .= " AND (hm.sex = '$gender')";
         }
-        $sql .= ") AS res ) AS r";
+        $sql .= ") AS res ) AS r ";
 
 
         if ($group_by_settlement || $group_by_gender) {
