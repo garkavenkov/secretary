@@ -302,7 +302,7 @@ class HouseholdMemberController extends Controller
 
         } else if ($db_conn == 'mysql') {
 
-            $sql = "MONTH(birthdate) ?";
+            $sql = "MONTH(birthdate) = ?";
         }
         
         return HouseholdMember::alive()->whereRaw($sql, $month)->count();
