@@ -556,8 +556,8 @@ class DummyDataSeeder extends Seeder
                     'sex'                           =>  $gender == 'male' ? 'чоловіча' : 'жіноча',
                     'birthdate'                     =>  $birthdate->format('Y-m-d'),
                     'family_relationship_type_id'   =>  $family_relationship_type_id,
-                    'employment_information'        =>  '',
-                    'work_place_id'                 =>  '',
+                    'employment_information'        =>  null,
+                    'work_place_id'                 =>  null,
         ]);
         
     }
