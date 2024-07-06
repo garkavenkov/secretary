@@ -84,7 +84,7 @@ class AdditionalParamController extends Controller
      */
     public function show($id)
     {
-        $param = AdditionalParam::findOrFail($id);
+        $param = AdditionalParam::with('conditions.attribute')->findOrFail($id);
 
         return new AdditionalParamResource($param);
     }

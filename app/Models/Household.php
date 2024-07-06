@@ -180,8 +180,9 @@ class Household extends Model
      */
     public function familyInfo(): \Illuminate\Support\Collection
     {
-        $params = $this->additionalParams('family_%')
-                        ->get()
+        $params = $this->additionalParams('family_')
+                        // ->get()
+                        // dd($params);
                         ->map(function($p) {
                             return $p->code;
                         })

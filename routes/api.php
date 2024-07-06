@@ -16,6 +16,7 @@ use App\Http\Controllers\API\v1\UserRoleController;
 use App\Http\Controllers\API\v1\CommunityController;
 use App\Http\Controllers\API\v1\HouseholdController;
 use App\Http\Controllers\API\v1\WorkPlaceController;
+use App\Http\Controllers\API\v1\ExportDataController;
 use App\Http\Controllers\API\v1\PermissionController;
 use App\Http\Controllers\API\v1\SettlementController;
 use App\Http\Controllers\API\v1\CouncilTypeController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\API\v1\HouseholdLandController;
 use App\Http\Controllers\API\v1\HouseholdTypeController;
 use App\Http\Controllers\API\v1\HouseholdHouseController;
 use App\Http\Controllers\API\v1\HouseholdOwnerController;
+use App\Http\Controllers\API\v1\ModelAttributeController;
 use App\Http\Controllers\API\v1\SettlementTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamController;
 use App\Http\Controllers\API\v1\HouseholdMemberController;
@@ -35,8 +37,8 @@ use App\Http\Controllers\API\v1\AdditionalParamValueController;
 use App\Http\Controllers\API\v1\FamilyRelationshipTypeController;
 use App\Http\Controllers\API\v1\AdditionalParamCategoryController;
 use App\Http\Controllers\API\v1\HouseholdMemberMovementController;
+use App\Http\Controllers\API\v1\AdditionalParamConditionController;
 use App\Http\Controllers\API\v1\AdditionalParamValueTypeController;
-use App\Http\Controllers\API\v1\ExportDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +85,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     Route::resource('positions',                    PositionController::class);
     Route::resource('users',                        UserController::class);
     Route::resource('reports',                      ReportController::class);
+    Route::resource('model-attributes',             ModelAttributeController::class);
+    Route::resource('additional-param-conditions',  AdditionalParamConditionController::class);
 
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
     // Route::post('generate-report',                  [ReportController::class, 'generateReport'])->name('generate-report');

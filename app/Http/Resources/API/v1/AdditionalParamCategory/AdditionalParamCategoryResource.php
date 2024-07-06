@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\API\v1\AdditionalParamCategory;
 
+use App\Http\Resources\API\v1\AdditionalParam\AdditionalParamResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AdditionalParamCategoryResource extends JsonResource
@@ -18,6 +19,7 @@ class AdditionalParamCategoryResource extends JsonResource
             'id'        =>  (int)   $this->id,
             'code'      =>  $this->code,
             'name'      =>  $this->name,
+            'params'    =>  AdditionalParamResource::collection($this->whenLoaded('params')),
         ];
     }
 }

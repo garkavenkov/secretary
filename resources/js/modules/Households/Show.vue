@@ -234,10 +234,11 @@ export default {
         font-size: 1.1rem;
         margin-bottom: 0;
 
-        span:first-of-type {
+        span.go-back-page {
             height: 30px;
             width: 30px;
             opacity: 0.5;
+            font-size: 1.1rem;
             transition: all 0.3s;
             
             &:hover {

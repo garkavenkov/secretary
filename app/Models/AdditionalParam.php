@@ -23,6 +23,7 @@ class AdditionalParam extends Model
 
         static::deleting(function($model) {
             $model->values()->delete();
+            $model->conditions()->delete();
         });
 
     }
@@ -40,5 +41,10 @@ class AdditionalParam extends Model
     public function valueType()
     {
         return $this->belongsTo(AdditionalParamValueType::class, 'value_type_id');
+    }
+
+    public function conditions()
+    {
+        return $this->hasMany(AdditionalParamCondition::class, 'param_id');
     }
 }

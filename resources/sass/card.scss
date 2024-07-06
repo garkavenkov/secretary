@@ -20,7 +20,30 @@
                 border-right: 1px solid #d2d2d2;
                 padding-right: 1rem;
             }
+
+            span.icon {
+                svg {
+                    height: 30px;
+                    width: 30px;
+                    // opacity: 0.5;                    
+                    transition: all 0.3s;
+                    fill: var(--bs-primary);
+                }
+                &.go-back-page {
+                    svg {
+                        opacity: 0.5;
+            
+                        &:hover {
+                            opacity: 1;
+                            // fill: var(--bs-primary);
+                        }
+
+                    }
+                }            
+            }
         }
+
+
 
         &.thin-header {
             padding: 0.25rem 0.5rem 0.25rem 0.75rem;

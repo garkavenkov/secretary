@@ -48,8 +48,8 @@ class AdditionalParamCategoryController extends Controller
      */
     public function show($id)
     {
-        $category = AdditionalParamCategory::findOrFail($id);
-
+        $category = AdditionalParamCategory::with('params.conditions.attribute', 'params.valueType')->findOrFail($id);
+        
         return new AdditionalParamCategoryResource($category);
     }
 

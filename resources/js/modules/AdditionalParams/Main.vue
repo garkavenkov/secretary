@@ -1,23 +1,39 @@
 <template>    
 
     <div class="row">
-        <!-- Additional Param Categories -->
-        <div class="col-md-5">
+        
+        <div class="col-md-10 mx-auto">
+            
+        
             <div class="card">
                 <div class="card-header">
                     <div class="dictionary-name__wrapper">
+
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <title>Повернутись по переліку категорій додаткових параметрів</title>                            
+                                <path d="M6.5 10C7.3 10 8 9.3 8 8.5S7.3 7 6.5 7 5 7.7 5 8.5 5.7 10 6.5 10M9 6L16 13L11 18L4 11V6H9M9 4H4C2.9 4 2 4.9 2 6V11C2 11.6 2.2 12.1 2.6 12.4L9.6 19.4C9.9 19.8 10.4 20 11 20S12.1 19.8 12.4 19.4L17.4 14.4C17.8 14 18 13.5 18 13C18 12.4 17.8 11.9 17.4 11.6L10.4 4.6C10.1 4.2 9.6 4 9 4M13.5 5.7L14.5 4.7L21.4 11.6C21.8 12 22 12.5 22 13S21.8 14.1 21.4 14.4L16 19.8L15 18.8L20.7 13L13.5 5.7Z" />
+                            </svg>                           
+                        </span>   
+
                         <span>Категорії додаткових параметрів</span>
-                    </div>
-                    <div class="d-flex">                                               
 
                         <ButtonAdd 
+                                @click="newCategory" 
+                                title="Додати параметр" class="btn-sm btn-primary p-2"/>
+                        
+                        <ButtonRefreshData 
+                                @click="fetchAdditionalParamCategories"
+                                buttonClass="btn-outline-primary p-2 ms-2" />
+
+                        <!-- <ButtonAdd 
                                 buttonClass="btn-outline-secondary btn-transparent p-2" 
                                 @click="newCategory" 
-                                title="Додати категорію" />
-
-                        <ButtonRefreshData 
+                                title="Додати категорію" /> -->
+    
+                        <!-- <ButtonRefreshData 
                                 buttonClass="btn-outline-secondary btn-transparent ms-2 p-2"
-                                @click="fetchAdditionalParamCategories" />                  
+                                @click="fetchAdditionalParamCategories" />                   -->
                     </div>                    
                 </div>
                 <div class="card-body">
@@ -30,11 +46,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="category in categories" :key="category.id" :class="{'selected' : selectedCategory.id == category.id}">
+                            <tr v-for="category in categories" :key="category.id">
                                 <td>
-                                    <a @click="getCategoryParams(category)" style="cursor:pointer;">
+                                    <router-link :to="{name: 'additional.params.show' , params: {id: category.id}}">
                                         {{ category.code }}
-                                    </a>
+                                    </router-link>
+                                    <!-- <a @click="getCategoryParams(category)" style="cursor:pointer;">
+                                        {{ category.code }}
+                                    </a> -->
                                 </td>
                                 <td>{{ category.name }}</td>
                                 <td class="actions">
@@ -54,6 +73,7 @@
             </div>
         </div>
         <!-- Additional Params -->
+        <!-- 
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
@@ -132,19 +152,19 @@
                 </div>
             </div>
         </div>
+        -->
     </div>
-
     <CategoryForm
             :formData="categoryData"
             :action="action"
             @refreshData="fetchAdditionalParamCategories"/>
 
-    <ParamForm
+    <!-- <ParamForm
             :formData="paramData"
             :category="selectedCategory"
             :action="action"
             :valueTypes="valueTypes"
-            @refreshData="fetchAdditionalParams(paramData.category_id)"/>
+            @refreshData="fetchAdditionalParams(paramData.category_id)"/> -->
 
 </template>
 
@@ -168,18 +188,19 @@ export default {
     data() {
         return {
             categories: [],
-            params: [],
+            // params: [],
             valueTypes: [],
             categoryData: {
                 code: '',
                 name: ''
             },
-            selectedCategory: {},
+            // selectedCategory: {},
             paramData: {
                 category_id: null,
                 code: '',
                 name: '',
                 value_type_id: 0,
+                mask: '',
             },
             action: '',
             modalTitle: '',
@@ -201,23 +222,23 @@ export default {
                     this.categories = res.data.data;
                 })
         },
-        fetchAdditionalParams(categoryId) {
-            axios.get(`/api/v1/additional-params?category_id=${categoryId}`)
-                .then(res => {
-                    this.params = res.data.data;
-                })
-        },
-        fetchAdditionalParamValueTypes() {
-            axios.get('/api/v1/additional-param-value-types')
-                .then(res => {
-                    this.valueTypes = res.data.data;
-                })
-        },
-        getCategoryParams(category) {
-            this.selectedCategory = category;
-            this.paramData.category_id = category.id;
-            this.fetchAdditionalParams(category.id);
-        },
+        // fetchAdditionalParams(categoryId) {
+        //     axios.get(`/api/v1/additional-params?category_id=${categoryId}`)
+        //         .then(res => {
+        //             this.params = res.data.data;
+        //         })
+        // },
+        // fetchAdditionalParamValueTypes() {
+        //     axios.get('/api/v1/additional-param-value-types')
+        //         .then(res => {
+        //             this.valueTypes = res.data.data;
+        //         })
+        // },
+        // getCategoryParams(category) {
+        //     this.selectedCategory = category;
+        //     this.paramData.category_id = category.id;
+        //     this.fetchAdditionalParams(category.id);
+        // },
         newCategory() {
             this.modalTitle = 'Нова категорія';
             this.modalSubmitCaption = 'Додати';
@@ -226,15 +247,15 @@ export default {
             let categoryForm = new Modal(document.getElementById('CategoryForm'));
             categoryForm.show();
         },
-        newParam() {
-            this.modalTitle = 'Новий параметр';
-            this.modalSubmitCaption = 'Додати';
-            this.action = 'create';
-            this.paramData.category_id  = this.selectedCategory.id;
+        // newParam() {
+        //     this.modalTitle = 'Новий параметр';
+        //     this.modalSubmitCaption = 'Додати';
+        //     this.action = 'create';
+        //     this.paramData.category_id  = this.selectedCategory.id;
 
-            let paramForm = new Modal(document.getElementById('ParamForm'));
-            paramForm.show();
-        },
+        //     let paramForm = new Modal(document.getElementById('ParamForm'));
+        //     paramForm.show();
+        // },
         editCategory(category) {
             this.modalTitle = 'Редагування категорії';
             this.modalSubmitCaption = 'Зберегти';
@@ -247,38 +268,39 @@ export default {
             let categoryForm = new Modal(document.getElementById('CategoryForm'));
             categoryForm.show();
         },
-        editParam(param) {
-            this.modalTitle = 'Редагування параметру';
-            this.modalSubmitCaption = 'Зберегти';
-            this.action = 'update';
+        // editParam(param) {
+        //     this.modalTitle = 'Редагування параметру';
+        //     this.modalSubmitCaption = 'Зберегти';
+        //     this.action = 'update';
 
-            this.paramData.id               = param.id
-            this.paramData.category_id      = param.category_id
-            this.paramData.code             = param.code;
-            this.paramData.name             = param.name;
-            this.paramData.value_type_id    = param.value_type_id;
+        //     this.paramData.id               = param.id
+        //     this.paramData.category_id      = param.category_id
+        //     this.paramData.code             = param.code;
+        //     this.paramData.name             = param.name;
+        //     this.paramData.mask             = param.mask;
+        //     this.paramData.value_type_id    = param.value_type_id;
 
-            let paramForm = new Modal(document.getElementById('ParamForm'));
-            paramForm.show();
-        },
-        deleteParam(param) {
-            let msg = 'Видалення параметру може призвести до неочікуваних результатів в звітах.'
-            this.$confirmDelete('Ви дійсно бажаєте видалити додатковий параметр', msg)
-                .then(res => {
-                    if (res.isConfirmed) {
-                        axios.delete(`/api/v1/additional-params/${param.id}`)
-                            .then(res => {
-                                this.$toast(res.data.message);
-                                this.fetchAdditionalParams(param.category_id);
-                            })
-                    }
-                })
-        }
+        //     let paramForm = new Modal(document.getElementById('ParamForm'));
+        //     paramForm.show();
+        // },
+        // deleteParam(param) {
+        //     let msg = 'Видалення параметру може призвести до неочікуваних результатів в звітах.'
+        //     this.$confirmDelete('Ви дійсно бажаєте видалити додатковий параметр', msg)
+        //         .then(res => {
+        //             if (res.isConfirmed) {
+        //                 axios.delete(`/api/v1/additional-params/${param.id}`)
+        //                     .then(res => {
+        //                         this.$toast(res.data.message);
+        //                         this.fetchAdditionalParams(param.category_id);
+        //                     })
+        //             }
+        //         })
+        // }
     },
     computed: {
-        selectedCategoryName() {
-            return this.selectedCategory?.name ? `. Категорія: "${this.selectedCategory.name}"` : ''
-        }
+        // selectedCategoryName() {
+        //     return this.selectedCategory?.name ? `. Категорія: "${this.selectedCategory.name}"` : ''
+        // }
     },
     components: {
         CategoryForm,
@@ -288,7 +310,7 @@ export default {
     },
     created() {
         this.fetchAdditionalParamCategories();
-        this.fetchAdditionalParamValueTypes()
+        // this.fetchAdditionalParamValueTypes()
     }
 }
 

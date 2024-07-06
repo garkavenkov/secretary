@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\AdditionalParam;
 use App\Models\AdditionalParamCategory;
+use App\Models\AdditionalParamCondition;
 use App\Models\AdditionalParamValue;
 use App\Models\AdditionalParamValueType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -52,7 +53,38 @@ class AdditionalParamTest extends TestCase
         $param->delete();
         $this->assertDatabaseMissing('additional_params', ['id' => $param->id]);
         $this->assertDatabaseCount('additional_param_values', 0);
+    }
 
+    public function test_additional_param_MAY_HAVE_condition_for_display()
+    {
+        $param = AdditionalParam::factory()->create(
+            [
+                'code'  =>  'passport',
+                'name'  =>  'Паспорт'
+            ]
+        );
 
+        AdditionalParamCondition::factory()->create(
+            [
+                'param_id'      =>  $param->id,
+            ]
+        );
+
+        $this->assertCount(1, $param->conditions);
+    }
+
+    public function test_additional_param_conditions_MUST_BE_deleted_during_param_deleting()
+    {
+        $param = AdditionalParam::factory()->create();
+
+        AdditionalParamCondition::factory()->create(
+            [
+                'param_id'      =>  $param->id,
+            ]
+        );
+
+        $param->delete();
+        $this->assertDatabaseMissing('additional_params', ['id' => $param->id]);
+        $this->assertDatabaseEmpty('additional_param_conditions');
     }
 }

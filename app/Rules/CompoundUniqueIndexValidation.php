@@ -2,8 +2,8 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\DataAwareRule;
 
 class CompoundUniqueIndexValidation implements Rule, DataAwareRule
 {
@@ -26,7 +26,7 @@ class CompoundUniqueIndexValidation implements Rule, DataAwareRule
 
     public function setData($data)
     {
-        $this->data = $data;
+        $this->data = $data;        
     }
 
     /**
@@ -37,12 +37,33 @@ class CompoundUniqueIndexValidation implements Rule, DataAwareRule
      * @return bool
      */
     public function passes($attribute, $value)
-    {
-        $entity = $this->model
-                    ::where($this->field, $this->data[$this->field])
+    {   
+        $entity = $this->model::query()
+                    ->when(str_contains($this->field, ','), function($q) {
+                        
+                        $fields = explode(',',$this->field);
+                        $sql = "";
+                        $values = [];
+                        $fields_count = count($fields);
+
+                        for($i = 0; $i< $fields_count; $i++) {
+                            $sql .= $fields[$i] . " = ? ";
+                            if ($i != $fields_count -1) {
+                                $sql .= " and ";
+                            }
+                            $values[] = $this->data[$fields[$i]];
+                        }
+                        
+                        $q->whereRaw($sql, $values);
+                        
+                    }, function($q) {
+
+                        $q->where($this->field, $this->data[$this->field]);
+
+                    })
                     ->where($attribute, $value)
                     ->first();
-
+        
         if (!is_null($entity)) {
             if (request()->method() == 'PATCH') {
                 return $entity->id == $this->data['id'] ? true : false;

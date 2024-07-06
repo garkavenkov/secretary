@@ -4,6 +4,7 @@ namespace App\Http\Resources\API\v1\AdditionalParam;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\API\v1\AdditionalParamCategory\AdditionalParamCategoryResource;
+use App\Http\Resources\API\v1\AdditionalParamCondition\AdditionalParamConditionResource;
 use App\Http\Resources\API\v1\AdditionalParamValueType\AdditionalParamValueTypeResource;
 
 class AdditionalParamResource extends JsonResource
@@ -24,6 +25,7 @@ class AdditionalParamResource extends JsonResource
             'name'          =>  $this->name,
             'value_type_id' =>  (int)   $this->value_type_id,
             'value_type'    =>  new AdditionalParamValueTypeResource($this->whenLoaded('valueType')),
+            'conditions'    =>  AdditionalParamConditionResource::collection($this->whenLoaded('conditions')),
             'is_system'     =>  (bool)  $this->is_system
         ];
     }

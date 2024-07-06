@@ -14,17 +14,8 @@ class AdditionalParamCategory extends Model
         'name'
     ];
 
-    public function params($code)
-    {
-        $params = $this->hasMany(AdditionalParam::class, 'category_id');
-        if (is_array($code)) {
-            if (count($code) > 0)
-            {
-                return $params->whereIn('code', $code);
-            }
-        } else{
-            return $params->where('code', 'like', $code);
-        }
-
+    public function params()
+    {        
+        return $this->hasMany(AdditionalParam::class, 'category_id')->with('conditions.attribute');     
     }
 }

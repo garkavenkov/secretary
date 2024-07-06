@@ -241,8 +241,12 @@ class HouseholdMemberController extends Controller
     public function additionalParams($id)
     {
         $member = HouseholdMember::findOrFail($id);
+        // dd($member->additionalParams());
 
+        // $additional_params = $member->memberInfo();
+        // dd($additional_params);
         return AdditionalParamValueResource::collection($member->memberInfo());
+        // return AdditionalParamValueResource::collection($member->additionalParams());
     }
 
     public function memberMovements($id)

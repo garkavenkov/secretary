@@ -88,6 +88,7 @@ export default {
             default: 'Додати'
         }
     },
+    emits: ['submitData', 'closeForm'],
     data() {
         return {}
     },
