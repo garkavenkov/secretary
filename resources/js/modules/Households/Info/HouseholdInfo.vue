@@ -3,9 +3,9 @@
         <div class="row justify-content-around mb-xl-4 mb-md-4">
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">Адреса</div>
-                <div v-if="info.short_address" class="household-address">
+                <div v-if="household.short_address" class="household-address">
                     <span>
-                        {{ info.short_address }}
+                        {{ household.short_address }}
                     </span>
                     <span>
                         {{ restOfAddress }}
@@ -14,15 +14,15 @@
             </div>
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="fw-bold border-bottom mb-xl-2 pb-xl-2">Тип</div>
-                <div v-if="info.household_type">
-                    {{ info.household_type}}
+                <div v-if="household.household_type">
+                    {{ household.household_type}}
                 </div>
             </div>
         </div>
         <div class="row justify-content-around mb-xl-4 mb-md-4">
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="d-flex justify-content-between align-items-center border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">
-                    <span class="fw-bold">Власник<span v-show="info.owners && (info.owners.length > 1)">и</span></span>
+                    <span class="fw-bold">Власник<span v-show="household.owners && (household.owners.length > 1)">и</span></span>
                   
                     <ButtonAdd buttonClass="btn-sm btn-light ms-3 text-muted" title="Додати нового власника" @click="newOwner">
                         Додати власника
@@ -30,9 +30,9 @@
 
                 </div>
                 <div class="owners-wrapper">
-                    <template v-if="info.owners && (info.owners.length > 0)">
+                    <template v-if="household.owners && (household.owners.length > 0)">
                         <div    class="owner"
-                                v-for="owner in info.owners"
+                                v-for="owner in household.owners"
                                 :key="owner.id">
                             <div class="d-flex flex-column">
                                 <span>{{ owner.name }}</span>
@@ -68,12 +68,12 @@
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1 household-head">Голова домогосподарства</div>
                 <div>
-                    <template v-if="info.household_head">
+                    <template v-if="household.household_head">
                         <span   :draggable="!headIsAlreadyOwner"
                                 style="cursor:grabbing;"
-                                @dragstart="pickupHead($event, info.household_head)"
+                                @dragstart="pickupHead($event, household.household_head)"
                                 @dragend="pickupHeadEnded($event)">
-                            {{ info.household_head }}
+                            {{ household.household_head }}
                         </span>
                     </template>
                     <template v-else>
@@ -85,12 +85,12 @@
         <div class="row justify-content-around mb-xl-4">
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">Спеціальні відмітки</div>
-                <div v-if="info.special_marks">{{ info.special_marks }}</div>
+                <div v-if="household.special_marks">{{ household.special_marks }}</div>
                 <div v-else class="text-muted text-center fs-08 p-2">Інформація відсутня</div>
             </div>
             <div class="col-xl-5 col-md-12 mb-md-4">
                 <div class="fw-bold border-bottom mb-xl-2 pb-xl-2 mb-lg-1 pb-lg-1">Додаткові відомості</div>
-                <div v-if="info.additional_data">{{ info.additional_data }}</div>
+                <div v-if="household.additional_data">{{ household.additional_data }}</div>
                 <div v-else class="text-muted text-center fs-08 p-2">Інформація відсутня</div>
             </div>
         </div>
@@ -100,7 +100,7 @@
         :formData="ownerData"
         :action="action"
         @refreshData="$store.dispatch('Households/fetchRecord', household_id)"
-        @getHouseholdAddress="ownerData.address = info.address" />
+        @getHouseholdAddress="ownerData.address = household.address" />
 
 </template>
 
@@ -168,8 +168,8 @@ export default {
                 })
         },
         pickupHead(e, head) {
-            let index = this.info.owners.findIndex(o => {
-                return ((o.name == head) && (o.address == this.info.address));
+            let index = this.household.owners.findIndex(o => {
+                return ((o.name == head) && (o.address == this.household.address));
             })
             
             if (index == -1) {
@@ -184,7 +184,7 @@ export default {
 
                 e.dataTransfer.dropEffect = "move";
                 e.dataTransfer.effectAllowed = "move";
-                e.dataTransfer.setData('head', JSON.stringify({name: head, address: this.info.short_address}));
+                e.dataTransfer.setData('head', JSON.stringify({name: head, address: this.household.short_address}));
             }
         },
         dropHead(e) {
@@ -214,14 +214,14 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('Households', ['info', 'household_id']),
+        ...mapGetters('Households', ['household', 'household_id']),
         restOfAddress() {
-            return this.info.full_address.substring(this.info.short_address.length);
+            return this.household.full_address.substring(this.household.short_address.length);
         },
         headIsAlreadyOwner() {
-            if (this.info.household_head) {
-                return this.info.owners.findIndex(o => {
-                    return (o.name == this.info.household_head);
+            if (this.household.household_head) {
+                return this.household.owners.findIndex(o => {
+                    return (o.name == this.household.household_head);
                 }) != -1;
             }
         }

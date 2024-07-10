@@ -1396,8 +1396,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     pickupHead: function pickupHead(e, head) {
       var _this3 = this;
-      var index = this.info.owners.findIndex(function (o) {
-        return o.name == head && o.address == _this3.info.address;
+      var index = this.household.owners.findIndex(function (o) {
+        return o.name == head && o.address == _this3.household.address;
       });
       if (index == -1) {
         var noInfo = document.getElementById('no-owner-information');
@@ -1410,7 +1410,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         e.dataTransfer.effectAllowed = "move";
         e.dataTransfer.setData('head', JSON.stringify({
           name: head,
-          address: this.info.short_address
+          address: this.household.short_address
         }));
       }
     },
@@ -1437,15 +1437,15 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       dropZone.classList.remove('active');
     }
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('Households', ['info', 'household_id'])), {}, {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('Households', ['household', 'household_id'])), {}, {
     restOfAddress: function restOfAddress() {
-      return this.info.full_address.substring(this.info.short_address.length);
+      return this.household.full_address.substring(this.household.short_address.length);
     },
     headIsAlreadyOwner: function headIsAlreadyOwner() {
       var _this5 = this;
-      if (this.info.household_head) {
-        return this.info.owners.findIndex(function (o) {
-          return o.name == _this5.info.household_head;
+      if (this.household.household_head) {
+        return this.household.owners.findIndex(function (o) {
+          return o.name == _this5.household.household_head;
         }) != -1;
       }
     }
@@ -2129,6 +2129,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         additional_params: []
       },
       members: [],
+      // familyInfo: [],
       modalTitle: '',
       modalSubmitCaption: '',
       viewMode: 'card',
@@ -2288,12 +2289,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   computed: _objectSpread({
     shownMembers: function shownMembers() {
       return this.showAllMembers ? this.members : this.members.filter(function (m) {
-        return m.status == 'active';
+        return m.status == 'active' && !m.death_date;
       });
     },
     hiddenMemebersExist: function hiddenMemebersExist() {
       return this.members.some(function (m) {
-        return ['dead', 'gone'].indexOf(m.status) !== -1;
+        return ['dead', 'gone'].indexOf(m.status) !== -1 || !m.death_date;
       });
     }
   }, (0,vuex__WEBPACK_IMPORTED_MODULE_10__.mapGetters)('Households', ['household_id', 'familyInfo'])),
@@ -2336,16 +2337,33 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdFamilyAdditionalParams',
+  // props: {
+  //     'familyInfo' : {
+  //         type: Array,
+  //         required: true
+  //     }
+  // },
   data: function data() {
-    return {};
+    return {
+      familyInfo: []
+    };
   },
   methods: {
     saveData: function saveData() {},
     closeForm: function closeForm() {
       this.$emit('refreshData');
+    },
+    fetchFamilyInfo: function fetchFamilyInfo() {
+      var _this = this;
+      axios.get("/api/v1/households/".concat(this.household_id, "/family-info")).then(function (res) {
+        _this.familyInfo = res.data.data;
+      });
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('Households', ['household_id', 'familyInfo'])),
+  created: function created() {
+    this.fetchFamilyInfo();
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)('Households', ['household_id'])),
   components: {
     ModalForm: _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     AdditionalParamsList: _AdditionalParams_AdditionalParamsList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -2585,9 +2603,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: {
     openHouseholdForm: function openHouseholdForm() {
       var _this = this;
-      this.formData.id = this.id, this.formData.settlement_id = this.household.info.settlement_id, this.formData.household_type_id = this.household.info.household_type_id, this.formData.number = this.household.info.number, this.formData.special_marks = this.household.info.special_marks, this.formData.additional_data = this.household.info.additional_data;
+      this.formData.id = this.id, this.formData.settlement_id = this.household.settlement_id, this.formData.household_type_id = this.household.household_type_id, this.formData.number = this.household.number, this.formData.special_marks = this.household.special_marks, this.formData.additional_data = this.household.additional_data;
       var address_part_names = ['address_street_type', 'address_street_name', 'address_house', 'address_corps', 'address_apartment'];
-      var address_part_values = this.household.info.raw_address.split(',');
+      var address_part_values = this.household.raw_address.split(',');
       address_part_values.forEach(function (value, index) {
         _this.formData[address_part_names[index]] = value;
       });
@@ -4649,7 +4667,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ButtonEdit = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonEdit");
   var _component_ButtonDelete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonDelete");
   var _component_OwnerForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("OwnerForm");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, _ctx.info.short_address ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.info.short_address), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.restOfAddress), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, _ctx.info.household_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.info.household_type), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Власник"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "и", 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.info.owners && _ctx.info.owners.length > 1]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonAdd, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, _ctx.household.short_address ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.household.short_address), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.restOfAddress), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, _ctx.household.household_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.household.household_type), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Власник"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "и", 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.household.owners && _ctx.household.owners.length > 1]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonAdd, {
     buttonClass: "btn-sm btn-light ms-3 text-muted",
     title: "Додати нового власника",
     onClick: $options.newOwner
@@ -4658,9 +4676,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати власника ")];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["onClick"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_ctx.info.owners && _ctx.info.owners.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  }, 8 /* PROPS */, ["onClick"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_ctx.household.owners && _ctx.household.owners.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.info.owners, function (owner) {
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.household.owners, function (owner) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "owner",
       key: owner.id
@@ -4685,26 +4703,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     onDragover: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"])),
     onDragenter: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]))
-  }, " Переместить голову домогосподарства сюди ", 32 /* HYDRATE_EVENTS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_ctx.info.household_head ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+  }, " Переместить голову домогосподарства сюди ", 32 /* HYDRATE_EVENTS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_ctx.household.household_head ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
     key: 0,
     draggable: !$options.headIsAlreadyOwner,
     style: {
       "cursor": "grabbing"
     },
     onDragstart: _cache[3] || (_cache[3] = function ($event) {
-      return $options.pickupHead($event, _ctx.info.household_head);
+      return $options.pickupHead($event, _ctx.household.household_head);
     }),
     onDragend: _cache[4] || (_cache[4] = function ($event) {
       return $options.pickupHeadEnded($event);
     })
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.info.household_head), 41 /* TEXT, PROPS, HYDRATE_EVENTS */, _hoisted_20)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, "Інформація відсутня"))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, _ctx.info.special_marks ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.info.special_marks), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_26, "Інформація відсутня"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_hoisted_28, _ctx.info.additional_data ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.info.additional_data), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_30, "Інформація відсутня"))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_OwnerForm, {
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.household.household_head), 41 /* TEXT, PROPS, HYDRATE_EVENTS */, _hoisted_20)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, "Інформація відсутня"))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, _ctx.household.special_marks ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.household.special_marks), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_26, "Інформація відсутня"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_hoisted_28, _ctx.household.additional_data ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.household.additional_data), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_30, "Інформація відсутня"))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_OwnerForm, {
     formData: $data.ownerData,
     action: $data.action,
     onRefreshData: _cache[5] || (_cache[5] = function ($event) {
       return _ctx.$store.dispatch('Households/fetchRecord', _ctx.household_id);
     }),
     onGetHouseholdAddress: _cache[6] || (_cache[6] = function ($event) {
-      return $data.ownerData.address = _ctx.info.address;
+      return $data.ownerData.address = _ctx.household.address;
     })
   }, null, 8 /* PROPS */, ["formData", "action"])], 64 /* STABLE_FRAGMENT */);
 }
@@ -5763,7 +5781,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.shownMembers, function (member) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["card member", [member.status == 'dead' ? 'dead' : '', member.status == 'gone' ? 'gone' : '']]),
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["card member", {
+        'dead': member.death_date != null,
+        'gone': member.status == 'gone'
+      }]),
       key: member.id,
       onDblclick: function onDblclick($event) {
         return $options.showHouseholdMemberInfo(member);
@@ -5883,7 +5904,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onRefreshData: _cache[4] || (_cache[4] = function ($event) {
       return _ctx.$store.dispatch('Households/fetchRecord', _ctx.household_id);
     })
-  }, null, 8 /* PROPS */, ["onCloseForm"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["onCloseForm"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" :familyInfo=\"familyInfo\" ")], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -5920,7 +5941,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_AdditionalParamsList, {
         owner: "App\\Models\\Household",
         ownerId: _ctx.household_id,
-        additionalParams: _toConsumableArray(_ctx.familyInfo),
+        additionalParams: _toConsumableArray($data.familyInfo),
         onRefreshData: _cache[0] || (_cache[0] = function ($event) {
           return _ctx.$emit('refreshData');
         })

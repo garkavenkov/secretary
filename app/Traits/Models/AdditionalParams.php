@@ -21,7 +21,10 @@ trait AdditionalParams
      */
     public function additionalParams(mixed $filtered_params = null): Collection
     {
-        $category = AdditionalParamCategory::where('code', get_class($this))->first();
+        $category = AdditionalParamCategory::with('params.conditions')
+                            ->where('code', get_class($this))
+                            ->first();
+        // dd($category);
         if (!$category) {
             return  null;
         }
@@ -81,7 +84,7 @@ trait AdditionalParams
                     ->where('apc.code', '=', get_class($this))        
                     ->pluck('id')
                     ->toArray();
-        
+        // dd($params);
         return $this->hasMany(AdditionalParamValue::class, 'owner_id')
                     ->where(function ($q) use($params) {
                         $q->whereIn('param_id', $params);

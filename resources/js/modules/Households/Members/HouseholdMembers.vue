@@ -62,7 +62,7 @@
         <div class="px-3 d-flex gap-3 flex-wrap" :class="{'pt-3': members.length == 0}">
             <template v-if="viewMode == 'card'">
                 <div    class="card member"
-                        :class="[member.status == 'dead' ? 'dead' : '',  member.status == 'gone' ? 'gone' : '']"
+                        :class="{'dead': member.death_date != null,  'gone' : member.status == 'gone' }"
                         v-for="member in shownMembers"
                         :key="member.id"
                         @dblclick="showHouseholdMemberInfo(member)">
@@ -229,7 +229,8 @@
             v-if="additionalParamsFormIsVisible"
             @closeForm="closeAdditionalParamsForm"
             @refreshData="$store.dispatch('Households/fetchRecord', household_id)" />
-
+            <!-- :familyInfo="familyInfo" -->
+            
 </template>
 
 <script>
@@ -286,6 +287,7 @@ export default {
                 additional_params: []
             },
             members: [],
+            // familyInfo: [],
             modalTitle: '',
             modalSubmitCaption: '',
             viewMode: 'card',
@@ -433,7 +435,7 @@ export default {
             this.modalTitle = ' Додаткова інформація о родині';
             this.modalSubmitCaption = 'Встановити';
             this.additionalParamsFormIsVisible = true;
-
+            
             nextTick(() => {
                 let familyAdditionalParamsForm = new Modal(document.getElementById('HouseholdFamilyAdditionalParams'));
                 familyAdditionalParamsForm.show();
@@ -445,11 +447,13 @@ export default {
     },
     computed: {
         shownMembers() {
-            return this.showAllMembers ? this.members : this.members.filter(m => m.status == 'active');
+            return this.showAllMembers ? this.members : this.members.filter(m => {
+                return (m.status == 'active') && !m.death_date;
+            });
         },
         hiddenMemebersExist() {
             return this.members.some(m => {
-                return ['dead', 'gone'].indexOf(m.status) !== -1;
+                return ['dead', 'gone'].indexOf(m.status) !== -1 || !m.death_date ;
             })
         },
         ...mapGetters('Households', ['household_id', 'familyInfo'])

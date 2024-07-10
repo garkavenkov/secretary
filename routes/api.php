@@ -91,7 +91,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     Route::post('generate-report',                  [ReportController::class, 'generate'])->name('generate-report');
     // Route::post('generate-report',                  [ReportController::class, 'generateReport'])->name('generate-report');
     Route::post('upload-report-template/{id}',      [ReportController::class, 'uploadTemplate'])->name('upload-report-template');
-    Route::get('download-report-template/{id}',    [ReportController::class, 'downloadReportTemplate'])->name('download-report-template');
+    Route::get('download-report-template/{id}',     [ReportController::class, 'downloadReportTemplate'])->name('download-report-template');
     Route::post('family-composition-report',        [ReportController::class, 'familyComposition']);
 
     Route::post('establish-family-relationships',   [FamilyRelationshipController::class, 'establishRelationships'])->name('establish-family-relationships');
@@ -103,7 +103,8 @@ Route::group(['prefix' => 'v1', 'middleware' => ['auth:sanctum']], function () {
     Route::get('households/{id}/land-years',        [HouseholdController::class, 'landYears'])->name('household-land-years');
     Route::get('households/{id}/house-years',       [HouseholdController::class, 'houseYears'])->name('household-house-years');
     Route::get('households/{id}/family-relations',  [HouseholdController::class, 'familyRelations'])->name('household-family-relations');
-    // Route::get('households/{id}/house-info',        [HouseholdController::class, 'houseInfo'])->name('household-house-info');
+    Route::get('households/{id}/family-info',       [HouseholdController::class, 'familyInfo'])->name('household-family-info');
+    Route::get('households/{id}/house-info',        [HouseholdController::class, 'houseInfo'])->name('household-house-info');
     // Route::get('households/{id}/members',           [HouseholdController::class, 'members'])->name('household-members');
 
     Route::get('household-members/{id}/land-years',         [HouseholdMemberController::class, 'landYears'])->name('member-land-years');

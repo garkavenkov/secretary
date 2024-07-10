@@ -32,19 +32,21 @@ class HouseholdMemberResource extends JsonResource
             'birthdate'                     =>  $this->birthdate,
             'family_relationship_type_id'   =>  (int)   $this->family_relationship_type_id,
             'full_age'                      =>  (int)   $this->fullAge,
-            'family_relationship_type'      =>  $this->whenLoaded('familyRelationshipType', $this->familyRelationshipType->name),
+            // 'family_relationship_type'      =>  $this->whenLoaded('familyRelationshipType', $this->familyRelationshipType->name),
+            'family_relationship_type'      =>  $this->family_relationship_type,
             'employment_information'        =>  $this->employment_information,
             'social_information'            =>  $this->social_information,
             'additional_information'        =>  $this->additional_information,
             'work_place_id'                 =>  (int)   $this->work_place_id,
-            'work_place'                    =>  new WorkPlaceResource($this->whenLoaded('workPlace')),
+            // 'work_place'                    =>  new WorkPlaceResource($this->whenLoaded('workPlace')),
+            'work_place'                    =>  $this->work_place,
             'status'                        =>  $this->status,
             'death_date'                    =>  $this->death_date,
             'death_register_number'         =>  $this->death_register_number,
             'death_register_office'         =>  $this->death_register_office,
-            'full_address'                  =>  $this->whenLoaded('household', $this->household->getFullAddress()),
-            'household_number'              =>  $this->whenLoaded('household', $this->household->fullNumber()),
-            'relatives'                     =>  $this->relatives()
+            // 'full_address'                  =>  $this->whenLoaded('household', $this->household->getFullAddress()),
+            // 'household_number'              =>  $this->whenLoaded('household', $this->household->fullNumber()),
+            // 'relatives'                     =>  $this->relatives()
         ];
     }
 }

@@ -4,17 +4,15 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Models\Household;
 use App\Models\Permission;
-use App\Models\Settlement;
-use Illuminate\Support\Arr;
+use App\Snippets\SqlSnippet;
 use Illuminate\Http\Request;
-use App\Models\HouseholdType;
-use Ramsey\Uuid\Type\Integer;
 use App\Models\HouseholdMember;
 use App\Traits\Models\UserRights;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\API\v1\HouseholdRequest;
+use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\Household\HouseholdResource;
 use App\Http\Resources\API\v1\HouseholdLand\HouseholdLandResource;
 use App\Http\Resources\API\v1\Household\HouseholdResourceCollection;
@@ -51,6 +49,7 @@ class HouseholdController extends Controller
                                 ->join('settlements as s', 's.id', '=', 'h.settlement_id')
                                 ->join('settlement_types as st', 'st.id', '=', 's.settlement_type_id')
                                 ->where('h.address', 'like', $search)
+                                ->limit(10)
                                 ->get()
                                 ->toArray();
 
@@ -110,41 +109,63 @@ class HouseholdController extends Controller
 
             return response()->json(['data' => $result]);
 
-        } else if (request()->query('where')) {
+        } else  {            
+            $households = Household::query()
+                            ->join('settlements as s', 's.id', '=', 'households.settlement_id')
+                            ->select(
+                                'households.id',
+                                'households.address', 
+                                'households.number', 
+                                'households.household_type_id',
+                                's.id as settlement_id',
+                                's.name as settlement',
+                                's.inner_code as settlement_inner_code'
+                            )                            
+                            ->addSelect(SqlSnippet::members_count())
+                            ->addSelect(SqlSnippet::household_head());
 
-            $conditions = explode(';', request()->query('where'));
-            $households = Household::with('settlement');
-            foreach($conditions as $condition) {
-                $parts = explode('=', $condition);                
-                if (count($parts) == 2) {
-                    if (Household::isFieldFilterable($parts[0])) {
-                        if ($parts[0] == 'address') {
-                            // check weather address contains street with number 
-                            $address = explode(' ', $parts[1]);
-                            if (count($address) > 1) {
-                                $address = implode("%", $address);
+
+
+            if (request()->query('where')) {
+
+                $conditions = explode(';', request()->query('where'));
+                // $households = Household::with('settlement');
+                
+                foreach($conditions as $condition) {
+                    $parts = explode('=', $condition);                
+                    if (count($parts) == 2) {
+                        if (Household::isFieldFilterable($parts[0])) {
+                            if ($parts[0] == 'address') {
+                                // check weather address contains street with number 
+                                $address = explode(' ', $parts[1]);
+                                if (count($address) > 1) {
+                                    $address = implode("%", $address);
+                                } else {
+                                    $address = $parts[1];
+                                }                                     
+                                $households = $households->where($parts[0], 'like', '%'. $address. '%');
                             } else {
-                                $address = $parts[1];
-                            }                
-                            // dd($address);
-                            $households = $households->where($parts[0], 'like', '%'. $address. '%');
-                        } else {
-                            $households = $households->where($parts[0], $parts[1]);
+                                $households = $households->where($parts[0], $parts[1]);
+                            }
+                        } else if ($parts[0] == 'additional_params') {                           
+                            $households->whereRaw(
+                                SqlSnippet::filled_additional_params(
+                                    model:'App\\Models\\Household', 
+                                    owner: 'households.id',
+                                    value_type: 'boolean', 
+                                    parameters: $parts[1]
+                                )
+                            );
                         }
-                    } else if ($parts[0] == 'additional_params') {
-                        $params = explode(',', $parts[1]);
-                        $households = $households->whereHas('additionalParamsFilled.param', function($q) use($params) {
-                            return $q->whereIn('code', $params);
-                        });   
                     }
-                }
+                }            
             }
-            // $households = $households->get();
-        } else {
-            $households = Household::with('settlement');//->get();
+                            
         }
-        $households = $households->orderBy('number')->paginate($per_page);
 
+
+        $households = $households->orderBy('number')->paginate($per_page);
+       
         return new HouseholdResourceCollection($households->withQueryString());
     }
 
@@ -172,17 +193,35 @@ class HouseholdController extends Controller
      */
     public function show($id)
     {
-        $household = Household::with('settlement',
-                            'type',
-                            // 'members.familyRelationshipType',
-                            // 'members.workPlace',
-                            // 'members.movements',
-                            // 'houseYears',
-                            // 'landYears',
-                            'owners'
-                        )
-                        ->findOrFail($id);
-
+        // $household = Household::with('settlement', 'type', 'owners')->findOrFail($id);
+        
+        $household = Household::query()                        
+                        ->join('settlements as s', 'households.settlement_id', '=', 's.id')
+                        ->join('settlement_types as st', 'st.id', '=', 's.settlement_type_id')
+                        ->join('councils as c', 'c.id', '=', 's.council_id')
+                        ->join('communities as com', 'com.id', '=', 'c.community_id')
+                        ->join('districts as d', 'd.id', '=', 'com.district_id')
+                        ->join('regions as r', 'r.id', '=', 'd.region_id')
+                        ->join('household_types as ht', 'households.household_type_id', '=', 'ht.id')        
+                        ->select(
+                            'households.id',
+                            'households.settlement_id',                       
+                            'households.household_type_id',
+                            'households.number',
+                            'households.address',
+                            'households.special_marks',
+                            'households.additional_data',
+                            'ht.name as household_type',
+                            's.name as settlement',
+                            's.inner_code as settlement_inner_code',                            
+                            'st.name as settlement_type',
+                            'd.name as district',
+                            'r.name as region',
+                        )                        
+                        ->addSelect(SqlSnippet::household_head())
+                        ->with('owners')
+                        ->findOrFail($id);          
+                            
         return new HouseholdResource($household);
     }
 
@@ -364,6 +403,16 @@ class HouseholdController extends Controller
         return HouseholdFamilyRelationsResource::collection($members);
     }
 
+
+    public function familyInfo($id)
+    {
+        $household = Household::findOrFail($id);
+
+        // $params = $household->familyInfo();
+        
+        return AdditionalParamValueResource::collection($household->familyInfo());
+    }
+
     public function totalCount(): int 
     {
         return Household::count();
@@ -382,35 +431,10 @@ class HouseholdController extends Controller
         }
 
         $settlement_id = $request->input('settlement_id') ? $request->input('settlement_id') : null;
-      
-        /*
-        $types = HouseholdType::select('id', 'name')->orderBy('id')->get()->toArray();
-        foreach($types as $type) {
-            if (mb_strlen($type['name']) > 30) {
-                $type_words = explode(' ', $type['name']);
-
-            }
-            
-        }
-        */
-
 
         $result = Household::groupByType(settlement_id: $settlement_id, group_by_settlement: $by_settlement);
+
         return $result;
-        // dd($result);
-        // $datasets = [];
-        // foreach($result as $row) {            
-        //     if ($by_settlement) {                
-        //         $label = $row->settlement;
-        //         unset($row->settlement);
-        //         $data = array_values((array)$row);            
-        //         $datasets[$label] = $data;       
-        //     } else {
-        //         $data = array_values((array)$row);            
-        //         $datasets = $data;
-        //     }           
-        // }
-        
-        // return ['datasets' => $datasets]; //, 'labels' => $types];
+
     }
 }

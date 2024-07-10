@@ -163,15 +163,15 @@ export default {
     methods: {
         openHouseholdForm() {
             this.formData.id                = this.id,
-            this.formData.settlement_id     = this.household.info.settlement_id,
-            this.formData.household_type_id = this.household.info.household_type_id,
-            this.formData.number            = this.household.info.number,
-            this.formData.special_marks     = this.household.info.special_marks,
-            this.formData.additional_data   = this.household.info.additional_data
+            this.formData.settlement_id     = this.household.settlement_id,
+            this.formData.household_type_id = this.household.household_type_id,
+            this.formData.number            = this.household.number,
+            this.formData.special_marks     = this.household.special_marks,
+            this.formData.additional_data   = this.household.additional_data
 
 
             const address_part_names = ['address_street_type', 'address_street_name', 'address_house', 'address_corps', 'address_apartment'];
-            const address_part_values = this.household.info.raw_address.split(',');
+            const address_part_values = this.household.raw_address.split(',');
 
             address_part_values.forEach((value, index) => {
                 this.formData[address_part_names[index]] = value;

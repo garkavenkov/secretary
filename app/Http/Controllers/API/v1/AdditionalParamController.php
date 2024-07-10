@@ -4,12 +4,13 @@ namespace App\Http\Controllers\API\v1;
 
 use Illuminate\Http\Request;
 use App\Models\AdditionalParam;
+use App\Traits\Models\UserRights;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\v1\AdditionalParamRequest;
-use App\Http\Resources\API\v1\AdditionalParam\AdditionalParamResource;
 use App\Models\AdditionalParamCategory;
 use App\Models\AdditionalParamValueType;
-use App\Traits\Models\UserRights;
+use App\Http\Requests\API\v1\AdditionalParamRequest;
+use App\Http\Resources\API\v1\AdditionalParam\AdditionalParamResource;
 
 class AdditionalParamController extends Controller
 {
@@ -20,43 +21,50 @@ class AdditionalParamController extends Controller
      * @return App\Http\Resources\API\v1\AdditionalParam\AdditionalParamResource
      */
     public function index()
-    {
+    {       
         $category_id = request()->input('category_id');
         $category_code = request()->input('category_code');
         $value_type_id = request()->input('value_type_id');
         $value_type_code = request()->input('value_type_code');
+        $owner_id   = request()->input('owner_id');
+
+        $params = AdditionalParam::query()
+                    ->join('additional_param_value_types as apvt', 'additional_params.value_type_id', '=', 'apvt.id')
+                    ->join('additional_param_categories as apc', 'additional_params.category_id', '=', 'apc.id')
+                    ->when($owner_id, function($q) use($owner_id) {
+                        $q->leftJoin('additional_param_values as apv', function($join) use($owner_id) {
+                            $join->on('additional_params.id', '=', 'apv.param_id');
+                            $join->on('apv.owner_id', '=', $owner_id);
+                        });
+                    })
+                    ->select(
+                        'additional_params.id',
+                        'additional_params.code', 
+                        'additional_params.name',
+                        'additional_params.is_system',
+                        'additional_params.category_id',
+                        'apc.name as category_name',
+                        'apvt.code as value_type_code',                        
+                    )
+                    ->when($owner_id, function($q) {
+                        $q->addSelect('apv.value');
+                    })
+                    ->when($category_id, function($q) use ($category_id) {
+                        $q->where('apc.id', $category_id);
+                    })
+                    ->when($category_code, function($q) use ($category_code) {
+                        $q->where('apc.code', $category_code);
+                    })
+                    ->when($value_type_id , function($q) use ($value_type_id) {
+                        $q->where('apvt.id', $value_type_id);
+                    })
+                    ->when($value_type_code , function($q) use ($value_type_code) {
+                        $q->where('apvt.code', $value_type_code);
+                    })                    
+                    ->orderBy('additional_params.code')        
+                    ->get();
         
-        if (!is_null($category_code)) {
-            $category = AdditionalParamCategory::where('code', $category_code)->first();
-            if ($category) {
-                $category_id = $category->id;
-            }
-        }
-
-        if (!is_null($category_id)) {
-            $params = AdditionalParam::with('valueType')
-                        ->where('category_id', $category_id);                        
-        } else {
-            $params = AdditionalParam::with('valueType');
-        }
-        
-        if (!is_null($value_type_code)) {
-            $value_type = AdditionalParamValueType::where('code', $value_type_code)->first();
-
-            if ($value_type) {
-                $value_type_id = $value_type->id;
-            }
-        }
-
-        if (!is_null($value_type_id)) {
-            $params = $params->where('value_type_id', '=', $value_type_id);
-            // $params = $params->where(function ($query) use($value_type_id) {
-            //                     $query->where('value_type_id', '=', $value_type_id)
-            //                           ->orWhere(0, 0);
-            //                 });                            
-        } 
-
-        $params = $params->orderBy('code')->get();
+        return AdditionalParamResource::collection($params);
         
         return AdditionalParamResource::collection($params);
     }

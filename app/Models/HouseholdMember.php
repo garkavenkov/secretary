@@ -119,6 +119,7 @@ class HouseholdMember extends Model
     }
 
     //********************************** Attributes *********************************************************
+    /*
     public function getStatusAttribute()
     {
         $status = 'active';
@@ -137,7 +138,7 @@ class HouseholdMember extends Model
 
         return $status;
     }
-
+    */
     public function getFullNameAttribute()
     {
         return  $this->surname . ' ' . $this->name . ' ' . $this->patronymic;

@@ -45,14 +45,55 @@ class HouseholdMemberController extends Controller
         if (request()->query('household_id')) {
 
             $household_id = request()->query('household_id');
-            $h = Household::findOrFail($household_id);
-            $members = $h->members()->with('familyRelationshipType','workPlace','movements')->orderBy('family_relationship_type_id')->get();
-            // $members = HouseholdMember::with('familyRelationshipType','workPlace','movements')
-            //             ->where('household_id', $household_id)
-            //             ->orderBy('family_relationship_id')
-            //             ->get();
-            // return new HouseholdMemberResourceCollection($members);
-            return HouseholdMemberResource::collection($members);
+            // $h = Household::findOrFail($household_id);
+
+            // $members = $h->members()->with('familyRelationshipType','workPlace','movements')->orderBy('family_relationship_type_id')->get();
+            
+            $members = HouseholdMember::query()
+                            ->from('household_members as hm')
+                            ->select(
+                                'hm.id',
+                                'hm.household_id',
+                                'hm.surname',
+                                'hm.name',
+                                'hm.patronymic',                                
+                                'hm.sex',
+                                'hm.birthdate',
+                                'hm.family_relationship_type_id',                                
+                                'frt.name as family_relationship_type',
+                                'hm.employment_information',
+                                'hm.social_information',
+                                'hm.additional_information',
+                                'hm.work_place_id',
+                                'wp.name as work_place',
+                                'hm.death_date'
+                            )
+                            ->addSelect(DB::raw(
+                                    "CASE 
+		    	                        WHEN movements.code = 'leave' THEN 'gone'
+	    		                        WHEN movements.code IS NULL OR movements.code = 'register' THEN 'active'
+    		                        END AS status"
+                                )
+                            )
+                            ->join('family_relationship_types as frt', 'hm.family_relationship_type_id', '=', 'frt.id')
+                            ->leftJoin('work_places as wp', 'hm.work_place_id', '=', 'wp.id')
+                            ->leftJoin(
+                                DB::raw("
+                                    (
+                                        SELECT 	mt.code, hmm.member_id 
+			                            FROM 	household_member_movements hmm
+			                            JOIN	movement_types mt ON hmm.movement_type_id = mt.id
+			                            ORDER	BY hmm.date DESC 
+			                            LIMIT 	1 
+                                    ) movements"
+                                ),
+                                'movements.member_id', '=', 'hm.id'
+                            )
+                            ->where('hm.household_id', $household_id)
+                            ->get();
+            // dd($members);
+
+            return new HouseholdMemberResourceCollection($members);
 
         } else if (request()->query('where')) {            
             $conditions = explode(';', request()->query('where'));

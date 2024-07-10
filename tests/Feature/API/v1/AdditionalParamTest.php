@@ -110,4 +110,22 @@ class AdditionalParamTest extends TestCase
             'value_type_id does not exist'          =>  ['value_type_id',   99],
         ];
     }
+
+    public function test_api_should_return_additional_params_by_category_code()
+    {
+        $category = AdditionalParamCategory::factory()->create(['code' => 'category1']);        
+
+        AdditionalParam::factory()
+                            ->count(3)
+                            ->create([
+                                'category_id'   =>  $category->id,
+                            ])
+                            ->each(function($p) {
+                                AdditionalParamValue::factory()->create(['param_id' => $p->id, 'owner_id' => 2 ]);
+                            });
+        
+        $response = $this->get($this->url . "?category_code=$category->code&owner_id=2")->getData();        
+        $this->assertCount(3, $response->data);
+                            
+    }
 }

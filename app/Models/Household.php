@@ -31,6 +31,8 @@ class Household extends Model
         'address'
     ];
 
+    protected $appends = array('short_address', 'full_address');
+
     protected static function boot()
     {
         parent::boot();
@@ -101,11 +103,19 @@ class Household extends Model
      * @return string
      */
     public function household_head(): string
-    {        
-        $head = $this->members->first(function($m) {
-            return $m->familyRelationshipType->name == 'голова домогосподарства';
-        });
+    {   
+        $head = DB::table('household_members as hm')     
+                    ->join('family_relationship_types as frt', 'hm.family_relationship_type_id', '=', 'frt.id')
+                    ->select(
+                        'hm.surname',
+                        'hm.name',
+                        'hm.patronymic'
+                    )
+                    ->where('frt.name', '=', 'голова домогосподарства')
+                    ->where('hm.household_id', $this->id)
+                    ->first();
         
+     
         if ($head) {
             return $head->surname . ' ' . $head->name . ' ' . $head->patronymic;
         }
@@ -118,7 +128,7 @@ class Household extends Model
      *
      * @return string
      */
-    public function getShortAddress(): string
+    public function getShortAddress() : string
     {
         $parts = explode(',', $this->address);
         $address = "$parts[0] $parts[1], буд. $parts[2]";
@@ -129,7 +139,7 @@ class Household extends Model
         // квартира
         $address = $address . ($parts[4] !== '' ? ", кв. $parts[4]" : "");
 
-        return $address;
+        return $address;   
     }
 
     /**
@@ -140,18 +150,15 @@ class Household extends Model
      */
     public function getFullAddress(): string
     {
-        $settlement = $this->settlement->name;
-        $settlement_type = mb_strtolower($this->settlement->type->name);
-        $district = $this->settlement->council->community->district;
-        $region = $district->region->name;
-
-        $district = explode(' ', $district->name);
+     
+        $settlement_type = mb_strtolower($this->settlement_type);             
+        $district = explode(' ', $this->district);
         $district = Toponym::inGenetive(['name' => $district[0], 'type' => $district[1]]);
-
-        $region = explode(' ', $region);
+        
+        $region = explode(' ', $this->region);
         $region = Toponym::inGenetive(['name' => $region[0], 'type' => $region[1]]);
 
-        return $this->getShortAddress() . ", $settlement_type $settlement, $district, $region";
+        return $this->getShortAddress() . ", $settlement_type $this->settlement, $district, $region";
     }
 
     public function houseInfo()
@@ -179,16 +186,8 @@ class Household extends Model
      * @return \Illuminate\Support\Collection
      */
     public function familyInfo(): \Illuminate\Support\Collection
-    {
-        $params = $this->additionalParams('family_')
-                        // ->get()
-                        // dd($params);
-                        ->map(function($p) {
-                            return $p->code;
-                        })
-                        ->toArray();
-
-        return $this->additionalParamValue($params);
+    {       
+        return $this->additionalParamValue('family_');      
     }
 
     /**
@@ -208,7 +207,7 @@ class Household extends Model
                 . '-'
                 . $this->household_type_id;
     }
-
+   
     /**
      * Get household grouped by type and settlement
      *
@@ -217,24 +216,7 @@ class Household extends Model
      * @return array
      */
     public static function groupByType(int|string $settlement_id = null, bool $group_by_settlement = true): array
-    {
-        /*
-        SELECT	settlement,
-		        sum(case when type_id = 1 then 1 else 0 end) as 'домогосподарство з реєстрацією місця проживання на території населеного пункту',
-		        sum(case when type_id = 2 then 1 else 0 end) as 'домогосподарство з реґстрацією місця перебування на території населеного пункту',
-		        sum(case when type_id = 3 then 1 else 0 end) as 'домоволодіння',
-		        sum(case when type_id = 4 then 1 else 0 end) as 'землеволодіння',
-		        sum(case when type_id = 5 then 1 else 0 end) as `закинутий об'єкт`
-        FROM (
-                SELECT 	s.name as settlement,
-		                ht.id as type_id,		                
-                FROM 	households h 
-                INNER	JOIN household_types ht ON h.household_type_id  = ht.id
-                INNER	JOIN settlements s  ON h.settlement_id = s.id 
-                GROUP 	BY s.name, ht.id
-                ORDER 	BY s.id, ht.id 
-        )
-        */
+    {      
 
         if (!is_null($settlement_id)) {
             $group_by_settlement = true;
@@ -288,26 +270,29 @@ class Household extends Model
     }
         
     //********************************** Attributes *********************************************************
+    /*
     public function getSettlementNameAttribute()
     {
         return $this->settlement->name;
     }
+    */
 
     public function getHouseholdNumberAttribute()
     {
-        return $this->fullNumber();
+        // return $this->fullNumber();
+        return  str_pad($this->settlement_inner_code, 2, '0', STR_PAD_LEFT)
+                . '-'
+                . str_pad($this->number, 4, '0', STR_PAD_LEFT)
+                . '-'
+                . $this->household_type_id;
     }
-
-    public function getHouseholdHeadAttribute()
-    {
-        return $this->household_head();
-    }
-
-    public function getShortAddressAttribute()
+   
+    public function getShortAddressAttribute(): string
     {
         return $this->getShortAddress();
     }
 
+   
     public function getFullAddressAttribute()
     {
         return $this->getFullAddress();

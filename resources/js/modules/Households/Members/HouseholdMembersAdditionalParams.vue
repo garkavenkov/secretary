@@ -22,9 +22,15 @@ import AdditionalParamsList from '../../AdditionalParams/AdditionalParamsList.vu
 
 export default {
     name: 'HouseholdFamilyAdditionalParams',
+    // props: {
+    //     'familyInfo' : {
+    //         type: Array,
+    //         required: true
+    //     }
+    // },
     data() {
         return {
-
+            familyInfo: []
         }
     },
     methods: {
@@ -32,9 +38,18 @@ export default {
         closeForm() {
             this.$emit('refreshData');
         },
+        fetchFamilyInfo() {
+            axios.get(`/api/v1/households/${this.household_id}/family-info`)
+            .then(res => {
+                this.familyInfo = res.data.data;                
+            })
+        }
+    },
+    created() {
+        this.fetchFamilyInfo();
     },
     computed: {
-        ...mapGetters('Households', ['household_id', 'familyInfo'])
+        ...mapGetters('Households', ['household_id'])
     },
     components: {
         ModalForm,
