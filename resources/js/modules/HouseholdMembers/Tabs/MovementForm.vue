@@ -77,8 +77,7 @@ export default {
     },
     emits:['refreshData'],
     data() {
-        return {
-            apiUrl: '/api/v1/household-member-lands'
+        return {          
         }
     },
     methods: {
@@ -87,6 +86,8 @@ export default {
                 axios.post('/api/v1/household-member-movements', this.formData)
                     .then(res => {
                         this.$toast(res.data.message);
+                        // need to refactor? should I call this API 
+                        // Is  member's movement somehow affect on member info?
                         axios.get(`/api/v1/household-members/${this.formData.member_id}`)
                             .then(res => {
                                 this.$emit('refreshData');

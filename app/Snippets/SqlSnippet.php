@@ -69,6 +69,39 @@ class SqlSnippet
         return DB::raw($sql);
     }   
     
+    public static function memberFullAgeRange(): string
+    {
+        $db_conn = config('database.default');
+
+        if ($db_conn == 'sqlite') {
+
+            $sql = "strftime('%Y', DATE('now')) - strftime('%Y', birthdate) + 			
+                    case 
+                        when(strftime('%m', DATE('now')) - strftime('%m', birthdate) ) < 0  then -1
+                        when (strftime('%m', DATE('now')) - strftime('%m', birthdate) ) = 0 then 
+                            case 
+                                when (strftime('%d', DATE('now')) - strftime('%d', birthdate) ) < 0 then -1
+                                else 0
+                            end
+                        else 0
+                    end  between ? and  ?";
+
+        } else if ($db_conn == 'mysql') {
+
+            $sql = "YEAR(CURDATE()) - YEAR (birthdate) +
+                    case 
+                        when ( MONTH(CURDATE()) - MONTH(birthdate) ) < 0 then -1
+                        when ( MONTH(CURDATE()) - MONTH(birthdate) ) = 0 then
+                            case
+                                when ( DAY(CURDATE()) - DAY(birthdate) ) < 0 then -1
+                                else 0
+                            end
+                        else 0			
+                    end	between ? and ?";
+        }
+
+        return $sql;
+    }
 
     /**
      * Return part of SQL code for checking for presence of setted additional

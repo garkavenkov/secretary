@@ -23,7 +23,7 @@ class HouseholdMemberMovementResource extends JsonResource
             'member'            =>  new HouseholdMemberResource($this->whenLoaded('member')),
             'movement_type_id'  =>  (int)   $this->movement_type_id,
             // 'movement_type'     =>  new MovementTypeResource($this->whenLoaded('type')),
-            'movement_type'     =>  $this->type->name,
+            'movement_type'     =>  $this->type_name,
             'date'              =>  $this->date,
             'date_formatted'    =>  Carbon::parse($this->date)->format('d.m.Y'),
             'comment'           =>  $this->comment

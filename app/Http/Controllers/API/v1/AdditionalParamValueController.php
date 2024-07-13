@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Models\AdditionalParam;
 use App\Http\Controllers\Controller;
 use App\Models\AdditionalParamValue;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 
 class AdditionalParamValueController extends Controller
 {
@@ -69,15 +71,17 @@ class AdditionalParamValueController extends Controller
 
     public function setAdditionalParams(Request $request)
     {
-        // dd($request->all());
         // Owner model
         if (!isset($request->owner)) {
             throw new \Exception('Відсутній тип власника додаткових параметрів');
         }
         $model = $request->owner;
+        // Check if class exists        
+        if (!class_exists($model)) {
+            throw new \Exception('Відсутній клас "' . $model . '"');
+        }
         $request->request->remove('owner');
-
-        // $permission = Permission::where('code', 'App\Models\AdditionalParamValue')->first();
+        
         // $permission = Permission::where('code', $model)->first();
         // if (!Auth::user()->hasPermission($permission->code, 8)) {
         //     $error_msg = 'У Вас відсутні права на редагування додаткових параметрів';
@@ -90,22 +94,28 @@ class AdditionalParamValueController extends Controller
         }
         $owner_id = $request->owner_id;
         $request->request->remove('owner_id');
-        // dd($owner_id);
+        
         $owner = $model::findOrFail($owner_id);
+        
+        $param_code = array_keys($request->all());
 
-        // dd($owner);
-
-        foreach($request->all() as $param => $value) {
-            $param = $owner->getAdditionalParam($param);
-
-            if ($param) {
-                if ($value) {
-                    $owner->setAdditionalParamValue($param->id, $value);
-                } else {
-                    $owner->clearAdditionalParam($param->id);
-                }
+        $params = AdditionalParam::query()
+                        ->from('additional_params as ap')
+                        ->select('ap.*')
+                        ->join('additional_param_categories as apc', 'apc.id', '=', 'ap.category_id')                        
+                        ->where('apc.code', $model)
+                        ->whereIn('ap.code', $param_code)
+                        ->get();
+                
+        foreach($params as $param) {            
+            $value = $request[$param->code];     
+            if ($value) {     
+                $owner->setAdditionalParamValue($param, $value);
+            } else {            
+                $owner->clearAdditionalParam($param);
             }
         }
+
         return response()->json(['message' => 'Додаткова параметри були успішно встановлені']);
     }
 }

@@ -17,6 +17,7 @@ export const Households = {
         },
         houseYears: [],
         landYears: [],
+        houseInfo: [],
         filter: {
             settlement_id: 0,
             household_type_id: 0,
@@ -43,6 +44,7 @@ export const Households = {
         houseYears: state => state.houseYears,
         availableHouseYears: state => state.household.houseYears.map(y => y.year),
         // houseInfo: state => state.household.houseInfo,
+        houseInfo: state => state.houseInfo,
         // landYears: state => state.household.landYears,
         landYears: state => state.landYears,
         // availableLandYears: state => state.household.landYears.map(y => y.year).sort((a, b) => b - a),

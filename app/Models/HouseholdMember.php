@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 use function PHPUnit\Framework\isNull;
 
@@ -440,6 +441,61 @@ class HouseholdMember extends Model
         return DB::select($sql);
     }    
 
+    public static function sqlBuilder(): EloquentBuilder
+    {
+        return HouseholdMember::query()        
+                    ->select(
+                        'household_members.id',
+                        'household_members.household_id',
+                        'household_members.surname',
+                        'household_members.name',
+                        'household_members.patronymic',                                
+                        'household_members.sex',
+                        'household_members.birthdate',
+                        'household_members.family_relationship_type_id',                                
+                        'frt.name as family_relationship_type',
+                        'household_members.employment_information',
+                        'household_members.social_information',
+                        'household_members.additional_information',
+                        'household_members.work_place_id',
+                        'wp.name as work_place',
+                        'household_members.death_date',
+                        'h.number',                                 // for HouseholdNumber
+                        'h.household_type_id',                      // for HouseholdNumber
+                        's.inner_code as  settlement_inner_code',   // fof HouseholdNumber
+                        'h.address',                                // for ShortAddress / FullAddress
+                        's.name as settlement',                     // for FullAddress
+                        'st.name as settlement_type',               // for FullAddress
+                        'd.name as district',                       // for FullAddress
+                        'r.name as region'                          // for FullAddress        
+                    )
+                    ->addSelect(DB::raw(
+                            "CASE 
+                                WHEN movements.code = 'leave' THEN 'gone'
+                                WHEN movements.code IS NULL OR movements.code = 'register' THEN 'active'
+                            END AS status"        
+                        )
+                    )
+                    ->join('family_relationship_types as frt', 'household_members.family_relationship_type_id', '=', 'frt.id')
+                    ->join('households as h', 'household_members.household_id', '=', 'h.id')
+                    ->join('settlements as s', 'h.settlement_id', '=', 's.id')
+                    ->join('settlement_types as st', 'st.id', '=', 's.settlement_type_id')
+                    ->join('councils as c', 'c.id', '=', 's.council_id')
+                    ->join('communities as com', 'com.id', '=', 'c.community_id')
+                    ->join('districts as d', 'd.id', '=', 'com.district_id')
+                    ->join('regions as r', 'r.id', '=', 'd.region_id')
+                    ->leftJoin('work_places as wp', 'household_members.work_place_id', '=', 'wp.id')
+                    ->leftJoin(DB::raw("
+                            (
+                                SELECT 	mt.code, hmm.member_id 
+                                FROM 	household_member_movements hmm
+                                JOIN	movement_types mt ON hmm.movement_type_id = mt.id
+                                ORDER	BY hmm.date DESC 
+                                LIMIT 	1 
+                            ) movements"
+                        ), 'movements.member_id', '=', 'household_members.id'
+                    );
+    }
 
     // *********************************************** Scopes ************************************************
 

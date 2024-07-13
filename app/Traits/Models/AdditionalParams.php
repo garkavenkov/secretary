@@ -2,10 +2,12 @@
 
 namespace App\Traits\Models;
 
+use App\Models\AdditionalParam;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use App\Models\AdditionalParamValue;
 use App\Models\AdditionalParamCategory;
+use App\Models\AdditionalParamCondition;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Collection as SupportCollection;
 
@@ -20,39 +22,65 @@ trait AdditionalParams
      * @return Collection
      */
     public function additionalParams(mixed $filtered_params = null): Collection
-    {
-        $category = AdditionalParamCategory::with('params.conditions')
-                            ->where('code', get_class($this))
-                            ->first();
-        // dd($category);
-        if (!$category) {
-            return  null;
-        }
+    {       
+        $params = AdditionalParam::query()
+                        ->select('additional_params.*')
+                        ->addSelect(DB::raw("
+                                (
+                                    select  count(*) 
+                                    from    additional_param_conditions as cond 
+                                    where   cond.param_id = additional_params.id
+                                ) as conditions_count" )
+                        )
+                        ->join('additional_param_categories as apc', 'apc.id', '=', 'additional_params.category_id')                        
+                        ->where('apc.code', get_class($this))                       
+                        ->get();
+        
         
         if (!is_null($filtered_params)) {
 
             if (!is_array($filtered_params)) {
                 $filtered_params = explode(',',$filtered_params);
             }
-            $params = $category->params->filter(function($param) use($filtered_params) {
+
+            $params = $params->filter(function($param) use($filtered_params) {
                 return Str::contains($param->code, $filtered_params);
             });
-
-        } else {
-            $params = $category->params;
         }
+        
         
         // Filter params that did not pass condition validation
         $result = $params->filter(function($param) {
-            if ($param->conditions()->count() == 0) {
+            // if ($param->conditions()->count() == 0) {
+            if($param->conditions_count == 0) {
                 return $param;
             } else {
-                foreach($param->conditions as $condition) {
-                    //  Get parameter's value
-                    $attr = $this[$condition['attribute']['code']];
+                // dd($param->conditions);
+                $conditions = AdditionalParamCondition::query()
+                                    ->from('additional_param_conditions as apc')
+                                    ->select(
+                                        'apc.id',
+                                        'apc.condition',
+                                        'apc.value',
+                                        'ma.model',
+                                        'ma.code',
+                                        'ma.name',
+                                        'ma.available_values' 
+                                    )
+                                    ->join('model_attributes as ma', 'apc.attribute_id','=', 'ma.id')
+                                    ->where('apc.param_id', $param->id)
+                                    ->get();
+                // dd($conditions);
+                // foreach($param->conditions as $condition) {
+                foreach($conditions as $condition) {
+                    // Get parameter's value                    
+                    // $condition['code'] holds attribute in $this, 
+                    // e.g $this['code'] contains model's field (property) value
+                    $attr = $this[$condition['code']];
+                    
                     //  Get condition's value
                     $value = $condition->value;
-
+                    
                     // Match values
                     $res[] = match ($condition->condition) {
                         '<'  => ($attr <  $value),
@@ -121,19 +149,7 @@ trait AdditionalParams
                     $join->on('apv.param_id', '=', 'ap.id')
                         ->where('apv.owner_id', $this->id);
                 })                
-                ->whereIn('ap.id', array_values($param_ids));
-
-        //  This part is already checked in additionalParams()
-        //  Need to remove 
-        /*
-         if (isset($params)) {
-            if (is_array($params)) {
-                $q = $q->whereIn('ap.code', $params);
-            } else {
-                $q = $q->where('ap.code', 'like', $params);
-            }
-        }
-        */        
+                ->whereIn('ap.id', array_values($param_ids));      
         
         return $q->orderBy('ap.code')->get();
     }
@@ -152,18 +168,18 @@ trait AdditionalParams
     /**
      * Set value for additional parameter
      *
-     * @param integer $param_id     Additional parameter's id
-     * @param mixed $value          Additional parameter's value
+     * @param AdditionalParam   Additional parameter
+     * @param mixed $value      Additional parameter's value
      * @return AdditionalParamValue
      */
-    public function setAdditionalParamValue(int $param_id, mixed $value): AdditionalParamValue
-    {
-        $apv =  AdditionalParamValue::where('param_id', $param_id)->where('owner_id', $this->id)->first();
+    public function setAdditionalParamValue(AdditionalParam $param, mixed $value): AdditionalParamValue
+    {        
+        $apv =  AdditionalParamValue::where('param_id', $param->id)->where('owner_id', $this->id)->first();
 
         if (!$apv) {
             return AdditionalParamValue::create([
                 'owner_id' => $this->id,
-                'param_id' => $param_id,
+                'param_id' => $param->id,
                 'value' => $value
             ]);
         } else {
@@ -178,12 +194,12 @@ trait AdditionalParams
     /**
      * Remove additional parameter's value
      *
-     * @param integer $id   Additional parameter value's ID
+     * @param AdditionalParam   Additional parameter     
      * @return boolean|null
      */
-    public function clearAdditionalParam(int $id): ?bool
+    public function clearAdditionalParam(AdditionalParam $param): ?bool
     {
-        $apv =  AdditionalParamValue::where('param_id', $id)->where('owner_id', $this->id)->first();
+        $apv =  AdditionalParamValue::where('param_id', $param->id)->where('owner_id', $this->id)->first();
         if ($apv) {
             return ($apv->delete());
         } else {

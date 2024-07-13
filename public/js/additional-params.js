@@ -185,12 +185,14 @@ __webpack_require__.r(__webpack_exports__);
       this.resetForm();
       this.attributeValues = [];
       this.attributeConditions = [];
-      this.insertMode = false;
-      this.editMode = false;
+      this.action = '';
+      // this.insertMode = false;
+      // this.editMode = false;
     },
     cancelInsertMode: function cancelInsertMode() {
-      this.insertMode = false;
-      this.editMode = false;
+      // this.insertMode = false;
+      // this.editMode = false;
+      this.action = '';
       this.resetForm();
     },
     saveCondition: function saveCondition() {
@@ -198,7 +200,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = {};
       Object.assign(data, this.formData);
       data.param_id = this.param.id;
-      if (this.insertMode) {
+      if (this.action == 'create') {
         axios.post('/api/v1/additional-param-conditions', data).then(function (res) {
           if (res.status == 201) {
             _this.$emit('refresh', _this.param.id);
@@ -209,7 +211,7 @@ __webpack_require__.r(__webpack_exports__);
           var _err$response;
           _this.errors = (_err$response = err.response) === null || _err$response === void 0 ? void 0 : _err$response.data.errors;
         });
-      } else if (this.editMode) {
+      } else if (this.action == 'update') {
         axios.patch("/api/v1/additional-param-conditions/".concat(this.formData.id), data).then(function (res) {
           if (res.status == 200) {
             _this.$emit('refresh', _this.param.id);
@@ -231,7 +233,7 @@ __webpack_require__.r(__webpack_exports__);
       this.formData.attribute_id = cond.attribute_id;
       this.formData.condition = cond.condition;
       this.formData.value = cond.value;
-      this.editMode = true;
+      this.action = 'update';
     },
     deleteCondition: function deleteCondition(condition) {
       var _this2 = this;
@@ -254,10 +256,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     saveConditionTitle: function saveConditionTitle() {
-      if (this.insertMode) {
+      if (this.action == 'create') {
         return 'Додати умову';
       }
-      if (this.editMode) {
+      if (this.action == 'update') {
         return 'Змінити умову';
       }
     }
@@ -848,7 +850,7 @@ var _hoisted_2 = {
   "class": "col"
 };
 var _hoisted_3 = {
-  "class": "d-flex justify-content-between align-items-center"
+  "class": "d-flex justify-content-between align-items-center lh-34"
 };
 var _hoisted_4 = {
   "class": "fw-semibold"
@@ -958,18 +960,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     showFooter: false
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Парметр: "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.param.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonAdd, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Парметр: "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.param.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.action == '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ButtonAdd, {
+        key: 0,
         onClick: _cache[0] || (_cache[0] = function ($event) {
-          return $data.insertMode = true;
+          return $data.action = 'create';
         }),
         title: "Додати умову",
-        buttonClass: ['btn-primary px-2 py-1', $data.insertMode || $data.editMode ? 'disabled' : '']
+        buttonClass: ['btn-primary px-2 py-1', $data.action != '' ? 'disabled' : '']
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Додати ")];
         }),
         _: 1 /* STABLE */
-      }, 8 /* PROPS */, ["buttonClass"])])])])]), $data.insertMode || $data.editMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }, 8 /* PROPS */, ["buttonClass"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), $data.action != '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('attribute_id') ? 'is-invalid' : '']),
         id: "conditionAttributeId",
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -1032,13 +1035,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           onClick: function onClick($event) {
             return $options.editCondition(condition);
           },
-          disabled: $data.insertMode || $data.editMode,
+          disabled: $data.action != '',
           title: "Редагувати умову",
           buttonClass: "btn-outline-warning btn-transparent p-2"
         }, null, 8 /* PROPS */, ["onClick", "disabled"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonDelete, {
           buttonClass: "btn-outline-danger btn-transparent p-2",
           title: "Видалити умову",
-          disabled: $data.insertMode || $data.editMode,
+          disabled: $data.action != '',
           onClick: function onClick($event) {
             return $options.deleteCondition(condition);
           }

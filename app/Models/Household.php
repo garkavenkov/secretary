@@ -128,9 +128,22 @@ class Household extends Model
      *
      * @return string
      */
-    public function getShortAddress() : string
+    // public function getShortAddress() : string
+    // {
+    //     $parts = explode(',', $this->address);
+    //     $address = "$parts[0] $parts[1], буд. $parts[2]";
+
+    //     // корпус
+    //     $address = $address . ($parts[3] !== '' ? ", корп. $parts[3]" : "");
+
+    //     // квартира
+    //     $address = $address . ($parts[4] !== '' ? ", кв. $parts[4]" : "");
+
+    //     return $address;   
+    // }
+    public static function getShortAddress(string $address) : string 
     {
-        $parts = explode(',', $this->address);
+        $parts = explode(',', $address);
         $address = "$parts[0] $parts[1], буд. $parts[2]";
 
         // корпус
@@ -142,23 +155,34 @@ class Household extends Model
         return $address;   
     }
 
+   
+    // public function getFullAddress(): string
+    // {
+     
+    //     $settlement_type = mb_strtolower($this->settlement_type);             
+    //     $district = explode(' ', $this->district);
+    //     $district = Toponym::inGenetive(['name' => $district[0], 'type' => $district[1]]);
+        
+    //     $region = explode(' ', $this->region);
+    //     $region = Toponym::inGenetive(['name' => $region[0], 'type' => $region[1]]);
+
+    //     return $this->getShortAddress() . ", $settlement_type $this->settlement, $district, $region";
+    // }
     /**
      * Get full address. 
      * Which extends showrt address adding district and region name
      *
      * @return string
      */
-    public function getFullAddress(): string
-    {
-     
-        $settlement_type = mb_strtolower($this->settlement_type);             
-        $district = explode(' ', $this->district);
+    public static function getFullAddress(string $address, string $settlement, string $settlement_type, string $district, string $region): string
+    {        
+        $district = explode(' ', $district);
         $district = Toponym::inGenetive(['name' => $district[0], 'type' => $district[1]]);
-        
-        $region = explode(' ', $this->region);
+            
+        $region = explode(' ', $region);
         $region = Toponym::inGenetive(['name' => $region[0], 'type' => $region[1]]);
-
-        return $this->getShortAddress() . ", $settlement_type $this->settlement, $district, $region";
+    
+        return Household::getShortAddress($address) . ", $settlement_type $settlement, $district, $region";
     }
 
     public function houseInfo()
@@ -207,7 +231,16 @@ class Household extends Model
                 . '-'
                 . $this->household_type_id;
     }
-   
+
+    public static function getHouseholdNumber($inner_code, $number, $household_type_id): string
+    {
+        return  str_pad($inner_code, 2, '0', STR_PAD_LEFT)
+                . '-'
+                . str_pad($number, 4, '0', STR_PAD_LEFT)
+                . '-'
+                . $household_type_id;
+    }
+
     /**
      * Get household grouped by type and settlement
      *
@@ -289,13 +322,15 @@ class Household extends Model
    
     public function getShortAddressAttribute(): string
     {
-        return $this->getShortAddress();
+        // return $this->getShortAddress();
+        return Household::getShortAddress($this->address);
     }
 
    
     public function getFullAddressAttribute()
     {
-        return $this->getFullAddress();
+        // return $this->getFullAddress();
+        return Household::getFullAddress($this->address, $this->settlement, $this->settlement_type, $this->district, $this->region);
     }
 
     // *********************************************** Scopes ************************************************

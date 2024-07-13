@@ -11821,6 +11821,10 @@ input:-webkit-autofill:active{
   line-height: 24px;
 }
 
+.lh-34 {
+  line-height: 34px;
+}
+
 .sidebar-menu {
   position: fixed;
   display: flex;

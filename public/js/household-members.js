@@ -1737,9 +1737,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   emits: ['refreshData'],
   data: function data() {
-    return {
-      apiUrl: '/api/v1/household-member-lands'
-    };
+    return {};
   },
   methods: {
     submitData: function submitData() {
@@ -1747,6 +1745,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.action == 'create') {
         axios.post('/api/v1/household-member-movements', this.formData).then(function (res) {
           _this.$toast(res.data.message);
+          // need to refactor? should I call this API 
+          // Is  member's movement somehow affect on member info?
           axios.get("/api/v1/household-members/".concat(_this.formData.member_id)).then(function (res) {
             _this.$emit('refreshData');
             _this.clearForm();

@@ -3,22 +3,23 @@
     <ModalForm formId="AdditionalParamConditions" @submitData="() => {}" @closeForm="closeForm" modalClass="modal-lg" :showFooter="false">
         <div class="row mb-3">
             <div class="col">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center lh-34">
                     <div>
                         Парметр: <span class="fw-semibold">{{ param.name }}</span>
                     </div>
                     <div>
                         <ButtonAdd
-                                @click="insertMode = true"
+                                v-if="action == ''"
+                                @click="action = 'create'"
                                 title="Додати умову"
-                                :buttonClass="['btn-primary px-2 py-1', (insertMode || editMode) ? 'disabled' : '']">
+                                :buttonClass="['btn-primary px-2 py-1', (action != '') ? 'disabled' : '']">
                             Додати
                         </ButtonAdd>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mb-3 mx-0 py-2 border rounded" v-if="insertMode || editMode">
+        <div class="row mb-3 mx-0 py-2 border rounded" v-if="action != ''">
             <div class="col">                
                 <select :class="['form-control', hasError('attribute_id') ? 'is-invalid' : '']"
                         id="conditionAttributeId"
@@ -104,14 +105,14 @@
                             <td class="actions">                                    
                                 <ButtonEdit 
                                         @click="editCondition(condition)"
-                                        :disabled="insertMode || editMode"
+                                        :disabled="action != ''"
                                         title="Редагувати умову"
                                         buttonClass="btn-outline-warning btn-transparent p-2" />
         
                                 <ButtonDelete
                                         buttonClass="btn-outline-danger btn-transparent p-2"
                                         title="Видалити умову"
-                                        :disabled="insertMode || editMode"
+                                        :disabled="action != ''"
                                         @click="deleteCondition(condition)" />
                             </td>                                
                         </tr>                    
@@ -182,12 +183,14 @@ export default {
             this.attributeValues = [];
             this.attributeConditions = [];
 
-            this.insertMode = false;
-            this.editMode = false;
+            this.action = '';
+            // this.insertMode = false;
+            // this.editMode = false;
         },
         cancelInsertMode() {
-            this.insertMode = false;
-            this.editMode = false;
+            // this.insertMode = false;
+            // this.editMode = false;
+            this.action = '';
             this.resetForm();
         },
         saveCondition() {
@@ -195,7 +198,7 @@ export default {
             Object.assign(data, this.formData);
             data.param_id = this.param.id;
             
-            if (this.insertMode) {
+            if (this.action == 'create') {
                 axios.post('/api/v1/additional-param-conditions', data)
                     .then(res => {
                         if(res.status == 201) {
@@ -207,7 +210,7 @@ export default {
                     .catch(err => {
                         this.errors = err.response?.data.errors;
                     })
-            } else if (this.editMode) {
+            } else if (this.action == 'update') {
                 axios.patch(`/api/v1/additional-param-conditions/${this.formData.id}`, data)
                     .then(res => {
                         if (res.status == 200) {
@@ -232,7 +235,7 @@ export default {
             this.formData.condition = cond.condition;
             this.formData.value = cond.value;
             
-            this.editMode = true;            
+            this.action = 'update';            
         },
         deleteCondition(condition) {
             let msg = 'Видалення параметру може призвести до неочікуваних результатів в звітах.'
@@ -256,10 +259,10 @@ export default {
     },
     computed: {
         saveConditionTitle() {
-            if (this.insertMode) {
+            if (this.action == 'create') {
                 return 'Додати умову';
             }
-            if (this.editMode) {
+            if (this.action == 'update') {
                 return 'Змінити умову';
             }            
         }

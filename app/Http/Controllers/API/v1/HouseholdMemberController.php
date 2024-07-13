@@ -24,6 +24,8 @@ use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberRelativesResource;
 use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMember\HouseholdMemberResourceCollection;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
+use App\Models\HouseholdMemberMovement;
+use App\Snippets\SqlSnippet;
 
 class HouseholdMemberController extends Controller
 {
@@ -41,135 +43,64 @@ class HouseholdMemberController extends Controller
         } else {
             $per_page = 10;
         }
+      
+        $members = HouseholdMember::sqlBuilder();
 
         if (request()->query('household_id')) {
 
-            $household_id = request()->query('household_id');
-            // $h = Household::findOrFail($household_id);
-
-            // $members = $h->members()->with('familyRelationshipType','workPlace','movements')->orderBy('family_relationship_type_id')->get();
+            $household_id = request()->query('household_id');            
             
-            $members = HouseholdMember::query()
-                            ->from('household_members as hm')
-                            ->select(
-                                'hm.id',
-                                'hm.household_id',
-                                'hm.surname',
-                                'hm.name',
-                                'hm.patronymic',                                
-                                'hm.sex',
-                                'hm.birthdate',
-                                'hm.family_relationship_type_id',                                
-                                'frt.name as family_relationship_type',
-                                'hm.employment_information',
-                                'hm.social_information',
-                                'hm.additional_information',
-                                'hm.work_place_id',
-                                'wp.name as work_place',
-                                'hm.death_date'
-                            )
-                            ->addSelect(DB::raw(
-                                    "CASE 
-		    	                        WHEN movements.code = 'leave' THEN 'gone'
-	    		                        WHEN movements.code IS NULL OR movements.code = 'register' THEN 'active'
-    		                        END AS status"
-                                )
-                            )
-                            ->join('family_relationship_types as frt', 'hm.family_relationship_type_id', '=', 'frt.id')
-                            ->leftJoin('work_places as wp', 'hm.work_place_id', '=', 'wp.id')
-                            ->leftJoin(
-                                DB::raw("
-                                    (
-                                        SELECT 	mt.code, hmm.member_id 
-			                            FROM 	household_member_movements hmm
-			                            JOIN	movement_types mt ON hmm.movement_type_id = mt.id
-			                            ORDER	BY hmm.date DESC 
-			                            LIMIT 	1 
-                                    ) movements"
-                                ),
-                                'movements.member_id', '=', 'hm.id'
-                            )
-                            ->where('hm.household_id', $household_id)
-                            ->get();
-            // dd($members);
+            $members = $members
+                            ->where('household_members.household_id', $household_id)
+                            ->get();            
 
             return new HouseholdMemberResourceCollection($members);
 
-        } else if (request()->query('where')) {            
+        } 
+        if (request()->query('where')) {            
             $conditions = explode(';', request()->query('where'));
-            // dd($conditions);
-            $members = HouseholdMember::with('household')->alive();//->first();
-            // dd($members->fullAge);
+          
             foreach($conditions as $condition) {                
                 
                 $parts = explode('=', $condition);
 
                 if (count($parts) == 2) {
+
                     if ($parts[0] == 'settlement_id') {
+                        
                         if (HouseholdMember::isFieldFilterable($parts[0])) {                            
-                            $members = $members->whereHas('household', function($q) use($parts){
-                                return $q->where($parts[0], $parts[1]);
-                            });
+                      
+                            $members = $members->where('h.settlement_id', '=', $parts[1]);
                         }
+
                     } else if ($parts[0] == 'additional_params') {
-                        $params = explode(',', $parts[1]);                        
-                        $members = $members->whereHas('additionalParamsFilled.param', function($q) use($params) {
-                            return $q->whereIn('code', $params);
-                        });
+                       
+                        $members->whereRaw(
+                            SqlSnippet::filled_additional_params(
+                                model:'App\\Models\\HouseholdMember', 
+                                owner: 'household_members.id',
+                                value_type: 'boolean', 
+                                parameters: $parts[1]
+                            )
+                        );
                     
-                    }  else if ($parts[0] == 'age') {                      
-                        $ageRange =  array_map('intval', explode(',', $parts[1], 2));
+                    }  else if ($parts[0] == 'age') {                            
                         
-                        $db_conn = config('database.default');
-                        if ($db_conn == 'sqlite') {
-
-                            $sql = "strftime('%Y', DATE('now')) - strftime('%Y', birthdate) + 			
-                                    case 
-                                        when(strftime('%m', DATE('now')) - strftime('%m', birthdate) ) < 0  then -1
-                                        when (strftime('%m', DATE('now')) - strftime('%m', birthdate) ) = 0 then 
-                                            case 
-                                                when (strftime('%d', DATE('now')) - strftime('%d', birthdate) ) < 0 then -1
-                                                else 0
-                                            end
-                                        else 0
-                                    end  between ? and  ?";
-
-                        } else if ($db_conn == 'mysql') {
-
-                            $sql = "YEAR(CURDATE()) - YEAR (birthdate) +
-                                    case 
-                                        when ( MONTH(CURDATE()) - MONTH(birthdate) ) < 0 then -1
-                                        when ( MONTH(CURDATE()) - MONTH(birthdate) ) = 0 then
-                                            case
-                                                when ( DAY(CURDATE()) - DAY(birthdate) ) < 0 then -1
-                                                else 0
-                                            end
-                                        else 0			
-                                    end	between ? and ?";
-                        }
-
-                        $members = $members->whereRaw($sql, $ageRange);
-                        // $members = $members->where(function($q) use($ageRange, $sql) {
-                        //     $q->whereNull('death_date')
-                        //         ->whereRaw($sql, $ageRange);                            
-                        // }); 
-                        
-                        // dd($members->paginate(10));
+                        $ageRange =  array_map('intval', explode(',', $parts[1], 2));                        
+                       
+                        $members = $members->whereRaw(SqlSnippet::memberFullAgeRange(), $ageRange);                      
 
                     }  else {
+
                         $members = $members->where($parts[0], $parts[1]);
+
                     }
                 }
             }
 
-            $members = $members->paginate($per_page);
-            
+        } 
 
-        } else {
-
-            $members = HouseholdMember::with('household')->alive()->paginate($per_page);
-
-        }
+        $members = $members->paginate($per_page);
 
         return new HouseholdMemberResourceCollection($members->withQueryString());
     }
@@ -197,8 +128,10 @@ class HouseholdMemberController extends Controller
      */
     public function show($id)
     {
-        $member = HouseholdMember::with('household', 'workPlace', 'movements.type', 'landYears')->findOrFail($id);
-
+        // $member = HouseholdMember::with('household', 'workPlace', 'movements.type', 'landYears')->findOrFail($id);
+        
+        $member = HouseholdMember::sqlBuilder()->findOrFail($id);
+        
         return new HouseholdMemberResource($member);
     }
 
@@ -237,6 +170,7 @@ class HouseholdMemberController extends Controller
         }
     }
 
+    /*    
     public function setAdditionalParams(Request $request)
     {
         $permission = Permission::where('code', 'App\Models\HouseholdMember')->first();
@@ -265,6 +199,7 @@ class HouseholdMemberController extends Controller
         }
         return response()->json(['message' => 'Додаткова параметри були успішно додані']);
     }
+    */
 
     public function landYears(Request $request, $id)
     {
@@ -292,9 +227,24 @@ class HouseholdMemberController extends Controller
 
     public function memberMovements($id)
     {
-        $member = HouseholdMember::findOrFail($id);
+        // $member = HouseholdMember::findOrFail($id);
 
-        return HouseholdMemberMovementResource::collection($member->movements);
+        $movements = HouseholdMemberMovement::query()
+                            ->from('household_member_movements as hmm')
+                            ->select(
+                                'hmm.id',
+                                'hmm.member_id',
+                                'hmm.movement_type_id',
+                                'hmm.date',
+                                'hmm.comment',
+                                'mt.name as type_name'
+                            )
+                            ->join('movement_types as mt', 'mt.id', '=', 'hmm.movement_type_id')
+                            ->where('hmm.member_id', $id)
+                            ->get();
+
+        // return HouseholdMemberMovementResource::collection($member->movements);
+        return HouseholdMemberMovementResource::collection($movements);
     }
 
     public function memberRelatives($id)
@@ -396,3 +346,4 @@ class HouseholdMemberController extends Controller
         return $result;
     }
 }
+
