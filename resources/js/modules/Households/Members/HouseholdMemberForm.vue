@@ -80,6 +80,7 @@
             <div class="col">
                 <label for="workPlace" class="form-label">Місце роботи залежно від територіального розташування</label>
                 <select class="form-select" 
+                        :class="{'is-invalid': hasError('work_place_id')}"
                         id="workPlace"                         
                         v-model="formData.work_place_id">
                     <option disabled value="0">Оберить місце роботи</option>
@@ -87,15 +88,53 @@
                         {{place.name}}
                     </option>
                 </select>
+                <div id="workPlaceValidation" class="invalid-feedback">
+                    {{ getError('work_place_id') }}
+                </div>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col">
                 <label for="memberEmployment" class="form-label">Відомості про зайнятість / незайнятість</label>
-                <textarea class="form-control" id="memberEmployment" rows="2" v-model="formData.employment_information"></textarea>
+                <textarea   class="form-control"
+                            :class="{'is-invalid' : hasError('employment_information')}"
+                            id="memberEmployment" 
+                            rows="2" 
+                            v-model="formData.employment_information">
+                </textarea>
+                <div id="memberEmploymentValidation" class="invalid-feedback">
+                    {{ getError('employment_information') }}
+                </div>
             </div>
         </div>
-
+        <div class="row mb-3">
+            <div class="col">
+                <label for="memberSocialInformation" class="form-label">Відомості про пенсію, інвалідність, отримання соціальної допомоги</label>
+                <textarea   class="form-control"
+                            :class="{'is-invalid' : hasError('social_information')}"
+                            id="memberSocialInformation" 
+                            rows="2" 
+                            v-model="formData.social_information">
+                </textarea>
+                <div id="memberSocialInformationValidation" class="invalid-feedback">
+                    {{ getError('social_information') }}
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="memberAdditionalInformation" class="form-label">Додаткова інформація</label>
+                <textarea   class="form-control"
+                            :class="{'is-invalid': hasError('additional_information')}" 
+                            id="memberAdditionalInformation" 
+                            rows="2" 
+                            v-model="formData.additional_information">
+                </textarea>
+                <div id="memberAdditionalInformationValidation" class="invalid-feedback">
+                    {{ getError('additional_information') }}
+                </div>
+            </div>
+        </div>
     </ModalForm>
 
 </template>
@@ -143,6 +182,8 @@ export default {
                 this.formData.family_relationship_type_id = 0;
                 this.formData.employment_information = '';
                 this.formData.work_place_id = 0;
+                this.formData.social_information = '';
+                this.formData.additional_information = '';
 
                 this.errors = [];
         },

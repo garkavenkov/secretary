@@ -176,6 +176,8 @@ class Household extends Model
      */
     public static function getFullAddress(string $address, string $settlement, string $settlement_type, string $district, string $region): string
     {        
+        $settlement_type = mb_strtolower($settlement_type);
+        
         $district = explode(' ', $district);
         $district = Toponym::inGenetive(['name' => $district[0], 'type' => $district[1]]);
             

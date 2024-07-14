@@ -196,11 +196,11 @@
                     @refreshData="fetchYears" />
 
     <HouseInfoForm  :formData="infoData"
-                    @refreshData="$store.dispatch('Households/fetchRecord', owner_id)" />
+                    @refreshHouseInfo="fetchHouseInfo" />
 
     <HouseAdditionalDataForm
                     :formData="additionalData"
-                    @refreshData="$store.dispatch('Households/fetchRecord', owner_id)" />
+                    @refreshHouseInfo="fetchHouseInfo" />
 
 </template>
 
@@ -218,6 +218,7 @@ import YearsPaginator           from '../../../components/ui/YearsPaginator.vue'
 import DropDownMenu             from '../../../components/ui/DropDownMenu.vue';
 
 import YearsCUD                 from '../../../mixins/YearsCUD';
+import axios from 'axios';
 
 export default {
     name: 'HouseholdHouseYears',
@@ -243,15 +244,18 @@ export default {
                 electric_stove: false,
             },
             infoData: {
-                household_id: null,
+                owner: 'App\\Models\\Household',
+                owner_id: null,
                 house_year_of_construction: '',
                 house_material_walls: '',
                 house_material_roof: ''
             },
             additionalData: {
-                household_id: null,
+                owner: 'App\\Models\\Household',
+                owner_id: null,
                 house_additional_data: '',
             },
+            info: [],
             modalSubmitCaption: '',
             modalTitle: '',
             action: '',
@@ -281,7 +285,7 @@ export default {
             this.modalTitle = 'Інформація по будинку';
             this.modalSubmitCaption = 'Зберегти'
 
-            this.infoData.household_id                  = this.owner_id;
+            this.infoData.owner_id                      = this.owner_id;
             this.infoData.house_year_of_construction    = this.houseInfo('house_year_of_construction');
             this.infoData.house_material_walls          = this.houseInfo('house_material_walls');
             this.infoData.house_material_roof           = this.houseInfo('house_material_roof');
@@ -293,11 +297,17 @@ export default {
             this.modalTitle = 'Додаткова інформація';
             this.modalSubmitCaption = 'Зберегти'
 
-            this.additionalData.household_id = this.owner_id;
+            this.additionalData.owner_id = this.owner_id;
             this.additionalData.house_additional_data = this.houseInfo('house_additional_data');
 
             var additionalDataForm = new Modal(document.getElementById('HouseAdditionalDataForm'))
             additionalDataForm.show()
+        },
+        fetchHouseInfo() {
+            axios.get(`/api/v1/households/${this.$route.params.id}/house-info`)
+                .then(res => {
+                    this.info = res.data;
+                })
         },
         fetchYears(url) {
             if (url == undefined) {
@@ -315,7 +325,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('Households', {'owner_id': 'household_id', 'info': 'houseInfo'})
+        ...mapGetters('Households', {'owner_id': 'household_id'})
     },
     watch: {
         '$route' (to, from) {
@@ -331,6 +341,7 @@ export default {
     },
     created() {
         this.fetchYears();
+        this.fetchHouseInfo();
     },
     components: {
         TableRow,

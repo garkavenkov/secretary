@@ -190,7 +190,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="d-flex justify-content-between">
         <div>           
             
@@ -236,7 +236,7 @@
 
         </div>
     </div>
-</div>
+</div> -->
 
 </template>
 
@@ -276,49 +276,49 @@ export default {
         }
     },
     methods: {
-        editData() {
-            this.isInEditMode = true;
-            this._formData = JSON.parse(JSON.stringify(this.formData));
+        // editData() {
+        //     this.isInEditMode = true;
+        //     this._formData = JSON.parse(JSON.stringify(this.formData));
 
-        },
-        cancelEdit() {
-            this.isInEditMode = false;
-            this.errors = [];
-            this._formData = {};
-            // this.formData = Object.assign({}, this.info);
-            this.$store.dispatch('HouseholdMembers/fetchRecord', this.memberId);
-            // this.$emit('refreshData');
-        },
-        saveData() {
-            let data = Object.assign({}, this.formData);
-            if (data.work_place_id == 0) {
-                delete data.work_place_id;
-            }
-            axios.patch(`/api/v1/household-members/${this.formData.id}`, data)
-                .then(res => {
-                    this.$toast(res.data.message);
-                    this.$emit('refreshData');
-                    this.$store.dispatch('Households/fetchRecord', this.formData.household_id);
-                })
-                .catch(err => {
-                    this.errors = err.response?.data.errors;
-                })
-        },
-        deleteData() {
-            this.$confirmDelete('Ви дійсно бажаєти видалити інформацію о члені домогосподарства')
-                .then(res => {
-                    if(res.isConfirmed) {
-                        axios.delete(`/api/v1/household-members/${this.formData.id}`)
-                            .then(res => {
-                                this.$toast(res.data.message);
-                                this.$router.push({name: 'households.show.members', params: {id: this.formData.household_id}});
-                            })
-                            .catch(err => {
-                                this.$errorMessage('Неможливо видалити члена домогосподарства', err.response.data.message, 'Зрозуміло');
-                            });
-                    }
-                })
-        }
+        // },
+        // cancelEdit() {
+        //     this.isInEditMode = false;
+        //     this.errors = [];
+        //     this._formData = {};
+        //     // this.formData = Object.assign({}, this.info);
+        //     this.$store.dispatch('HouseholdMembers/fetchRecord', this.memberId);
+        //     // this.$emit('refreshData');
+        // },
+        // saveData() {
+        //     let data = Object.assign({}, this.formData);
+        //     if (data.work_place_id == 0) {
+        //         delete data.work_place_id;
+        //     }
+        //     axios.patch(`/api/v1/household-members/${this.formData.id}`, data)
+        //         .then(res => {
+        //             this.$toast(res.data.message);
+        //             this.$emit('refreshData');
+        //             this.$store.dispatch('Households/fetchRecord', this.formData.household_id);
+        //         })
+        //         .catch(err => {
+        //             this.errors = err.response?.data.errors;
+        //         })
+        // },
+        // deleteData() {
+        //     this.$confirmDelete('Ви дійсно бажаєти видалити інформацію о члені домогосподарства')
+        //         .then(res => {
+        //             if(res.isConfirmed) {
+        //                 axios.delete(`/api/v1/household-members/${this.formData.id}`)
+        //                     .then(res => {
+        //                         this.$toast(res.data.message);
+        //                         this.$router.push({name: 'households.show.members', params: {id: this.formData.household_id}});
+        //                     })
+        //                     .catch(err => {
+        //                         this.$errorMessage('Неможливо видалити члена домогосподарства', err.response.data.message, 'Зрозуміло');
+        //                     });
+        //             }
+        //         })
+        // }
 
 
     },

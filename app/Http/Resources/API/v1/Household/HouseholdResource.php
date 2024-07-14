@@ -29,12 +29,13 @@ class HouseholdResource extends JsonResource
         
         return [
             'id'                    =>  (int)   $this->id,
-            'number'                =>  $this->household_number,                    
+            'number'                =>  (int)   $this->number,
+            'household_number'      =>  $this->household_number,                    
             'settlement_id'         =>  (int)   $this->settlement_id,                
             'household_type_id'     =>  (int)   $this->household_type_id,                
             'household_type'        =>  $this->household_type,            
             'household_head'        =>  $this->household_head,
-            // 'raw_address'           =>  $this->address,
+            'address'               =>  $this->address,
             'short_address'         =>  $this->short_address,            
             'full_address'          =>  $this->full_address,            
             'special_marks'         =>  $this->special_marks,

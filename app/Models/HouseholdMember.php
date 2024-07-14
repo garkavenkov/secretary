@@ -441,8 +441,11 @@ class HouseholdMember extends Model
         return DB::select($sql);
     }    
 
-    public static function sqlBuilder(): EloquentBuilder
+    public static function sqlBuilder($date = null): EloquentBuilder
     {
+        if (is_null($date)) {
+            $date = date('Y-m-d');
+        }
         return HouseholdMember::query()        
                     ->select(
                         'household_members.id',
@@ -460,6 +463,8 @@ class HouseholdMember extends Model
                         'household_members.work_place_id',
                         'wp.name as work_place',
                         'household_members.death_date',
+                        'household_members.death_register_number',
+                        'household_members.death_register_office',
                         'h.number',                                 // for HouseholdNumber
                         'h.household_type_id',                      // for HouseholdNumber
                         's.inner_code as  settlement_inner_code',   // fof HouseholdNumber
@@ -495,6 +500,10 @@ class HouseholdMember extends Model
                             ) movements"
                         ), 'movements.member_id', '=', 'household_members.id'
                     );
+                    // ->where(function($q) use($date) {
+                    //     return $q->whereNull('household_members.death_date')
+                    //                 ->orWhere('household_members.death_date', '>', $date);
+                    // });
     }
 
     // *********************************************** Scopes ************************************************

@@ -284,32 +284,14 @@ class HouseholdController extends Controller
         }
     }
 
-    public function houseInfo(Request $request)
+   
+    public function houseInfo($id)
     {
-        $permission = Permission::where('code', 'App\Models\Household')->first();
-        if (!Auth::user()->hasPermission($permission->code, 8)) {
-            $error_msg = 'У Вас відсутні права на редагування інформації по будинку';
-            return response()->json(['message' => $error_msg], 403);
-        }
+        $household = Household::findOrFail($id);
 
-        if (!isset($request->household_id)) {
-            throw new \Exception('Відсутній ID домогосподарства');
-        }
-        $household = Household::findOrFail($request->household_id);
-        $request->request->remove('household_id');
+        $info = $household->houseInfo();
 
-        foreach($request->all() as $param => $value) {
-            $param = $household->getAdditionalParam($param);
-
-            if ($param) {
-                if ($value) {
-                    $household->setAdditionalParamValue($param->id, $value);
-                } else {
-                    $household->clearAdditionalParam($param->id);
-                }
-            }
-        }
-        return response()->json(['message' => 'Інформация по будинку була успішно додана']);
+        return response()->json($info);
     }
 
     public function landYears(Request $request, $id)
@@ -334,34 +316,18 @@ class HouseholdController extends Controller
 
     }
 
-    public function landInfo(Request $request)
+  
+    public function landInfo($id)
     {
-        $permission = Permission::where('code', 'App\Models\Household')->first();
-        if (!Auth::user()->hasPermission($permission->code, 8)) {
-            $error_msg = 'У Вас відсутні права на редагування інформації по землі';
-            return response()->json(['message' => $error_msg], 403);
-        }
+        $household = Household::findOrFail($id);
 
-        if (!isset($request->household_id)) {
-            throw new \Exception('Відсутній ID домогосподарства');
-        }
-        $household = Household::findOrFail($request->household_id);
-        $request->request->remove('household_id');
+        $info = $household->landInfo();
 
-        foreach($request->all() as $param => $value) {
-            $param = $household->getAdditionalParam($param);
-
-            if ($param) {
-                if ($value) {
-                    $household->setAdditionalParamValue($param->id, $value);
-                } else {
-                    $household->clearAdditionalParam($param->id);
-                }
-            }
-        }
-        return response()->json(['message' => 'Інформация по землі була успішно додана']);
+        return response()->json($info);
     }
 
+
+    /*
     public function setAdditionalParams(Request $request)
     {
         $permission = Permission::where('code', 'App\Models\Household')->first();
@@ -388,7 +354,7 @@ class HouseholdController extends Controller
             }
         }
         return response()->json(['message' => 'Додаткова параметри були успішно додані']);
-    }
+    }*/
 
     public function familyRelations($id)
     {

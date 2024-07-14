@@ -4,14 +4,7 @@
     <div class="card" v-if="household?.id">
         <div class="card-header ">
             <div class="card-title">
-                <span class="go-back-page" @click="$router.push({name: 'households'})">
-                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M18.41,16.59L13.82,12L18.41,7.41L17,6L11,12L17,18L18.41,16.59M6,6H8V18H6V6Z" />
-                    </svg> -->
-                    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <title>Повернутись по переліку погосподарських карт</title>
-                        <path d="M7,8L2.5,12L7,16V8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z" />
-                    </svg> -->
+                <span class="go-back-page" @click="$router.push({name: 'households'})">                  
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <title>Повернутись по переліку погосподарських карт</title>
                         <!-- <title>table-arrow-left</title> -->
@@ -19,7 +12,7 @@
                     </svg>
                 </span>
                 <span>Облікова картка об'єкта погосподарського обліку:</span>
-                <span class="household-card--number">{{ household.number }}</span>
+                <span class="household-card--number">{{ household.household_number }}</span>
             </div>
             <div class="dropdown" v-show="$route.name == 'households.show.info'">                
                 
@@ -156,7 +149,7 @@ export default {
     },
     provide() {
         return {
-            modalTitle: 'Редагування облікових картки',
+            modalTitle: 'Редагування облікової картки',
             modalSubmitCaption: 'Зберегти',
         }
     },
@@ -171,7 +164,7 @@ export default {
 
 
             const address_part_names = ['address_street_type', 'address_street_name', 'address_house', 'address_corps', 'address_apartment'];
-            const address_part_values = this.household.raw_address.split(',');
+            const address_part_values = this.household.address.split(',');
 
             address_part_values.forEach((value, index) => {
                 this.formData[address_part_names[index]] = value;

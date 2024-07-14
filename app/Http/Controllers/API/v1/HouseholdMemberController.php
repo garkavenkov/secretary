@@ -99,8 +99,13 @@ class HouseholdMemberController extends Controller
             }
 
         } 
-
-        $members = $members->paginate($per_page);
+        $date = date('Y-m-d');
+        $members = $members
+                        ->where(function($q) use($date) {
+                            return $q->whereNull('household_members.death_date')
+                                     ->orWhere('household_members.death_date', '>', $date);
+                        })
+                        ->paginate($per_page);
 
         return new HouseholdMemberResourceCollection($members->withQueryString());
     }

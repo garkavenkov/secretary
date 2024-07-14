@@ -31,6 +31,8 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'family_relationship_type'  =>  $member->family_relationship_type,
                 'status'                    =>  $member->status,
                 'death_date'                =>  $member->death_date,
+                'death_register_number'     =>  $member->death_register_number,
+                'death_register_office'     =>  $member->death_register_office,
                 'full_address'              =>  Household::getFullAddress(
                                                         $member->address,
                                                         $member->settlement, 

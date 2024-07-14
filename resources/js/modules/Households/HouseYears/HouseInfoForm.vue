@@ -49,6 +49,7 @@
 
 <script>
 
+import axios from 'axios';
 import ModalForm from '../../../components/ui/ModalForm.vue';
 
 export default {
@@ -62,12 +63,15 @@ export default {
     data() {
         return {}
     },
+    emits:['refreshHouseInfo'],
     methods: {
         submitData() {
-            axios.post('/api/v1/house-additional-information', this.formData)
+            
+            // axios.post('/api/v1/house-additional-information', this.formData)
+            axios.post('api/v1/set-additional-params', this.formData)
                 .then(res => {
                     this.$toast(res.data.message);
-                    this.$emit('refreshData');
+                    this.$emit('refreshHouseInfo');
                 })
         },
         closeForm() {}

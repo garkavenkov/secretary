@@ -33,12 +33,13 @@ export default {
 
         }
     },
+    emits: ['refreshLandInfo'],
     methods: {
         submitData() {
-            axios.post('/api/v1/land-additional-information', this.formData)
+            axios.post('/api/v1/set-additional-params', this.formData)
                 .then(res => {
                     this.$toast(res.data.message);
-                    this.$emit('refreshData');
+                    this.$emit('refreshLandInfo');
                     this.closeForm();
                 })
         },

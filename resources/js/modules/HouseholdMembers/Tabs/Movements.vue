@@ -46,8 +46,8 @@
         </table>
     </template>
     <template v-else>
-        <div class="d-flex flex-column align-items-center">
-            <span class="text-muted mb-2">
+        <div class="d-flex flex-column align-items-center p-3">
+            <span class="text-muted mb-3">
                 Інформація по переміщенню відсутня
             </span>
 

@@ -868,12 +868,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
+  emits: ['refreshHouseInfo'],
   methods: {
     submitData: function submitData() {
       var _this = this;
-      axios.post('/api/v1/house-additional-information', this.formData).then(function (res) {
+      axios.post('api/v1/set-additional-params', this.formData).then(function (res) {
         _this.$toast(res.data.message);
-        _this.$emit('refreshData');
+        _this.$emit('refreshHouseInfo');
         _this.closeForm();
       });
     },
@@ -896,7 +897,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var _components_ui_ModalForm_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../components/ui/ModalForm.vue */ "./resources/js/components/ui/ModalForm.vue");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'HouseholdHouseInfoForm',
@@ -909,12 +912,14 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
+  emits: ['refreshHouseInfo'],
   methods: {
     submitData: function submitData() {
       var _this = this;
-      axios.post('/api/v1/house-additional-information', this.formData).then(function (res) {
+      // axios.post('/api/v1/house-additional-information', this.formData)
+      axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('api/v1/set-additional-params', this.formData).then(function (res) {
         _this.$toast(res.data.message);
-        _this.$emit('refreshData');
+        _this.$emit('refreshHouseInfo');
       });
     },
     closeForm: function closeForm() {}
@@ -1009,7 +1014,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var _HouseYearForm_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HouseYearForm.vue */ "./resources/js/modules/Households/HouseYears/HouseYearForm.vue");
 /* harmony import */ var _HouseInfoForm_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HouseInfoForm.vue */ "./resources/js/modules/Households/HouseYears/HouseInfoForm.vue");
@@ -1018,12 +1023,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ui_YearsPaginator_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../components/ui/YearsPaginator.vue */ "./resources/js/components/ui/YearsPaginator.vue");
 /* harmony import */ var _components_ui_DropDownMenu_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../components/ui/DropDownMenu.vue */ "./resources/js/components/ui/DropDownMenu.vue");
 /* harmony import */ var _mixins_YearsCUD__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../mixins/YearsCUD */ "./resources/js/mixins/YearsCUD.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 
@@ -1058,15 +1065,18 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         electric_stove: false
       },
       infoData: {
-        household_id: null,
+        owner: 'App\\Models\\Household',
+        owner_id: null,
         house_year_of_construction: '',
         house_material_walls: '',
         house_material_roof: ''
       },
       additionalData: {
-        household_id: null,
+        owner: 'App\\Models\\Household',
+        owner_id: null,
         house_additional_data: ''
       },
+      info: [],
       modalSubmitCaption: '',
       modalTitle: '',
       action: '',
@@ -1100,7 +1110,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     openHouseInfoForm: function openHouseInfoForm() {
       this.modalTitle = 'Інформація по будинку';
       this.modalSubmitCaption = 'Зберегти';
-      this.infoData.household_id = this.owner_id;
+      this.infoData.owner_id = this.owner_id;
       this.infoData.house_year_of_construction = this.houseInfo('house_year_of_construction');
       this.infoData.house_material_walls = this.houseInfo('house_material_walls');
       this.infoData.house_material_roof = this.houseInfo('house_material_roof');
@@ -1110,19 +1120,25 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     openHouseAdditionalDataForm: function openHouseAdditionalDataForm() {
       this.modalTitle = 'Додаткова інформація';
       this.modalSubmitCaption = 'Зберегти';
-      this.additionalData.household_id = this.owner_id;
+      this.additionalData.owner_id = this.owner_id;
       this.additionalData.house_additional_data = this.houseInfo('house_additional_data');
       var additionalDataForm = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('HouseAdditionalDataForm'));
       additionalDataForm.show();
     },
-    fetchYears: function fetchYears(url) {
+    fetchHouseInfo: function fetchHouseInfo() {
       var _this2 = this;
+      axios__WEBPACK_IMPORTED_MODULE_9__["default"].get("/api/v1/households/".concat(this.$route.params.id, "/house-info")).then(function (res) {
+        _this2.info = res.data;
+      });
+    },
+    fetchYears: function fetchYears(url) {
+      var _this3 = this;
       if (url == undefined) {
         url = "/api/v1/households/".concat(this.$route.params.id, "/house-years?per_page=").concat(this.perPage);
       }
-      axios.get(url).then(function (res) {
-        _this2.years = res.data.data.reverse();
-        _this2.meta = res.data.meta;
+      axios__WEBPACK_IMPORTED_MODULE_9__["default"].get(url).then(function (res) {
+        _this3.years = res.data.data.reverse();
+        _this3.meta = res.data.meta;
       });
     },
     houseInfo: function houseInfo(param) {
@@ -1132,9 +1148,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       return additionalParam.value ? additionalParam.value : '';
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_9__.mapGetters)('Households', {
-    'owner_id': 'household_id',
-    'info': 'houseInfo'
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_10__.mapGetters)('Households', {
+    'owner_id': 'household_id'
   })),
   watch: {
     '$route': function $route(to, from) {
@@ -1150,6 +1165,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   created: function created() {
     this.fetchYears();
+    this.fetchHouseInfo();
   },
   components: {
     TableRow: _components_ui_TableRow_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -1529,12 +1545,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {};
   },
+  emits: ['refreshLandInfo'],
   methods: {
     submitData: function submitData() {
       var _this = this;
-      axios.post('/api/v1/land-additional-information', this.formData).then(function (res) {
+      axios.post('/api/v1/set-additional-params', this.formData).then(function (res) {
         _this.$toast(res.data.message);
-        _this.$emit('refreshData');
+        _this.$emit('refreshLandInfo');
         _this.closeForm();
       });
     },
@@ -1647,9 +1664,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         commercial_agriculture: 0
       },
       additionalData: {
-        household_id: null,
+        owner: 'App\\Models\\Household',
+        owner_id: null,
         land_additional_data: ''
       },
+      info: [],
       modalTitle: '',
       modalSubmitCaption: '',
       action: '',
@@ -1676,7 +1695,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     openLandAdditionalDataForm: function openLandAdditionalDataForm() {
       this.modalTitle = 'Додаткова інформація';
       this.modalSubmitCaption = 'Зберегти';
-      this.additionalData.household_id = this.owner_id;
+      this.additionalData.owner_id = this.owner_id;
       this.additionalData.land_additional_data = this.landInfo('land_additional_data');
       var additionalDataForm = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById('LandAdditionalDataForm'));
       additionalDataForm.show();
@@ -1691,6 +1710,12 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         _this2.meta = res.data.meta;
       });
     },
+    fetchLandInfo: function fetchLandInfo() {
+      var _this3 = this;
+      axios.get("/api/v1/households/".concat(this.$route.params.id, "/land-info")).then(function (res) {
+        _this3.info = res.data;
+      });
+    },
     landInfo: function landInfo(param) {
       var additionalParam = this.info.find(function (i) {
         return i.code == param;
@@ -1699,11 +1724,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_9__.mapGetters)('Households', {
-    'owner_id': 'household_id',
-    'info': 'landInfo'
+    'owner_id': 'household_id'
   })),
   created: function created() {
     this.fetchYears();
+    this.fetchLandInfo();
   },
   watch: {
     '$route': function $route(to, from) {
@@ -2041,6 +2066,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.formData.family_relationship_type_id = 0;
       this.formData.employment_information = '';
       this.formData.work_place_id = 0;
+      this.formData.social_information = '';
+      this.formData.additional_information = '';
       this.errors = [];
     },
     saveData: function saveData() {
@@ -2605,7 +2632,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var _this = this;
       this.formData.id = this.id, this.formData.settlement_id = this.household.settlement_id, this.formData.household_type_id = this.household.household_type_id, this.formData.number = this.household.number, this.formData.special_marks = this.household.special_marks, this.formData.additional_data = this.household.additional_data;
       var address_part_names = ['address_street_type', 'address_street_name', 'address_house', 'address_corps', 'address_apartment'];
-      var address_part_values = this.household.raw_address.split(',');
+      var address_part_values = this.household.address.split(',');
       address_part_values.forEach(function (value, index) {
         _this.formData[address_part_names[index]] = value;
       });
@@ -4115,12 +4142,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     size: 16,
     buttonClass: ['btn-light btn-transparent p-2'],
     title: "Редагувати інформацію по будинку"
-  }, null, 8 /* PROPS */, ["onClick"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_19, [_ctx.info && _ctx.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_21, $options.houseInfo('house_year_of_construction') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_year_of_construction')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_23, " не вказано "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_24, $options.houseInfo('house_material_walls') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_material_walls')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_26, " не вказано "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_27, $options.houseInfo('house_material_roof') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_material_roof')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_29, " не вказано "))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonEdit, {
+  }, null, 8 /* PROPS */, ["onClick"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_19, [$data.info && $data.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tbody", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_21, $options.houseInfo('house_year_of_construction') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_year_of_construction')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_23, " не вказано "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_24, $options.houseInfo('house_material_walls') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_material_walls')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_26, " не вказано "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_27, $options.houseInfo('house_material_roof') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_material_roof')), 1 /* TEXT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_29, " не вказано "))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonEdit, {
     onClick: $options.openHouseAdditionalDataForm,
     size: 16,
     buttonClass: ['btn-light btn-transparent p-2'],
     title: "Редагувати додаткову інформацію"
-  }, null, 8 /* PROPS */, ["onClick"])]), _ctx.info && _ctx.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_33, [$options.houseInfo('house_additional_data') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  }, null, 8 /* PROPS */, ["onClick"])]), $data.info && $data.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_33, [$options.houseInfo('house_additional_data') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.houseInfo('house_additional_data')), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_34, "інформація відсутня"))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseYearForm, {
     formData: $data.yearData,
@@ -4128,15 +4155,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onRefreshData: $options.fetchYears
   }, null, 8 /* PROPS */, ["formData", "action", "onRefreshData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseInfoForm, {
     formData: $data.infoData,
-    onRefreshData: _cache[2] || (_cache[2] = function ($event) {
-      return _ctx.$store.dispatch('Households/fetchRecord', _ctx.owner_id);
-    })
-  }, null, 8 /* PROPS */, ["formData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseAdditionalDataForm, {
+    onRefreshHouseInfo: $options.fetchHouseInfo
+  }, null, 8 /* PROPS */, ["formData", "onRefreshHouseInfo"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseAdditionalDataForm, {
     formData: $data.additionalData,
-    onRefreshData: _cache[3] || (_cache[3] = function ($event) {
-      return _ctx.$store.dispatch('Households/fetchRecord', _ctx.owner_id);
-    })
-  }, null, 8 /* PROPS */, ["formData"])], 64 /* STABLE_FRAGMENT */);
+    onRefreshHouseInfo: $options.fetchHouseInfo
+  }, null, 8 /* PROPS */, ["formData", "onRefreshHouseInfo"])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -5085,7 +5108,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     size: 16,
     buttonClass: "btn-light btn-transparent p-2",
     title: "Редагувати додаткову інформацію"
-  }, null, 8 /* PROPS */, ["onClick"])]), _ctx.info && _ctx.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [$options.landInfo('land_additional_data') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  }, null, 8 /* PROPS */, ["onClick"])]), $data.info && $data.info.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [$options.landInfo('land_additional_data') !== '' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.landInfo('land_additional_data')), 1 /* TEXT */)], 64 /* STABLE_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, "інформація відсутня"))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_LandYearForm, {
     formData: $data.yearData,
@@ -5093,10 +5116,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onRefreshData: $options.fetchYears
   }, null, 8 /* PROPS */, ["formData", "action", "onRefreshData"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_LandAdditionalDataForm, {
     formData: $data.additionalData,
-    onRefreshData: _cache[2] || (_cache[2] = function ($event) {
-      return _ctx.$store.dispatch('Households/fetchRecord', _ctx.owner_id);
-    })
-  }, null, 8 /* PROPS */, ["formData"])], 64 /* STABLE_FRAGMENT */);
+    onRefreshLandInfo: $options.fetchLandInfo
+  }, null, 8 /* PROPS */, ["formData", "onRefreshLandInfo"])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -5488,16 +5509,51 @@ var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, "Оберить місце роботи", -1 /* HOISTED */);
 var _hoisted_29 = ["value"];
 var _hoisted_30 = {
-  "class": "row mb-3"
+  id: "workPlaceValidation",
+  "class": "invalid-feedback"
 };
 var _hoisted_31 = {
+  "class": "row mb-3"
+};
+var _hoisted_32 = {
   "class": "col"
 };
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "memberEmployment",
   "class": "form-label"
 }, "Відомості про зайнятість / незайнятість", -1 /* HOISTED */);
-
+var _hoisted_34 = {
+  id: "memberEmploymentValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_35 = {
+  "class": "row mb-3"
+};
+var _hoisted_36 = {
+  "class": "col"
+};
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "memberSocialInformation",
+  "class": "form-label"
+}, "Відомості про пенсію, інвалідність, отримання соціальної допомоги", -1 /* HOISTED */);
+var _hoisted_38 = {
+  id: "memberSocialInformationValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_39 = {
+  "class": "row mb-3"
+};
+var _hoisted_40 = {
+  "class": "col"
+};
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "memberAdditionalInformation",
+  "class": "form-label"
+}, "Додаткова інформація", -1 /* HOISTED */);
+var _hoisted_42 = {
+  id: "memberAdditionalInformationValidation",
+  "class": "invalid-feedback"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
@@ -5555,7 +5611,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           key: relationship.id
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(relationship.name), 9 /* TEXT, PROPS */, _hoisted_22);
       }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.family_relationship_type_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('family_relationship_type_id')), 1 /* TEXT */)])]), _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-        "class": "form-select",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-select", {
+          'is-invalid': _ctx.hasError('work_place_id')
+        }]),
         id: "workPlace",
         "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
           return $props.formData.work_place_id = $event;
@@ -5565,15 +5623,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           value: place.id,
           key: place.id
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(place.name), 9 /* TEXT, PROPS */, _hoisted_29);
-      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.work_place_id]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-        "class": "form-control",
+      }), 128 /* KEYED_FRAGMENT */))], 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $props.formData.work_place_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('work_place_id')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+          'is-invalid': _ctx.hasError('employment_information')
+        }]),
         id: "memberEmployment",
         rows: "2",
         "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
           return $props.formData.employment_information = $event;
         })
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.employment_information]])])])];
+      }, "\n                ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.employment_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('employment_information')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+          'is-invalid': _ctx.hasError('social_information')
+        }]),
+        id: "memberSocialInformation",
+        rows: "2",
+        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+          return $props.formData.social_information = $event;
+        })
+      }, "\n                ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.social_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('social_information')), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+          'is-invalid': _ctx.hasError('additional_information')
+        }]),
+        id: "memberAdditionalInformation",
+        rows: "2",
+        "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+          return $props.formData.additional_information = $event;
+        })
+      }, "\n                ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.additional_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('additional_information')), 1 /* TEXT */)])])];
     }),
+
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
 }
@@ -6097,36 +6176,37 @@ var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
     d: "M4 3H18C19.11 3 20 3.9 20 5V12.08C18.45 11.82 16.92 12.18 15.68 13H12V17H13.08C12.97 17.68 12.97 18.35 13.08 19H4C2.9 19 2 18.11 2 17V5C2 3.9 2.9 3 4 3M4 7V11H10V7H4M12 7V11H18V7H12M4 13V17H10V13H4M18.44 15V17H22.44V19H18.44V21L15.44 18L18.44 15"
   })], -1 /* HOISTED */);
 });
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_5 = [_hoisted_4];
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Облікова картка об'єкта погосподарського обліку:", -1 /* HOISTED */);
 });
-var _hoisted_6 = {
+var _hoisted_7 = {
   "class": "household-card--number"
 };
-var _hoisted_7 = {
+var _hoisted_8 = {
   "class": "dropdown"
 };
-var _hoisted_8 = {
+var _hoisted_9 = {
   "class": "dropdown-menu"
 };
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Редагувати", -1 /* HOISTED */);
 });
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
     "class": "dropdown-divider"
   })], -1 /* HOISTED */);
 });
-var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Видалити", -1 /* HOISTED */);
 });
-var _hoisted_12 = {
+var _hoisted_13 = {
   "class": "card-body"
 };
-var _hoisted_13 = {
+var _hoisted_14 = {
   "class": "px-3 pt-3"
 };
-var _hoisted_14 = {
+var _hoisted_15 = {
   "class": "pt-2"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -6144,13 +6224,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         name: 'households'
       });
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n                        <path d=\"M18.41,16.59L13.82,12L18.41,7.41L17,6L11,12L17,18L18.41,16.59M6,6H8V18H6V6Z\" />\n                    </svg> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n                        <title>Повернутись по переліку погосподарських карт</title>\n                        <path d=\"M7,8L2.5,12L7,16V8M12,10A2,2 0 0,0 10,12A2,2 0 0,0 12,14A2,2 0 0,0 14,12A2,2 0 0,0 12,10Z\" />\n                    </svg> "), _hoisted_4]), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.household.number), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconButton, {
+  }, _hoisted_5), _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.household.household_number), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_IconButton, {
     buttonClass: "btn-outline-secondary btn-transparent dropdown-toggle p-2",
     "data-bs-toggle": "dropdown",
     "aria-expanded": "false",
     size: 16,
     mdiPath: $data.pathMdiCogs
-  }, null, 8 /* PROPS */, ["mdiPath"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, null, 8 /* PROPS */, ["mdiPath"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": "dropdown-item d-flex align-items-center cursor-pointer",
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.openHouseholdForm && $options.openHouseholdForm.apply($options, arguments);
@@ -6160,7 +6240,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     path: $data.pathMdiPencil,
     size: 16,
     "class": "text-warning me-2"
-  }, null, 8 /* PROPS */, ["path"]), _hoisted_9])]), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, null, 8 /* PROPS */, ["path"]), _hoisted_10])]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     "class": "dropdown-item d-flex align-items-center cursor-pointer",
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.deleteHouseholdCard(_ctx.household.id);
@@ -6170,10 +6250,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     path: $data.pathMdiTrashCan,
     size: 16,
     "class": "text-danger me-2"
-  }, null, 8 /* PROPS */, ["path"]), _hoisted_11])])])], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$route.name == 'households.show.info']])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NavigationTabs, {
+  }, null, 8 /* PROPS */, ["path"]), _hoisted_12])])])], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.$route.name == 'households.show.info']])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_NavigationTabs, {
     tabs: $data.tabs,
     navigationClass: ['px-3']
-  }, null, 8 /* PROPS */, ["tabs"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_view)])])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Page404, {
+  }, null, 8 /* PROPS */, ["tabs"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_view)])])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Page404, {
     key: 1,
     message: "\u0414\u043E\u043C\u043E\u0433\u043E\u0441\u043F\u043E\u0434\u0430\u0440\u0441\u0442\u0432\u043E \u0437 id:".concat($props.id, " \u0432\u0456\u0434\u0441\u0443\u0442\u043D\u0435"),
     resource: "img/404/house.png",

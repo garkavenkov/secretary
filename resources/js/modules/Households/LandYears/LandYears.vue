@@ -97,7 +97,7 @@
 
     <LandAdditionalDataForm
             :formData="additionalData"
-            @refreshData="$store.dispatch('Households/fetchRecord', owner_id)" />
+            @refreshLandInfo="fetchLandInfo" />
 
 </template>
 
@@ -130,9 +130,11 @@ export default {
                 commercial_agriculture: 0
             },
             additionalData: {
-                household_id: null,
+                owner: 'App\\Models\\Household',
+                owner_id: null,
                 land_additional_data: '',
             },
+            info: [],
             modalTitle: '',
             modalSubmitCaption: '',
             action: '',
@@ -155,7 +157,7 @@ export default {
             this.modalTitle = 'Додаткова інформація';
             this.modalSubmitCaption = 'Зберегти'
 
-            this.additionalData.household_id = this.owner_id;
+            this.additionalData.owner_id = this.owner_id;
             this.additionalData.land_additional_data = this.landInfo('land_additional_data');
 
             var additionalDataForm = new Modal(document.getElementById('LandAdditionalDataForm'))
@@ -171,16 +173,23 @@ export default {
                     this.meta = res.data.meta;
                 });
         },
+        fetchLandInfo() {
+            axios.get(`/api/v1/households/${this.$route.params.id}/land-info`)
+                .then(res => {
+                    this.info = res.data
+                });
+        },
         landInfo(param) {
             let additionalParam = this.info.find(i => i.code == param)
             return additionalParam.value ? additionalParam.value : '';
         }
     },
     computed: {
-        ...mapGetters('Households', {'owner_id': 'household_id', 'info': 'landInfo'})
+        ...mapGetters('Households', {'owner_id': 'household_id'})
     },
     created() {
         this.fetchYears();
+        this.fetchLandInfo();
     },
     watch: {
         '$route' (to, from) {

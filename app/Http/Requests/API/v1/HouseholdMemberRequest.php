@@ -38,7 +38,7 @@ class HouseholdMemberRequest extends FormRequest
             'family_relationship_type_id'   =>  'required|exists:family_relationship_types,id',
             'birthdate'                     =>  'required|date|before_or_equal:today',
             'work_place_id'                 =>  'nullable|exists:work_places,id',
-            'employment_information'        =>  'required_with:work_place_id',
+            'employment_information'        =>  ['required_with:work_place_id'],
             'additional_information'        =>  'nullable|min:3',
             'social_information'            =>  'nullable|min:3',
             'death_date'                    =>  'nullable|date|after_or_equal:birthdate',
