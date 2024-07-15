@@ -135,6 +135,41 @@
                 </div>
             </div>
         </div>
+        <template  v-if="showDeathInfo">
+            <hr>
+            <div class="row mb-3">
+                <div class="col-3">
+                    <label  for="memberDeathdate" class="form-label">Дата смерті</label>
+                    <input  type="date"
+                            :class="['form-control', hasError('death_date') ? 'is-invalid' : '']"
+                            id="memberDeathdate"
+                            v-model="formData.death_date">
+                    <div id="memberDeathdateValidation" class="invalid-feedback">
+                        {{ getError('death_date') }}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label  for="memberDeathRegisterNumber" class="form-label">Номер свідоцтва</label>
+                    <input  type="text"
+                            id="memberDeathRegisterNumber"
+                            :class="['form-control', hasError('death_register_number') ? 'is-invalid' : '']"
+                            v-model="formData.death_register_number" >
+                    <div id="memberDeathRegisterNumberValidation" class="invalid-feedback">
+                        {{ getError('death_register_number') }}
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label  for="memberDeathRegisterOffice" class="form-label">Орган</label>
+                    <input  type="text"
+                            id="memberDeathRegisterOffice"
+                            :class="['form-control', hasError('death_register_office') ? 'is-invalid' : '']"
+                            v-model="formData.death_register_number" >
+                    <div id="memberDeathRegisterOfficeValidation" class="invalid-feedback">
+                        {{ getError('death_register_office') }}
+                    </div>
+                </div>
+            </div>
+        </template>
     </ModalForm>
 
 </template>
@@ -165,6 +200,11 @@ export default {
             type: Array,
             required: false,
             default: () => []
+        },
+        'showDeathInfo': {
+            type: Boolean,
+            required: false,
+            default: () => false,
         }
     },
     data() {

@@ -1,87 +1,106 @@
 <template>
 
-    <table class="table table-sm  table-bordered table-years">
-        <thead class="bg-body-secondary">
-            <tr>
-                <th class="align-middle">
+    <template v-if="years.length > 0"> 
+        <table class="table table-sm  table-bordered table-years">
+            <thead class="bg-body-secondary">
+                <tr>
+                    <th class="align-middle">
                     
-                    <ButtonAdd 
-                            @click="newYearData($event)" 
-                            buttonClass="btn-outline-primary btn-transparent px-2 py-1"
-                            title="Додати інформацію за рік">
-                        Додати рік
-                    </ButtonAdd>
+                        <ButtonAdd 
+                                @click="newYearData($event)" 
+                                buttonClass="btn-outline-primary btn-transparent px-2 py-1"
+                                title="Додати інформацію за рік">
+                            Додати рік
+                        </ButtonAdd>
                 
-                </th>
-                <th v-for="year in years" :key="year.year">
+                    </th>
+                    <th v-for="year in years" :key="year.year">
 
-                    <div class="d-flex align-items-center justify-content-end">
+                        <div class="d-flex align-items-center justify-content-end">
 
-                        <div class="year">{{year.year}}</div>
-                        <DropDownMenu
-                                buttonClass="btn-outline-secondary btn-transparent"
-                                :showToggler="false"
-                                @edit="editYear(year)" 
-                                @delete="deleteYear(year)">
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" @click="landOwnedReport(year.year)">                                    
-                                    <SvgIcon type="mdi" :path="pathMdiLandFields" :size="16" class="text-success me-2" />
-                                    <span>Звіт про склад земельної ділянки</span>
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                        </DropDownMenu>
+                            <div class="year">{{year.year}}</div>
+                            <DropDownMenu
+                                    buttonClass="btn-outline-secondary btn-transparent"
+                                    :showToggler="false"
+                                    @edit="editYear(year)" 
+                                    @delete="deleteYear(year)">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" @click="landOwnedReport(year.year)">                                    
+                                        <SvgIcon type="mdi" :path="pathMdiLandFields" :size="16" class="text-success me-2" />
+                                        <span>Звіт про склад земельної ділянки</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                            </DropDownMenu>
                         
-                    </div>
+                        </div>
                     
-                </th>
-            </tr>
-        </thead>
-        <tbody class="table-group-divider">
-            <TableRow   :years="years"
-                        field="total"
-                        rowTitle="<b>Площа земельних ділянок - усього, <small>га</small></b>" />
-            <TableRow   :years="years"
-                        field="maintenance"
-                        rowTitle="під забудовою"
-                        rowTitleClass="ps-3"/>
-            <TableRow   :years="years"
-                        field="personal_agriculture"
-                        rowTitle="для ведення  <abbr title='особистого селянського господарства'>ОСГ</abbr>"
-                        rowTitleClass="ps-3"/>
-            <TableRow   :years="years"
-                        field="hay_cutting"
-                        rowTitle="сінокосіння"
-                        rowTitleClass="ps-3"/>
-            <TableRow   :years="years"
-                        field="pastures"
-                        rowTitle="пасовища"
-                        rowTitleClass="ps-3"/>
-            <TableRow   :years="years"
-                        field="land_share"
-                        rowTitle="земельний пай"
-                        rowTitleClass="ps-3"/>
-            <TableRow   :years="years"
-                        field="property_share"
-                        rowTitle="майновий пай"
-                        rowTitleClass="ps-3"/>
-        </tbody>
-    </table>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <TableRow   :years="years"
+                            field="total"
+                            rowTitle="<b>Площа земельних ділянок - усього, <small>га</small></b>" />
+                <TableRow   :years="years"
+                            field="maintenance"
+                            rowTitle="під забудовою"
+                            rowTitleClass="ps-3"/>
+                <TableRow   :years="years"
+                            field="personal_agriculture"
+                            rowTitle="для ведення  <abbr title='особистого селянського господарства'>ОСГ</abbr>"
+                            rowTitleClass="ps-3"/>
+                <TableRow   :years="years"
+                            field="hay_cutting"
+                            rowTitle="сінокосіння"
+                            rowTitleClass="ps-3"/>
+                <TableRow   :years="years"
+                            field="pastures"
+                            rowTitle="пасовища"
+                            rowTitleClass="ps-3"/>
+                <TableRow   :years="years"
+                            field="land_share"
+                            rowTitle="земельний пай"
+                            rowTitleClass="ps-3"/>
+                <TableRow   :years="years"
+                            field="property_share"
+                            rowTitle="майновий пай"
+                            rowTitleClass="ps-3"/>
+            </tbody>
+        </table>
+    </template>
+    <template v-else>
+        <div class="d-flex flex-column align-items-center p-3">
+
+            <span class="text-muted mb-3">
+                Інформація по землі відсутня
+            </span>
+
+            <ButtonAdd 
+                    @click="newYearData($event)" 
+                    buttonClass="btn-outline-primary px-2 py-1"
+                    title="Додати інформацію за рік">
+                Додати рік
+            </ButtonAdd>
+
+        </div>
+    </template>
+
     <YearsPaginator
             v-if="years.length > 0"
             v-model="perPage"
             :meta="meta"
             @fetchYears="fetchYears" />
 
-    <teleport to="body">
+    <!-- <teleport to="body"> -->
         <LandYearForm
                 :formData="yearData"                
                 :action="action"
                 @closeYearForm="closeYearForm"
                 @refreshData="fetchYears"/>
-    </teleport>
+    <!-- </teleport> -->
 
 
 </template>

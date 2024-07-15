@@ -2049,6 +2049,13 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       "default": function _default() {
         return [];
       }
+    },
+    'showDeathInfo': {
+      type: Boolean,
+      required: false,
+      "default": function _default() {
+        return false;
+      }
     }
   },
   data: function data() {
@@ -2623,7 +2630,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   },
   provide: function provide() {
     return {
-      modalTitle: 'Редагування облікових картки',
+      modalTitle: 'Редагування облікової картки',
       modalSubmitCaption: 'Зберегти'
     };
   },
@@ -3451,7 +3458,7 @@ var _hoisted_1 = {
   "class": "row"
 };
 var _hoisted_2 = {
-  "class": "col-md-10 mx-auto"
+  "class": "col-md-8 mx-auto"
 };
 var _hoisted_3 = {
   "class": "table table-sm"
@@ -5554,6 +5561,43 @@ var _hoisted_42 = {
   id: "memberAdditionalInformationValidation",
   "class": "invalid-feedback"
 };
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1 /* HOISTED */);
+var _hoisted_44 = {
+  "class": "row mb-3"
+};
+var _hoisted_45 = {
+  "class": "col-3"
+};
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "memberDeathdate",
+  "class": "form-label"
+}, "Дата смерті", -1 /* HOISTED */);
+var _hoisted_47 = {
+  id: "memberDeathdateValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_48 = {
+  "class": "col-3"
+};
+var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "memberDeathRegisterNumber",
+  "class": "form-label"
+}, "Номер свідоцтва", -1 /* HOISTED */);
+var _hoisted_50 = {
+  id: "memberDeathRegisterNumberValidation",
+  "class": "invalid-feedback"
+};
+var _hoisted_51 = {
+  "class": "col-6"
+};
+var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "memberDeathRegisterOffice",
+  "class": "form-label"
+}, "Орган", -1 /* HOISTED */);
+var _hoisted_53 = {
+  id: "memberDeathRegisterOfficeValidation",
+  "class": "invalid-feedback"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
@@ -5650,9 +5694,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
           return $props.formData.additional_information = $event;
         })
-      }, "\n                ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.additional_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('additional_information')), 1 /* TEXT */)])])];
+      }, "\n                ", 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.additional_information]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('additional_information')), 1 /* TEXT */)])]), $props.showDeathInfo ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [_hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "date",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_date') ? 'is-invalid' : '']),
+        id: "memberDeathdate",
+        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+          return $props.formData.death_date = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.death_date]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_date')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [_hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        id: "memberDeathRegisterNumber",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_register_number') ? 'is-invalid' : '']),
+        "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+          return $props.formData.death_register_number = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.death_register_number]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_number')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [_hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        id: "memberDeathRegisterOffice",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('death_register_office') ? 'is-invalid' : '']),
+        "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
+          return $props.formData.death_register_number = $event;
+        })
+      }, null, 2 /* CLASS */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.death_register_number]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('death_register_office')), 1 /* TEXT */)])])], 64 /* STABLE_FRAGMENT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
-
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["onSubmitData", "onCloseForm"]);
 }
@@ -6207,7 +6273,7 @@ var _hoisted_14 = {
   "class": "px-3 pt-3"
 };
 var _hoisted_15 = {
-  "class": "pt-2"
+  "class": "pt-4"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _ctx$household;
@@ -6731,7 +6797,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".household-address span[data-v-1cc3b751]:last-of-type {\n  color: var(--bs-gray-500);\n}\n.household-address span[data-v-1cc3b751]:last-of-type:hover {\n  color: var(--bs-card-color);\n}\n.owners-wrapper .owner[data-v-1cc3b751] {\n  display: flex;\n  justify-content: space-between;\n  border-width: 1px;\n  border-style: dashed;\n  border-radius: 5px;\n  border-color: transparent;\n  transition: all 0.3s ease;\n}\n.owners-wrapper .owner[data-v-1cc3b751]:not(:last-child) {\n  border-bottom: 1px dashed #e7e7e7;\n  padding-bottom: 0.5rem;\n  margin-bottom: 0.5rem;\n}\n.owners-wrapper #no-owner-information[data-v-1cc3b751] {\n  border: 1px solid transparent;\n  padding: 0.75rem;\n}\n.owners-wrapper #no-owner-information.hide[data-v-1cc3b751] {\n  display: none;\n}\n.owner-drop-zone[data-v-1cc3b751] {\n  display: none;\n  background: repeating-linear-gradient(-45deg, transparent 0 4px, #e7e7e7 4px 6px);\n  border: 1px dotted #adb5bd;\n  text-align: center;\n  padding: 0.75rem;\n  color: darkgray;\n  border-radius: 0.2rem;\n  transition: all 0.3s ease;\n}\n.owner-drop-zone.active[data-v-1cc3b751] {\n  display: block;\n}\n@media (min-width: 1200px) {\n.household-head[data-v-1cc3b751] {\n    height: 39px;\n}\n}\n.fs-08[data-v-1cc3b751] {\n  font-size: 0.8rem;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".household-address span[data-v-1cc3b751]:last-of-type {\n  color: var(--bs-gray-500);\n}\n.household-address span[data-v-1cc3b751]:last-of-type:hover {\n  color: var(--bs-card-color);\n}\n.owners-wrapper .owner[data-v-1cc3b751] {\n  display: flex;\n  justify-content: space-between;\n  border-width: 1px;\n  border-style: dashed;\n  border-radius: 5px;\n  border-color: transparent;\n  transition: all 0.3s ease;\n}\n.owners-wrapper .owner[data-v-1cc3b751]:not(:last-child) {\n  border-bottom: 1px dashed #e7e7e7;\n  padding-bottom: 0.5rem;\n  margin-bottom: 0.5rem;\n}\n.owners-wrapper #no-owner-information[data-v-1cc3b751] {\n  border: 1px solid transparent;\n  padding: 0.75rem;\n}\n.owners-wrapper #no-owner-information.hide[data-v-1cc3b751] {\n  display: none;\n}\n.owner-drop-zone[data-v-1cc3b751] {\n  display: none;\n  background: repeating-linear-gradient(-45deg, transparent 0 4px, #e7e7e7 4px 6px);\n  border: 1px dotted #adb5bd;\n  text-align: center;\n  padding: 0.75rem;\n  color: darkgray;\n  border-radius: 0.2rem;\n  transition: all 0.3s ease;\n}\n.owner-drop-zone.active[data-v-1cc3b751] {\n  display: block;\n}\n@media (min-width: 1200px) {\n.household-head[data-v-1cc3b751] {\n    height: 39px;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

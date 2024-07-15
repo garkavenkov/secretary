@@ -46,7 +46,7 @@
 
             <div class="px-3 pt-3">             
                 <NavigationTabs :tabs="tabs" :navigationClass="['px-3']"/>
-                <div class="pt-2">
+                <div class="pt-4">
                     <router-view></router-view>
                 </div>                
             </div>

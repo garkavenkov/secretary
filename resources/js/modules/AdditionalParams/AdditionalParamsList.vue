@@ -1,7 +1,7 @@
 <template>
 
     <div class="row">
-        <div class="col-md-10 mx-auto">
+        <div class="col-md-8 mx-auto">
             <table class="table table-sm">
                 <tbody>
                     <tr v-for="param in additionalParams" :key="param.id" class="align-middle">

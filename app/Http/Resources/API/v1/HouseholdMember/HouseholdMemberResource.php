@@ -2,13 +2,14 @@
 
 namespace App\Http\Resources\API\v1\HouseholdMember;
 
+use Carbon\Carbon;
 use App\Models\Household;
 use App\Models\HouseholdMemberLand;
 use function PHPUnit\Framework\isNull;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\API\v1\WorkPlace\WorkPlaceResource;
-use App\Http\Resources\API\v1\HouseholdMemberLand\HouseholdMemberLandResource;
 
+use App\Http\Resources\API\v1\HouseholdMemberLand\HouseholdMemberLandResource;
 use App\Http\Resources\API\v1\AdditionalParamValue\AdditionalParamValueResource;
 use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 
@@ -31,8 +32,10 @@ class HouseholdMemberResource extends JsonResource
             'full_name'                     =>  $this->full_name,
             'sex'                           =>  $this->sex,
             'birthdate'                     =>  $this->birthdate,
+            'birthdate_formatted'           =>  Carbon::parse($this->birthdate)->format('d.m.Y'),
             'family_relationship_type_id'   =>  (int)   $this->family_relationship_type_id,
-            'full_age'                      =>  (int)   $this->full_age,            
+            'full_age'                      =>  (int)   $this->full_age,
+            // 'full_age_string'               =>  $this->full_age . trans_choice('plural.years', $this->full_age),
             'family_relationship_type'      =>  $this->family_relationship_type,
             'employment_information'        =>  $this->employment_information,
             'social_information'            =>  $this->social_information,
@@ -41,6 +44,7 @@ class HouseholdMemberResource extends JsonResource
             'work_place'                    =>  $this->work_place,
             'status'                        =>  $this->status,
             'death_date'                    =>  $this->death_date,
+            'death_date_formatted'          =>  $this->when($this->death_date, Carbon::parse($this->death_date)->format('d.m.Y')),
             'death_register_number'         =>  $this->death_register_number,
             'death_register_office'         =>  $this->death_register_office,
             'household_number'              =>  Household::getHouseholdNumber(

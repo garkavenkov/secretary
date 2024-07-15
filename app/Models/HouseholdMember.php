@@ -476,6 +476,7 @@ class HouseholdMember extends Model
                     )
                     ->addSelect(DB::raw(
                             "CASE 
+                                WHEN household_members.death_date IS NOT NULL THEN 'dead'                                
                                 WHEN movements.code = 'leave' THEN 'gone'
                                 WHEN movements.code IS NULL OR movements.code = 'register' THEN 'active'
                             END AS status"        

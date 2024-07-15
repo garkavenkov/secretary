@@ -307,7 +307,4 @@ export default {
     }
 }
 
-.fs-08 {
-    font-size: 0.8rem;
-}
 </style>

@@ -60,12 +60,13 @@
                 </div>
             </div>
             <div class="pt-3">             
-                <NavigationTabs :tabs="tabs" :navigationClass="['px-1']"/>
-                <div class="pt-2">
+                <NavigationTabs :tabs="tabs" :navigationClass="['px-3']"/>
+                <div class="py-3">
                     <router-view></router-view>
                 </div>
             </div>
         </div>
+
     </div>   
 
     <Page404 v-else
@@ -76,8 +77,11 @@
     
     <HouseholdMemberForm
         :formData="formData"
+        :showDeathInfo="true"
         action="update"
         @refreshData="refreshData"/>
+
+
 
 </template>
 
@@ -93,8 +97,8 @@ import {
     mdiTransitTransfer,
     mdiTagMultipleOutline,
     mdiPencil,
-    mdiCogs,
-    // mdiPencilOffOutline,
+    mdiCogs,    
+    mdiHumanMaleFemaleChild,
     mdiTrashCanOutline,
 } from '@mdi/js';
 
@@ -143,6 +147,11 @@ export default {
                     iconPath: mdiTagMultipleOutline,
                     title: 'Додаткові дані' 
                 },
+                {
+                    routeName: 'household-member.relatives',
+                    iconPath: mdiHumanMaleFemaleChild,
+                    title: 'Родина' 
+                },
             ],
             formData: {
                 id: '',
@@ -163,7 +172,7 @@ export default {
             },
             pathMdiPencil: mdiPencil,            
             pathMdiTrashCan: mdiTrashCanOutline,
-            pathMdiCogs: mdiCogs,
+            pathMdiCogs: mdiCogs,            
             modalTitle: '',
             modalSubmitCaption: ''
         }

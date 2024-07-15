@@ -39,6 +39,12 @@ export default [
                 name: 'household-member.additional-data',
                 meta: {name: 'Додаткові дані'},
             },
+            {
+                path: 'relatives',
+                component: () => import(/* webpackChunkName: "household-members" */'../modules/HouseholdMembers/Tabs/Relatives.vue'),
+                name: 'household-member.relatives',
+                meta: {name: 'Родина'},
+            },
         ],
     },    
 ]
