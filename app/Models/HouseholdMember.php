@@ -47,7 +47,8 @@ class HouseholdMember extends Model
     ];
     
     
-    protected $appends = array('status', 'fullAge');
+    // protected $appends = array('status', 'fullAge');
+    protected $appends = array('fullAge');
 
 
     protected static function boot()

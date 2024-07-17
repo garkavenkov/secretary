@@ -28,7 +28,7 @@ class HouseholdMemberFactory extends Factory
             'name'                          =>  $sex == 'чоловіча' ? $this->faker->firstName($gender = 'male') : $this->faker->firstName($gender = 'female'),
             'patronymic'                    =>  $sex == 'чоловіча' ? $this->faker->middleName($gender = 'male') : $this->faker->middleName($gender = 'female'),
             'sex'                           =>  $sex,
-            'birthdate'                     =>  $birthdate,
+            'birthdate'                     =>  $birthdate,            
             'family_relationship_type_id'   =>  FamilyRelationshipType::factory(),
             'employment_information'        =>  $this->faker->company(),
             'work_place_id'                 =>  WorkPlace::factory(),

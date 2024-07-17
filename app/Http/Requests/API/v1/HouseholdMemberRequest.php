@@ -32,7 +32,7 @@ class HouseholdMemberRequest extends FormRequest
         return [
             'household_id'                  =>  'required|exists:households,id',
             'surname'                       =>  'required|min:3',
-            'name'                          =>  'required|min:3',
+            'name'                          =>  'required|min:2',
             'patronymic'                    =>  'required|min:3',
             'sex'                           =>  ['required',  Rule::in(['чоловіча', 'жіноча'])],
             'family_relationship_type_id'   =>  'required|exists:family_relationship_types,id',
