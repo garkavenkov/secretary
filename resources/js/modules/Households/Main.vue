@@ -175,9 +175,10 @@ export default {
             availabaleFields: {
                 id: 'ID',
                 short_address: 'Місцезнаходження / адреса',
-                settlement_name: 'Населений пункт',
-                household_head: 'Голова домогосподарства',                
-                household_number: 'Домогосподарство',                
+                settlement: 'Населений пункт',
+                head: 'Голова домогосподарства',                
+                household_number: 'Номер домогосподарства',
+                members_count: 'Мешкає'
             },   
             pathRouterLinkIcon: mdiFolderHomeOutline,
         }

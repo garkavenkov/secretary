@@ -8,6 +8,8 @@ return [
     'household_number'      =>  'Номер домогосподарства',
     'short_address'         =>  'Адреса',
     'full_address'          =>  'Повна адреса',
-    'settlement_name'       =>  'Населений пункт',
-    'household_head'        =>  'Голова домогосподарства'
+    'settlement'            =>  'Населений пункт',
+    'head'                  =>  'Голова домогосподарства',
+    'members_count'         =>  'Мешкає',
+    'sex'                   =>  'Стать'
 ];

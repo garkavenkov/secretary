@@ -4,15 +4,11 @@ namespace App\Models;
 
 use DateTime;
 use App\Models\WorkPlace;
-use App\Models\FamilyRelationship;
 use Illuminate\Support\Facades\DB;
 use DeclensionUkrainian\Anthroponym;
 use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Http\Resources\API\v1\HouseholdMemberMovement\HouseholdMemberMovementResource;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 use function PHPUnit\Framework\isNull;
@@ -48,7 +44,7 @@ class HouseholdMember extends Model
     
     
     // protected $appends = array('status', 'fullAge');
-    protected $appends = array('fullAge');
+    protected $appends = array('fullAge', 'full_address');
 
 
     protected static function boot()
@@ -197,17 +193,30 @@ class HouseholdMember extends Model
 
     public function getFullAddressAttribute()
     {
-        return $this->household->getFullAddress();
+        // return $this->household->getFullAddress();
+        return Household::getFullAddress(
+                    $this->address,
+                    $this->settlement, 
+                    $this->settlement_type, 
+                    $this->district, 
+                    $this->region
+                );
     }
 
     public function getShortAddressAttribute()
     {
-        return $this->household->getShortAddress();
+        // return $this->household->getShortAddress();
+        return Household::getShortAddress($this->address);
     }
     
-    public function getHouseholdNumberAttribute()
+    public function getHouseholdNumberAttribute()   
     {
-        return $this->household->fullNumber();
+        // return $this->household->fullNumber();
+        return Household::getHouseholdNumber(
+                    $this->settlement_inner_code, 
+                    $this->number, 
+                    $this->household_type_id
+                );
     }
 
     public function getGenderAttribute()
@@ -453,7 +462,7 @@ class HouseholdMember extends Model
                         'household_members.household_id',
                         'household_members.surname',
                         'household_members.name',
-                        'household_members.patronymic',                                
+                        'household_members.patronymic',
                         'household_members.sex',
                         'household_members.birthdate',
                         'household_members.family_relationship_type_id',                                

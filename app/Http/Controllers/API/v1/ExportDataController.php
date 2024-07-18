@@ -19,7 +19,7 @@ class ExportDataController extends Controller
 
     public function exportData(Request $request)
     {
-        // dd($request->all());
+        
         $model = $this->getExportModel($request);
 
         $ids = $this->getIds($request);
@@ -30,8 +30,14 @@ class ExportDataController extends Controller
 
         $fields = $this->getFields($request);
 
-        $data = $model::findOrFail($ids);
-
+        // $data = $model::findOrFail($ids);
+        if (method_exists($model, 'sqlBuilder')) {
+            $data = $model::sqlBuilder()->findOrFail($ids);
+        } else {
+            $data = $model::findOrFail($ids);
+        }
+        // dd($data);
+        
         $exportMethod = 'export' . mb_strtoupper($format);
 
         call_user_func_array(array($this, $exportMethod), array($data, $fields, $orientation));
@@ -97,7 +103,7 @@ class ExportDataController extends Controller
             if (isset($request->fields)) {
                 $fields = explode(',', $request->fields);
             } else {
-                throw new \Exception("Відсутній перелів стовпців для єкспорту даних");
+                throw new \Exception("Відсутній перелік стовпців для єкспорту даних");
                 // make static/protected model's property for list of fields for export
                 // and if $request->fields is null, use model's export fields by default
             } 
@@ -119,13 +125,18 @@ class ExportDataController extends Controller
         exit;
     }
 
+    protected function localizeFieldName(string $field): string
+    {
+        return  __("fields.$field");
+    }
+
     protected function exportCSV($records, array $fields, string $orientation)
     {
         $filename= storage_path('app/tmp/file.csv');
         $fp = fopen($filename, 'w');
         // Row with field's name
         foreach($fields as $field) {
-            $data = __("fields.$field");
+            $data = $this->localizeFieldName($field);
             $row[] = $data;
         }        
         fputcsv($fp, $row);
@@ -189,7 +200,7 @@ class ExportDataController extends Controller
         // Row with field's name
         $column = 1; // A
         foreach($fields as $field) {        
-            $activeWorksheet->setCellValue([$column, 1], __("fields.$field"));
+            $activeWorksheet->setCellValue([$column, 1], $this->localizeFieldName($field));
             $activeWorksheet->getColumnDimensionByColumn($column)->setAutoSize(true);
             $column++;
         } 
@@ -220,6 +231,7 @@ class ExportDataController extends Controller
         
         $activeWorksheet->getStyle([1,1,$column,1])->applyFromArray($fieldNameStyle);
         $row = 2;
+        
         foreach($records as $record) {
             $column = 1;
             foreach($fields as $field) {        
@@ -311,7 +323,7 @@ class ExportDataController extends Controller
         // $table->addCell(2000, $tableCellStyle)->addText('Row 4', $tableFontStyle);
         // $table->addCell(500, $tableCellBtlrStyle)->addText('Row 5', $tableFontStyle);
         foreach($fields as $field) {
-            $table->addCell()->addText(__("fields.$field"), $tableFontStyle);
+            $table->addCell()->addText($this->localizeFieldName($field), $tableFontStyle);
         }
 
         foreach($records as $record) {            

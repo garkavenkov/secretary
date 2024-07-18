@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Settlement;
+use App\Snippets\SqlSnippet;
 use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
 use DeclensionUkrainian\Toponym;
@@ -11,6 +12,7 @@ use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class Household extends Model
 {
@@ -31,7 +33,8 @@ class Household extends Model
         'address'
     ];
 
-    protected $appends = array('short_address', 'full_address');
+    protected $appends = array('short_address', 'full_address', 'settlement_name', 'household_head');
+    // protected $appends = array('settlement_name');
 
     protected static function boot()
     {
@@ -127,20 +130,7 @@ class Household extends Model
      * e.g: "вул. Свободи, буд. 5, корп. 3, кв. 4
      *
      * @return string
-     */
-    // public function getShortAddress() : string
-    // {
-    //     $parts = explode(',', $this->address);
-    //     $address = "$parts[0] $parts[1], буд. $parts[2]";
-
-    //     // корпус
-    //     $address = $address . ($parts[3] !== '' ? ", корп. $parts[3]" : "");
-
-    //     // квартира
-    //     $address = $address . ($parts[4] !== '' ? ", кв. $parts[4]" : "");
-
-    //     return $address;   
-    // }
+     */   
     public static function getShortAddress(string $address) : string 
     {
         $parts = explode(',', $address);
@@ -156,18 +146,7 @@ class Household extends Model
     }
 
    
-    // public function getFullAddress(): string
-    // {
-     
-    //     $settlement_type = mb_strtolower($this->settlement_type);             
-    //     $district = explode(' ', $this->district);
-    //     $district = Toponym::inGenetive(['name' => $district[0], 'type' => $district[1]]);
-        
-    //     $region = explode(' ', $this->region);
-    //     $region = Toponym::inGenetive(['name' => $region[0], 'type' => $region[1]]);
-
-    //     return $this->getShortAddress() . ", $settlement_type $this->settlement, $district, $region";
-    // }
+ 
     /**
      * Get full address. 
      * Which extends showrt address adding district and region name
@@ -304,14 +283,30 @@ class Household extends Model
         return DB::select($sql);
     }
         
-    //********************************** Attributes *********************************************************
-    /*
-    public function getSettlementNameAttribute()
+    public static function sqlBuilder(): EloquentBuilder
     {
-        return $this->settlement->name;
+        return Household::query()
+                    ->join('settlements as s', 's.id', '=', 'households.settlement_id')
+                    ->select(
+                        'households.id',
+                        'households.address', 
+                        'households.number', 
+                        'households.household_type_id',
+                        'households.settlement_id',
+                        's.name as settlement',
+                        's.inner_code as settlement_inner_code'
+                    )                            
+                    ->addSelect(SqlSnippet::members_count())
+                    ->addSelect(SqlSnippet::household_head());
     }
-    */
 
+    //********************************** Attributes *********************************************************
+   
+    // public function getSettlementNameAttribute()
+    // {
+    //     return $this->settlement->name;
+    // }
+    
     public function getHouseholdNumberAttribute()
     {
         // return $this->fullNumber();
@@ -323,16 +318,19 @@ class Household extends Model
     }
    
     public function getShortAddressAttribute(): string
-    {
-        // return $this->getShortAddress();
+    {        
         return Household::getShortAddress($this->address);
     }
 
    
     public function getFullAddressAttribute()
     {
-        // return $this->getFullAddress();
         return Household::getFullAddress($this->address, $this->settlement, $this->settlement_type, $this->district, $this->region);
+    }
+
+    public function getHouseholdHeadAttribute()
+    {
+        return $this->household_head();
     }
 
     // *********************************************** Scopes ************************************************

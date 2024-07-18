@@ -109,22 +109,9 @@ class HouseholdController extends Controller
 
             return response()->json(['data' => $result]);
 
-        } else  {            
-            $households = Household::query()
-                            ->join('settlements as s', 's.id', '=', 'households.settlement_id')
-                            ->select(
-                                'households.id',
-                                'households.address', 
-                                'households.number', 
-                                'households.household_type_id',
-                                's.id as settlement_id',
-                                's.name as settlement',
-                                's.inner_code as settlement_inner_code'
-                            )                            
-                            ->addSelect(SqlSnippet::members_count())
-                            ->addSelect(SqlSnippet::household_head());
+        } else  {    
 
-
+            $households = Household::sqlBuilder();
 
             if (request()->query('where')) {
 
@@ -193,27 +180,15 @@ class HouseholdController extends Controller
      */
     public function show($id)
     {
-        // $household = Household::with('settlement', 'type', 'owners')->findOrFail($id);
-        
-        $household = Household::query()                        
-                        ->join('settlements as s', 'households.settlement_id', '=', 's.id')
+        $household = Household::sqlBuilder()
                         ->join('settlement_types as st', 'st.id', '=', 's.settlement_type_id')
                         ->join('councils as c', 'c.id', '=', 's.council_id')
                         ->join('communities as com', 'com.id', '=', 'c.community_id')
                         ->join('districts as d', 'd.id', '=', 'com.district_id')
                         ->join('regions as r', 'r.id', '=', 'd.region_id')
-                        ->join('household_types as ht', 'households.household_type_id', '=', 'ht.id')        
-                        ->select(
-                            'households.id',
-                            'households.settlement_id',                       
-                            'households.household_type_id',
-                            'households.number',
-                            'households.address',
-                            'households.special_marks',
-                            'households.additional_data',
+                        ->join('household_types as ht', 'households.household_type_id', '=', 'ht.id')
+                        ->addSelect(
                             'ht.name as household_type',
-                            's.name as settlement',
-                            's.inner_code as settlement_inner_code',                            
                             'st.name as settlement_type',
                             'd.name as district',
                             'r.name as region',
@@ -221,7 +196,8 @@ class HouseholdController extends Controller
                         ->addSelect(SqlSnippet::household_head())
                         ->with('owners')
                         ->findOrFail($id);          
-                            
+
+       
         return new HouseholdResource($household);
     }
 

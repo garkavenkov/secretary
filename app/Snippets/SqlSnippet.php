@@ -49,7 +49,7 @@ class SqlSnippet
             from    household_members hm
             inner   join family_relationship_types frt on frt.id = hm.family_relationship_type_id 
             where   hm.household_id  = households.id and frt.name = 'голова домогосподарства'
-        ) as household_head";
+        ) as head";
         
         return DB::raw($sql);
     }   

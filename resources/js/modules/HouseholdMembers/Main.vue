@@ -163,7 +163,10 @@ export default {
                 formatted_birthdate: 'Дата народження',
                 full_age: 'Вік',
                 full_address: 'Повна адреса',
-                household_number: 'Домогосподарство',                
+                sex: 'Стать',
+                short_address: 'Місцезнаходження / адреса',
+                settlement: 'Населений пункт',
+                household_number: 'Номер домогосподарство',                
             },   
             pathMdiAccountEye: mdiAccountEyeOutline            
         }
