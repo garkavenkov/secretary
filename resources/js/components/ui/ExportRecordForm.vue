@@ -4,7 +4,9 @@
       
         <div class="row mb-3">           
 
-            <div class="mb-2">Оберіть формат документу</div>
+            <div class="mb-2" :class="{'not-selected' : formatType == ''}">
+                Оберіть формат документу
+            </div>
             <div class="format-type__wrapper">
 
                 <label class="format-type" for="excel" style="--clr: green;" title="Експорт у форматі Microsoft Excel">
@@ -55,7 +57,9 @@
         </div>
         <div class="row mb-3">
             <div class="d-flex flex-column">   
-                <div class="mb-2">Доступні стовпці</div>
+                <div class="mb-2">
+                    Доступні стовпці
+                </div>
                 <div class="available-field__wrapper">                    
                     <div    v-for="(field,index) in fieldsTitle" 
                             :key="index" 
@@ -73,7 +77,9 @@
 
         <div class="row mb-3">
             <div class="d-flex flex-column">   
-                <div class="mb-2">Відібрані стовпці</div>
+                <div class="mb-2" :class="{'not-selected' : selectedFields.length == 0}">
+                    Відібрані стовпці
+                </div>
                 <div    class="selected-field__wrapper"  
                         @drop="dropField($event)"
                         @dragover.prevent
@@ -296,6 +302,10 @@ export default {
 .format-type__wrapper {
     display: flex;
     justify-content: space-between;
+}
+
+.not-selected {
+    color: red;
 }
 
 .format-type {
