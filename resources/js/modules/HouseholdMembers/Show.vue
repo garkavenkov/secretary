@@ -234,7 +234,8 @@ export default {
     },
     watch: {
         '$route' (to, from) {                     
-            if ((to.params.id !== from.params.id) && (to.name == from.name)) {                
+            // console.log(to, from);
+            if ((to.params.id !== from.params.id)) { // && (to.name == from.name)) {                
                 this.$store.dispatch('HouseholdMembers/fetchRecord', to.params.id,);
             }
         },

@@ -58,7 +58,7 @@ class HouseholdMemberResource extends JsonResource
                                                         $this->settlement_type, 
                                                         $this->district, 
                                                         $this->region
-                                                )            
+                                                ),
             // 'relatives'                     =>  $this->relatives()
         ];
     }

@@ -256,7 +256,7 @@ class HouseholdMemberController extends Controller
     {
         $member = HouseholdMember::findOrFail($id);
 
-        return new HouseholdMemberRelativesResource($member);
+        return HouseholdMemberRelativesResource::collection($member->relatives());
     }
 
     /**

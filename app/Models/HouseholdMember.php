@@ -251,12 +251,13 @@ class HouseholdMember extends Model
                     frt.id as relation_id,
                     frt.name as relation"
                 )
+                ->addSelect(DB::raw(HouseholdMember::memberFullAgeSQLSnippet(date('Y-m-d'))))
                 ->join('family_relationship_types as frt', 'frt.id', '=', 'fr.relationship_type_id')
                 ->join('household_members as hm', 'hm.id', '=', 'fr.relative_id')
-                ->where('fr.member_id', '=', $this->id)
                 ->when($only_alive, function($q) {
                     $q->whereNull('hm.death_date');
                 })
+                ->where('fr.member_id', '=', $this->id)
                 ->get();
     }
 
