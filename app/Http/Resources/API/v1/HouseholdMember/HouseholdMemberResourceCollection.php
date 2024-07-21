@@ -16,7 +16,8 @@ class HouseholdMemberResourceCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function($member) {                       
+        return $this->collection->map(function($member) {              
+            $age = $member->full_age > 20 ? $member->full_age % 10 : $member->full_age;
             return [
                 'id'                        =>  (int)   $member->id,
                 'household_id'              =>  (int)   $member->household_id,
@@ -28,6 +29,7 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'birthdate'                 =>  $member->birthdate,
                 'birthdate_formatted'       =>  Carbon::parse($member->birthdate)->format('d.m.Y'),
                 'full_age'                  =>  $member->full_age,
+                'full_age_with_prefix'      =>  $member->full_age . " " . trans_choice('plural.years', $age),
                 'family_relationship_type'  =>  $member->family_relationship_type,
                 'status'                    =>  $member->status,
                 'death_date'                =>  $member->death_date,

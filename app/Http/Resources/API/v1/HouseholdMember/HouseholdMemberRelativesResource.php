@@ -14,6 +14,8 @@ class HouseholdMemberRelativesResource extends JsonResource
      */
     public function toArray($request)
     {
+        $age = $this->full_age > 20 ? $this->full_age % 10 : $this->full_age;
+
         return [
             'id'                    =>  (int) $this->id,
             'formatted_birthdate'   =>  $this->formatted_birthdate,
@@ -23,7 +25,7 @@ class HouseholdMemberRelativesResource extends JsonResource
             'sex'                   =>  $this->sex,
             'full_name'             =>  $this->full_name,
             'full_age'              =>  (int) $this->full_age,
-            // 'full_age_with_prefix'  =>  trans_choice('plural.years', (int) $this->full_age, ['value' => $this->full_age]),
+            'full_age_with_prefix'  =>  $this->full_age . " " . trans_choice('plural.years', $age),
             'relation_id'           =>  (int) $this->relation_id,
             'relation'              =>  $this->relation,
         ];

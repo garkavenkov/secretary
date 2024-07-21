@@ -234,7 +234,7 @@ export default {
     },
     watch: {
         '$route'(to, from) {
-            console.log(to, from);
+            // console.log(to, from);
             if ((to.params.id !== from.params.id) && (to.name.includes('household-member.'))) {
                 this.$store.dispatch('HouseholdMembers/fetchRecord', to.params.id);
             }

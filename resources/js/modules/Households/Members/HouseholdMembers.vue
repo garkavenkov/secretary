@@ -67,9 +67,11 @@
                         :key="member.id"
                         @dblclick="showHouseholdMemberInfo(member)">
 
-                    <div class="card-header d-flex justify-content-between">
+                    <div class="card-header flex-column">
                         <div>
-                            <div class="member-surname">{{member.surname}}</div>
+                            <div class="member-surname">{{member.surname}}</div>                        
+                        </div>
+                        <div class="d-flex gap-1">
                             <div class="member-name">{{member.name}}</div>
                             <div class="member-name">{{member.patronymic}}</div>
                         </div>
@@ -89,30 +91,34 @@
                             <SvgIcon
                                 type="mdi" 
                                 :path="pathMdiFamilyTree" 
-                                :size="16"
-                                class="me-3"
-                                style="color:blue" 
+                                :size="18"
+                                class="me-2"
+                                style="color:green" 
                                 title="Родинні відносини"/>
                             <span>{{member.family_relationship_type}}</span>
                         </div>
 
-                        <div class="d-flex mb-2 flex-column">
-                            <div>                                
-                                <SvgIcon
-                                    type="mdi" 
-                                    :path="pathMdiCakeVariant"
-                                    :size="16"
-                                    class="me-3"
-                                    style="color:red" 
-                                    title="Дата народження"/>
-                                <span>{{formatedDate(member.birthdate)}}</span>
+                        <div class="d-flex mb-2 flex-column border-top pt-2">
+                            <div class="d-flex d-flex justify-content-between align-items-center">
+                                <div class="d-flex"> 
+                                    <SvgIcon
+                                        type="mdi" 
+                                        :path="pathMdiCakeVariant"
+                                        :size="18"
+                                        class="me-2"
+                                        style="color:magenta" 
+                                        title="Дата народження"/>
+                                    <span>{{formatedDate(member.birthdate)}}</span>
+                                </div>
+                                <span class="fs-08 text-muted">{{ member.full_age_with_prefix }}</span>
                             </div>
-                            <div v-if="member.death_date != null">                                
+
+                            <div v-if="member.death_date != null" class="d-flex">
                                 <SvgIcon
                                     type="mdi" 
                                     :path="pathMdiCoffin"
-                                    :size="16"
-                                    class="me-3"
+                                    :size="18"
+                                    class="me-2"
                                     title="Дата смерті"/>
                                 <span>{{formatedDate(member.death_date)}}</span>
                             </div>
@@ -482,7 +488,7 @@ export default {
     -webkit-user-select: none;
     -ms-user-select: none;
 
-    width: 200px;
+    width: 220px;
 
     &:hover, &:active {
         box-shadow: 0 0 2px 3px #e7e7e7;

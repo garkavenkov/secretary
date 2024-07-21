@@ -9,38 +9,38 @@
                 <div>{{ relative.name }} {{ relative.patronymic }}</div>    
             </div>
             <div class="card-body">
-                <div class="border-bottom pb-2 mb-2">
-                    <!-- <div> -->
-                        <!-- <SvgIcon
+                <div class="border-bottom pb-2 mb-2  align-items-baseline lh-24">
+                    <div class="d-flex align-items-baseline1">
+                        <SvgIcon
                             type="mdi" 
                             :path="pathBirthdate"
                             :size="18"
-                            class="me-3"
-                            style="color:red" 
-                            title="Дата народження"/>  -->
-                        <!-- </div> -->
-                    <span>
-                        {{ relative.formatted_birthdate }}                
-                    </span>
-                    <span>
-                        {{ relative.full_age }}
+                            class="me-1"
+                            style="color:magenta" 
+                            title="Дата народження"/> 
+                        <span>
+                            {{ relative.formatted_birthdate }}                
+                        </span>
+                    </div>
+                    <span class="fs-07 text-muted">
+                        {{ relative.full_age_with_prefix }}
                     </span>
                 </div>
-                <div >
-                    <!-- <div>
+                <div class="lh-24">
+                    <div class="d-flex align-items-center">
                         <SvgIcon
                             type="mdi" 
                             :path="pathRelation" 
                             :size="18"
-                            class="me-3"
-                            style="color:blue" 
+                            class="me-1"
+                            style="color:green" 
                             title="Родинні відносини"/>
-                        </div> -->
-                    {{ relative.relation }}
+                        {{ relative.relation }}
+                    </div>
                     <div :class="[relative.sex ==  'чоловіча' ? 'male' : 'female']">
                         <SvgIcon 
                             type="mdi" 
-                            size="18"
+                            :size="18"
                             :path="relative.sex == 'чоловіча' ? pathMale : pathFemale"
                             :title="relative.sex == 'чоловіча' ? 'чоловіча' : 'жіноча'" />
                     </div>
@@ -128,7 +128,7 @@ export default {
     // border: 1px solid #e7e7e7;
     // border-radius: 0.2rem;
     // padding: 0.5rem 1rem;
-    min-width: 200px;
+    min-width: 220px;
 
     // div:nth-of-type(1) {
     //     font-weight: bold;
@@ -150,10 +150,14 @@ export default {
     // }
 
     // div:nth-of-type(4) {
-        div.male {
+        .male, .female {
+            display: flex;
+            align-items: center;
+        }
+        .male {
             color: blue;
         }
-        div.female {
+        .female {
             color: red;
         }
 
