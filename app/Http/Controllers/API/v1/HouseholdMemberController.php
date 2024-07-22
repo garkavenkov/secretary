@@ -111,7 +111,7 @@ class HouseholdMemberController extends Controller
             }
 
         } 
-        $date = date('Y-m-d');
+        // $date = date('Y-m-d');
         $members = $members
                         // ->where(function($q) use($date) {
                         //     return $q->whereNull('household_members.death_date')

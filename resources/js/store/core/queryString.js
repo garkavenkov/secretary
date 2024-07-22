@@ -38,7 +38,7 @@ export default {
                 }
 
                 if (state.filter.hasOwnProperty('status')) { //&& state.filter.status !== 'alive') {
-                    conditions.push('status=' + state.filter.status);
+                    conditions.push(`status=${state.filter.status}`);
                 }
                 
                 if (conditions.length > 0) {

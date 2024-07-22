@@ -17,7 +17,9 @@ class HouseholdMemberResourceCollection extends ResourceCollection
     public function toArray($request)
     {
         return $this->collection->map(function($member) {              
+            
             $age = $member->full_age > 20 ? $member->full_age % 10 : $member->full_age;
+            
             return [
                 'id'                        =>  (int)   $member->id,
                 'household_id'              =>  (int)   $member->household_id,
@@ -38,6 +40,8 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                                                 }),
                 'death_register_number'     =>  $member->death_register_number,
                 'death_register_office'     =>  $member->death_register_office,
+                'address'                   =>  Household::getShortAddress($member->address),
+                'settlement'                =>  mb_strcut(mb_strtolower($member->settlement_type), 0, 2) . ". " .  $member->settlement,
                 'full_address'              =>  Household::getFullAddress(
                                                         $member->address,
                                                         $member->settlement, 

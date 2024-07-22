@@ -76,13 +76,19 @@
                             data-field-type="number"
                             class="sortable"
                             style="min-width: 70px;">
-                            Вік
+                                Вік
                         </th> 
-                        <th>Повна адреса</th>
+                        <!--<th>Повна адреса</th>-->
+                        <th>Населений пункт</th>
+                        <th data-sort-field="address"
+                            data-field-type="string"
+                            class="sortable">
+                                Адреса
+                        </th>
                         <th data-sort-field="household_number"
                             data-field-type="string"
                             class="sortable">
-                            Домогосподарство
+                                Домогосподарство
                         </th>
                     </tr>
                 </template>
@@ -90,7 +96,7 @@
                 <template v-slot:default="slotProps">
                     <tr     v-for="record in slotProps.paginatedData"
                             :key="record.id"
-                            :class="{ 'table-primary': record.selected }">                            
+                            :class="{ 'table-primary': record.selected, 'dead-member': record.death_date !== null}">
                         <td class="text-center" v-if="!inSelectMode" style="line-height: 24px;">
                             <router-link :to="{name: 'household-member', params: { id: record.id }}" title="Перейти до інформації по члену домогосподарства">
                                 <SvgIcon type="mdi" :path="pathMdiAccountEye" :size="18"/>
@@ -106,7 +112,9 @@
                         <td class="text-center">{{record.birthdate_formatted}}</td>
                         <td class="text-center" v-if="showDeathDateField">{{ record.death_date_formatted }}</td>                        
                         <td class="text-center">{{record.full_age}}</td>
-                        <td>{{record.full_address}}</td>
+                        <!--<td>{{record.full_address}}</td>-->
+                        <td>{{ record.settlement }}</td>
+                        <td>{{ record.address }}</td>
                         <td class="text-center">
                             <router-link :to="{name: 'households.show.info', params: { id: record.household_id }}" style="text-decoration: none;">
                                 {{record.household_number}}
@@ -190,7 +198,7 @@ export default {
         },
         resetFilter() {
             this.filter.settlement_id = 0;
-            this.filter.isFiltered = false;
+            this.filter.isFiltered = true;
             this.filter.age.selected = false;
             this.filter.age.value = [0,100];
             this.filter.additionalParams = {};
@@ -252,3 +260,11 @@ export default {
 }
 
 </script>
+
+<style lang="scss" scoped>
+
+tr.dead-member {
+    background-color: #ced4da;
+}
+
+</style>

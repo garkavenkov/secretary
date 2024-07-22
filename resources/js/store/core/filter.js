@@ -15,7 +15,7 @@ export default {
     },
     actions: {
         applyFilter: ({commit, dispatch}, payload) => {                                    
-            commit('setFilter', payload );            
+            commit('setFilter', payload );
             commit('makeQueryString');
             dispatch('fetchRecords' );
         }

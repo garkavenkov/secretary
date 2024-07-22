@@ -12,8 +12,7 @@ export default {
             // console.log(`url: ${url}`);
             // if (state.queryString !== undefined) {
             //     url = `${state.url}${state.queryString}`;                
-            // } 
-            // console.log(`url: ${url}`);
+            // }             
             axios.get(state.url)
                 .then(res => {
                     commit('setData', {ent:state.entities, data: res.data.data});

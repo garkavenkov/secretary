@@ -59,7 +59,7 @@ export const HouseholdMembers = {
     mutations: {
         ...crud.mutations,
         ...filter.mutations,
-        ...queryString.mutations
+        ...queryString.mutations,
     },
     actions: {
         ...crud.actions,
