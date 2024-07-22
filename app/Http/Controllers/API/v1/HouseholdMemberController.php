@@ -43,7 +43,7 @@ class HouseholdMemberController extends Controller
         } else {
             $per_page = 10;
         }
-      
+        // dd(request()->all());
         $members = HouseholdMember::sqlBuilder();
 
         if (request()->query('household_id')) {
@@ -90,6 +90,18 @@ class HouseholdMemberController extends Controller
                        
                         $members = $members->whereRaw(SqlSnippet::memberFullAgeRange(), $ageRange);                      
 
+                    }  else if ($parts[0] == 'status') {
+                        
+                        if ($parts[1] == 'alive') {
+                            $members = $members->whereNull('household_members.death_date');
+                        } else if ($parts[1] == 'dead') {
+                            $members = $members->whereNotNull('household_members.death_date');
+                        }
+
+                    }  else if ($parts[0] == 'sex') {
+
+                        $members = $members->where('household_members.sex', '=', $parts[1]);
+
                     }  else {
 
                         $members = $members->where($parts[0], $parts[1]);
@@ -101,10 +113,10 @@ class HouseholdMemberController extends Controller
         } 
         $date = date('Y-m-d');
         $members = $members
-                        ->where(function($q) use($date) {
-                            return $q->whereNull('household_members.death_date')
-                                     ->orWhere('household_members.death_date', '>', $date);
-                        })
+                        // ->where(function($q) use($date) {
+                        //     return $q->whereNull('household_members.death_date')
+                        //              ->orWhere('household_members.death_date', '>', $date);
+                        // })
                         ->paginate($per_page);
 
         return new HouseholdMemberResourceCollection($members->withQueryString());

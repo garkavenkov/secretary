@@ -33,6 +33,9 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'family_relationship_type'  =>  $member->family_relationship_type,
                 'status'                    =>  $member->status,
                 'death_date'                =>  $member->death_date,
+                'death_date_formatted'      =>  $this->when($member->death_date, function() use($member) {
+                                                    return Carbon::parse($member->death_date)->format('d.m.Y');
+                                                }),
                 'death_register_number'     =>  $member->death_register_number,
                 'death_register_office'     =>  $member->death_register_office,
                 'full_address'              =>  Household::getFullAddress(

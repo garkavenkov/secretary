@@ -36,6 +36,10 @@ export default {
                 if (state.filter.hasOwnProperty('address') && state.filter.address !== '') {
                     conditions.push('address=' + state.filter.address);
                 }
+
+                if (state.filter.hasOwnProperty('status')) { //&& state.filter.status !== 'alive') {
+                    conditions.push('status=' + state.filter.status);
+                }
                 
                 if (conditions.length > 0) {
                     // state.queryString = `?per_page=${state.perPage}&where=` + conditions.join(';');                 

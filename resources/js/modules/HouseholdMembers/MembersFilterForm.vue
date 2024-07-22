@@ -23,8 +23,18 @@
                     <option value="all">Всі</option>
                     <option value="чоловіча">Чоловіча</option>
                     <option value="жіноча">Жіноча</option>
-                </select>                
-            </div>            
+                </select>
+            </div>
+            <div class="col">
+                <label for="memberStatus" class="form-label" :class="{'filtered': filter.status !== 'alive'}">Статус</label>
+                <select class="form-control"
+                        id="memberStatus"
+                        v-model="filter.status">
+                    <option value="alive">Живі</option>
+                    <option value="dead">Мертві</option>
+                    <option value="all">Всі</option>
+                </select>
+            </div>
         </div>
         <div class="row mb-3">
             <div class="col" >

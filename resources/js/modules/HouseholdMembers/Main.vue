@@ -71,6 +71,7 @@
                             Призвіще ім'я по батькові
                         </th>
                         <th class="text-center">Дата народження</th>
+                        <th class="text-center" v-if="showDeathDateField">Дата смерті</th>                        
                         <th data-sort-field="full_age"
                             data-field-type="number"
                             class="sortable"
@@ -103,6 +104,7 @@
                         </td>                        
                         <td>{{record.full_name}}</td>
                         <td class="text-center">{{record.birthdate_formatted}}</td>
+                        <td class="text-center" v-if="showDeathDateField">{{ record.death_date_formatted }}</td>                        
                         <td class="text-center">{{record.full_age}}</td>
                         <td>{{record.full_address}}</td>
                         <td class="text-center">
@@ -192,6 +194,8 @@ export default {
             this.filter.age.selected = false;
             this.filter.age.value = [0,100];
             this.filter.additionalParams = {};
+            this.filter.status = 'alive';
+            this.filter.sex = 'all';
             this.$store.dispatch('HouseholdMembers/applyFilter', this.filter);
         },
         perPageChanged(value) {
@@ -225,8 +229,13 @@ export default {
             'selectedRecords',
             'selectedRecordsCount', 
             'isAllSelected',
-            'toggleSelectAllTitle'
-        ]),   
+            'toggleSelectAllTitle',
+            'url'
+        ]),
+        showDeathDateField() {
+            return (this.url.includes('status=dead') || this.url.includes('status=all')) ? true : false;
+            
+        }
     },
     components: {
         MembersFilterForm,

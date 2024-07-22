@@ -1133,6 +1133,8 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.filter.age.selected = false;
       this.filter.age.value = [0, 100];
       this.filter.additionalParams = {};
+      this.filter.status = 'alive';
+      this.filter.sex = 'all';
       this.$store.dispatch('HouseholdMembers/applyFilter', this.filter);
     },
     perPageChanged: function perPageChanged(value) {
@@ -1159,7 +1161,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       reportWizardForm.show();
     }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_13__.mapGetters)('HouseholdMembers', ['members', 'filter', 'pagination', 'entities', 'inSelectMode', 'isFiltered', 'isIndeterminate', 'selectedRecords', 'selectedRecordsCount', 'isAllSelected', 'toggleSelectAllTitle'])),
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_13__.mapGetters)('HouseholdMembers', ['members', 'filter', 'pagination', 'entities', 'inSelectMode', 'isFiltered', 'isIndeterminate', 'selectedRecords', 'selectedRecordsCount', 'isAllSelected', 'toggleSelectAllTitle', 'url'])), {}, {
+    showDeathDateField: function showDeathDateField() {
+      return this.url.includes('status=dead') || this.url.includes('status=all') ? true : false;
+    }
+  }),
   components: {
     MembersFilterForm: _MembersFilterForm_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     ButtonSelectRecords: _components_ui_Buttons_ButtonSelectRecords_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
@@ -3103,7 +3109,11 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "class": "text-center"
 }, "Дата народження", -1 /* HOISTED */);
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+var _hoisted_12 = {
+  key: 2,
+  "class": "text-center"
+};
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "data-sort-field": "full_age",
   "data-field-type": "number",
   "class": "sortable",
@@ -3111,37 +3121,41 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
     "min-width": "70px"
   }
 }, " Вік ", -1 /* HOISTED */);
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Повна адреса", -1 /* HOISTED */);
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Повна адреса", -1 /* HOISTED */);
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   "data-sort-field": "household_number",
   "data-field-type": "string",
   "class": "sortable"
 }, " Домогосподарство ", -1 /* HOISTED */);
-var _hoisted_15 = {
+var _hoisted_16 = {
   key: 0,
   "class": "text-center",
   style: {
     "line-height": "24px"
   }
 };
-var _hoisted_16 = {
+var _hoisted_17 = {
   key: 1,
   "class": "text-center",
   style: {
     "line-height": "24px"
   }
 };
-var _hoisted_17 = ["onUpdate:modelValue", "onClick"];
-var _hoisted_18 = {
-  "class": "text-center"
-};
+var _hoisted_18 = ["onUpdate:modelValue", "onClick"];
 var _hoisted_19 = {
   "class": "text-center"
 };
 var _hoisted_20 = {
+  key: 2,
   "class": "text-center"
 };
 var _hoisted_21 = {
+  "class": "text-center"
+};
+var _hoisted_22 = {
+  "class": "text-center"
+};
+var _hoisted_23 = {
   key: 1,
   "class": "text-muted text-center p-3"
 };
@@ -3202,7 +3216,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onChange: _cache[1] || (_cache[1] = function ($event) {
           return _ctx.toggleSelectAll($event);
         })
-      }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_8)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_9)), _hoisted_10, _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14])];
+      }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_8)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_9)), _hoisted_10, _hoisted_11, $options.showDeathDateField ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_12, "Дата смерті")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_13, _hoisted_14, _hoisted_15])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
@@ -3211,7 +3225,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
             'table-primary': record.selected
           })
-        }, [!_ctx.inSelectMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        }, [!_ctx.inSelectMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
           to: {
             name: 'household-member',
             params: {
@@ -3228,7 +3242,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }, null, 8 /* PROPS */, ["path"])];
           }),
           _: 2 /* DYNAMIC */
-        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
           "class": "form-check-input cursor-pointer",
           type: "checkbox",
           "onUpdate:modelValue": function onUpdateModelValue($event) {
@@ -3240,7 +3254,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
               id: record.id
             });
           }, ["shift"])
-        }, null, 8 /* PROPS */, _hoisted_17), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.selected]])])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.full_name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.birthdate_formatted), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.full_age), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.full_address), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+        }, null, 8 /* PROPS */, _hoisted_18), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.selected]])])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.full_name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.birthdate_formatted), 1 /* TEXT */), $options.showDeathDateField ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.death_date_formatted), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.full_age), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.full_address), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
           to: {
             name: 'households.show.info',
             params: {
@@ -3261,7 +3275,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
 
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["dataTable", "perPageItems", "externalPagination", "onPageChanged", "onPerPageChanged"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, " Немає даних для відображення. "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MembersFilterForm, {
+  }, 8 /* PROPS */, ["dataTable", "perPageItems", "externalPagination", "onPageChanged", "onPerPageChanged"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, " Немає даних для відображення. "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MembersFilterForm, {
     onResetFilter: $options.resetFilter
   }, null, 8 /* PROPS */, ["onResetFilter"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DocumentGenerationForm, {
     records: _ctx.selectedRecords
@@ -3313,27 +3327,40 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, "Жіноча", -1 /* HOISTED */);
 var _hoisted_10 = [_hoisted_7, _hoisted_8, _hoisted_9];
 var _hoisted_11 = {
-  "class": "row mb-3"
-};
-var _hoisted_12 = {
   "class": "col"
 };
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "form-check-label",
-  "for": "filterByAge"
-}, " Відобразити за віком ", -1 /* HOISTED */);
-var _hoisted_14 = {
-  "class": "col d-flex justify-content-end"
-};
-var _hoisted_15 = ["innerHTML"];
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "alive"
+}, "Живі", -1 /* HOISTED */);
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "dead"
+}, "Мертві", -1 /* HOISTED */);
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "all"
+}, "Всі", -1 /* HOISTED */);
+var _hoisted_15 = [_hoisted_12, _hoisted_13, _hoisted_14];
 var _hoisted_16 = {
-  key: 0,
   "class": "row mb-3"
 };
 var _hoisted_17 = {
   "class": "col"
 };
-var _hoisted_18 = ["disabled"];
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "form-check-label",
+  "for": "filterByAge"
+}, " Відобразити за віком ", -1 /* HOISTED */);
+var _hoisted_19 = {
+  "class": "col d-flex justify-content-end"
+};
+var _hoisted_20 = ["innerHTML"];
+var _hoisted_21 = {
+  key: 0,
+  "class": "row mb-3"
+};
+var _hoisted_22 = {
+  "class": "col"
+};
+var _hoisted_23 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_RangeInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("RangeInput");
   var _component_AdditionalParamsFormFilter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AdditionalParamsFormFilter");
@@ -3347,12 +3374,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     footer: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         "class": "btn btn-outline-secondary",
-        onClick: _cache[5] || (_cache[5] = function ($event) {
+        onClick: _cache[6] || (_cache[6] = function ($event) {
           return _ctx.$emit('resetFilter');
         }),
         title: "Скинути фильтр",
         disabled: !_ctx.filter.isFiltered
-      }, " Скинути ", 8 /* PROPS */, _hoisted_18)];
+      }, " Скинути ", 8 /* PROPS */, _hoisted_23)];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -3382,27 +3409,38 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return _ctx.filter.sex = $event;
         })
-      }, _hoisted_10, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.filter.sex]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, _hoisted_10, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.filter.sex]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+        "for": "memberStatus",
+        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-label", {
+          'filtered': _ctx.filter.status !== 'alive'
+        }])
+      }, "Статус", 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        "class": "form-control",
+        id: "memberStatus",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return _ctx.filter.status = $event;
+        })
+      }, _hoisted_15, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.filter.status]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "form-check-input ms-2",
         type: "checkbox",
         value: "",
         id: "filterByAge",
-        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return _ctx.filter.age.selected = $event;
         })
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, _ctx.filter.age.selected]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, _ctx.filter.age.selected]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         "class": "text-muted",
         innerHTML: $options.ageRangeInformation
-      }, null, 8 /* PROPS */, _hoisted_15)])]), _ctx.filter.age.selected ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [$data.oldestAge ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_RangeInput, {
+      }, null, 8 /* PROPS */, _hoisted_20)])]), _ctx.filter.age.selected ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [$data.oldestAge ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_RangeInput, {
         key: 0,
         min: "0",
         max: $data.oldestAge,
         minValue: _ctx.filter.age.values[0],
-        "onUpdate:minValue": _cache[3] || (_cache[3] = function ($event) {
+        "onUpdate:minValue": _cache[4] || (_cache[4] = function ($event) {
           return _ctx.filter.age.values[0] = $event;
         }),
         maxValue: _ctx.filter.age.values[1],
-        "onUpdate:maxValue": _cache[4] || (_cache[4] = function ($event) {
+        "onUpdate:maxValue": _cache[5] || (_cache[5] = function ($event) {
           return _ctx.filter.age.values[1] = $event;
         })
       }, null, 8 /* PROPS */, ["max", "minValue", "maxValue"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_AdditionalParamsFormFilter, {
