@@ -481,7 +481,7 @@ class HouseholdMember extends Model
                         's.inner_code as  settlement_inner_code',   // fof HouseholdNumber
                         'h.address',                                // for ShortAddress / FullAddress
                         's.name as settlement',                     // for FullAddress
-                        'st.name as settlement_type',               // for FullAddress
+                        'st.abbreviation as settlement_type',       // for FullAddress
                         'd.name as district',                       // for FullAddress
                         'r.name as region'                          // for FullAddress        
                     )

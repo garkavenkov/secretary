@@ -16,8 +16,9 @@ class SettlementTypeResourceCollection extends ResourceCollection
     {
         return $this->collection->map(function($type) {
             return [
-                'id'    =>  (int)   $type->id,
-                'name'  =>  $type->name
+                'id'            =>  (int)   $type->id,
+                'name'          =>  $type->name,
+                'abbreviation'  =>  $type->abbreviation
             ];
         });
     }

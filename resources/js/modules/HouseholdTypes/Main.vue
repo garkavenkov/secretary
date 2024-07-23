@@ -5,6 +5,7 @@
 
             <SystemDictionaryTable
                     :dataTable="householdTypes"
+                    :fields="fields"
                     title="Довідник 'Типи об'єктів погосподарського обліку'"
                     newRecordTitle="Додати новий тип обліку"
                     editRecordTitle="Редагувати тип обліку"
@@ -20,9 +21,10 @@
             :formData="formData"
             :action="action"
             :formId="formId"
-            fieldId="householdTypeName"
+            :fields="fields"            
             url="/api/v1/household-types"
-            @refreshData="$store.dispatch('HouseholdTypes/fetchRecords')"  />
+            @refreshData="$store.dispatch('HouseholdTypes/fetchRecords')"  
+            @resetForm="resetForm" />
 
 </template>
 
@@ -46,6 +48,22 @@ export default {
             formId: 'HouseholdTypeForm',
             modalTitleCreate: "Новий тип об'єкта погосподарського обліку",
             modalTitleUpdate: 'Редагування типу',
+            fields: [
+                {
+                    title: 'Назва',
+                    name: 'name',
+                    fieldId: "settlementTypeName",
+                    validate: true                  
+                },                
+            ],
+            formData: {
+                name: ''                
+            }
+        }
+    },
+    methods: {
+        resetForm() {
+            this.formData.name = '';
         }
     },
     computed: {

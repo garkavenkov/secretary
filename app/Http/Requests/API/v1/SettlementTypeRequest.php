@@ -28,7 +28,8 @@ class SettlementTypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'  =>  'required|min:3|unique:settlement_types,name'
+            'name'          =>  'required|min:3|unique:settlement_types,name,' . $this->id,
+            'abbreviation'  =>  'required|min:2|unique:settlement_types,abbreviation,' . $this->id
         ];
     }
 
@@ -41,8 +42,11 @@ class SettlementTypeRequest extends FormRequest
     {
         return [
             'name.required'                 =>  'Ви не вказали назву типу населенного пункту',
-            'name.min'                      =>  'Назва типу населенного пункту повинна бути більш ніж :min символів',
+            'name.min'                      =>  'Назва типу населенного пункту повинна бути більш ніж 2 символа',
             'name.unique'                   =>  'Тип с такою назвою вже існує',
+            'abbreviation.required'         =>  'Ви не вказали абревіатуру типу населенного пункту',
+            'abbreviation.min'              =>  'Абревіатура типу населенного пункту повинна бути більш ніж 1 символ',
+            'abbreviation.unique'           =>  'Тип с такою абревіатурою вже існує',
         ];
     }
 }

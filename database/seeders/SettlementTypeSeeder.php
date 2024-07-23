@@ -20,10 +20,12 @@ class SettlementTypeSeeder extends Seeder
 
         DB::table('settlement_types')->insert([
             [
-                'name'  =>  'Селище міського типу',
+                'name'          =>  'Селище міського типу',
+                'abbreviation'  =>  'смт.'
             ],
             [
-                'name'  =>  'Село',
+                'name'          =>  'Село',
+                'abbreviation'  =>  'с.'
             ],
         ]);
     }

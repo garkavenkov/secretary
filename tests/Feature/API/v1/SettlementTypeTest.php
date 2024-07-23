@@ -75,7 +75,7 @@ class SettlementTypeTest extends TestCase
      */
     public function test_api_MUST_NOT_create_settlement_type_if_data_did_not_pass_validation($field, $value)
     {
-        SettlementType::factory()->create(['name' => 'Село']);
+        SettlementType::factory()->create(['name' => 'Село', 'abbreviation' => 'с.']);
         $type = SettlementType::factory()->make([$field => $value])->toArray();
 
         $this->post($this->url, $type)->assertSessionHasErrors($field);
@@ -86,9 +86,12 @@ class SettlementTypeTest extends TestCase
     public function dataProvider(): array
     {
         return [
-            'name is empty'             =>  ['name',    ''],
-            'name is not long enough'   =>  ['name',    'qw'],
-            'name is already exists'    =>  ['name',    'Село']
+            'name is empty'                     =>  ['name',              ''],
+            'name is not long enough'           =>  ['name',            'qw'],
+            'name is already exists'            =>  ['name',          'Село'],
+            'abbreviation is empty'             =>  ['abbreviation',      ''],
+            'abbreviation is not long enough'   =>  ['abbreviation',     'q'],
+            'abbreviation is already exists'    =>  ['abbreviation',    'с.']
         ];
     }
 }

@@ -5,6 +5,7 @@
 
             <SystemDictionaryTable
                     :dataTable="places"
+                    :fields="fields"
                     title="Довідник 'Коди місця роботи (заняття)'"
                     newRecordTitle="Додати новий код місця роботи"
                     editRecordTitle="Редагувати код місця роботи"
@@ -20,9 +21,10 @@
             :formData="formData"
             :action="action"
             :formId="formId"
-            fieldId="workPlaceName"
+            :fields="fields"
             url="/api/v1/work-places"
-            @refreshData="$store.dispatch('WorkPlaces/fetchRecords')" />
+            @refreshData="$store.dispatch('WorkPlaces/fetchRecords')" 
+            @resetForm="resetForm" />
 
 </template>
 
@@ -46,6 +48,22 @@ export default {
             formId: 'WorkPlaceForm',
             modalTitleCreate: "Новий код місця роботи",
             modalTitleUpdate: 'Редагування коду',
+            fields: [
+                {
+                    title: 'Назва',
+                    name: 'name',
+                    fieldId: "workPlaceName",
+                    validate: true                  
+                },                
+            ],
+            formData: {
+                name: ''             
+            }
+        }
+    },
+    methods: {
+        resetForm() {
+            this.formData.name = '';
         }
     },
     computed: {

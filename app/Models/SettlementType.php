@@ -10,6 +10,7 @@ class SettlementType extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'abbreviation'
     ];
 }

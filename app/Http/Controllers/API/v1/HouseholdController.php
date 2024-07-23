@@ -189,7 +189,7 @@ class HouseholdController extends Controller
                         ->join('household_types as ht', 'households.household_type_id', '=', 'ht.id')
                         ->addSelect(
                             'ht.name as household_type',
-                            'st.name as settlement_type',
+                            'st.abbreviation as settlement_type',
                             'd.name as district',
                             'r.name as region',
                         )                        

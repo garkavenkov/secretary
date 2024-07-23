@@ -4,7 +4,7 @@
         <div class="card-header">
             <div class="dictionary-name__wrapper">
                 <span>{{ title }}</span>
-                <ButtonAdd buttonClass="btn-primary p-2" @click="$parent.$emit('newRecord')" :title="newRecordTitle"/>
+                <ButtonAdd buttonClass="btn-primary p-2" @click="$emit('newRecord')" :title="newRecordTitle"/>
             </div>
         </div>
         <div class="card-body">
@@ -13,30 +13,30 @@
                     tableClass="table-bordered table-hover table-sm"
                     tableHeaderClass="table-dark">
                 <template v-slot:header>
-                    <tr>
-                        <th v-for="(title,index) in fieldsTitle" :key="index">
-                            {{ title }}
+                    <tr>                        
+                        <th v-for="(field,index) in fields" :key="index">
+                            {{ field.title }}
                         </th>
                         <th></th>
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">                    
                     <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id">
-                        <td v-for="(name,index) in fieldsName" :key="index">
-                            {{ record[name] }}
+                            :key="record.id">                        
+                        <td v-for="(field,index) in fields" :key="index">
+                            {{ record[field.name] }}
                         </td>
                         <td>
 
                             <ButtonEdit 
                                     buttonClass="btn-outline-warning btn-transparent p-2" 
                                     :title="editRecordTitle" 
-                                    @click="$parent.$emit('editRecord', record)" />
+                                    @click="$emit('editRecord', record)" />
 
                             <ButtonDelete
                                     buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
                                     :title="deleteRecordTitle" 
-                                    @click="$parent.$emit('deleteRecord', record)" />
+                                    @click="$emit('deleteRecord', record)" />
                                     
                         </td>
                     </tr>                    
@@ -60,16 +60,10 @@ export default {
             type: Array,
             required: true
         },
-        fieldsTitle: {
+        fields: {
             type: Array,
-            required: false,
-            default: () => ['Назва']
-        },
-        fieldsName: {
-            type: Array,
-            required: false,
-            default: () => ['name']
-        },
+            required: true            
+        },      
         newRecordTitle: {
             type: String,
             required: false,
@@ -86,6 +80,7 @@ export default {
             default: 'Видалити запис'
         },
     },
+    emits:['newRecord', 'editRecord', 'deleteRecord'],
     data() {
         return {
 

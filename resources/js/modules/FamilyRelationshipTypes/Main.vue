@@ -5,9 +5,8 @@
 
             <SystemDictionaryTable
                     :dataTable="relationshipTypes"
-                    title="Довідник 'Родинні стосунки'"
-                    :fieldsTitle="['Назва', 'Стать']"
-                    :fieldsName="['name', 'sex']"
+                    :fields="fields"
+                    title="Довідник 'Родинні стосунки'"                    
                     newRecordTitle="Додати новий тип родинних стосунків"
                     editRecordTitle="Редагувати тип родинних стосунків"
                     deleteRecordTitle="Видалити тип родинних стосунків"
@@ -22,9 +21,10 @@
             :formData="formData"
             :action="action"
             :formId="formId"
-            fieldId="familyRelationshipTypeName"
+            :fields="fields"            
             url="/api/v1/family-relationship-types"
-            @refreshData="$store.dispatch('FamilyRelationshipTypes/fetchRecords')" />
+            @refreshData="$store.dispatch('FamilyRelationshipTypes/fetchRecords')" 
+            @resetForm="resetForm" />
 
 </template>
 
@@ -47,10 +47,30 @@ export default {
             formId: 'FamilyRelationshipTypeForm',
             modalTitleCreate: 'Новий тип родинних відносин',
             modalTitleUpdate: 'Редагування типу',
+            fields: [
+                {
+                    title: 'Назва',
+                    name: 'name',
+                    fieldId: "familyRelationshipTypeName",
+                    validate: true                  
+                },
+                {
+                    title: 'Стать',
+                    name: 'sex',
+                    fieldId: "familyRelationshipTypeSex",
+                    validate: true
+                },
+            ],
             formData: {
                 name: '',
                 sex: ''
             },
+        }
+    },
+    methods: {
+        resetForm() {
+            this.formData.name = '';
+            this.formData.sex = '';
         }
     },
     computed: {

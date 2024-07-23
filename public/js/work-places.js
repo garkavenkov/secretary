@@ -97,28 +97,29 @@ __webpack_require__.r(__webpack_exports__);
   name: 'SystemDictionaryForm',
   mixins: [_mixins_FormValidator__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
-    'formId': {
+    formId: {
       type: String,
       required: true
     },
-    'fieldId': {
+    fields: {
+      type: Array,
+      required: true
+    },
+    url: {
       type: String,
       required: true
     },
-    'url': {
-      type: String,
-      required: true
-    },
-    'formData': {
+    formData: {
       type: Object,
       required: true
     },
-    'action': {
+    action: {
       type: String,
       required: false,
       "default": 'create'
     }
   },
+  emits: ['refreshData'],
   data: function data() {
     return {};
   },
@@ -128,6 +129,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.action == 'create') {
         axios.post(this.url, this.formData).then(function (res) {
           _this.clearFormData();
+          _this.$toast(res.data.message);
           _this.$emit('refreshData');
         })["catch"](function (err) {
           _this.errors = err.response.data.errors;
@@ -135,6 +137,7 @@ __webpack_require__.r(__webpack_exports__);
       } else if (this.action == 'update') {
         axios.patch("".concat(this.url, "/").concat(this.formData.id), this.formData).then(function (res) {
           _this.errors = [];
+          _this.$toast(res.data.message);
           _this.$emit('refreshData');
         })["catch"](function (err) {
           _this.errors = err.response.data.errors;
@@ -174,19 +177,9 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: true
     },
-    fieldsTitle: {
+    fields: {
       type: Array,
-      required: false,
-      "default": function _default() {
-        return ['Назва'];
-      }
-    },
-    fieldsName: {
-      type: Array,
-      required: false,
-      "default": function _default() {
-        return ['name'];
-      }
+      required: true
     },
     newRecordTitle: {
       type: String,
@@ -204,6 +197,7 @@ __webpack_require__.r(__webpack_exports__);
       "default": 'Видалити запис'
     }
   },
+  emits: ['newRecord', 'editRecord', 'deleteRecord'],
   data: function data() {
     return {};
   },
@@ -253,8 +247,22 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     return {
       formId: 'WorkPlaceForm',
       modalTitleCreate: "Новий код місця роботи",
-      modalTitleUpdate: 'Редагування коду'
+      modalTitleUpdate: 'Редагування коду',
+      fields: [{
+        title: 'Назва',
+        name: 'name',
+        fieldId: "workPlaceName",
+        validate: true
+      }],
+      formData: {
+        name: ''
+      }
     };
+  },
+  methods: {
+    resetForm: function resetForm() {
+      this.formData.name = '';
+    }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('WorkPlaces', ['places']))
 });
@@ -345,14 +353,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "row mb-3"
-};
-var _hoisted_2 = {
   "class": "col"
 };
-var _hoisted_3 = ["for"];
+var _hoisted_2 = ["for"];
+var _hoisted_3 = ["id", "onUpdate:modelValue"];
 var _hoisted_4 = ["id"];
-var _hoisted_5 = ["id"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ModalForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ModalForm, {
@@ -361,21 +366,32 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onCloseForm: $options.clearFormData
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-        "for": $props.fieldId,
-        "class": "form-label"
-      }, "Назва", 8 /* PROPS */, _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-        row: "2",
-        "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['form-control', _ctx.hasError('name') ? 'is-invalid' : '']),
-        id: $props.fieldId,
-        "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-          return $props.formData.name = $event;
-        })
-      }, "\n                ", 10 /* CLASS, PROPS */, _hoisted_4), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData.name]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-        id: "".concat($props.fieldId, "Validation"),
-        "class": "invalid-feedback"
-      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError('name')), 9 /* TEXT, PROPS */, _hoisted_5)])])];
+      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.fields, function (field, index) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+          "class": "row mb-3",
+          key: index
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+          "for": field.fieldId,
+          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-label", {
+            'is-invalid': _ctx.hasError(field.name)
+          }])
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(field.title), 11 /* TEXT, CLASS, PROPS */, _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+          row: "2",
+          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["form-control", {
+            'is-invalid': _ctx.hasError(field.name)
+          }]),
+          id: field.fieldId,
+          "onUpdate:modelValue": function onUpdateModelValue($event) {
+            return $props.formData[field.name] = $event;
+          }
+        }, "\n                ", 10 /* CLASS, PROPS */, _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $props.formData[field.name]]]), field.validate ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+          key: 0,
+          id: "".concat(field.fieldId, "Validation"),
+          "class": "invalid-feedback"
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.getError(field.name)), 9 /* TEXT, PROPS */, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
+      }), 128 /* KEYED_FRAGMENT */))];
     }),
+
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["formId", "onSubmitData", "onCloseForm"]);
 }
@@ -421,7 +437,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonAdd, {
     buttonClass: "btn-primary p-2",
     onClick: _cache[0] || (_cache[0] = function ($event) {
-      return _ctx.$parent.$emit('newRecord');
+      return _ctx.$emit('newRecord');
     }),
     title: $props.newRecordTitle
   }, null, 8 /* PROPS */, ["title"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DataTable, {
@@ -430,31 +446,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     tableHeaderClass: "table-dark"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.fieldsTitle, function (title, index) {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.fields, function (field, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", {
           key: index
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(title), 1 /* TEXT */);
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(field.title), 1 /* TEXT */);
       }), 128 /* KEYED_FRAGMENT */)), _hoisted_5])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: record.id
-        }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.fieldsName, function (name, index) {
+        }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.fields, function (field, index) {
           return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
             key: index
-          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record[name]), 1 /* TEXT */);
+          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record[field.name]), 1 /* TEXT */);
         }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonEdit, {
           buttonClass: "btn-outline-warning btn-transparent p-2",
           title: $props.editRecordTitle,
           onClick: function onClick($event) {
-            return _ctx.$parent.$emit('editRecord', record);
+            return _ctx.$emit('editRecord', record);
           }
         }, null, 8 /* PROPS */, ["title", "onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonDelete, {
           buttonClass: "btn-outline-danger btn-transparent ms-3 p-2",
           title: $props.deleteRecordTitle,
           onClick: function onClick($event) {
-            return _ctx.$parent.$emit('deleteRecord', record);
+            return _ctx.$emit('deleteRecord', record);
           }
         }, null, 8 /* PROPS */, ["title", "onClick"])])]);
       }), 128 /* KEYED_FRAGMENT */))];
@@ -489,6 +505,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SystemDictionaryForm = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SystemDictionaryForm");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryTable, {
     dataTable: _ctx.places,
+    fields: $data.fields,
     title: "Довідник 'Коди місця роботи (заняття)'",
     newRecordTitle: "Додати новий код місця роботи",
     editRecordTitle: "Редагувати код місця роботи",
@@ -496,16 +513,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onNewRecord: _ctx.openFormForAdd,
     onEditRecord: _ctx.openFormForEdit,
     onDeleteRecord: _cache[0] || (_cache[0] = function () {})
-  }, null, 8 /* PROPS */, ["dataTable", "onNewRecord", "onEditRecord"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryForm, {
-    formData: _ctx.formData,
+  }, null, 8 /* PROPS */, ["dataTable", "fields", "onNewRecord", "onEditRecord"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SystemDictionaryForm, {
+    formData: $data.formData,
     action: _ctx.action,
     formId: $data.formId,
-    fieldId: "workPlaceName",
+    fields: $data.fields,
     url: "/api/v1/work-places",
     onRefreshData: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.$store.dispatch('WorkPlaces/fetchRecords');
-    })
-  }, null, 8 /* PROPS */, ["formData", "action", "formId"])], 64 /* STABLE_FRAGMENT */);
+    }),
+    onResetForm: $options.resetForm
+  }, null, 8 /* PROPS */, ["formData", "action", "formId", "fields", "onResetForm"])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -577,9 +595,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      formData: {
-        name: ''
-      },
       action: '',
       modalTitle: '',
       modalSubmitCaption: ''
@@ -608,8 +623,7 @@ __webpack_require__.r(__webpack_exports__);
       var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal(document.getElementById(this.formId));
       this.modalTitle = this.modalTitleUpdate;
       this.modalSubmitCaption = 'Зберегти';
-      this.formData.id = record.id;
-      this.formData.name = record.name;
+      Object.assign(this.formData, record);
       this.action = 'update';
       myModal.show();
     }

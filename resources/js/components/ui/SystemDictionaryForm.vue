@@ -2,17 +2,18 @@
 
     <ModalForm  :formId="formId" @submitData="submitData" @closeForm="clearFormData">
 
-        <div class="row mb-3">
+        <div class="row mb-3" v-for="(field,index) in fields" :key="index">
             <div class="col">
-                <label :for="fieldId" class="form-label">Назва</label>
+                <label :for="field.fieldId" class="form-label" :class="{'is-invalid': hasError(field.name) }">{{ field.title }}</label>
                 <textarea
                         row="2"
-                        :class="['form-control', hasError('name') ? 'is-invalid' : '']"
-                        :id="fieldId"
-                        v-model="formData.name">
+                        class="form-control"
+                        :class="{ 'is-invalid': hasError(field.name) }"
+                        :id="field.fieldId"
+                        v-model="formData[field.name]">
                 </textarea>
-                <div :id="`${fieldId}Validation`" class="invalid-feedback">
-                    {{ getError('name') }}
+                <div :id="`${field.fieldId}Validation`" class="invalid-feedback" v-if="field.validate">
+                    {{ getError(field.name) }}
                 </div>
             </div>
         </div>
@@ -29,38 +30,40 @@ export default {
     name: 'SystemDictionaryForm',
     mixins: [FormValidator],
     props: {
-        'formId': {
+        formId: {
             type: String,
             required: true
         },
-        'fieldId': {
+        fields: {
+            type: Array,
+            required: true
+        },        
+        url: {
             type: String,
             required: true
         },
-        'url': {
-            type: String,
-            required: true
-        },
-        'formData': {
+        formData: {
             type: Object,
             required: true,
         },
-        'action': {
+        action: {
             type: String,
             required: false,
             default: 'create'
         },
     },
+    emits: ['refreshData'],
     data() {
         return {
         }
-    },
+    },    
     methods: {
         submitData() {
             if (this.action == 'create') {
                 axios.post(this.url, this.formData)
                     .then(res => {
                         this.clearFormData();
+                        this.$toast(res.data.message);
                         this.$emit('refreshData');
                     })
                     .catch(err => {
@@ -70,6 +73,7 @@ export default {
                 axios.patch(`${this.url}/${this.formData.id}`, this.formData)
                     .then(res => {
                         this.errors = [];
+                        this.$toast(res.data.message);
                         this.$emit('refreshData');
                     })
                     .catch(err => {

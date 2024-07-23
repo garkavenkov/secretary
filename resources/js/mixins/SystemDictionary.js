@@ -3,10 +3,7 @@ import { Modal } from 'bootstrap'
 
 export default {
     data() {
-        return {
-            formData: {
-                name: ''
-            },
+        return {           
             action: '',
             modalTitle: '',
             modalSubmitCaption: '',
@@ -33,9 +30,9 @@ export default {
 
             this.modalTitle = this.modalTitleUpdate;
             this.modalSubmitCaption = 'Зберегти';
-
-            this.formData.id   = record.id;
-            this.formData.name = record.name;
+            
+            Object.assign(this.formData, record);
+            
             this.action = 'update';
 
             myModal.show();

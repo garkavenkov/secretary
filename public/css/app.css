@@ -12129,6 +12129,11 @@ table thead th.show-record {
   background-color: var(--bs-secondary-bg);
 }
 
+.form-label.is-invalid {
+  color: var(--bs-danger);
+  transition: color 0.3s;
+}
+
 .card-body.widget {
   display: flex;
   align-items: center;

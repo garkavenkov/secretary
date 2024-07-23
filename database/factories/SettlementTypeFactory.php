@@ -17,7 +17,8 @@ class SettlementTypeFactory extends Factory
     public function definition()
     {
         return [
-            'name'  =>  $this->faker->sentence(2)
+            'name'          =>  $this->faker->sentence(2),
+            'abbreviation'  =>  $this->faker->sentence(1)
         ];
     }
 }

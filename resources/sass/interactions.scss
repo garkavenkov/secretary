@@ -27,3 +27,8 @@
 
 
 }
+
+.form-label.is-invalid {
+    color: var(--bs-danger);
+    transition: color 0.3s;
+}

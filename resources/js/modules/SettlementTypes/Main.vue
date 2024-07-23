@@ -5,13 +5,14 @@
 
             <SystemDictionaryTable
                     :dataTable="settlementTypes"
+                    :fields="fields"                    
                     title="Довідник 'Тип населеного пункту'"
                     newRecordTitle="Додати новий тип населенного пункту"
                     editRecordTitle="Редагувати тип населенного пункту"
                     deleteRecordTitle="Видалити тип населенного пункту"
                     @newRecord="openFormForAdd"
                     @editRecord="openFormForEdit"
-                    @deleteRecprd="() => {}"/>
+                    @deleteRecord="() => {}"/>
 
         </div>
     </div>
@@ -20,9 +21,10 @@
             :formData="formData"
             :action="action"
             :formId="formId"
-            fieldId="settlementTypeName"
+            :fields="fields"            
             url="/api/v1/settlement-types"
-            @refreshData="$store.dispatch('SettlementTypes/fetchRecords')"  />
+            @refreshData="$store.dispatch('SettlementTypes/fetchRecords')" 
+            @resetForm="resetForm"  />
 
 </template>
 
@@ -44,7 +46,32 @@ export default {
         return {
             formId: 'SettlementTypeForm',
             modalTitleCreate: "Новий тип населеного пункту",
-            modalTitleUpdate: 'Редагування типу',
+            modalTitleUpdate: 'Редагування типу',           
+            fields: [
+                {
+                    title: 'Назва',
+                    name: 'name',
+                    fieldId: "settlementTypeName",
+                    validate: true                  
+                },
+                {
+                    title: 'Абревіатура',
+                    name: 'abbreviation',
+                    fieldId: "settlementTypeAbbreviation",
+                    validate: true
+                },
+            ],
+            formData: {
+                name: '',
+                abbreviation: ''
+            }
+
+        }
+    },
+    methods: {
+        resetForm() {
+            this.formData.name = '';
+            this.formData.abbreviation = '';
         }
     },
     computed: {
