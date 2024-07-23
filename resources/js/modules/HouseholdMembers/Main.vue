@@ -174,10 +174,11 @@ export default {
                 full_age: 'Вік',
                 full_address: 'Повна адреса',
                 sex: 'Стать',
-                short_address: 'Місцезнаходження / адреса',
+                short_address: 'Адреса',
                 settlement: 'Населений пункт',
-                household_number: 'Номер домогосподарство',                
+                household_number: 'Номер домогосподарства',                
             },   
+           
             pathMdiAccountEye: mdiAccountEyeOutline            
         }
     },

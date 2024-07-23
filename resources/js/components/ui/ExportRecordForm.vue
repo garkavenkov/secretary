@@ -70,15 +70,18 @@
                             @dragstart="pickupAvailableField($event, `available-field-${index}`)"
                             @dragend="pickupAvailableFieldEnded($event)">
                         {{ field }}
-                    </div>                        
+                    </div>
                 </div>
             </div>    
         </div>
 
         <div class="row mb-3">
             <div class="d-flex flex-column">   
-                <div class="mb-2" :class="{'not-selected' : selectedFields.length == 0}">
+                <div class="mb-2 d-flex align-items-center lh-24" :class="{'not-selected' : selectedFields.length == 0}">
                     Відібрані стовпці
+                    <div v-if="selectedFields.length > 0" class="ms-2 eraser" title="Прибрати всі стовпці" @click="selectedFields = []">
+                        <SvgIcon type="mdi" :path="eraserPath" size="18" />
+                    </div>
                 </div>
                 <div    class="selected-field__wrapper"  
                         @drop="dropField($event)"
@@ -125,7 +128,8 @@ import {
     mdiCodeJson,
     mdiFileDelimited,
     mdiCropLandscape,
-    mdiCropPortrait
+    mdiCropPortrait,
+    mdiEraser
 } from '@mdi/js';
 
 export default {
@@ -152,6 +156,7 @@ export default {
             csvPath: mdiFileDelimited,
             landscapePath: mdiCropLandscape,
             portraitPath: mdiCropPortrait,
+            eraserPath: mdiEraser,
 
             formatType: '',
             orientation: 'landscape',
@@ -175,13 +180,13 @@ export default {
                 return;
             }
             let fields = [];
-            
-            this.selectedFields.forEach(f => {
+         
+            this.selectedFields.forEach(f => {         
                 const index = this.fieldsTitle.indexOf(f);
                 let fieldName = this.fieldsName[index];
                 fields.push(fieldName);
             });
-
+            console.log(fields);
             let data = {
                 model: this.model,
                 format: this.formatType,
@@ -359,12 +364,12 @@ export default {
     .available-field {
         display: flex;        
         border: 1px solid #d7d7d7;
-        padding: 0.2rem 0.5rem;
+        padding: 0.125rem 0.25rem;
         align-items: center;
         border-radius: 0.2rem;
         background: #eee;
         cursor: pointer;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
 
         &.selected {            
             background: #d7d7d7;
@@ -395,7 +400,7 @@ export default {
         background: #eee;
         cursor: grabbing;
         position: relative;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
 
         &::before {
             position: absolute;            
@@ -439,6 +444,28 @@ export default {
         font-size: 0.8rem;
         color: var(--bs-secondary-color);
     }
+}
+
+.eraser {    
+
+    
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid transparent;
+    border-radius: 0.2rem;
+    
+    &:hover {
+        border: 1px solid #e7e7e7;
+    }
+
+    svg {
+        color: red;
+    }
+
+
 }
 
 </style>
