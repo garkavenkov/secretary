@@ -88,30 +88,39 @@
                                     @change="toggleSelectAll($event)"/>
                         </th>
                         <th v-else class="show-record"></th>
-                        <th data-sort-field="full_name"
-                            data-field-type="string"
-                            class="sortable">
+                        <th     data-sort-field="full_name"
+                                data-field-type="string"
+                                class="sortable">
                             Призвіще ім'я по батькові
                         </th>
-                        <th class="text-center">Дата народження</th>
-                        <th class="text-center" v-if="showDeathDateField">Дата смерті</th>
-                        <th data-sort-field="full_age"
-                            data-field-type="number"
-                            class="sortable"
-                            style="min-width: 70px;">
-                                Вік
+                        <th     data-sort-field="birthdate_formatted"
+                                data-field-type="date"
+                                class="sortable">
+                            Дата народження
+                        </th>                     
+                        <th     v-if="showDeathDateField" 
+                                class="text-center">
+                            Дата смерті
+                        </th>
+                        <th     data-sort-field="full_age"
+                                data-field-type="number"
+                                class="sortable"
+                                style="min-width: 70px;">
+                            Вік
                         </th> 
                         <!--<th>Повна адреса</th>-->
-                        <th>Населений пункт</th>
-                        <th data-sort-field="address"
-                            data-field-type="string"
-                            class="sortable">
-                                Адреса
+                        <th>
+                            Населений пункт
                         </th>
-                        <th data-sort-field="household_number"
-                            data-field-type="string"
-                            class="sortable">
-                                Домогосподарство
+                        <th     data-sort-field="short_address"
+                                data-field-type="string"
+                                class="sortable">
+                            Адреса
+                        </th>
+                        <th     data-sort-field="household_number"
+                                data-field-type="string"
+                                class="sortable">
+                            Домогосподарство
                         </th>
                     </tr>
                 </template>

@@ -3137,8 +3137,10 @@ var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
-    "class": "text-center"
-  }, "Дата народження", -1 /* HOISTED */);
+    "data-sort-field": "birthdate_formatted",
+    "data-field-type": "date",
+    "class": "sortable"
+  }, " Дата народження ", -1 /* HOISTED */);
 });
 var _hoisted_13 = {
   key: 2,
@@ -3155,11 +3157,11 @@ var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
   }, " Вік ", -1 /* HOISTED */);
 });
 var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Населений пункт", -1 /* HOISTED */);
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, " Населений пункт ", -1 /* HOISTED */);
 });
 var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
-    "data-sort-field": "address",
+    "data-sort-field": "short_address",
     "data-field-type": "string",
     "class": "sortable"
   }, " Адреса ", -1 /* HOISTED */);
@@ -3260,7 +3262,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         onChange: _cache[1] || (_cache[1] = function ($event) {
           return _ctx.toggleSelectAll($event);
         })
-      }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_9)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_10)), _hoisted_11, _hoisted_12, $options.showDeathDateField ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_13, "Дата смерті")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<th>Повна адреса</th>"), _hoisted_15, _hoisted_16, _hoisted_17])];
+      }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_9)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_10)), _hoisted_11, _hoisted_12, $options.showDeathDateField ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_13, " Дата смерті ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("<th>Повна адреса</th>"), _hoisted_15, _hoisted_16, _hoisted_17])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
       return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
@@ -3380,32 +3382,28 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "dead"
 }, "Мертві", -1 /* HOISTED */);
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-  value: "all"
-}, "Всі", -1 /* HOISTED */);
-var _hoisted_15 = [_hoisted_12, _hoisted_13, _hoisted_14];
-var _hoisted_16 = {
+var _hoisted_14 = {
   "class": "row mb-3"
 };
-var _hoisted_17 = {
+var _hoisted_15 = {
   "class": "col"
 };
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-check-label",
   "for": "filterByAge"
 }, " Відобразити за віком ", -1 /* HOISTED */);
-var _hoisted_19 = {
+var _hoisted_17 = {
   "class": "col d-flex justify-content-end"
 };
-var _hoisted_20 = ["innerHTML"];
-var _hoisted_21 = {
+var _hoisted_18 = ["innerHTML"];
+var _hoisted_19 = {
   key: 0,
   "class": "row mb-3"
 };
-var _hoisted_22 = {
+var _hoisted_20 = {
   "class": "col"
 };
-var _hoisted_23 = ["disabled"];
+var _hoisted_21 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_RangeInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("RangeInput");
   var _component_AdditionalParamsFormFilter = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AdditionalParamsFormFilter");
@@ -3424,7 +3422,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         title: "Скинути фильтр",
         disabled: !_ctx.filter.isFiltered
-      }, " Скинути ", 8 /* PROPS */, _hoisted_23)];
+      }, " Скинути ", 8 /* PROPS */, _hoisted_21)];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
@@ -3465,7 +3463,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return _ctx.filter.status = $event;
         })
-      }, _hoisted_15, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.filter.status]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, [_hoisted_12, _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <option value=\"all\">Всі</option> ")], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, _ctx.filter.status]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "form-check-input ms-2",
         type: "checkbox",
         value: "",
@@ -3473,10 +3471,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return _ctx.filter.age.selected = $event;
         })
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, _ctx.filter.age.selected]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, _ctx.filter.age.selected]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
         "class": "text-muted",
         innerHTML: $options.ageRangeInformation
-      }, null, 8 /* PROPS */, _hoisted_20)])]), _ctx.filter.age.selected ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [$data.oldestAge ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_RangeInput, {
+      }, null, 8 /* PROPS */, _hoisted_18)])]), _ctx.filter.age.selected ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [$data.oldestAge ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_RangeInput, {
         key: 0,
         min: "0",
         max: $data.oldestAge,

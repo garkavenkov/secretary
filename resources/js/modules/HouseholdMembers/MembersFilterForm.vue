@@ -32,7 +32,7 @@
                         v-model="filter.status">
                     <option value="alive">Живі</option>
                     <option value="dead">Мертві</option>
-                    <option value="all">Всі</option>
+                    <!-- <option value="all">Всі</option> -->
                 </select>
             </div>
         </div>

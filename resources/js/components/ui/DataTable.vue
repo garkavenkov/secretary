@@ -250,17 +250,26 @@ export default {
                             compareResult.push(a[field].localeCompare(b[field]));
                         } else if (dataType == 'number') {
                             compareResult.push(a[field] - b[field]);
+                        } else if (dataType == 'date') {
+                            let date_1 = new Date(a[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+                            let date_2 = new Date(b[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));                            
+                            compareResult.push(date_1 - date_2);
                         }
                     } else if (sortOrder.toLowerCase() == 'descending') {
                         if(dataType == 'string') {
                             compareResult.push(b[field].localeCompare(a[field]));
                         } else if (dataType == 'number') {
                             compareResult.push(b[field] - a[field]);
+                        } else if (dataType == 'date') {                           
+                            let date_1 = new Date(a[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+                            let date_2 = new Date(b[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));                           
+                            compareResult.push(date_2 - date_1);                            
                         }
                     } else {
                         return;
                     }
                 });
+                // console.log(compareResult);
                 return compareResult.reduce((res, next) => res || next);
             }
         },
@@ -342,6 +351,10 @@ export default {
         },
         isFirstPage() {
             return this.currentPage == 1;
+        },
+        sortableFields() {
+            let fields = document.querySelectorAll('[data-sort-field]');
+            console.log(fields.length);
         }
     },
     mounted() {
@@ -361,7 +374,7 @@ export default {
                 });
             }
         // }
-    },
+    },   
     watch: {
         sortedBy: {
             handler(newVal, oldVal) {
