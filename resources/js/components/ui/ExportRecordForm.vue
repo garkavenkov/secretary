@@ -185,8 +185,7 @@ export default {
                 const index = this.fieldsTitle.indexOf(f);
                 let fieldName = this.fieldsName[index];
                 fields.push(fieldName);
-            });
-            console.log(fields);
+            });            
             let data = {
                 model: this.model,
                 format: this.formatType,

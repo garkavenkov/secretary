@@ -31,11 +31,34 @@
                     
                 </div>
             </div>
-            <div>
+            <div class="d-flex">
+                <!-- <IconButton 
+                    :size="18"
+                    :mdiPath="pathTableSetting"
+                    class="me-2 btn-sm btn-outline-secondary p-2"
+                    title="Налаштування стовпців для відображення"
+                    @click="() => {}"
+                /> -->
+                <!-- <div class="dropdown" v-if="members.length > 0" >
+                
+                    <IconButton 
+                            buttonClass="btn-outline-secondary btn-transparent dropdown-toggle p-2 me-2" 
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            :size="18"
+                            :mdiPath="pathTableSetting" />
+
+                    <ul class="dropdown-menu">
+                        <li v-for="(field, index) in fieldsTitle" :key="index">
+                            {{ field }}
+                        </li>   
+                    </ul>
+                </div>
+                 -->
                 <ButtonFilter 
                     @click="openFilterForm"                    
                     :buttonClass="['btn-sm btn-outline-secondary p-2', isFiltered ? 'active': '' ]"    
-                    title="Фільтр членів домогосподарств" />                
+                    title="Фільтр членів домогосподарств" />
 
             </div>
         </div>
@@ -71,7 +94,7 @@
                             Призвіще ім'я по батькові
                         </th>
                         <th class="text-center">Дата народження</th>
-                        <th class="text-center" v-if="showDeathDateField">Дата смерті</th>                        
+                        <th class="text-center" v-if="showDeathDateField">Дата смерті</th>
                         <th data-sort-field="full_age"
                             data-field-type="number"
                             class="sortable"
@@ -102,19 +125,19 @@
                                 <SvgIcon type="mdi" :path="pathMdiAccountEye" :size="18"/>
                             </router-link>
                         </td>
-                        <td v-else class="text-center" style="line-height: 24px;">                            
+                        <td v-else class="text-center" style="line-height: 24px;">
                                 <input  class="form-check-input cursor-pointer"
                                         type="checkbox"
                                         v-model="record.selected"
                                         @click.shift="selectMultipleRecords({e: $event, id: record.id})"/>
-                        </td>                        
+                        </td>
                         <td>{{record.full_name}}</td>
                         <td class="text-center">{{record.birthdate_formatted}}</td>
-                        <td class="text-center" v-if="showDeathDateField">{{ record.death_date_formatted }}</td>                        
+                        <td class="text-center" v-if="showDeathDateField">{{ record.death_date_formatted }}</td>
                         <td class="text-center">{{record.full_age}}</td>
                         <!--<td>{{record.full_address}}</td>-->
                         <td>{{ record.settlement }}</td>
-                        <td>{{ record.address }}</td>
+                        <td>{{ record.short_address }}</td>
                         <td class="text-center">
                             <router-link :to="{name: 'households.show.info', params: { id: record.household_id }}" style="text-decoration: none;">
                                 {{record.household_number}}
@@ -131,7 +154,7 @@
 
     <MembersFilterForm  @resetFilter="resetFilter"/>
     <DocumentGenerationForm :records="selectedRecords"/>
-    <ExportRecordForm :records="selectedRecords" :availableFields="availabaleFields" :model="'App\\Models\\HouseholdMember'"/>
+    <ExportRecordForm :records="selectedRecords" :availableFields="availableFields" :model="'App\\Models\\HouseholdMember'"/>
     
 
 </template>
@@ -141,7 +164,10 @@ import { mapGetters, mapActions }   from 'vuex';
 import { Modal }                    from 'bootstrap';
 import { computed }                 from 'vue';
 import SvgIcon                      from '@jamescoyle/vue-icon';
-import { mdiAccountEyeOutline }     from '@mdi/js';
+import { 
+    mdiAccountEyeOutline,
+    mdiTableCog 
+}     from '@mdi/js';
 
 import ExportDataForm               from '../../mixins/ExportDataForm';
 
@@ -151,6 +177,7 @@ import ButtonDocumentGenerationForm from '../../components/ui/Buttons/ButtonDocu
 import ButtonRefreshData            from '../../components/ui/Buttons/ButtonRefreshData.vue';
 import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
 import ButtonFilter                 from '../../components/ui/Buttons/ButtonFilter.vue';
+import IconButton                   from '../../components/ui/Buttons/IconButton.vue';
 
 import MembersFilterForm            from './MembersFilterForm.vue';
 import DocumentGenerationForm       from './DocumentGenerationForm.vue';
@@ -167,19 +194,21 @@ export default {
             ],
             modalTitle: '',
             modalSubmitCaption: '',     
-            availabaleFields: {
+            availableFields: {
                 id: 'ID',
                 full_name: 'Призвіще ім\'я по батькові',
-                formatted_birthdate: 'Дата народження',
-                full_age: 'Вік',
-                full_address: 'Повна адреса',
                 sex: 'Стать',
-                short_address: 'Адреса',
+                birthdate_formatted: 'Дата народження',
+                full_age: 'Вік',
+                death_date_formatted: 'Дата сметрі',
                 settlement: 'Населений пункт',
-                household_number: 'Номер домогосподарства',                
+                full_address: 'Повна адреса',
+                short_address: 'Адреса',
+                household_number: 'Номер домогосподарства',         
             },   
            
-            pathMdiAccountEye: mdiAccountEyeOutline            
+            pathMdiAccountEye: mdiAccountEyeOutline,
+            pathTableSetting: mdiTableCog
         }
     },
     mixins: [ExportDataForm],
@@ -242,9 +271,11 @@ export default {
             'url'
         ]),
         showDeathDateField() {
-            return (this.url.includes('status=dead') || this.url.includes('status=all')) ? true : false;
-            
-        }
+            return (this.url.includes('status=dead') || this.url.includes('status=all')) ? true : false;            
+        },
+        // fieldsTitle() {
+        //     return Object.values(this.availableFields);
+        // },
     },
     components: {
         MembersFilterForm,
@@ -255,7 +286,8 @@ export default {
         DocumentGenerationForm,
         ExportRecordForm,
         ButtonFilter,
-        SvgIcon        
+        SvgIcon,
+        IconButton      
     }
 
 }

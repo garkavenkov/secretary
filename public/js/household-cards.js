@@ -409,7 +409,6 @@ __webpack_require__.r(__webpack_exports__);
         var fieldName = _this.fieldsName[index];
         fields.push(fieldName);
       });
-      console.log(fields);
       var data = {
         model: this.model,
         format: this.formatType,

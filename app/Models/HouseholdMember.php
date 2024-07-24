@@ -159,9 +159,17 @@ class HouseholdMember extends Model
                     . mb_substr($this->patronymic, 0, 1) . '.';
     }
 
-    public function getFormattedBirthdateAttribute()
+    public function getBirthdateFormattedAttribute()
     {
         return (new DateTime($this->birthdate))->format('d.m.Y');
+    }
+
+    public function getDeathDateFormattedAttribute()
+    {
+        if ($this->death_date) {
+            return (new DateTime($this->death_date))->format('d.m.Y');
+        }
+        return  null;
     }
 
     public function getFullAgeAttribute()

@@ -40,7 +40,7 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                                                 }),
                 'death_register_number'     =>  $member->death_register_number,
                 'death_register_office'     =>  $member->death_register_office,
-                'address'                   =>  Household::getShortAddress($member->address),
+                'short_address'             =>  Household::getShortAddress($member->address),
                 'settlement'                =>  mb_strcut(mb_strtolower($member->settlement_type), 0, 2) . ". " .  $member->settlement,
                 'full_address'              =>  Household::getFullAddress(
                                                         $member->address,
