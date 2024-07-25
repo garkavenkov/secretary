@@ -352,10 +352,10 @@ export default {
         isFirstPage() {
             return this.currentPage == 1;
         },
-        sortableFields() {
-            let fields = document.querySelectorAll('[data-sort-field]');
-            // console.log(fields.length);
-        }
+        // sortableFields() {
+        //     let fields = document.querySelectorAll('[data-sort-field]');
+        //     // console.log(fields.length);
+        // }
     },
     mounted() {
         // if (this.dataFields.length > 0) {
