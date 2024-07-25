@@ -32,12 +32,16 @@ class ExportDataController extends Controller
 
         // $data = $model::findOrFail($ids);
         if (method_exists($model, 'sqlBuilder')) {
-            $data = $model::sqlBuilder()->findOrFail($ids);
+            // $data = $model::sqlBuilder()->findOrFail($ids);
+            $data = $model::sqlBuilder()->find($ids);
         } else {
             $data = $model::findOrFail($ids);
         }
+        $data = $data->sortBy(function($m) use ($ids) {
+            return array_search($m->getKey(), $ids);
+        });
         // dd($data);
-        
+
         $exportMethod = 'export' . mb_strtoupper($format);
 
         call_user_func_array(array($this, $exportMethod), array($data, $fields, $orientation));

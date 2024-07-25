@@ -354,7 +354,7 @@ export default {
         },
         sortableFields() {
             let fields = document.querySelectorAll('[data-sort-field]');
-            console.log(fields.length);
+            // console.log(fields.length);
         }
     },
     mounted() {
