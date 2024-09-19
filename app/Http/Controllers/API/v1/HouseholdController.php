@@ -35,7 +35,7 @@ class HouseholdController extends Controller
         } else {
             $per_page = 3;
         }
-
+        
         if (request()->query('search')) {
             $search = '%' . str_replace(' ', '%', request()->query('search')) . '%';
 
@@ -116,7 +116,6 @@ class HouseholdController extends Controller
             if (request()->query('where')) {
 
                 $conditions = explode(';', request()->query('where'));
-                // $households = Household::with('settlement');
                 
                 foreach($conditions as $condition) {
                     $parts = explode('=', $condition);                
@@ -137,7 +136,7 @@ class HouseholdController extends Controller
                         } else if ($parts[0] == 'additional_params') {                           
                             $households->whereRaw(
                                 SqlSnippet::filled_additional_params(
-                                    model:'App\\Models\\Household', 
+                                    model:'App\Models\Household', 
                                     owner: 'households.id',
                                     value_type: 'boolean', 
                                     parameters: $parts[1]
@@ -148,8 +147,7 @@ class HouseholdController extends Controller
                 }            
             }
                             
-        }
-
+        }        
 
         $households = $households->orderBy('number')->paginate($per_page);
        
