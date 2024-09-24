@@ -83,7 +83,11 @@ export default {
         openDistrictForm() {
             var myModal = new Modal(document.getElementById('DistrictForm'))
             myModal.show();
-        }
+        },
+        searchData(row, searchText) {
+            return  row['name'].toLowerCase().includes(searchText.toLowerCase()) || 
+                    row['center'].toLowerCase().includes(searchText.toLowerCase());
+        },
     },
     computed: {
         ...mapGetters('Districts', ['districts'])

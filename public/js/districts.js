@@ -404,6 +404,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     openDistrictForm: function openDistrictForm() {
       var myModal = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('DistrictForm'));
       myModal.show();
+    },
+    searchData: function searchData(row, searchText) {
+      return row['name'].toLowerCase().includes(searchText.toLowerCase()) || row['center'].toLowerCase().includes(searchText.toLowerCase());
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)('Districts', ['districts']))

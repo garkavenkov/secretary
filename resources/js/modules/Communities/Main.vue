@@ -16,6 +16,7 @@
                     <tr>
                         <th class="show-record"></th>
                         <th>Назва громади</th>
+                        <th>Адміністративний центр</th>
                         <th>Район</th>
                         <th>Адреса</th>
                         <th>ЕДРПОУ</th>
@@ -30,6 +31,7 @@
                             <DictionaryShowRecordLink routeName="communities.show" :routeParamId="record.id" />
                         </td>                                               
                         <td>{{record.name}}</td>
+                        <td>{{record.center}}</td>
                         <td>{{record.district.name}}</td>
                         <td>{{record.address}}</td>
                         <td>{{record.edrpou}}</td>
@@ -81,7 +83,11 @@ export default {
         openCommunityForm() {
             let communitForm = new Modal(document.getElementById('CommunityForm'))
             communitForm.show();
-        }
+        },
+        searchData(row, searchText) {
+            return  row['name'].toLowerCase().includes(searchText.toLowerCase()) || 
+                    row['center'].toLowerCase().includes(searchText.toLowerCase());
+        },
     },
     computed: {
         ...mapGetters('Communities', ['communities'])

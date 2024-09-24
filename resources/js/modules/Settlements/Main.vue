@@ -84,7 +84,10 @@ export default {
         openSettlementForm() {
             var settlementForm = new Modal(document.getElementById('SettlementForm'));
             settlementForm.show();
-        }
+        },
+        searchData(row, searchText) {
+            return row['name'].toLowerCase().includes(searchText.toLowerCase());
+        },
     },
     computed: {
         ...mapGetters('Settlements', ['settlements']),

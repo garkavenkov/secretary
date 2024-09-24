@@ -15,8 +15,8 @@
                 <template v-slot:header>
                     <tr>
                         <th class="show-record"></th>
-                        <th>Громада</th>                        
                         <th>Назва </th>
+                        <th>Громада</th>                        
                         <th>Адреса</th>
                         <th>ЕДРПОУ</th>
                         <th>КОАТУУ</th>
@@ -29,8 +29,8 @@
                         <td class="text-center">
                             <DictionaryShowRecordLink routeName="councils.show" :routeParamId="record.id" />
                         </td>                       
-                        <td>{{record.community.name}}</td>
                         <td>{{record.name}}</td>
+                        <td>{{record.community.name}}</td>
                         <td>{{record.address}}</td>
                         <td>{{record.edrpou}}</td>
                         <td>{{record.koatuu}}</td>
@@ -82,6 +82,10 @@ export default {
         openCouncilForm() {
             var myModal = new Modal(document.getElementById('CouncilForm'));
             myModal.show();
+        },
+        searchData(row, searchText) {
+            return  row['name'].toLowerCase().includes(searchText.toLowerCase()) || 
+                    row['community']['name'].toLowerCase().includes(searchText.toLowerCase());
         },
     },
     computed: {

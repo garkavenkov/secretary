@@ -290,8 +290,7 @@ export default {
         },
         paginatedData(){
             let dataSet;
-            console.log(this.searchData.length)
-            console.log(this.searchData.trim.length)
+            
             if (this.externalPagination?.total) {
                 if (this.searchData.length > 0 ) {
                    dataSet = this.dataTable

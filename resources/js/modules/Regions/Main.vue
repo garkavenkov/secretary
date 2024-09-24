@@ -83,7 +83,10 @@ export default {
             var myModal = new Modal(document.getElementById('RegionForm'))
             myModal.show();
         },
-        searchData(row, searchText) {},
+        searchData(row, searchText) {
+            return  row['name'].toLowerCase().includes(searchText.toLowerCase()) || 
+                    row['center'].toLowerCase().includes(searchText.toLowerCase());
+        },
     },
     computed: {
         ...mapGetters('Regions', ['regions']),

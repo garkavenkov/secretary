@@ -302,6 +302,9 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     openSettlementForm: function openSettlementForm() {
       var settlementForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('SettlementForm'));
       settlementForm.show();
+    },
+    searchData: function searchData(row, searchText) {
+      return row['name'].toLowerCase().includes(searchText.toLowerCase());
     }
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)('Settlements', ['settlements']))
