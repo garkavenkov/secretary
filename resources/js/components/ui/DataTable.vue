@@ -290,9 +290,10 @@ export default {
         },
         paginatedData(){
             let dataSet;
-
+            console.log(this.searchData.length)
+            console.log(this.searchData.trim.length)
             if (this.externalPagination?.total) {
-                if (this.searchData !== '') {
+                if (this.searchData.length > 0 ) {
                    dataSet = this.dataTable
                             .filter(r => this.$parent.searchData(r, this.searchData))
                 } else {
@@ -302,7 +303,7 @@ export default {
                 let start = (this.currentPage - 1) * this.perPage,
                     end = start + this.perPage;
 
-                if (this.searchData !== '') {
+                if (this.searchData.length > 0 ) {
                     dataSet =  this.dataTable
                             .filter(r => this.$parent.searchData(r, this.searchData))
                             .slice(start, end);

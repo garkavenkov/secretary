@@ -23,7 +23,7 @@ class HouseholdResourceCollection extends ResourceCollection
                 'household_type_id'         =>  (int)   $household->household_type_id,
                 'number'                    =>  $household->household_number, 
                 'short_address'             =>  $household->short_address,
-                'household_head'            =>  $household->head,
+                'household_head'            =>  $household->head ?? '',
                 'household_members_count'   =>  $household->members_count,                
             ];
         });

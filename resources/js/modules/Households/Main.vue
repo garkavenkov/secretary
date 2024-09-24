@@ -237,7 +237,9 @@ export default {
             this.$store.dispatch('Households/changePage', page)
         },
         searchData(row, searchText) {
-            return  row['address'].includes(searchText) ||
+            // console.log(row, searchText);
+            // return true;
+            return  row['short_address'].includes(searchText) ||
                     row['number'].includes(searchText) ||
                     row['household_head'].includes(searchText);
         },
