@@ -203,8 +203,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     searchData: function searchData(row, searchText) {
-      return this.fieldsName.some(function (field) {
-        return row[field].toLowerCase().includes(searchText.toLowerCase());
+      return this.fields.some(function (field) {
+        return row[field.name].toLowerCase().includes(searchText.toLowerCase());
       });
     }
   }

@@ -88,7 +88,7 @@ export default {
     },
     methods: {
         searchData(row, searchText) {
-            return this.fieldsName.some(field => row[field].toLowerCase().includes(searchText.toLowerCase()) );
+            return this.fields.some(field => row[field.name].toLowerCase().includes(searchText.toLowerCase()) );
         }
     }    
 }
