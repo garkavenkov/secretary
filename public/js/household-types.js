@@ -428,7 +428,13 @@ var _hoisted_4 = {
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, null, -1 /* HOISTED */);
 });
-
+var _hoisted_6 = {
+  "class": "actions"
+};
+var _hoisted_7 = {
+  key: 1
+};
+var _hoisted_8 = ["colspan"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ButtonAdd = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonAdd");
   var _component_ButtonEdit = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonEdit");
@@ -453,14 +459,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 128 /* KEYED_FRAGMENT */)), _hoisted_5])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
+      return [slotProps.paginatedData.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: record.id
         }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.fields, function (field, index) {
           return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", {
             key: index
           }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record[field.name]), 1 /* TEXT */);
-        }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonEdit, {
+        }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonEdit, {
           buttonClass: "btn-outline-warning btn-transparent p-2",
           title: $props.editRecordTitle,
           onClick: function onClick($event) {
@@ -473,9 +481,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             return _ctx.$emit('deleteRecord', record);
           }
         }, null, 8 /* PROPS */, ["title", "onClick"])])]);
-      }), 128 /* KEYED_FRAGMENT */))];
+      }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+        colspan: $props.fields.length + 1,
+        "class": "p-3 text-muted text-center"
+      }, " Дані, що задовольняють пошуку, не знайдені. ", 8 /* PROPS */, _hoisted_8)]))];
     }),
-
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["dataTable"])])]);
 }
@@ -648,7 +658,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "table th[data-v-ceb82cce]:last-of-type {\n  width: 7rem;\n}\ntable tr[data-v-ceb82cce] {\n  vertical-align: middle;\n}\ntable tr td[data-v-ceb82cce]:last-of-type {\n  display: flex;\n  justify-content: space-around;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "table th[data-v-ceb82cce]:last-of-type {\n  width: 7rem;\n}\ntable tr[data-v-ceb82cce] {\n  vertical-align: middle;\n}\ntable tr td.actions[data-v-ceb82cce] {\n  display: flex;\n  justify-content: space-around;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

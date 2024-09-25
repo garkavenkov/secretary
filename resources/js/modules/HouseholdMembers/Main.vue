@@ -126,33 +126,42 @@
                 </template>
 
                 <template v-slot:default="slotProps">
-                    <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id"
-                            :class="{ 'table-primary': record.selected, 'dead-member': record.death_date !== null}">
-                        <td class="text-center" v-if="!inSelectMode" style="line-height: 24px;">
-                            <router-link :to="{name: 'household-member', params: { id: record.id }}" title="Перейти до інформації по члену домогосподарства">
-                                <SvgIcon type="mdi" :path="pathMdiAccountEye" :size="18"/>
-                            </router-link>
-                        </td>
-                        <td v-else class="text-center" style="line-height: 24px;">
-                                <input  class="form-check-input cursor-pointer"
-                                        type="checkbox"
-                                        v-model="record.selected"
-                                        @click.shift="selectMultipleRecords({e: $event, id: record.id})"/>
-                        </td>
-                        <td>{{record.full_name}}</td>
-                        <td class="text-center">{{record.birthdate_formatted}}</td>
-                        <td class="text-center" v-if="showDeathDateField">{{ record.death_date_formatted }}</td>
-                        <td class="text-center">{{record.full_age}}</td>
-                        <!--<td>{{record.full_address}}</td>-->
-                        <td>{{ record.settlement }}</td>
-                        <td>{{ record.short_address }}</td>
-                        <td class="text-center">
-                            <router-link :to="{name: 'households.show.info', params: { id: record.household_id }}" style="text-decoration: none;">
-                                {{record.household_number}}
-                            </router-link>
-                        </td>
-                    </tr>
+                    <template v-if="slotProps.paginatedData.length > 0">                    
+                        <tr     v-for="record in slotProps.paginatedData"
+                                :key="record.id"
+                                :class="{ 'table-primary': record.selected, 'dead-member': record.death_date !== null}">
+                            <td class="text-center" v-if="!inSelectMode" style="line-height: 24px;">
+                                <router-link :to="{name: 'household-member', params: { id: record.id }}" title="Перейти до інформації по члену домогосподарства">
+                                    <SvgIcon type="mdi" :path="pathMdiAccountEye" :size="18"/>
+                                </router-link>
+                            </td>
+                            <td v-else class="text-center" style="line-height: 24px;">
+                                    <input  class="form-check-input cursor-pointer"
+                                            type="checkbox"
+                                            v-model="record.selected"
+                                            @click.shift="selectMultipleRecords({e: $event, id: record.id})"/>
+                            </td>
+                            <td>{{record.full_name}}</td>
+                            <td class="text-center">{{record.birthdate_formatted}}</td>
+                            <td class="text-center" v-if="showDeathDateField">{{ record.death_date_formatted }}</td>
+                            <td class="text-center">{{record.full_age}}</td>
+                            <!--<td>{{record.full_address}}</td>-->
+                            <td>{{ record.settlement }}</td>
+                            <td>{{ record.short_address }}</td>
+                            <td class="text-center">
+                                <router-link :to="{name: 'households.show.info', params: { id: record.household_id }}" style="text-decoration: none;">
+                                    {{record.household_number}}
+                                </router-link>
+                            </td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <tr>
+                            <td colspan="7" class="p-3 text-muted text-center">
+                                Дані, що задовольняють пошуку, не знайдені
+                            </td>
+                        </tr>
+                    </template>
                 </template>
             </DataTable>
             <div v-else class="text-muted text-center p-3">

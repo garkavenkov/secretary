@@ -5307,6 +5307,16 @@ var _hoisted_19 = {
   "class": "text-center"
 };
 var _hoisted_20 = {
+  key: 1
+};
+var _hoisted_21 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", {
+    colspan: "6",
+    "class": "p-3 text-muted text-center"
+  }, " Дані, що задовольняють пошуку, не знайдені ", -1 /* HOISTED */);
+});
+var _hoisted_22 = [_hoisted_21];
+var _hoisted_23 = {
   key: 1,
   "class": "text-muted text-center p-3"
 };
@@ -5369,7 +5379,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_8)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("th", _hoisted_9)), _hoisted_10, _hoisted_11, _hoisted_12, _hoisted_13, _hoisted_14])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (slotProps) {
-      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
+      return [slotProps.paginatedData.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 0
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(slotProps.paginatedData, function (record) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
           key: record.id,
           "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
@@ -5387,11 +5399,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             return record.selected = $event;
           }
         }, null, 8 /* PROPS */, _hoisted_17), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, record.selected]])])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.number), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.settlement), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.short_address), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.household_head), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(record.household_members_count), 1 /* TEXT */)], 2 /* CLASS */);
-      }), 128 /* KEYED_FRAGMENT */))];
+      }), 128 /* KEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", _hoisted_20, _hoisted_22))];
     }),
-
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["dataTable", "perPageItems", "externalPagination", "onPageChanged", "onPerPageChanged"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, " Немає даних для відображення. "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseholdForm, {
+  }, 8 /* PROPS */, ["dataTable", "perPageItems", "externalPagination", "onPageChanged", "onPerPageChanged"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, " Немає даних для відображення. "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseholdForm, {
     formData: $data.formData,
     disabledFields: $data.disabledFields,
     onRefreshData: _cache[2] || (_cache[2] = function ($event) {

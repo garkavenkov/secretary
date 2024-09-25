@@ -20,27 +20,36 @@
                         <th></th>
                     </tr>
                 </template>
-                <template v-slot:default="slotProps">                    
-                    <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id">                        
-                        <td v-for="(field,index) in fields" :key="index">
-                            {{ record[field.name] }}
-                        </td>
-                        <td>
-
-                            <ButtonEdit 
-                                    buttonClass="btn-outline-warning btn-transparent p-2" 
-                                    :title="editRecordTitle" 
-                                    @click="$emit('editRecord', record)" />
-
-                            <ButtonDelete
-                                    buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
-                                    :title="deleteRecordTitle" 
-                                    @click="$emit('deleteRecord', record)" />
-                                    
-                        </td>
-                    </tr>                    
-                </template>                
+                <template  v-slot:default="slotProps">
+                    <template v-if="slotProps.paginatedData.length > 0">
+                        <tr     v-for="record in slotProps.paginatedData"
+                                :key="record.id">                        
+                            <td v-for="(field,index) in fields" :key="index">
+                                {{ record[field.name] }}
+                            </td>
+                            <td class="actions">
+    
+                                <ButtonEdit 
+                                        buttonClass="btn-outline-warning btn-transparent p-2" 
+                                        :title="editRecordTitle" 
+                                        @click="$emit('editRecord', record)" />
+    
+                                <ButtonDelete
+                                        buttonClass="btn-outline-danger btn-transparent ms-3 p-2"
+                                        :title="deleteRecordTitle" 
+                                        @click="$emit('deleteRecord', record)" />
+                                        
+                            </td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <tr>
+                            <td :colspan="fields.length + 1" class="p-3 text-muted text-center">
+                                Дані, що задовольняють пошуку, не знайдені.
+                            </td>
+                        </tr>
+                    </template>
+                </template>
             </DataTable>
         </div>
     </div>
@@ -90,7 +99,7 @@ export default {
         searchData(row, searchText) {
             return this.fields.some(field => row[field.name].toLowerCase().includes(searchText.toLowerCase()) );
         }
-    }    
+    }
 }
 </script>
 
@@ -106,7 +115,7 @@ table {
     tr {
         vertical-align: middle;
 
-        td:last-of-type {    
+        td.actions {    
             display: flex;
             justify-content: space-around;       
         }

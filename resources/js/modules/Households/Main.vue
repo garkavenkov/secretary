@@ -66,30 +66,39 @@
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">
-                    <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id"
-                            :class="{ 'table-primary': record.selected }">
-                        <td class="text-center show-record" v-if="!inSelectMode">
-
-                            <DictionaryShowRecordLink 
-                                    routeName="households.show" 
-                                    :routeParamId="record.id" 
-                                    :mdiIconPath="pathRouterLinkIcon" 
-                                    title="Перейти до інформації по домогосподарству" />
-                                            
-                        </td>
-                        <td v-else class="text-center show-record">
-                            <input  class="form-check-input cursor-pointer"
-                                    type="checkbox"
-                                    v-model="record.selected"/>
-                        
-                        </td>       
-                        <td class="text-center">{{record.number}}</td>
-                        <td>{{record.settlement}}</td>
-                        <td>{{record.short_address}}</td>
-                        <td>{{record.household_head}}</td>
-                        <td class="text-center">{{record.household_members_count}}</td>
-                    </tr>
+                    <template v-if="slotProps.paginatedData.length > 0">
+                        <tr     v-for="record in slotProps.paginatedData"
+                                :key="record.id"
+                                :class="{ 'table-primary': record.selected }">
+                            <td class="text-center show-record" v-if="!inSelectMode">
+    
+                                <DictionaryShowRecordLink 
+                                        routeName="households.show" 
+                                        :routeParamId="record.id" 
+                                        :mdiIconPath="pathRouterLinkIcon" 
+                                        title="Перейти до інформації по домогосподарству" />
+                                                
+                            </td>
+                            <td v-else class="text-center show-record">
+                                <input  class="form-check-input cursor-pointer"
+                                        type="checkbox"
+                                        v-model="record.selected"/>
+                            
+                            </td>       
+                            <td class="text-center">{{record.number}}</td>
+                            <td>{{record.settlement}}</td>
+                            <td>{{record.short_address}}</td>
+                            <td>{{record.household_head}}</td>
+                            <td class="text-center">{{record.household_members_count}}</td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <tr>
+                            <td colspan="6" class="p-3 text-muted text-center">
+                                Дані, що задовольняють пошуку, не знайдені
+                            </td>
+                        </tr>
+                    </template>
                 </template>
             </DataTable>
             <div v-else class="text-muted text-center p-3">
