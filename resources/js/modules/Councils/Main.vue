@@ -23,18 +23,23 @@
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">
-                    <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id">
-                       
-                        <td class="text-center">
-                            <DictionaryShowRecordLink routeName="councils.show" :routeParamId="record.id" />
-                        </td>                       
-                        <td>{{record.name}}</td>
-                        <td>{{record.community.name}}</td>
-                        <td>{{record.address}}</td>
-                        <td>{{record.edrpou}}</td>
-                        <td>{{record.koatuu}}</td>
-                    </tr>
+                    <template v-if="slotProps.paginatedData.length > 0">
+                        <tr     v-for="record in slotProps.paginatedData"
+                                :key="record.id">
+                           
+                            <td class="text-center">
+                                <DictionaryShowRecordLink routeName="councils.show" :routeParamId="record.id" />
+                            </td>                       
+                            <td>{{record.name}}</td>
+                            <td>{{record.community.name}}</td>
+                            <td>{{record.address}}</td>
+                            <td>{{record.edrpou}}</td>
+                            <td>{{record.koatuu}}</td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <DictionaryDataSearchEmptyResult cols="6" />
+                    </template>
                 </template>
             </DataTable>
         </div>
@@ -47,17 +52,19 @@
 </template>
 
 <script>
-import { mapGetters }           from 'vuex';
-import { Modal }                from 'bootstrap';
+import { mapGetters }                   from 'vuex';
+import { Modal }                        from 'bootstrap';
 
-import CouncilForm              from './Form.vue';
-import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
+import CouncilForm                      from './Form.vue';
+import DictionaryShowRecordLink         from '../../components/ui/DictionaryShowRecordLink.vue';
+import DictionaryDataSearchEmptyResult  from '../../components/ui/DictionaryDataSearchEmptyResult.vue';
 
 export default {
     name: 'CouncilsMain',
     components: {
         CouncilForm,
-        DictionaryShowRecordLink
+        DictionaryShowRecordLink,
+        DictionaryDataSearchEmptyResult
     },
     data() {
         return {

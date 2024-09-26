@@ -30,15 +30,20 @@
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">
-                    <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id">
-                        <td class="text-center">
-                            <DictionaryShowRecordLink routeName="districts.show" :routeParamId="record.id" />
-                        </td>                       
-                        <td>{{record.name}}</td>
-                        <td>{{record.center}}</td>
-                        <td>{{record.region.name}}</td>
-                    </tr>
+                    <template v-if="slotProps.paginatedData.length > 0">
+                        <tr     v-for="record in slotProps.paginatedData"
+                                :key="record.id">
+                            <td class="text-center">
+                                <DictionaryShowRecordLink routeName="districts.show" :routeParamId="record.id" />
+                            </td>                       
+                            <td>{{record.name}}</td>
+                            <td>{{record.center}}</td>
+                            <td>{{record.region.name}}</td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <DictionaryDataSearchEmptyResult cols="4" />
+                    </template>
                 </template>
             </DataTable>
         </div>
@@ -51,19 +56,21 @@
 </template>
 
 <script>
-import { mapGetters }           from 'vuex';
-import { Modal }                from 'bootstrap';
+import { mapGetters }                   from 'vuex';
+import { Modal }                        from 'bootstrap';
 
-import DistrictForm             from './Form.vue';
-import ButtonRefreshData        from '../../components/ui/Buttons/ButtonRefreshData.vue';
-import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
+import DistrictForm                     from './Form.vue';
+import ButtonRefreshData                from '../../components/ui/Buttons/ButtonRefreshData.vue';
+import DictionaryShowRecordLink         from '../../components/ui/DictionaryShowRecordLink.vue';
+import DictionaryDataSearchEmptyResult  from '../../components/ui/DictionaryDataSearchEmptyResult.vue';
 
 export default {
     name: 'DistrictsMain',
     components: {        
         DistrictForm,        
         ButtonRefreshData,
-        DictionaryShowRecordLink
+        DictionaryShowRecordLink,
+        DictionaryDataSearchEmptyResult
     },
     data() {
         return {

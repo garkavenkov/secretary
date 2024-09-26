@@ -93,11 +93,7 @@
                         </tr>
                     </template>
                     <template v-else>
-                        <tr>
-                            <td colspan="6" class="p-3 text-muted text-center">
-                                Дані, що задовольняють пошуку, не знайдені
-                            </td>
-                        </tr>
+                        <DictionaryDataSearchEmptyResult cols="6" />
                     </template>
                 </template>
             </DataTable>
@@ -126,23 +122,24 @@
 
 <script>
 
-import { mapGetters, mapActions }   from 'vuex';
-import { Modal }                    from 'bootstrap'
-import { computed }                 from 'vue';
+import { mapGetters, mapActions }       from 'vuex';
+import { Modal }                        from 'bootstrap'
+import { computed }                     from 'vue';
 
-import { mdiFolderHomeOutline }     from '@mdi/js';
+import { mdiFolderHomeOutline }         from '@mdi/js';
 
-import ExportDataForm               from '../../mixins/ExportDataForm';
+import ExportDataForm                   from '../../mixins/ExportDataForm';
 
-import HouseholdForm                from './HouseholdForm.vue';
-import HouseholdFilterForm          from './HouseholdFilterForm.vue';
+import HouseholdForm                    from './HouseholdForm.vue';
+import HouseholdFilterForm              from './HouseholdFilterForm.vue';
 
-import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
-import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSelectRecords.vue';
-import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
-import ButtonRefreshData            from '../../components/ui/Buttons/ButtonRefreshData.vue';
-import ButtonFilter                 from '../../components/ui/Buttons/ButtonFilter.vue';
-import DictionaryShowRecordLink     from '../../components/ui/DictionaryShowRecordLink.vue';
+import ExportRecordForm                 from '../../components/ui/ExportRecordForm.vue';
+import ButtonSelectRecords              from '../../components/ui/Buttons/ButtonSelectRecords.vue';
+import ButtonExportRecordForm           from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
+import ButtonRefreshData                from '../../components/ui/Buttons/ButtonRefreshData.vue';
+import ButtonFilter                     from '../../components/ui/Buttons/ButtonFilter.vue';
+import DictionaryShowRecordLink         from '../../components/ui/DictionaryShowRecordLink.vue';
+import DictionaryDataSearchEmptyResult  from '../../components/ui/DictionaryDataSearchEmptyResult.vue';
 
 export default {
     name: 'HouseholdsMain',
@@ -154,7 +151,8 @@ export default {
         ButtonExportRecordForm,
         ButtonRefreshData,
         ButtonFilter,
-        DictionaryShowRecordLink
+        DictionaryShowRecordLink,
+        DictionaryDataSearchEmptyResult
     },
     mixins: [ExportDataForm],
     data() {

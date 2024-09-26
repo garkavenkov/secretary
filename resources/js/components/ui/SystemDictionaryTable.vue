@@ -43,11 +43,7 @@
                         </tr>
                     </template>
                     <template v-else>
-                        <tr>
-                            <td :colspan="fields.length + 1" class="p-3 text-muted text-center">
-                                Дані, що задовольняють пошуку, не знайдені.
-                            </td>
-                        </tr>
+                        <DictionaryDataSearchEmptyResult :cols="fields.length + 1" />                        
                     </template>
                 </template>
             </DataTable>
@@ -57,6 +53,8 @@
 </template>
 
 <script>
+
+import DictionaryDataSearchEmptyResult from './DictionaryDataSearchEmptyResult.vue';
 
 export default {
     name:'SystemDictionaryTable',
@@ -88,6 +86,9 @@ export default {
             required: false,
             default: 'Видалити запис'
         },
+    },
+    components: {
+        DictionaryDataSearchEmptyResult
     },
     emits:['newRecord', 'editRecord', 'deleteRecord'],
     data() {

@@ -17,7 +17,7 @@
             </div>
             <div class="search__wrapper">
                 <form autocomplete="off" @submit.prevent>
-                    <label  for="search">Поіск</label>
+                    <label  for="search">Пошук</label>
                     <!-- <input  type="search"
                             id="search"
                             class="search"                                                      

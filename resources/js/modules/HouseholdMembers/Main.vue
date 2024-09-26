@@ -156,11 +156,7 @@
                         </tr>
                     </template>
                     <template v-else>
-                        <tr>
-                            <td colspan="7" class="p-3 text-muted text-center">
-                                Дані, що задовольняють пошуку, не знайдені
-                            </td>
-                        </tr>
+                        <DictionaryDataSearchEmptyResult cols="8" />
                     </template>
                 </template>
             </DataTable>
@@ -178,27 +174,28 @@
 </template>
 
 <script>
-import { mapGetters, mapActions }   from 'vuex';
-import { Modal }                    from 'bootstrap';
-import { computed }                 from 'vue';
-import SvgIcon                      from '@jamescoyle/vue-icon';
+import { mapGetters, mapActions }       from 'vuex';
+import { Modal }                        from 'bootstrap';
+import { computed }                     from 'vue';
+import SvgIcon                          from '@jamescoyle/vue-icon';
 import { 
     mdiAccountEyeOutline,
     mdiTableCog 
 }     from '@mdi/js';
 
-import ExportDataForm               from '../../mixins/ExportDataForm';
+import ExportDataForm                   from '../../mixins/ExportDataForm';
 
-import ButtonSelectRecords          from '../../components/ui/Buttons/ButtonSelectRecords.vue';
-import ButtonExportRecordForm       from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
-import ButtonDocumentGenerationForm from '../../components/ui/Buttons/ButtonDocumentGenerationForm.vue';
-import ButtonRefreshData            from '../../components/ui/Buttons/ButtonRefreshData.vue';
-import ExportRecordForm             from '../../components/ui/ExportRecordForm.vue';
-import ButtonFilter                 from '../../components/ui/Buttons/ButtonFilter.vue';
-import IconButton                   from '../../components/ui/Buttons/IconButton.vue';
+import ButtonSelectRecords              from '../../components/ui/Buttons/ButtonSelectRecords.vue';
+import ButtonExportRecordForm           from '../../components/ui/Buttons/ButtonExportRecordForm.vue';
+import ButtonDocumentGenerationForm     from '../../components/ui/Buttons/ButtonDocumentGenerationForm.vue';
+import ButtonRefreshData                from '../../components/ui/Buttons/ButtonRefreshData.vue';
+import ExportRecordForm                 from '../../components/ui/ExportRecordForm.vue';
+import ButtonFilter                     from '../../components/ui/Buttons/ButtonFilter.vue';
+import IconButton                       from '../../components/ui/Buttons/IconButton.vue';
 
-import MembersFilterForm            from './MembersFilterForm.vue';
-import DocumentGenerationForm       from './DocumentGenerationForm.vue';
+import MembersFilterForm                from './MembersFilterForm.vue';
+import DocumentGenerationForm           from './DocumentGenerationForm.vue';
+import DictionaryDataSearchEmptyResult  from '../../components/ui/DictionaryDataSearchEmptyResult.vue';
 
 
 export default {
@@ -305,7 +302,8 @@ export default {
         ExportRecordForm,
         ButtonFilter,
         SvgIcon,
-        IconButton      
+        IconButton,
+        DictionaryDataSearchEmptyResult
     }
 
 }

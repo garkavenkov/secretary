@@ -24,18 +24,23 @@
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">
-                    <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id">
-                        <td class="text-center">
-                            <DictionaryShowRecordLink routeName="settlements.show" :routeParamId="record.id" />
-                        </td>
-                        <td>{{ record.name }}</td>
-                        <td>{{ record.settlement_type.name }}</td>
-                        <td>{{ record.council.name }}</td>
-                        <td>{{ record.postcode }}</td>
-                        <td>{{ record.katottg }}</td>
-                        <td></td>
-                    </tr>
+                    <template v-if="slotProps.paginatedData.length > 0">
+                        <tr     v-for="record in slotProps.paginatedData"
+                                :key="record.id">
+                            <td class="text-center">
+                                <DictionaryShowRecordLink routeName="settlements.show" :routeParamId="record.id" />
+                            </td>
+                            <td>{{ record.name }}</td>
+                            <td>{{ record.settlement_type.name }}</td>
+                            <td>{{ record.council.name }}</td>
+                            <td>{{ record.postcode }}</td>
+                            <td>{{ record.katottg }}</td>
+                            <td></td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <DictionaryDataSearchEmptyResult cols="7" />
+                    </template>
                 </template>
             </DataTable>
         </div>
@@ -48,17 +53,19 @@
 </template>
 
 <script>
-import { mapGetters }           from 'vuex';
-import { Modal }                from 'bootstrap'
+import { mapGetters }                   from 'vuex';
+import { Modal }                        from 'bootstrap'
 
-import SettlementForm           from './Form.vue';
-import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
+import SettlementForm                   from './Form.vue';
+import DictionaryShowRecordLink         from '../../components/ui/DictionaryShowRecordLink.vue';
+import DictionaryDataSearchEmptyResult  from '../../components/ui/DictionaryDataSearchEmptyResult.vue';
 
 export default {
     name: 'SettlementsMain',
     components: {
         SettlementForm,
-        DictionaryShowRecordLink
+        DictionaryShowRecordLink,
+        DictionaryDataSearchEmptyResult
     },
     data() {
         return {

@@ -24,19 +24,24 @@
                     </tr>
                 </template>
                 <template v-slot:default="slotProps">
-                    <tr     v-for="record in slotProps.paginatedData"
-                            :key="record.id">
-                        
-                        <td class="text-center">
-                            <DictionaryShowRecordLink routeName="communities.show" :routeParamId="record.id" />
-                        </td>                                               
-                        <td>{{record.name}}</td>
-                        <td>{{record.center}}</td>
-                        <td>{{record.district.name}}</td>
-                        <td>{{record.address}}</td>
-                        <td>{{record.edrpou}}</td>
-                        <td>{{record.koatuu}}</td>
-                    </tr>
+                    <template v-if="slotProps.paginatedData.length > 0">
+                        <tr     v-for="record in slotProps.paginatedData"
+                                :key="record.id">
+                            
+                            <td class="text-center">
+                                <DictionaryShowRecordLink routeName="communities.show" :routeParamId="record.id" />
+                            </td>                                               
+                            <td>{{record.name}}</td>
+                            <td>{{record.center}}</td>
+                            <td>{{record.district.name}}</td>
+                            <td>{{record.address}}</td>
+                            <td>{{record.edrpou}}</td>
+                            <td>{{record.koatuu}}</td>
+                        </tr>
+                    </template>
+                    <template v-else>
+                        <DictionaryDataSearchEmptyResult cols="7" />
+                    </template>
                 </template>
             </DataTable>
         </div>
@@ -49,17 +54,19 @@
 </template>
 
 <script>
-import { mapGetters }           from 'vuex';
-import { Modal }                from 'bootstrap';
+import { mapGetters }                   from 'vuex';
+import { Modal }                        from 'bootstrap';
 
-import CommunityForm            from './Form.vue';
-import DictionaryShowRecordLink from '../../components/ui/DictionaryShowRecordLink.vue';
+import CommunityForm                    from './Form.vue';
+import DictionaryShowRecordLink         from '../../components/ui/DictionaryShowRecordLink.vue';
+import DictionaryDataSearchEmptyResult  from '../../components/ui/DictionaryDataSearchEmptyResult.vue';
 
 export default {
     name: 'DistrictsMain',
     components: {
         CommunityForm,
-        DictionaryShowRecordLink
+        DictionaryShowRecordLink,
+        DictionaryDataSearchEmptyResult
     },
     data() {
         return {
