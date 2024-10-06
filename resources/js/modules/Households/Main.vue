@@ -60,7 +60,7 @@
                         <th v-else class="show-record"></th>                        
                         <th data-sort-field="number" data-field-type="string" class="sortable">Номер</th>
                         <th>Населений пункт</th>
-                        <th data-sort-field="address" data-field-type="string" class="sortable">Місцезнаходження / адреса</th>
+                        <th data-sort-field="short_address" data-field-type="string" class="sortable">Місцезнаходження / адреса</th>
                         <th>Голова домогосподарства</th>
                         <th data-sort-field="household_members_count" data-field-type="number" class="sortable">Мешкає</th>
                     </tr>

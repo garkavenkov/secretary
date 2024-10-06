@@ -5328,7 +5328,7 @@ var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
-    "data-sort-field": "address",
+    "data-sort-field": "short_address",
     "data-field-type": "string",
     "class": "sortable"
   }, "Місцезнаходження / адреса", -1 /* HOISTED */);
