@@ -40,10 +40,12 @@
                     :dataTable="households"
                     :perPageItems="perPageItems"
                     :externalPagination="pagination"
+                    :sortedByFields="sortedByFields"
                     tableHeaderClass="table-dark"
                     tableClass="table-bordered"
                     sortByDefaultField="id"
                     @pageChanged="pageChanged"
+                    @sortedBy="(fields) => setSortedBy(fields)"
                     @perPageChanged="perPageChanged">
                 <template v-slot:header>
                     <tr>
@@ -122,7 +124,11 @@
 
 <script>
 
-import { mapGetters, mapActions }       from 'vuex';
+import { 
+    mapGetters, 
+    mapActions, 
+    mapMutations 
+}                                       from 'vuex';
 import { Modal }                        from 'bootstrap'
 import { computed }                     from 'vue';
 
@@ -198,6 +204,7 @@ export default {
     },
     methods: {
         ...mapActions('Households', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords']),
+        ...mapMutations('Households', ['setSortedBy']),
         addCard() {
             this.modalTitle = 'Нова облікова картка';
             this.modalSubmitCaption = 'Додати';
@@ -254,6 +261,9 @@ export default {
             // console.log('sortData from Main component');
             console.log(a,b, criteria);
         },
+        // sortedBy(fields) {
+        //     this.setSortedBy(fields);
+        // }
     },
     computed: {
         ...mapGetters('Households', [            
@@ -267,7 +277,8 @@ export default {
             'selectedRecords',
             'selectedRecordsCount', 
             'isAllSelected',
-            'toggleSelectAllTitle'
+            'toggleSelectAllTitle',
+            'sortedByFields'
         ]),           
     }
 }

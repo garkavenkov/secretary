@@ -1878,7 +1878,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       })
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_13__.mapActions)('Households', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_13__.mapActions)('Households', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords'])), (0,vuex__WEBPACK_IMPORTED_MODULE_13__.mapMutations)('Households', ['setSortedBy'])), {}, {
     addCard: function addCard() {
       this.modalTitle = 'Нова облікова картка';
       this.modalSubmitCaption = 'Додати';
@@ -1933,9 +1933,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     sortData: function sortData(a, b, criteria) {
       // console.log('sortData from Main component');
       console.log(a, b, criteria);
-    }
+    } // sortedBy(fields) {
+    //     this.setSortedBy(fields);
+    // }
   }),
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_13__.mapGetters)('Households', ['households', 'filter', 'pagination', 'entities', 'isFiltered', 'inSelectMode', 'isIndeterminate', 'selectedRecords', 'selectedRecordsCount', 'isAllSelected', 'toggleSelectAllTitle']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_13__.mapGetters)('Households', ['households', 'filter', 'pagination', 'entities', 'isFiltered', 'inSelectMode', 'isIndeterminate', 'selectedRecords', 'selectedRecordsCount', 'isAllSelected', 'toggleSelectAllTitle', 'sortedByFields']))
 });
 
 /***/ }),
@@ -5402,10 +5404,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     dataTable: _ctx.households,
     perPageItems: $data.perPageItems,
     externalPagination: _ctx.pagination,
+    sortedByFields: _ctx.sortedByFields,
     tableHeaderClass: "table-dark",
     tableClass: "table-bordered",
     sortByDefaultField: "id",
     onPageChanged: $options.pageChanged,
+    onSortedBy: _cache[2] || (_cache[2] = function (fields) {
+      return _ctx.setSortedBy(fields);
+    }),
     onPerPageChanged: $options.perPageChanged
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -5448,10 +5454,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }))];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["dataTable", "perPageItems", "externalPagination", "onPageChanged", "onPerPageChanged"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, " Немає даних для відображення. "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseholdForm, {
+  }, 8 /* PROPS */, ["dataTable", "perPageItems", "externalPagination", "sortedByFields", "onPageChanged", "onPerPageChanged"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, " Немає даних для відображення. "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseholdForm, {
     formData: $data.formData,
     disabledFields: $data.disabledFields,
-    onRefreshData: _cache[2] || (_cache[2] = function ($event) {
+    onRefreshData: _cache[3] || (_cache[3] = function ($event) {
       return _ctx.$store.dispatch('Households/fetchRecords');
     })
   }, null, 8 /* PROPS */, ["formData", "disabledFields"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_HouseholdFilterForm, {

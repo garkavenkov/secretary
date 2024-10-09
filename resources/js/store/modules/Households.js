@@ -3,6 +3,7 @@ import pagination       from '../core/pagination';
 import filter           from '../core/filter';
 import queryString      from '../core/queryString';
 import selectRecords    from '../core/selectRecords';
+import sort             from '../core/sort';
 
 export const Households = {
     namespaced: true,
@@ -31,7 +32,8 @@ export const Households = {
         entity: 'household',
         pagination: {},
         perPage: 10,
-        ...selectRecords.state
+        ...selectRecords.state,
+        ...sort.state
     },
     getters: {
         households: state => state.households,
@@ -42,7 +44,7 @@ export const Households = {
         household_id: state => state.household.id,
         // houseYears: state => state.household.houseYears,
         houseYears: state => state.houseYears,
-        availableHouseYears: state => state.household.houseYears.map(y => y.year),
+        availableHouseYears: state => state.houseYears.map(y => y.year),
         // houseInfo: state => state.household.houseInfo,
         houseInfo: state => state.houseInfo,
         // landYears: state => state.household.landYears,
@@ -54,12 +56,14 @@ export const Households = {
         pagination: state => state.pagination,
         entities: state => state.entities,
         isFiltered: state => state.filter.isFiltered,
-        ...selectRecords.getters
+        ...selectRecords.getters,
+        ...sort.getters,
     },
     mutations: {
         ...crud.mutations,
         ...filter.mutations,
         ...queryString.mutations,
+        ...sort.mutation
     },
     actions: {
         ...crud.actions,

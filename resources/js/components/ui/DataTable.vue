@@ -1,6 +1,6 @@
 <template>
     <div class="data-table--wrapper">
-        <div class="data-table_  d-flex justify-content-between pb-2" v-if="showActionsPanel">
+        <div class="data-table_  d-flex justify-content-between pb-2 align-items-center" v-if="showActionsPanel">
             <div class="per-page__wrapper" >
                 <span>Відображати</span>
                 <select name="per_Page"
@@ -15,15 +15,12 @@
                     </option>
                 </select>
             </div>
+            <div v-if="sortedByLength > 0">                
+                <button class="btn btn-sm btn-outline-secondary btn-transparent" @click="cancelSort">Відмінити сортуваня</button>
+            </div>
             <div class="search__wrapper">
                 <form autocomplete="off" @submit.prevent>
-                    <label  for="search">Пошук</label>
-                    <!-- <input  type="search"
-                            id="search"
-                            class="search"                                                      
-                            autocomplete="off"
-                            v-model.lazy="searchData"> -->
-                            <!-- -- @input="$emit('searchInput', $event.target.value)"> -->
+                    <label  for="search">Пошук</label>                    
                     <input  type="search"
                             id="search"
                             class="search"
@@ -93,6 +90,7 @@
 </template>
 
 <script>
+
 export default {
     name: 'DataTable',
     props: {
@@ -106,11 +104,7 @@ export default {
                     50
                 ];
             }
-        },
-        // 'searchData': {
-        //     type: String,
-        //     required:true
-        // },
+        },     
         'dataTable': {
             type: Array
         },
@@ -154,11 +148,12 @@ export default {
             type: String,
             required: false,
             default: ''
+        },
+        'sortedByFields': {
+            type: Object,
+            required: false,
+            default: () => {}
         }
-        // 'sortableFields': {
-        //     type: Object,
-        //     required: false,
-        // }
     },
     data() {
         return {
@@ -171,7 +166,7 @@ export default {
             dataShouldBeSorted: false
         }
     },
-    emits: ['pageChanged', 'perPageChanged'],
+    emits: ['pageChanged', 'perPageChanged', 'sortedBy'],
     methods: {
         changePerPage(value) {
             if (this.externalPagination?.per_page) {
@@ -199,29 +194,23 @@ export default {
             let field = e.target.dataset.sortField;
             let sort = e.target.dataset.sortOrder;
 
-            // Click on sortable field
+            // If mouse click without Ctrl - reset all sort fields
             if (!e.ctrlKey) {
-                this.sortedBy = {};
-                let fields = document.querySelectorAll('[data-sort-order]');
-                fields.forEach(f => {
-                    f.removeAttribute('data-sort-order');
-                    f.removeAttribute('data-sort-position');
-                    f.classList.remove('ascending', 'descending');
-                });
+                this.clearDataSortAttributes();                
             }
-
+            
             if (sort == 'descending') {
-                e.target.classList.remove('descending')
-                e.target.removeAttribute('data-sort-order');
-                e.target.removeAttribute('data-sort-position');
-
+                // If sort order is already descendig - exclude field from sort
+                this.clearFieldSortAttributes(e.target);
                 delete(this.sortedBy[field]);
 
-                let fields = document.querySelectorAll('[data-sort-position]');
+                // Recalculate fields sort order, e.g: 1,2,etc.
+                let fields = document.querySelectorAll('[data-sort-position]');                
                 fields.forEach(f => {
                     let position = f.dataset.sortPosition;
                     f.dataset.sortPosition = position > 1 ? position - 1 : 1;
-                })
+                });
+
             } else {
                 if (sort == undefined) {
                     sort = 'ascending'
@@ -234,49 +223,77 @@ export default {
                 this.sortedBy[field] = sort;
             }
 
-            if (Object.keys(this.sortedBy).indexOf(field) >= 0 ) {
-                e.target.dataset.sortPosition = Object.keys(this.sortedBy).indexOf(field) + 1;
+            // Adjusting field's sort index. Start from 1 instead of 0;
+            let fieldSortPosition = Object.keys(this.sortedBy).indexOf(field);
+            if ( fieldSortPosition >= 0 ) {
+                e.target.dataset.sortPosition = fieldSortPosition + 1;
             }
+
+            this.$emit('sortedBy', this.sortedBy);
         },
         sortDataHandler(sortedBy, sortableFields) {
             return function(a, b) {
                 let compareResult = [];
                 Object.keys(sortedBy).forEach(function(field) {
-                    let sortOrder = sortedBy[field];
-                    let dataType = sortableFields[field];
 
-                    if (sortOrder.toLowerCase() == 'ascending') {
-                        if(dataType == 'string') {
-                            compareResult.push(a[field].localeCompare(b[field]));
-                        } else if (dataType == 'number') {
-                            compareResult.push(a[field] - b[field]);
-                        } else if (dataType == 'date') {
-                            let date_1 = new Date(a[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
-                            let date_2 = new Date(b[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));                            
-                            compareResult.push(date_1 - date_2);
-                        }
-                    } else if (sortOrder.toLowerCase() == 'descending') {
-                        if(dataType == 'string') {
-                            compareResult.push(b[field].localeCompare(a[field]));
-                        } else if (dataType == 'number') {
-                            compareResult.push(b[field] - a[field]);
-                        } else if (dataType == 'date') {                           
-                            let date_1 = new Date(a[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
-                            let date_2 = new Date(b[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));                           
-                            compareResult.push(date_2 - date_1);                            
-                        }
+                    let sortOrder = sortedBy[field].toLowerCase();
+                    let dataType = sortableFields[field];                    
+
+                    if (dataType == 'string') {
+
+                        compareResult.push( 
+                            sortOrder == 'ascending'
+                            ? (a[field].localeCompare(b[field]))
+                            : (b[field].localeCompare(a[field]))
+                        );
+
+                    } else if (dataType == 'number') {
+
+                        compareResult.push( 
+                            sortOrder == 'ascending'
+                            ? (a[field] - b[field]) 
+                            : (b[field] - a[field]) 
+                        );
+
+                    } else if (dataType == 'date') {
+
+                        let date_1 = new Date(a[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+                        let date_2 = new Date(b[field].replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+
+                        compareResult.push( 
+                            sortOrder == 'ascending'
+                            ? (date_1 - date_2) 
+                            : (date_2 - date_1) 
+                        );
+                        
                     } else {
                         return;
                     }
+
+                  
                 });
-                // console.log(compareResult);
+                
                 return compareResult.reduce((res, next) => res || next);
             }
         },
-        // sortOrderNumber(field) {
-        //     let index = Object.keys(this.sortedBy).indexOf(field);
-        //     return index < 0 ? '' : index+1;
-        // }
+        // Reset sort. Clear sort attributes on sortable fields
+        clearDataSortAttributes() {
+            this.sortedBy = {};
+            let fields = document.querySelectorAll('[data-sort-order]');
+            fields.forEach(field => this.clearFieldSortAttributes(field));
+        },
+        // Clear sort attributes on sortable field
+        clearFieldSortAttributes(field) {
+            field.removeAttribute('data-sort-order');
+            field.removeAttribute('data-sort-position');
+            field.classList.remove('ascending', 'descending');
+        },
+        cancelSort() {
+            this.clearDataSortAttributes();
+            this.dataShouldBeSorted = true;
+            this.$emit('sortedBy', this.sortedBy);
+        }
+        
     },
     computed: {
         pagesCount() {
@@ -310,7 +327,8 @@ export default {
                     dataSet = this.dataTable.slice(start, end);
                 }
             }
-
+            
+            // Sort dataSet
             if (this.sortedByLength > 0) {
                 dataSet.sort(this.sortDataHandler(this.sortedBy, this.fieldsType));
             } else {
@@ -351,27 +369,44 @@ export default {
         },
         isFirstPage() {
             return this.currentPage == 1;
-        },
-        // sortableFields() {
-        //     let fields = document.querySelectorAll('[data-sort-field]');
-        //     // console.log(fields.length);
-        // }
+        },     
     },
     mounted() {
         // if (this.dataFields.length > 0) {
             let fields = document.querySelectorAll('[data-sort-field]');
             if (fields) {
-                fields.forEach(field => {
+                fields.forEach(field => {                    
+
                     if (field.dataset.sortField !== '') {
-                        field.addEventListener('click', this.sortDataByField)
+
+                        field.addEventListener('click', this.sortDataByField)                        
+
+                        // Configure dataset field
                         if (field.dataset.fieldType) {
                             this.fieldsType[field.dataset.sortField] = field.dataset.fieldType;
                         } else {
                             this.fieldsType[field.dataset.sortField] = 'string'
                         }
-                    }
-                    // console.log(field.dataset.sortField);
+
+                        // Field's sort order (desc, asc) and sort number (1,2,3)                        
+                        if(Object.keys(this.sortedByFields).length > 0 ) {
+                            
+                            if(Object.keys(this.sortedByFields).indexOf(field.dataset.sortField) >= 0) {
+                                
+                                let position = Object.keys(this.sortedByFields).indexOf(field.dataset.sortField) + 1;
+                                let sortOrder = this.sortedByFields[field.dataset.sortField];
+
+                                field.dataset.sortPosition = position;
+                                field.dataset.sortOrder = sortOrder;
+
+                                field.classList.add(sortOrder);
+                            }
+
+                        } 
+                    }                  
+                    
                 });
+                this.sortedBy = Object.assign({}, this.sortedByFields);
             }
         // }
     },   
@@ -383,16 +418,11 @@ export default {
             deep: true,
             immidiate: true
         },
-        sortedByLength(newVal, oldVal) {
-            // console.log(`newVal: ${newVal}, oldVal: ${oldVal}`);
+        sortedByLength(newVal, oldVal) {          
             if (oldVal == 1 && newVal == 0) {
                 this.dataShouldBeSorted = true;
             }
-        },
-        // searchData(newVal, oldVal) {
-        //     console.log(`searchInput has been changed: new value is ${newVal}`);
-        //     this.$emit('searchInput', newVal);
-        // }
+        },    
     }
 }
 </script>
@@ -454,6 +484,18 @@ export default {
 .per-page__wrapper {
     span {
         margin-right: 0.5rem;
+    }
+}
+
+.datasort__cancel {
+    span {
+        opacity: 0.5;
+        color: red;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+        }
     }
 }
 

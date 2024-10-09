@@ -1152,7 +1152,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       })
     };
   },
-  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_15__.mapActions)('HouseholdMembers', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords'])), {}, {
+  methods: _objectSpread(_objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_15__.mapActions)('HouseholdMembers', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords'])), (0,vuex__WEBPACK_IMPORTED_MODULE_15__.mapMutations)('HouseholdMembers', ['setSortedBy'])), {}, {
     openFilterForm: function openFilterForm() {
       this.modalTitle = 'Фільтр членів домогосподарств';
       this.modalSubmitCaption = 'Застосувати';
@@ -1191,9 +1191,11 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       this.modalSubmitCaption = 'Згенерувати';
       var reportWizardForm = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('DocumentGenerationForm'));
       reportWizardForm.show();
-    }
+    } // sortedBy(fields) {
+    //     this.setSortedBy(fields);
+    // }      
   }),
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_15__.mapGetters)('HouseholdMembers', ['members', 'filter', 'pagination', 'entities', 'inSelectMode', 'isFiltered', 'isIndeterminate', 'selectedRecords', 'selectedRecordsCount', 'isAllSelected', 'toggleSelectAllTitle', 'url'])), {}, {
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_15__.mapGetters)('HouseholdMembers', ['members', 'filter', 'pagination', 'entities', 'inSelectMode', 'isFiltered', 'isIndeterminate', 'selectedRecords', 'selectedRecordsCount', 'isAllSelected', 'toggleSelectAllTitle', 'url', 'sortedByFields'])), {}, {
     showDeathDateField: function showDeathDateField() {
       return this.url.includes('status=dead') || this.url.includes('status=all') ? true : false;
     } // fieldsTitle() {
@@ -3297,10 +3299,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     dataTable: _ctx.members,
     perPageItems: $data.perPageItems,
     externalPagination: _ctx.pagination,
+    sortedByFields: _ctx.sortedByFields,
     tableHeaderClass: "table-dark",
     tableClass: "table-bordered",
     sortByDefaultField: "id",
     onPageChanged: $options.pageChanged,
+    onSortedBy: _cache[2] || (_cache[2] = function (fields) {
+      return _ctx.setSortedBy(fields);
+    }),
     onPerPageChanged: $options.perPageChanged
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -3379,7 +3385,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }))];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["dataTable", "perPageItems", "externalPagination", "onPageChanged", "onPerPageChanged"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, " Немає даних для відображення. "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MembersFilterForm, {
+  }, 8 /* PROPS */, ["dataTable", "perPageItems", "externalPagination", "sortedByFields", "onPageChanged", "onPerPageChanged"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_25, " Немає даних для відображення. "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MembersFilterForm, {
     onResetFilter: $options.resetFilter
   }, null, 8 /* PROPS */, ["onResetFilter"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_DocumentGenerationForm, {
     records: _ctx.selectedRecords

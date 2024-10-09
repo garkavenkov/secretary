@@ -68,10 +68,12 @@
                     :dataTable="members"
                     :perPageItems="perPageItems"
                     :externalPagination="pagination"                    
+                    :sortedByFields="sortedByFields"
                     tableHeaderClass="table-dark"
                     tableClass="table-bordered"
                     sortByDefaultField="id"
                     @pageChanged="pageChanged"
+                    @sortedBy="(fields) => setSortedBy(fields)"
                     @perPageChanged="perPageChanged">
                     <!-- @searchInput="searchData" -->
                 <template v-slot:header>
@@ -174,14 +176,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions }       from 'vuex';
+import { 
+    mapGetters,
+    mapActions,
+    mapMutations 
+}                                       from 'vuex';
 import { Modal }                        from 'bootstrap';
 import { computed }                     from 'vue';
 import SvgIcon                          from '@jamescoyle/vue-icon';
 import { 
     mdiAccountEyeOutline,
     mdiTableCog 
-}     from '@mdi/js';
+}                                       from '@mdi/js';
 
 import ExportDataForm                   from '../../mixins/ExportDataForm';
 
@@ -235,6 +241,7 @@ export default {
     },
     methods: {
         ...mapActions('HouseholdMembers', ['toggleSelectAll', 'toggleSelectMode', 'selectMultipleRecords']),
+        ...mapMutations('HouseholdMembers', ['setSortedBy']),
         openFilterForm() {
             this.modalTitle = 'Фільтр членів домогосподарств';
             this.modalSubmitCaption = 'Застосувати';            
@@ -268,7 +275,10 @@ export default {
             this.modalSubmitCaption = 'Згенерувати';
             let reportWizardForm = new Modal(document.getElementById('DocumentGenerationForm'));
             reportWizardForm.show();
-        },        
+        },
+        // sortedBy(fields) {
+        //     this.setSortedBy(fields);
+        // }      
     },
     computed: {
         ...mapGetters('HouseholdMembers', [
@@ -283,7 +293,8 @@ export default {
             'selectedRecordsCount', 
             'isAllSelected',
             'toggleSelectAllTitle',
-            'url'
+            'url',
+            'sortedByFields',
         ]),
         showDeathDateField() {
             return (this.url.includes('status=dead') || this.url.includes('status=all')) ? true : false;            

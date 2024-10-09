@@ -3,35 +3,29 @@ import pagination       from '../core/pagination';
 import filter           from '../core/filter';
 import queryString      from '../core/queryString';
 import selectRecords    from '../core/selectRecords';
+import sort             from '../core/sort';
 
 export const HouseholdMembers = {
     namespaced: true,
     state: {        
         members: [],
-        member: {
-            // info: {},
-            // movemets: [],
-            // additionalParams: [],
-            // landYears: [],
-        },
+        member: {},
         filter: {
             settlement_id: 0,
             sex: 'all',
-            additionalParams: {},
-            // age: {type: 'lte', value: 18},
-            // age: {type: 'gte', value: 18},
+            additionalParams: {},            
             age: {selected: false, values: [0,0]},
             status: 'alive',
             isFiltered: false,
-        },
-        // additionalParams: {},
+        },        
         baseUrl: '/api/v1/household-members',
         url: '',
         entities: 'members',
         entity: 'member',
         pagination: {},
         perPage: 10,
-        ...selectRecords.state      
+        ...selectRecords.state,
+        ...sort.state,
     },
     getters: {
         members: state => state.members,
@@ -44,7 +38,8 @@ export const HouseholdMembers = {
         entities: state => state.entities,
         isFiltered: state => state.filter.isFiltered,
         url: state => state.url,
-        ...selectRecords.getters
+        ...selectRecords.getters,
+        ...sort.getters,
         // info: state => Object.assign({}, state.member.info),
         // members: state => state.household.members,
         // household_id: state => state.household.id,
@@ -60,6 +55,7 @@ export const HouseholdMembers = {
         ...crud.mutations,
         ...filter.mutations,
         ...queryString.mutations,
+        ...sort.mutation,
     },
     actions: {
         ...crud.actions,
