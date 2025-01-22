@@ -40,20 +40,10 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                                                 }, null),
                 'death_register_number'     =>  $member->death_register_number,
                 'death_register_office'     =>  $member->death_register_office,
-                'short_address'             =>  Household::getShortAddress($member->address),
                 'settlement'                =>  mb_strcut(mb_strtolower($member->settlement_type), 0, 2) . ". " .  $member->settlement,
-                'full_address'              =>  Household::getFullAddress(
-                                                        $member->address,
-                                                        $member->settlement, 
-                                                        $member->settlement_type, 
-                                                        $member->district, 
-                                                        $member->region
-                                                ),
-                'household_number'          =>  Household::getHouseholdNumber(
-                                                    $member->settlement_inner_code, 
-                                                    $member->number, 
-                                                    $member->household_type_id
-                                                ),
+                'household_number'          =>  generateHouseholdNumber($member->settlement_inner_code, $member->number, $member->household_type_id),
+                'short_address'             =>  generateHouseholdShortAddress($member->address),
+                'full_address'              =>  generateHouseholdFullAddress($member->address, $member->settlement, $member->settlement_type, $member->district, $member->region),
                 // 'relatives'                 =>  $member->relatives()
                 'relatives'                 =>  []
             ];

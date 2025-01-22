@@ -44,20 +44,23 @@ class HouseholdMemberResource extends JsonResource
             'work_place'                    =>  $this->work_place,
             'status'                        =>  $this->status,
             'death_date'                    =>  $this->death_date,
-            'death_date_formatted'          =>  $this->when($this->death_date, Carbon::parse($this->death_date)->format('d.m.Y')),
+            'death_date_formatted'          =>  $this->when(
+                                                    $this->death_date, 
+                                                    Carbon::parse($this->death_date)->format('d.m.Y')
+                                                ),
             'death_register_number'         =>  $this->death_register_number,
             'death_register_office'         =>  $this->death_register_office,
-            'household_number'              =>  Household::getHouseholdNumber(
-                                                        $this->settlement_inner_code, 
-                                                        $this->number, 
-                                                        $this->household_type_id
+            'household_number'              =>  generateHouseholdNumber(
+                                                    $this->settlement_inner_code, 
+                                                    $this->number, 
+                                                    $this->household_type_id
                                                 ),
-            'full_address'                  =>  Household::getFullAddress(
-                                                        $this->address,
-                                                        $this->settlement, 
-                                                        $this->settlement_type, 
-                                                        $this->district, 
-                                                        $this->region
+            'full_address'                  =>  generateHouseholdFullAddress(
+                                                    $this->address, 
+                                                    $this->settlement, 
+                                                    $this->settlement_type, 
+                                                    $this->district, 
+                                                    $this->region
                                                 ),
             // 'relatives'                     =>  $this->relatives()
         ];

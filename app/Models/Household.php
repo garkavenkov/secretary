@@ -6,7 +6,6 @@ use App\Models\Settlement;
 use App\Snippets\SqlSnippet;
 use App\Models\HouseholdType;
 use App\Models\HouseholdHouse;
-use DeclensionUkrainian\Toponym;
 use Illuminate\Support\Facades\DB;
 use App\Traits\Models\AdditionalParams;
 use Illuminate\Database\Eloquent\Model;
@@ -124,46 +123,40 @@ class Household extends Model
         }
         return "";
     }
-
-    /**
-     * Get short address.
-     * e.g: "вул. Свободи, буд. 5, корп. 3, кв. 4
-     *
-     * @return string
-     */   
-    public static function getShortAddress(string $address) : string 
-    {
-        $parts = explode(',', $address);
-        $address = "$parts[0] $parts[1], буд. $parts[2]";
-
-        // корпус
-        $address = $address . ($parts[3] !== '' ? ", корп. $parts[3]" : "");
-
-        // квартира
-        $address = $address . ($parts[4] !== '' ? ", кв. $parts[4]" : "");
-
-        return $address;   
-    }
-
-   
  
-    /**
-     * Get full address. 
-     * Which extends showrt address adding district and region name
-     *
-     * @return string
-     */
-    public static function getFullAddress(string $address, string $settlement, string $settlement_type, string $district, string $region): string
-    {        
-        $settlement_type = mb_strtolower($settlement_type);
-        
-        $district = explode(' ', $district);
-        $district = Toponym::inGenetive(['name' => $district[0], 'type' => $district[1]]);
-            
-        $region = explode(' ', $region);
-        $region = Toponym::inGenetive(['name' => $region[0], 'type' => $region[1]]);
+
     
-        return Household::getShortAddress($address) . ", $settlement_type $settlement, $district, $region";
+    public function getFullAddress(): string
+    {           
+        $address = DB::table('households as h') 
+                    ->join('settlements as s', 's.id', '=', 'h.settlement_id')
+                    ->join('settlement_types as st', 'st.id', '=', 's.settlement_type_id')
+                    ->join('councils as c', 'c.id', '=', 's.council_id')
+                    ->join('communities as cm', 'cm.id', '=', 'c.community_id')
+                    ->join('districts as d', 'cm.district_id', '=', 'd.id')
+                    ->join('regions as r', 'r.id', '=', 'd.region_id')
+                    ->select(
+                        'h.id as household_id',
+                        'h.address as address',
+                        'h.number as household_number',
+                        'h.settlement_id as settlement_id',
+                        's.name as settlement',
+                        'st.name as settlement_type',
+                        'c.name as council',
+                        'cm.name as community',
+                        'd.name as district',
+                        'r.name as region'
+                    )
+                    ->where('h.id',$this->id)
+                    ->first();
+  
+        if (!is_null($address)) {
+            return generateHouseholdFullAddress($address->address, $address->settlement, $address->settlement_type, $address->district, $address->region);
+        } else {
+            return '';
+        }
+
+        
     }
 
     public function houseInfo()
@@ -193,33 +186,6 @@ class Household extends Model
     public function familyInfo(): \Illuminate\Support\Collection
     {       
         return $this->additionalParamValue('family_');      
-    }
-
-    /**
-     * Get household number in ss-nnnn-t format.
-     * where:   
-     *      -ss     - settlement inner code
-     *      -nnnn   - household number through settlement, 1,2,3....etc  
-     *      -t      - household type [1..5]
-     *
-     * @return string
-     */
-    public function fullNumber(): string
-    {
-        return  str_pad($this->settlement->inner_code, 2, '0', STR_PAD_LEFT)
-                . '-'
-                . str_pad($this->number, 4, '0', STR_PAD_LEFT)
-                . '-'
-                . $this->household_type_id;
-    }
-
-    public static function getHouseholdNumber($inner_code, $number, $household_type_id): string
-    {
-        return  str_pad($inner_code, 2, '0', STR_PAD_LEFT)
-                . '-'
-                . str_pad($number, 4, '0', STR_PAD_LEFT)
-                . '-'
-                . $household_type_id;
     }
 
     /**
@@ -300,32 +266,21 @@ class Household extends Model
                     ->addSelect(SqlSnippet::household_head());
     }
 
-    //********************************** Attributes *********************************************************
-   
-    // public function getSettlementNameAttribute()
-    // {
-    //     return $this->settlement->name;
-    // }
-    
+    //********************************** Attributes *********************************************************   
     public function getHouseholdNumberAttribute()
     {
-        // return $this->fullNumber();
-        return  str_pad($this->settlement_inner_code, 2, '0', STR_PAD_LEFT)
-                . '-'
-                . str_pad($this->number, 4, '0', STR_PAD_LEFT)
-                . '-'
-                . $this->household_type_id;
+        return generateHouseholdNumber($this->settlement_inner_code, $this->number, $this->household_type_id);
     }
    
     public function getShortAddressAttribute(): string
     {        
-        return Household::getShortAddress($this->address);
+        return generateHouseholdShortAddress($this->address);
     }
 
    
     public function getFullAddressAttribute()
     {
-        return Household::getFullAddress($this->address, $this->settlement, $this->settlement_type, $this->district, $this->region);
+        return $this->getFullAddress();
     }
 
     public function getHouseholdHeadAttribute()

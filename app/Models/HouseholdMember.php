@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
-use function PHPUnit\Framework\isNull;
-
 class HouseholdMember extends Model
 {
     use HasFactory, AdditionalParams;
@@ -186,9 +184,8 @@ class HouseholdMember extends Model
 
     public function getRegistrationAddressAttribute()
     {
-
         $address =$this->household->getFullAddress();
-
+           
         return ($this->sex == 'чоловіча' ? 'зареєстрований' : 'зареєстрована') . 
                 " за адресою: $address";
 
@@ -199,33 +196,10 @@ class HouseholdMember extends Model
         return $this->relatives()->toArray();
     }
 
-    public function getFullAddressAttribute()
-    {
-        // return $this->household->getFullAddress();
-        return Household::getFullAddress(
-                    $this->address,
-                    $this->settlement, 
-                    $this->settlement_type, 
-                    $this->district, 
-                    $this->region
-                );
-    }
-
-    public function getShortAddressAttribute()
-    {
-        // return $this->household->getShortAddress();
-        return Household::getShortAddress($this->address);
-    }
-    
-    public function getHouseholdNumberAttribute()   
-    {
-        // return $this->household->fullNumber();
-        return Household::getHouseholdNumber(
-                    $this->settlement_inner_code, 
-                    $this->number, 
-                    $this->household_type_id
-                );
-    }
+    // public function getFullAddressAttribute()
+    // {
+    //     return $this->household->getFullAddress();       
+    // }
 
     public function getGenderAttribute()
     {

@@ -25,8 +25,8 @@ class HouseholdResource extends JsonResource
             'household_type'        =>  $this->household_type,            
             'household_head'        =>  $this->head,
             'address'               =>  $this->address,
-            'short_address'         =>  $this->short_address,            
-            'full_address'          =>  $this->full_address,            
+            'short_address'         =>  $this->short_address,   // attribute         
+            'full_address'          =>  $this->full_address,    // attribute        
             'special_marks'         =>  $this->special_marks,
             'additional_data'       =>  $this->additional_data,
             'owners'                =>  HouseholdOwnerResource::collection($this->whenLoaded('owners'))
