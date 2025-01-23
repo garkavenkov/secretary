@@ -12,6 +12,7 @@ use App\Http\Resources\API\v1\Report\ReportResource;
 use App\Models\Report;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\File;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use ZipArchive;
@@ -248,14 +249,14 @@ class ReportController extends Controller
 
     public function familyComposition($params)
     {
-        
         if(!isset($params['member_id'])) {
             throw new Exception('Member did not pass');
         }
 
-        $ids = explode(',', $params['member_id']);
+        $ids = explode(',', $params['member_id']);  
+
         $members = HouseholdMember::findOrFail($ids);
-        
+
         $reports = [];
 
         foreach($members as $member) {
@@ -299,39 +300,42 @@ class ReportController extends Controller
             $templateProcessor->saveAs(storage_path($filename));
             $reports[] = $filename;            
         }
-        
-        $this->prepareForDownload(reports: $reports, archive: 'familyComposition');      
+
+        $isArchive = count($ids) > 1 ? true : false;
+
+        $this->prepareReportForDownload(reports: $reports, filename: 'familyComposition', isArchive: $isArchive);      
 
     }
 
-    private function prepareForDownload(array $reports, string $archive)
-    {
-        if (count($reports) > 1) {
+    private function prepareReportForDownload(array $reports, string $filename, bool $isArchive = false)
+    {   
+        if (count($reports) > 0) {
 
-            $zip = new ZipArchive();
-            
-            $archive = "$archive.zip";
-    
-            if ($zip->open(storage_path($archive), ZipArchive::CREATE)!==TRUE) {
-                throw new Exception("Cannot open $archive.zip",500);
+            if ($isArchive) {
+                $zip = new ZipArchive();
+                $filename = "$filename.zip";
+        
+                if ($zip->open(storage_path($filename), ZipArchive::CREATE)!==TRUE) {
+                    throw new Exception("Cannot open $filename.zip",500);
+                } else {
+                    foreach($reports as $report) {                      
+                        $zip->addFile(storage_path($report), $report);        
+                    }
+                    $zip->close();
+        
+                    foreach($reports as $report) {
+                        unlink(storage_path($report));
+                    }
+                    $this->downloadFile(content_type: "application/zip", filename: $filename);                    
+                }
+
             } else {
-                foreach($reports as $report) {
-                    $zip->addFile(storage_path($report), $report);        
-                }
-                $zip->close();
-    
-                foreach($reports as $report) {
-                    unlink(storage_path($report));
-                }
-                $this->downloadFile(content_type: "application/zip", filename: $archive);
-                
-            }
+                $filename = $reports[0];
+                $this->downloadFile(content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8", filename: $filename);
+            }       
 
-        } else if (count($reports) == 1 ) {
-            $filename = $reports[0];
-            $this->downloadFile(content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document;charset=utf-8", filename: $filename);
-            
-        } else {
+        }
+        else {
             throw new Exception("Не вдалося згненерувати файл.<br>Можливо відсутні данні необхідні для формування документу", 500);            
         }
     }
@@ -384,7 +388,6 @@ class ReportController extends Controller
         foreach($members as $member) {
 
             $year = $member->landYear($params['year']);
-            
             if (is_null($year)) {
 
                 if (count($members) == 1) {
@@ -419,8 +422,10 @@ class ReportController extends Controller
             }
 
         }
-        
-        $this->prepareForDownload(reports: $reports, archive: 'landOwned');      
+
+        $isArchive = count($ids) > 1 ? true : false;
+
+        $this->prepareReportForDownload(reports: $reports, filename: 'landOwned', isArchive: $isArchive);      
     }
 
     protected function formatTemplateValue($value, $suffix = '', $default = '')
