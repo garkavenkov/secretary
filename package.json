@@ -21,7 +21,6 @@
         "chartjs-plugin-datalabels": "^2.2.0",
         "laravel-mix": "^6.0.49",
         "lodash": "^4.17.19",
-        "node-sass": "^8.0.0",
         "postcss": "^8.1.14",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.32.11",

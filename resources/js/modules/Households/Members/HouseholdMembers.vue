@@ -300,7 +300,7 @@ export default {
             formIsReady: false,
             showAllMembers: false,
             isFamilyCompositionFormShown: false,
-            selectedMember: 0,
+            selectedMember: {},
             selectedLandYear: 0,
             familyAdditionalParams: [],
             additionalParamsFormIsVisible: false,
@@ -423,7 +423,7 @@ export default {
         openFamilyCompositionReportForm(member) {
             this.modalTitle = `Довідка про склад родини: ${member.full_name}`;
             this.modalSubmitCaption = 'Друк';
-            this.selectedMember = member.id;
+            this.selectedMember = member;            
             this.compositionReportFromIsVisible = true
 
             nextTick(() => {

@@ -44,8 +44,8 @@ class HouseholdMemberResourceCollection extends ResourceCollection
                 'household_number'          =>  generateHouseholdNumber($member->settlement_inner_code, $member->number, $member->household_type_id),
                 'short_address'             =>  generateHouseholdShortAddress($member->address),
                 'full_address'              =>  generateHouseholdFullAddress($member->address, $member->settlement, $member->settlement_type, $member->district, $member->region),
-                // 'relatives'                 =>  $member->relatives()
-                'relatives'                 =>  []
+                'relatives'                 =>  $member->relatives()
+                // 'relatives'                 =>  []
             ];
         });
     }

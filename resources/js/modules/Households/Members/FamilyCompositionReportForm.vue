@@ -13,7 +13,8 @@
         </div> -->
         <!-- rest members of the family -->
         <div class="row">
-            <div class="relatives" v-if="info.relatives && info.relatives.length > 0">
+            <!-- <div class="relatives" v-if="info.relatives && info.relatives.length > 0"> -->
+            <div class="relatives" v-if="relatives.length > 0">
                 <h6>Перелік родичів</h6>
                 <table class="table table-sm table-bordered table-600">
                     <thead class="table-secondary">
@@ -27,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="relative in info.relatives" :key="relative.id" :class="{'text-muted': !relative.selected}">
+                        <tr v-for="relative in relatives" :key="relative.id" :class="{'text-muted': !relative.selected}">
                             <td>
                                 <input type="checkbox" v-model="relative.selected" class="form-check-input">
                             </td>
@@ -57,16 +58,17 @@ export default {
     name: 'FamilyCompositionReportForm',
     props: {
         'selectedMember': {
-            type: [String, Number],
-            required: false,
-            default: 0
+            // type: [String, Number],
+            type: Object,
+            required: true,
+            // default: 0
         }
     },
     mixins: [PrepareDataForDownload],
     data() {
         return {
-            memberId: this.selectedMember,
-            info: {},
+            memberId: this.selectedMember.id,
+            relatives: [],
             allSelected: false
         }
     },
@@ -74,7 +76,8 @@ export default {
         fetchRelatives() {
             axios.get(`/api/v1/household-members/${this.memberId}/relatives`)
                 .then(res => {
-                    this.info = res.data.data
+                    // this.info = res.data.data
+                    this.relatives = res.data.data;
                 });
         },
         submitData() {
@@ -84,7 +87,7 @@ export default {
                 relatives: ''
             }
 
-            data.relatives = this.info.relatives.filter(r => r.selected).map(r => r.id).join(',');
+            data.relatives = this.relatives.filter(r => r.selected).map(r => r.id).join(',');
 
             axios.post('/api/v1/generate-report', data,    { responseType: 'arraybuffer'} )
                 .then(res => {
@@ -93,7 +96,7 @@ export default {
                     // const link = document.createElement('a');
 
                     // link.href = url;
-                    let fileName = `${this.info.surname} ${this.info.name} ${this.info.patronymic}. Довідка про склад родини.docx`;
+                    let fileName = `${this.selectedMember.surname} ${this.selectedMember.name} ${this.selectedMember.patronymic}. Довідка про склад родини.docx`;
                     // link.setAttribute('download', fileName);
                     // document.body.appendChild(link);
 
@@ -112,9 +115,9 @@ export default {
     watch: {
         'allSelected'(newVal) {
             if (newVal) {
-                this.info.relatives.forEach(r => r.selected = true)
-            } else if (this.info.relatives.length > 0) {
-                this.info.relatives.forEach(r => r.selected = false)
+                this.relatives.forEach(r => r.selected = true)
+            } else if (this.relatives.length > 0) {
+                this.relatives.forEach(r => r.selected = false)
             }
         }
     },

@@ -267,7 +267,7 @@ class HouseholdMemberController extends Controller
     public function memberRelatives($id)
     {
         $member = HouseholdMember::findOrFail($id);
-
+        
         return HouseholdMemberRelativesResource::collection($member->relatives());
     }
 
