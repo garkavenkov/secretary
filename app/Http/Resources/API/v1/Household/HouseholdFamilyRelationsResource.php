@@ -29,7 +29,7 @@ class HouseholdFamilyRelationsResource extends JsonResource
             'birthdate_formatted'           =>  Carbon::parse($this->birthdate)->format('d.m.Y'),
             'family_relationship_type_id'   =>  (int)   $this->family_relationship_type_id,
             'status'                        =>  $this->status,
-            'relatives'                     =>  $this->relatives
+            'relatives'                     =>  $this->established_relations
         ];
     }
 }

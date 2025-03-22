@@ -337,7 +337,7 @@ class HouseholdController extends Controller
         $members = HouseholdMember::where('household_id', $household->id)->get();
 
         foreach($members as $member) {
-                $member['relatives'] = $member->relatives();
+                $member['established_relations'] = $member->relatives();
         }
 
         return HouseholdFamilyRelationsResource::collection($members);
