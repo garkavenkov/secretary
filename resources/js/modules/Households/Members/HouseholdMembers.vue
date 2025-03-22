@@ -267,6 +267,7 @@ import FamilyCompositionReportForm      from './FamilyCompositionReportForm.vue'
 import HouseholdMembersAdditionalParams from './HouseholdMembersAdditionalParams.vue';
 
 import IconButton                       from '../../../components/ui/Buttons/IconButton.vue';
+import axios from 'axios';
 
 export default {
     name: 'HouseholdMembers',
@@ -387,30 +388,32 @@ export default {
             this.modalTitle = 'Родині відносини';
             this.modalSubmitCaption = 'Встановити';
 
-            this.householdMembersComposition = true
 
-            let pairs = [];
-            this.shownMembers.forEach(member => {
+            axios.get(`/api/v1/households/${this.$route.params.id}/family-relations`)
+                .then(res => {
+                    let pairs = [];
 
-                let links = member.relatives.map(r => {
-                        return {
-                            [`${member.id}.${r.id}`] : r.relation_id
-                        }
+                    res.data.data.forEach(member => {
+        
+                        let links = member.relatives.map(r => {
+                                return {
+                                    [`${member.id}.${r.id}`] : r.relation_id
+                                }
+                        });
+        
+                        pairs.push(...links);
+                    });
+                    pairs.forEach(p => {
+                        this.availableLinks[Object.keys(p)[0]] = Object.values(p)[0];
+                    })
+        
+                    this.establishedLinks = {...this.availableLinks};
+                    this.householdMembersComposition = true 
+                    nextTick(() => {
+                        let householdMembersComposition = new Modal(document.getElementById('HouseholdMembersComposition'));
+                        householdMembersComposition.show();
+                    })
                 });
-
-                pairs.push(...links);
-            });
-
-            pairs.forEach(p => {
-                this.availableLinks[Object.keys(p)[0]] = Object.values(p)[0];
-            })
-
-            this.establishedLinks = {...this.availableLinks};
-
-            nextTick(() => {
-                let householdMembersComposition = new Modal(document.getElementById('HouseholdMembersComposition'));
-                householdMembersComposition.show();
-            })
         },
         relationshipSelected({corMemberId, relationId}) {
             this.availableLinks[corMemberId] = relationId;

@@ -2222,7 +2222,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _jamescoyle_vue_icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @jamescoyle/vue-icon */ "./node_modules/@jamescoyle/vue-icon/lib/svg-icon.vue");
 /* harmony import */ var _mdi_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mdi/js */ "./node_modules/@mdi/js/mdi.js");
 /* harmony import */ var _mixins_DateFormat__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/DateFormat */ "./resources/js/mixins/DateFormat.js");
@@ -2231,6 +2231,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FamilyCompositionReportForm_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FamilyCompositionReportForm.vue */ "./resources/js/modules/Households/Members/FamilyCompositionReportForm.vue");
 /* harmony import */ var _HouseholdMembersAdditionalParams_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./HouseholdMembersAdditionalParams.vue */ "./resources/js/modules/Households/Members/HouseholdMembersAdditionalParams.vue");
 /* harmony import */ var _components_ui_Buttons_IconButton_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../components/ui/Buttons/IconButton.vue */ "./resources/js/components/ui/Buttons/IconButton.vue");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -2243,6 +2244,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 
@@ -2321,7 +2323,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
   methods: {
     fetchMembers: function fetchMembers() {
       var _this2 = this;
-      axios.get("/api/v1/household-members?household_id=".concat(this.$route.params.id)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_10__["default"].get("/api/v1/household-members?household_id=".concat(this.$route.params.id)).then(function (res) {
         _this2.members = res.data.data;
       });
     },
@@ -2369,7 +2371,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
     },
     deleteMember: function deleteMember(id) {
       var _this3 = this;
-      axios["delete"]("/api/v1/household-members/".concat(id)).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_10__["default"]["delete"]("/api/v1/household-members/".concat(id)).then(function (res) {
         _this3.$store.dispatch('Households/fetchHousehold', _this3.household_id);
         _this3.clearFormData();
         var memberForm = bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal.getInstance('#HouseholdMemberForm');
@@ -2380,22 +2382,26 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
       var _this4 = this;
       this.modalTitle = 'Родині відносини';
       this.modalSubmitCaption = 'Встановити';
-      this.householdMembersComposition = true;
-      var pairs = [];
-      this.shownMembers.forEach(function (member) {
-        var links = member.relatives.map(function (r) {
-          return _defineProperty({}, "".concat(member.id, ".").concat(r.id), r.relation_id);
+      axios__WEBPACK_IMPORTED_MODULE_10__["default"].get("/api/v1/households/".concat(this.$route.params.id, "/family-relations")).then(function (res) {
+        var pairs = [];
+        res.data.data.forEach(function (member) {
+          var links = member.relatives.map(function (r) {
+            return _defineProperty({}, "".concat(member.id, ".").concat(r.id), r.relation_id);
+          });
+          pairs.push.apply(pairs, _toConsumableArray(links));
         });
-        pairs.push.apply(pairs, _toConsumableArray(links));
+        pairs.forEach(function (p) {
+          _this4.availableLinks[Object.keys(p)[0]] = Object.values(p)[0];
+        });
+        _this4.establishedLinks = _objectSpread({}, _this4.availableLinks);
+        _this4.householdMembersComposition = true;
+        (0,vue__WEBPACK_IMPORTED_MODULE_1__.nextTick)(function () {
+          var householdMembersComposition = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('HouseholdMembersComposition'));
+          householdMembersComposition.show();
+        });
       });
-      pairs.forEach(function (p) {
-        _this4.availableLinks[Object.keys(p)[0]] = Object.values(p)[0];
-      });
-      this.establishedLinks = _objectSpread({}, this.availableLinks);
-      (0,vue__WEBPACK_IMPORTED_MODULE_1__.nextTick)(function () {
-        var householdMembersComposition = new bootstrap__WEBPACK_IMPORTED_MODULE_0__.Modal(document.getElementById('HouseholdMembersComposition'));
-        householdMembersComposition.show();
-      });
+
+      // return; 
     },
     relationshipSelected: function relationshipSelected(_ref2) {
       var corMemberId = _ref2.corMemberId,
@@ -2447,7 +2453,7 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
         return ['dead', 'gone'].indexOf(m.status) !== -1 || !m.death_date;
       });
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_10__.mapGetters)('Households', ['household_id', 'familyInfo'])),
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_11__.mapGetters)('Households', ['household_id', 'familyInfo'])),
   created: function created() {
     this.fetchMembers();
   },
